@@ -9,12 +9,12 @@
 		<version>2.7.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.tha103.newview</groupId>
-	<artifactId>com.tha103.newview</artifactId>
+	<groupId>com.tha103.artion</groupId>
+	<artifactId>com.tha103.artion</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>com.tha103.newview</name>
-	<description>com.tha103.newview</description>
+	<name>com.tha103.artion</name>
+	<description>com.tha103.artion</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
