@@ -64,7 +64,7 @@ public class AdministratorVO {
 	
 	@Expose
 	@Column(name = "adm_profilePhoto", columnDefinition = "longblob")
-	private Byte[] admProfilePhoto;
+	private byte[] admProfilePhoto;
 	
 	@Expose
 	@Column(name = "adm_right")
@@ -83,7 +83,7 @@ public class AdministratorVO {
 
 	public AdministratorVO(Integer admId, String admName, Integer admIdentity, Integer admStatus, String admMail,
 			String admPassword, Date admBirthday, String admMobile, Timestamp admAddTime, Timestamp admLastModifiedTime,
-			Byte[] admProfilePhoto, Integer admRight, Set<PromoCodeVO> proCodes) {
+			byte[] admProfilePhoto, Integer admRight, Set<PromoCodeVO> proCodes) {
 		super();
 		this.admId = admId;
 		this.admName = admName;
@@ -180,11 +180,11 @@ public class AdministratorVO {
 		this.admLastModifiedTime = admLastModifiedTime;
 	}
 
-	public Byte[] getAdmProfilePhoto() {
+	public byte[] getAdmProfilePhoto() {
 		return admProfilePhoto;
 	}
 
-	public void setAdmProfilePhoto(Byte[] admProfilePhoto) {
+	public void setAdmProfilePhoto(byte[] admProfilePhoto) {
 		this.admProfilePhoto = admProfilePhoto;
 	}
 
@@ -210,8 +210,10 @@ public class AdministratorVO {
 				+ ", admStatus=" + admStatus + ", admMail=" + admMail + ", admPassword=" + admPassword
 				+ ", admBirthday=" + admBirthday + ", admMobile=" + admMobile + ", admAddTime=" + admAddTime
 				+ ", admLastModifiedTime=" + admLastModifiedTime + ", admProfilePhoto="
-				+ Arrays.toString(admProfilePhoto) + ", admRight=" + admRight + "]";
+				+ Arrays.toString(admProfilePhoto) + ", admRight=" + admRight + ", proCodes=" + proCodes + "]";
 	}
+
+	
 	
 	
 }
