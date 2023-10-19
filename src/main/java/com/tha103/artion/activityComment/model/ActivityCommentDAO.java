@@ -10,8 +10,7 @@ import org.hibernate.SessionFactory;
 
 import com.tha103.artion.activity.model.ActivityVO;
 import com.tha103.artion.member.model.MemberVO;
-
-import util.HibernateUtil;
+import com.tha103.artion.util.HibernateUtil;
 
 public class ActivityCommentDAO implements ActivityCommentDAO_interface {
 
