@@ -1,4 +1,4 @@
-package util;
+package com.tha103.artion.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;

@@ -4,20 +4,22 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	version="4.0" metadata-complete="true">
-
+	<display-name>Artionhope</display-name>
 	<welcome-file-list>
-		<welcome-file>sel_actadd.jsp</welcome-file>
-		<welcome-file>sel_index.jsp</welcome-file>
-		<welcome-file>sel_login.jsp</welcome-file>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>default.htm</welcome-file>
 	</welcome-file-list>
-
 	<listener>
-		<listener-class>listener.InitializerListener</listener-class>
+		<listener-class>com.tha103.artion.listener.InitializerListener</listener-class>
 	</listener>
 
 	<filter>
 		<filter-name>SessionInViewFilter</filter-name>
-		<filter-class>filter.OpenSessionInViewFilter</filter-class>
+		<filter-class>com.tha103.artion.filter.OpenSessionInViewFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>SessionInViewFilter</filter-name>

@@ -1,7 +1,8 @@
-package filter;
+package com.tha103.artion.filter;
 
 import java.io.IOException;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -10,12 +11,12 @@ import javax.servlet.annotation.WebFilter;
 
 import org.hibernate.SessionFactory;
 
-import util.HibernateUtil;
+import com.tha103.artion.util.HibernateUtil;
 
 
 
 @WebFilter("/*")
-public class OpenSessionInViewFilter {
+public class OpenSessionInViewFilter implements Filter {
 	
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 		SessionFactory factory = HibernateUtil.getSessionFactory();

@@ -10,7 +10,7 @@ notify background: #c1717131;
 .logo {
     display: block;
     width: 80px;
-    background: url("../image/artion-logo_工作區域\ 1.png") no-repeat;
+    background: url("../../images/artionLogo.png") no-repeat;
     background-size: contain;
     text-indent: 101%;
     white-space: nowrap;

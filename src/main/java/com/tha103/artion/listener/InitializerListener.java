@@ -1,9 +1,9 @@
-package listener;
+package com.tha103.artion.listener;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import util.HibernateUtil;
+import com.tha103.artion.util.HibernateUtil;
 
 
 public class InitializerListener implements ServletContextListener{
