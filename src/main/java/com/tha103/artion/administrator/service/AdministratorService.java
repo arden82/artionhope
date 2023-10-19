@@ -6,9 +6,7 @@ import org.hibernate.Session;
 
 import com.tha103.artion.administrator.model.AdministratorDAO;
 import com.tha103.artion.administrator.model.AdministratorVO;
-
-
-import util.HibernateUtil;
+import com.tha103.artion.util.HibernateUtil;
 
 public class AdministratorService implements AdministratorService_Interface{
 	

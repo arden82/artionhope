@@ -6,8 +6,7 @@ import org.hibernate.Session;
 
 import com.tha103.artion.promoCode.model.PromoCodeDAO;
 import com.tha103.artion.promoCode.model.PromoCodeVO;
-
-import util.HibernateUtil;
+import com.tha103.artion.util.HibernateUtil;
 
 public class PromoCodeService implements PromoCodeService_Interface{
 	
