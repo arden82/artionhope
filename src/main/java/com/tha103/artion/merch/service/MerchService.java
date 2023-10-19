@@ -6,8 +6,7 @@ import org.hibernate.Session;
 
 import com.tha103.artion.merch.model.MerchDAO;
 import com.tha103.artion.merch.model.MerchVO;
-
-import util.HibernateUtil;
+import com.tha103.artion.util.HibernateUtil;
 
 public class MerchService implements MerchService_Interface{
 
