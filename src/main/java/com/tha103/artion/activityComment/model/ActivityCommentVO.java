@@ -74,7 +74,7 @@ public class ActivityCommentVO {
 
 	@Expose
 	@Column(name = "actCom_status", columnDefinition = "tinyint")
-	private Integer actComStatus;
+	private boolean actComStatus;
 	
 //-----------------------以下為OneToMany-----------------------
 	// 活動留言(pk)>活動留言按讚(fk)
@@ -94,7 +94,7 @@ public class ActivityCommentVO {
 
 	public ActivityCommentVO(Integer actComId, MemberVO member, ActivityVO activity, String actComContent,
 			Integer actComReportTimes, Timestamp actComTime, Integer actComLikeTimes, byte[] actComCoverPicture,
-			byte[] actComPicture1, byte[] actComPicture2, byte[] actComPicture3, Integer actComStatus,
+			byte[] actComPicture1, byte[] actComPicture2, byte[] actComPicture3, boolean actComStatus,
 			Set<ActivityCommentLikeVO> actComLikes, Set<CommentReportVO> comReports) {
 		super();
 		this.actComId = actComId;
@@ -201,11 +201,11 @@ public class ActivityCommentVO {
 		this.actComPicture3 = actComPicture3;
 	}
 
-	public Integer getActComStatus() {
+	public boolean getActComStatus() {
 		return actComStatus;
 	}
 
-	public void setActComStatus(Integer actComStatus) {
+	public void setActComStatus(boolean actComStatus) {
 		this.actComStatus = actComStatus;
 	}
 
