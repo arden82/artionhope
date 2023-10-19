@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.*, java.util.Base64, com.seller.model.*" %>
+<%@ page import="java.util.*, java.util.Base64, com.tha103.artion.seller.model.*" %>
 <%@ page import="java.util.*"%>
-<%@ page import="com.seller.model.*"%>
+<%@ page import="com.tha103.artion.seller.service.*"%>
 <%-- 此頁練習採用 S 的寫法取值 --%>
 
 <%
@@ -98,37 +98,37 @@ th, td {
 <%@ include file="page1.file" %> 
 <c:forEach var="sellerVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
             <tr>
-                <td>${sellerVO.sel_id}</td>
-                <td>${sellerVO.sel_account}</td>
-                <td>${sellerVO.sel_password}</td>
-                <td>${sellerVO.sel_name}</td>
-                <td>${sellerVO.sel_phone}</td>
-                <td>${sellerVO.sel_address}</td>
-                <td>${sellerVO.sel_url}</td>
-                <td>${sellerVO.sel_facebook}</td>
-                <td>${sellerVO.sel_contactPerson}</td>
-                <td>${sellerVO.sel_introduction}</td>
-                <td>${sellerVO.sel_bankCode}</td>
-                <td>${sellerVO.sel_bankNumber}</td>
-                <td>${sellerVO.sel_bankName}</td>
-                <td>${sellerVO.sel_remark}</td>
-                <td>${sellerVO.sel_title}</td>
-                <td>${sellerVO.sel_principal}</td>
-                <td>${sellerVO.sel_uniformNumbers}</td>
-                <td>${sellerVO.sel_registeredAddress}</td>
+                <td>${sellerVO.selId}</td>
+                <td>${sellerVO.selAccount}</td>
+                <td>${sellerVO.selPassword}</td>
+                <td>${sellerVO.selName}</td>
+                <td>${sellerVO.selPhone}</td>
+                <td>${sellerVO.selAddress}</td>
+                <td>${sellerVO.selUrl}</td>
+                <td>${sellerVO.selFacebook}</td>
+                <td>${sellerVO.selContactPerson}</td>
+                <td>${sellerVO.selIntroduction}</td>
+                <td>${sellerVO.selBankCode}</td>
+                <td>${sellerVO.selBankNumber}</td>
+                <td>${sellerVO.selBankName}</td>
+                <td>${sellerVO.selRemark}</td>
+                <td>${sellerVO.selTitle}</td>
+                <td>${sellerVO.selPrincipal}</td>
+                <td>${sellerVO.selUniformNumbers}</td>
+                <td>${sellerVO.selRegisteredAddress}</td>
                 <td>
-                    <img src="/IBM_emp_0201MVC_Single-Table_mySQL8/seller/seller2.do?sel_id=${sellerVO.sel_id}" width=200px height=200px />
+                    <img src="/IBM_emp_0201MVC_Single-Table_mySQL8/seller/seller2.do?sel_id=${sellerVO.selId}" width=200px height=200px />
                 </td>
-                <td>${sellerVO.sel_registerdTime}</td>
-                <td>${sellerVO.sel_lastModifiedTime}</td>
-                <td>${sellerVO.sel_status}</td>
+                <td>${sellerVO.selRegisterdTime}</td>
+                <td>${sellerVO.selLastModifiedTime}</td>
+                <td>${sellerVO.selStatus}</td>
 
                 <td>
                     <FORM METHOD="post"
                         ACTION="<%=request.getContextPath()%>/seller/seller.do"
                         style="margin-bottom: 0px;">
                         <input type="submit" value="修改"> <input type="hidden"
-                            name="sel_id" value="${sellerVO.sel_id}"> <input
+                            name="sel_id" value="${sellerVO.selId}"> <input
                             type="hidden" name="action" value="getOne_For_Update">
                     </FORM>
                 </td>
@@ -137,7 +137,7 @@ th, td {
                         ACTION="<%=request.getContextPath()%>/seller/seller.do"
                         style="margin-bottom: 0px;">
                         <input type="submit" value="刪除"> <input type="hidden"
-                            name="sel_id" value="${sellerVO.sel_id}"> <input
+                            name="sel_id" value="${sellerVO.selId}"> <input
                             type="hidden" name="action" value="delete">
                     </FORM>
                 </td>
