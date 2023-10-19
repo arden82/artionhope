@@ -8,8 +8,8 @@ import org.hibernate.SessionFactory;
 import com.tha103.artion.activity.model.ActivityVO;
 import com.tha103.artion.activityComment.model.ActivityCommentVO;
 import com.tha103.artion.member.model.MemberVO;
+import com.tha103.artion.util.HibernateUtil;
 
-import util.HibernateUtil;
 
 public class ActivityCommentLikeDAO implements ActivityCommentLikeDAO_interface {
 	private SessionFactory factory;
