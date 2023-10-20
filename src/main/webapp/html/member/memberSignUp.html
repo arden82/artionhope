@@ -170,7 +170,7 @@
 						<div class="wrap_memberinfo ">
 							<span class="font-size32 ">會員註冊&nbsp;&nbsp;Sign Up</span>
 							<hr>
-							<form class="logupForm" method="post" action="/member/member.do"
+							<form class="logupForm" method="post" action=""
 								enctype="multipart/form-data" accept-charset="UTF-8">
 								<div class="d-flex mb-2 wrap_memberinfo_input">
 									<label for="mem_account">帳號</label> <input type="email"
@@ -238,7 +238,7 @@
 								</div>
 								<div class='mugShotBox'></div>
 								<hr>
-								<button type="submit" class="colortest btn_old  mb-3  ">註冊會員</button>
+								<button type="button" class="colortest btn_old  mb-3 test  ">註冊會員</button>
 							</form>
 							<div class="d-flex ">
 								<a class="nav-link me-3 " href="./memberLogin.html">已經是會員了?會員登入</a>
@@ -284,44 +284,42 @@
 
             //送表單
             
-let logupForm = document.querySelector(".logupForm");
+let logupForm = document.querySelector(".test");
 logupForm.addEventListener("click", function () {
-    let mem_account = document.querySelector("#id").value;
+    let mem_account = document.querySelector("#mem_account").value;
     let mem_password = document.querySelector("#mem_password").value;
-    let mem_name = document.querySelector("#mem_name").value;;
-    let mem_gender = document.querySelector("#mem_gender").value;;
-    let mem_birthday = document.querySelector("#mem_birthday").value;;
-    let mem_mobile = document.querySelector("#mem_mobile").value;;
-    let mem_billAddress = document.querySelector("#mem_billAddress").value;;
-    let mem_profilePhoto = document.querySelector("#mem_profilePhoto").value;;
-    let data = {
-        mem_account: mem_account,
-        mem_password: mem_password,
-        mem_name: mem_name,
-        mem_gender: mem_gender,
-        mem_birthday: mem_birthday,
-        mem_mobile: mem_mobile,
-        mem_billAddress: mem_billAddress,
-        mem_profilePhoto: mem_profilePhoto
-    }
-    fetch("", {
-        method: "POST", 
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
+    let mem_name = document.querySelector("#mem_name").value;
+    let mem_gender = document.querySelector('input[name="mem_gender"]:checked').value;
+    let mem_birthday = document.querySelector("#mem_birthday").value;
+    let mem_mobile = document.querySelector("#mem_mobile").value;
+    let mem_billAddress = document.querySelector("#mem_billAddress").value;
+    let mem_profilePhoto = document.querySelector("#mem_profilePhoto").files[0]; 
+
+    let formData = new FormData();
+    formData.append("mem_account", mem_account);
+    formData.append("mem_password", mem_password);
+    formData.append("mem_name", mem_name);
+    formData.append("mem_gender", mem_gender);
+    formData.append("mem_birthday", mem_birthday);
+    formData.append("mem_mobile", mem_mobile);
+    formData.append("mem_billAddress", mem_billAddress);
+    formData.append("mem_profilePhoto", mem_profilePhoto);
+    formData.append("action", "insert"); 
+
+    fetch("http://localhost:8081/artion/member/member.do", { 
+        method: "POST",
+        body: formData
     })
-        .then(res => {
-            if (res.ok) {
-                console.log("data 200")
-            }else{
-                console.error("not 200")
-            }
-           
-        })
-        .catch(err => {
-            console.error("memberajax有問題:",err );
-        });
+    .then(response => {
+        if (response.ok) {
+            console.log("insert member OK");
+        } else {
+            console.error("insert member err");
+        }
+    })
+    .catch(err => {
+        console.error("Error:", err);
+    });
 });
 
         </script>

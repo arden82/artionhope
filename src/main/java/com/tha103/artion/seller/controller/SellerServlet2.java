@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.tha103.artion.seller.model.*;
 import com.tha103.artion.seller.service.*;
+import com.tha103.artion.seller.service.SellerService;
 
 
 public class SellerServlet2 extends HttpServlet {
@@ -22,8 +23,8 @@ public class SellerServlet2 extends HttpServlet {
 		String str = req.getParameter("sel_id");
 	    Integer sel_id = Integer.valueOf(str);
 
-	    SellerServiceImpl sellerSil = new SellerServiceImpl();
-	    SellerVO sellerVO = sellerSil.getOneSeller(sel_id);
+	    SellerService sellerSvc = new SellerService();
+	    SellerVO sellerVO = sellerSvc.getOneSeller(sel_id);
 
 	    if (sellerVO != null && sellerVO.getSelProfilePicture() != null) {
 	        res.setContentType("image/jpeg");

@@ -1,8 +1,7 @@
 package com.tha103.artion.activityComment.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collection;
+import java.io.*;
+import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
+import com.tha103.artion.activityComment.model.ActivityCommentVO;
+import com.tha103.artion.activityComment.model.ActivityCommentService;
+
+
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class ActivityCommentServlet extends HttpServlet{
@@ -57,8 +61,8 @@ public class ActivityCommentServlet extends HttpServlet{
 			}		
 
 			ActivityCommentVO activityCommentVO = new ActivityCommentVO();
-			activityCommentVO.setMemId(memId);
-			activityCommentVO.setActId(actId);
+			activityCommentVO.setMember(member);
+			activityCommentVO.setActivity(activity);
 			activityCommentVO.setActComContent(actComContent);
 
 
