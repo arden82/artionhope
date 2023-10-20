@@ -6,8 +6,9 @@ import java.sql.Date;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
-import util.HibernateUtil;
+import com.tha103.artion.util.*;
 
 public class AdministratorVO_Test {
 	
@@ -19,11 +20,11 @@ public class AdministratorVO_Test {
 		 }
 
 	public static void main(String[] args) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
-		try {
-
-			session.beginTransaction();
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//
+//		try {
+//
+//			session.beginTransaction();
 
 //			AdministratorVO admin = new AdministratorVO();
 
@@ -57,19 +58,25 @@ public class AdministratorVO_Test {
 //				session.delete(admin2);
 			
 			
-			List<AdministratorVO> list = session.createQuery("from AdministratorVO",AdministratorVO.class).list();
+//			List<AdministratorVO> list = session.createQuery("from AdministratorVO",AdministratorVO.class).list();
 			//查全部
-			System.out.println(list);
+//			System.out.println(list);
 			//查詢
 //			System.out.println(admin2);
 
-			session.getTransaction().commit();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		} finally {
-			HibernateUtil.shutdown();
-		}
+//			session.getTransaction().commit();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			session.getTransaction().rollback();
+//		} finally {
+//			HibernateUtil.shutdown();
+//		}
+		
+		
+		AdministratorDAO_Interface dao = new AdministratorDAO(HibernateUtil.getSessionFactory());
+		
+		AdministratorVO admin = dao.getById(1001);
+		System.out.println(admin);
 	}
 }

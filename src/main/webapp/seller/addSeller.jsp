@@ -205,7 +205,7 @@ th, td {
 java.sql.Timestamp sel_registerdTime = null;
 
 try {
-	sel_registerdTime = sellerVO.getSelegisterdTime();
+	sel_registerdTime = sellerVO.getSelRegisterdTime();
 } catch (Exception e) {
 	sel_registerdTime = new java.sql.Timestamp(System.currentTimeMillis());
 }
@@ -213,7 +213,7 @@ try {
 java.sql.Timestamp sel_lastModifiedTime = null;
 
 try {
-	sel_lastModifiedTime = sellerVO.getSel_lastModifiedTime();
+	sel_lastModifiedTime = sellerVO.getSelLastModifiedTime();
 } catch (Exception e) {
 	sel_lastModifiedTime = new java.sql.Timestamp(System.currentTimeMillis());
 }

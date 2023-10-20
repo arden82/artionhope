@@ -6,8 +6,7 @@ import org.hibernate.Session;
 
 import com.tha103.artion.commentReport.model.CommentReportDAO;
 import com.tha103.artion.commentReport.model.CommentReportVO;
-
-import util.HibernateUtil;
+import com.tha103.artion.util.HibernateUtil;
 
 public class CommentReportService implements CommentReportService_Interface{
 	

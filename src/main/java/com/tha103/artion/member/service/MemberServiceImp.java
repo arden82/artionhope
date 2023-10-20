@@ -5,7 +5,7 @@ import org.hibernate.Session;
 import com.tha103.artion.member.model.MemberDAO;
 import com.tha103.artion.member.model.MemberDAOlmp;
 import com.tha103.artion.member.model.MemberVO;
-
+import com.tha103.artion.memberLevel.model.MemberLevelVO;
 import com.tha103.artion.util.HibernateUtil;
 
 public class MemberServiceImp implements MemberService {
@@ -22,7 +22,9 @@ public class MemberServiceImp implements MemberService {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
+			MemberLevelVO level=session.get(MemberLevelVO.class, 1);
 			memberVO = member;
+			memberVO.setMemLevLevel(level);
 			memId=dao.insert(member);
 			session.getTransaction().commit();
 			return memId;

@@ -26,7 +26,7 @@ public class LoginHandler extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		sellerDAO = new SellerDAOImpl();
+		sellerDAO = new SellerDAO();
 	}
 
 	protected boolean allowUser(String account, String password) {
@@ -38,7 +38,7 @@ public class LoginHandler extends HttpServlet {
 		// 密码匹配，可以执行登录成功后的操作
 		// 例如，可以设置用户会话或重定向到其他页面
 		// 以下是一个重定向的示例：
-		res.sendRedirect("/IBM_emp_0201MVC_Single-Table_mySQL8/activity/sel_index.jsp");
+		res.sendRedirect("/Artionhope/activity/sel_index.jsp");
 		System.out.println("登入成功");
 	}
 

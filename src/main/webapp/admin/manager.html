@@ -61,15 +61,7 @@
             </div>
           </div>
           <div class="navbar-nav w-100">
-            <a href="index.html" class="nav-item nav-link"><i class="fa-solid fa-address-card"></i>會員總覽</a>
-            <a href="memberOrderManage.html" class="nav-item nav-link"><i class="fa-solid fa-table-list"></i> 會員訂單管理</a>
-            <a href="firm.html" class="nav-item nav-link"><i class="fa-solid fa-building-user"></i> 廠商總覽</a>
-            <a href="activityManage.html" class="nav-item nav-link"><i class="fa-solid fa-calendar-check"></i> 廠商活動管理</a>
-            <a href="complaint.html" class="nav-item nav-link"><i class="fa-solid fa-triangle-exclamation"></i> 客訴處理</a>
-            <a href="customerService.html" class="nav-item nav-link"><i class="fa-solid fa-comments"></i> 即時客服</a>
-            <a href="product.html" class="nav-item nav-link"><i class="fa-solid fa-box"></i> 周邊商品</a>
-            <a href="codeSetting.html" class="nav-item nav-link"><i class="fa-solid fa-barcode"></i> 優惠碼設定</a>
-            <a href="manager.html" class="nav-item nav-link active"><i class="fa-solid fa-user-tie"></i> 管理者管理</a>
+            <a href="index.html" class="nav-item nav-link"><i class="fa-solid fa-address-card"></i>會員總覽</a> <a href="memberOrderManage.html" class="nav-item nav-link"><i class="fa-solid fa-table-list"></i> 會員訂單管理</a> <a href="firm.html" class="nav-item nav-link"><i class="fa-solid fa-building-user"></i> 廠商總覽</a> <a href="activityManage.html" class="nav-item nav-link"><i class="fa-solid fa-calendar-check"></i> 廠商活動管理</a> <a href="complaint.html" class="nav-item nav-link"><i class="fa-solid fa-triangle-exclamation"></i> 客訴處理</a> <a href="customerService.html" class="nav-item nav-link"><i class="fa-solid fa-comments"></i> 即時客服</a> <a href="product.html" class="nav-item nav-link"><i class="fa-solid fa-box"></i> 周邊商品</a> <a href="codeSetting.html" class="nav-item nav-link"><i class="fa-solid fa-barcode"></i> 優惠碼設定</a> <a href="manager.html" class="nav-item nav-link active"><i class="fa-solid fa-user-tie"></i> 管理者管理</a>
             <a href="notification.html" class="nav-item nav-link"><i class="fa-solid fa-envelope"></i> 通知信</a>
           </div>
         </nav>
@@ -81,11 +73,11 @@
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
           <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-            <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+            <h2 class="text-primary mb-0">
+              <i class="fa fa-hashtag"></i>
+            </h2>
           </a>
-          <a href="#" class="sidebar-toggler flex-shrink-0">
-            <i class="fa fa-bars"></i>
-          </a>
+          <a href="#" class="sidebar-toggler flex-shrink-0"> <i class="fa fa-bars"></i> </a>
           <form class="d-none d-md-flex ms-4">
             <input class="form-control border-0" type="search" placeholder="Search" />
           </form>
@@ -154,15 +146,8 @@
               </div>
             </div>
             <div class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px" />
-                <span class="d-none d-lg-inline-flex">John Doe</span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                <a href="#" class="dropdown-item">My Profile</a>
-                <a href="#" class="dropdown-item">Settings</a>
-                <a href="#" class="dropdown-item">Log Out</a>
-              </div>
+              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px" /> <span class="d-none d-lg-inline-flex">John Doe</span> </a>
+              <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0"><a href="#" class="dropdown-item">My Profile</a> <a href="#" class="dropdown-item">Settings</a> <a href="#" class="dropdown-item">Log Out</a></div>
             </div>
           </div>
         </nav>
@@ -200,9 +185,31 @@
                     <th scope="col">更改時間</th>
                     <th scope="col">權限</th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
-                <tbody id="table-body"></tbody>
+                <tbody id="table-body">
+                  <tr>
+                    <th scope="row">number</th>
+                    <td>picture</td>
+                    <td>name</td>
+                    <td>role</td>
+                    <td>status</td>
+                    <td>jhon@email.com</td>
+                    <td>password</td>
+                    <td>birthdate</td>
+                    <td>cellphone</td>
+                    <td>createdDate</td>
+                    <td>updateDate</td>
+                    <td>authority</td>
+                    <td>
+                      <button>修改</button>
+                    </td>
+                    <td>
+                      <button>刪除</button>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -244,26 +251,91 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
+    <!-- ==================================================================== -->
+
     <script>
-      // 使用jQuery的Ajax函数获取数据
-      $.ajax({
-        url: "http://localhost:8081/artion/admin/admin.do", // 用来获取数据的服务器端脚本
-        type: "GET",
-        dataType: "json",
-        success: function (data) {
-          // 数据成功获取后的处理
-          var tableBody = $("#table-body");
+      $("#table-body").on("click", function () {
+        console.log("AAA");
 
-          // 清空表格中的内容
-          tableBody.empty();
+        $.ajax({
+          url: "http://localhost:8081/com.tha103.artion/getalladmins",
+          type: "GET",
+          dataType: "json",
+          success: function (data) {
+            var tableBody = $("#table-body");
+            tableBody.empty();
 
-          // 遍历数据并插入到表格中
-          $.each(data, function (index, item) {
-            var row = "<tr>" + "<td>" + item.adm_id + "</td>" + "<td>" + item.adm_profilePhoto + "</td>" + "<td>" + item.adm_name + "</td>" + "<td>" + item.adm_identity + "</td>" + "<td>" + item.adm_status + "</td>" + "<td>" + item.adm_mail + "</td>" + "<td>" + item.adm_password + "</td>" + "<td>" + item.adm_birthday + "</td>" + "<td>" + item.adm_mobile + "</td>" + "<td>" + item.adm_addTime + "</td>" + "<td>" + item.adm_lastModifiedTime + "</td>" + "<td>" + item.adm_right + "</td>" + '<td><a href="edit_manager.html?id=' + item.manager_id + '">编辑</a></td>' + "</tr>";
-            tableBody.append(row);
-          });
-        },
+            if (data.length > 0) {
+              $.each(data, function (index, admin) {
+                var newRowHTML = `
+						<tr>
+                            <th scope="row">${admin.admId}</th>
+                            <td><img src='${admin.admProfilePhoto}' alt='頭貼'></td>
+                            <td>${admin.admName}</td>
+                            <td>${admin.admIdentity}</td>
+                            <td>${admin.admStatus}</td>
+                            <td>${admin.admMail}</td>
+                            <td>${admin.admPassword}</td>
+                            <td>${admin.admBirthday}</td>
+                            <td>${admin.admMobile}</td>
+                            <td>${admin.admAddTime}</td>
+                            <td>${admin.admLastModifiedTime}</td>
+                            <td>${admin.admRight}</td>
+                            <td><button>修改</button></td>
+                            <td><button>刪除</button></td>
+                        </tr>
+                        `;
+                tableBody.append(newRowHTML);
+              });
+            } else {
+              tableBody.html("<tr><td colspan='13'>沒有管理員資料。</td></tr>");
+            }
+          },
+          error: function () {
+            // 處理錯誤
+            alert("請求失敗。");
+          },
+        });
+
+        //     // 這裡的資料是示例資料，你需要替換為實際的資料
+        //     var id = 1;
+        //     var profilePhoto = "picture.jpg";
+        //     var name = "John";
+        //     var identity = "Admin";
+        //     var status = "Active";
+        //     var mail = "john@email.com";
+        //     var password = "********";
+        //     var birthday = "1990-01-01";
+        //     var mobile = "123-456-7890";
+        //     var addTime = "2023-01-01";
+        //     var lastModifiedTime = "2023-10-19";
+        //     var right = "Admin";
+
+        //     // 使用模板字符串創建HTML代碼
+        //     var newRowHTML = `
+        //     <tr>
+        //         <th scope="row">${id}</th>
+        //         <td>${profilePhoto}</td>
+        //         <td>${name}</td>
+        //         <td>${identity}</td>
+        //         <td>${status}</td>
+        //         <td>${mail}</td>
+        //         <td>${password}</td>
+        //         <td>${birthday}</td>
+        //         <td>${mobile}</td>
+        //         <td>${addTime}</td>
+        //         <td>${lastModifiedTime}</td>
+        //         <td>${right}</td>
+        //         <td><button>修改</button></td>
+        //         <td><button>刪除</button></td>
+        //     </tr>
+        // `;
+
+        //     // 插入新的HTML代碼到tbody中
+        //     $("#table-body").append(newRowHTML);
       });
     </script>
+
+    <!-- ==================================================================== -->
   </body>
 </html>

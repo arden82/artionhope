@@ -1,19 +1,88 @@
 package com.tha103.artion.merchOrderDetail.model;
 
+import java.util.List;
+
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
-public class MerchOrderDetailDAO {
-	// SessionFactory 為 thread-safe，可宣告為屬性讓請求執行緒們共用
-	private SessionFactory factory;
+import com.tha103.artion.util.HibernateUtil;
 
-	public MerchOrderDetailDAO(SessionFactory factory) {
-		this.factory = factory;
+public class MerchOrderDetailDAO implements MerchOrderDetailDAO_interface {
+	@Override
+	public int insert(MerchOrderDetailVO merchorderdetailVO) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Integer merchOrdDetailId = (Integer) session.save(merchorderdetailVO);
+			session.getTransaction().commit();
+			return merchOrdDetailId;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return -1;
 	}
 
-	// Session 為 not thread-safe，所以此方法在各個增刪改查方法裡呼叫
-	// 以避免請求執行緒共用了同個 Session
-	private Session getSession() {
-		return factory.getCurrentSession();
+	@Override
+	public int update(MerchOrderDetailVO merchorderdetailVO) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			session.update(merchorderdetailVO);
+			session.getTransaction().commit();
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return -1;
+	}
+
+	@Override
+	public int delete(Integer merchOrdDetailId) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			MerchOrderDetailVO merchorderdetailVO = session.get(MerchOrderDetailVO.class, merchOrdDetailId);
+			if (merchorderdetailVO != null) {
+				session.delete(merchorderdetailVO);
+			}
+			session.getTransaction().commit();
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return -1;
+	}
+
+	@Override
+	public MerchOrderDetailVO findByPK(Integer merchOrdDetailId) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			MerchOrderDetailVO merchorderdetailVO = session.get(MerchOrderDetailVO.class, merchOrdDetailId);
+			session.getTransaction().commit();
+			return merchorderdetailVO;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
+	}
+
+	@Override
+	public List<MerchOrderDetailVO> getAll() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			List<MerchOrderDetailVO> list = session.createQuery("from MerchOrderDetailVO", MerchOrderDetailVO.class)
+					.list();
+			session.getTransaction().commit();
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
 	}
 }
