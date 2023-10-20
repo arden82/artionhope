@@ -6,5 +6,5 @@ target/
 .DS_Store
 .idea
 *.iml
-*.xml
-*exe
+*.exe
+src/main/resources/hibernate.cfg.xml
