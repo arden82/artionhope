@@ -41,20 +41,16 @@ public class ActivityVO {
 	private String actName;
 
 	@Expose
-	@Column(name = "act_ticketID")
-	private Integer actTicketID;
-
-	@Expose
 	@Column(name = "act_ticketPrice")
 	private Integer actTicketPrice; //0元=免費
 
 	@Expose
 	@Column(name = "act_ticketStartTime") //廠商自訂
-	private Timestamp actTicketStartTime; 
+	private Date actTicketStartTime; 
 
 	@Expose
 	@Column(name = "act_ticketEndTime") //廠商自訂
-	private Timestamp actTicketEndTime;  
+	private Date actTicketEndTime;  
 
 	@Expose
 	@Column(name = "act_type")
@@ -196,19 +192,18 @@ public class ActivityVO {
 		super();
 	}
 
-	public ActivityVO(Integer actId, String actName, Integer actTicketID, Integer actTicketPrice,
-			Timestamp actTicketStartTime, Timestamp actTicketEndTime, Integer actType, Date actStartDate,
-			Date actEndDate, Time actStartTime, Time actEndTime, String actCity, String actZone, String actAddress,
-			String actOrganization, String actEmail, String actPhone, Integer actTicketTotal, String actContent,
-			byte[] actCoverPicture, byte[] actPicture1, byte[] actPicture2, byte[] actPicture3, Integer actLikeTimes,
-			Integer actViews, Integer actApproalStatus, Integer actStatus, SellerVO seller, BigDecimal actLongitude,
-			BigDecimal actLatitude, Integer actTicketTotalSell, AdministratorVO admId, Timestamp actLastModifiedTime,
-			String actResultContent, Set<MemberCollectionVO> memCols, Set<ActivityLikeVO> actLikes,
-			Set<ActivityCommentVO> actComs, Set<TicketOrderDetailVO> ticOrdDets) {
+	public ActivityVO(Integer actId, String actName, Integer actTicketPrice, Date actTicketStartTime,
+			Date actTicketEndTime, Integer actType, Date actStartDate, Date actEndDate, Time actStartTime,
+			Time actEndTime, String actCity, String actZone, String actAddress, String actOrganization, String actEmail,
+			String actPhone, Integer actTicketTotal, String actContent, byte[] actCoverPicture, byte[] actPicture1,
+			byte[] actPicture2, byte[] actPicture3, Integer actLikeTimes, Integer actViews, Integer actApproalStatus,
+			Integer actStatus, SellerVO seller, BigDecimal actLongitude, BigDecimal actLatitude,
+			Integer actTicketTotalSell, AdministratorVO admId, Timestamp actLastModifiedTime, String actResultContent,
+			Set<MemberCollectionVO> memCols, Set<ActivityLikeVO> actLikes, Set<ActivityCommentVO> actComs,
+			Set<TicketOrderDetailVO> ticOrdDets) {
 		super();
 		this.actId = actId;
 		this.actName = actName;
-		this.actTicketID = actTicketID;
 		this.actTicketPrice = actTicketPrice;
 		this.actTicketStartTime = actTicketStartTime;
 		this.actTicketEndTime = actTicketEndTime;
@@ -262,14 +257,6 @@ public class ActivityVO {
 		this.actName = actName;
 	}
 
-	public Integer getActTicketID() {
-		return actTicketID;
-	}
-
-	public void setActTicketID(Integer actTicketID) {
-		this.actTicketID = actTicketID;
-	}
-
 	public Integer getActTicketPrice() {
 		return actTicketPrice;
 	}
@@ -278,19 +265,19 @@ public class ActivityVO {
 		this.actTicketPrice = actTicketPrice;
 	}
 
-	public Timestamp getActTicketStartTime() {
+	public Date getActTicketStartTime() {
 		return actTicketStartTime;
 	}
 
-	public void setActTicketStartTime(Timestamp actTicketStartTime) {
+	public void setActTicketStartTime(Date actTicketStartTime) {
 		this.actTicketStartTime = actTicketStartTime;
 	}
 
-	public Timestamp getActTicketEndTime() {
+	public Date getActTicketEndTime() {
 		return actTicketEndTime;
 	}
 
-	public void setActTicketEndTime(Timestamp actTicketEndTime) {
+	public void setActTicketEndTime(Date actTicketEndTime) {
 		this.actTicketEndTime = actTicketEndTime;
 	}
 
@@ -552,19 +539,20 @@ public class ActivityVO {
 
 	@Override
 	public String toString() {
-		return "ActivityVO [actId=" + actId + ", actName=" + actName + ", actTicketID=" + actTicketID
-				+ ", actTicketPrice=" + actTicketPrice + ", actTicketStartTime=" + actTicketStartTime
-				+ ", actTicketEndTime=" + actTicketEndTime + ", actType=" + actType + ", actStartDate=" + actStartDate
-				+ ", actEndDate=" + actEndDate + ", actStartTime=" + actStartTime + ", actEndTime=" + actEndTime
-				+ ", actCity=" + actCity + ", actZone=" + actZone + ", actAddress=" + actAddress + ", actOrganization="
-				+ actOrganization + ", actEmail=" + actEmail + ", actPhone=" + actPhone + ", actTicketTotal="
-				+ actTicketTotal + ", actContent=" + actContent + ", actCoverPicture="
-				+ Arrays.toString(actCoverPicture) + ", actPicture1=" + Arrays.toString(actPicture1) + ", actPicture2="
-				+ Arrays.toString(actPicture2) + ", actPicture3=" + Arrays.toString(actPicture3) + ", actLikeTimes="
-				+ actLikeTimes + ", actViews=" + actViews + ", actApproalStatus=" + actApproalStatus + ", actStatus="
-				+ actStatus + ", actLongitude=" + actLongitude + ", actLatitude=" + actLatitude
-				+ ", actTicketTotalSell=" + actTicketTotalSell + ", admId=" + admId + ", actLastModifiedTime="
-				+ actLastModifiedTime + ", actResultContent=" + actResultContent + "]";
+		return "ActivityVO [actId=" + actId + ", actName=" + actName + ", actTicketPrice=" + actTicketPrice
+				+ ", actTicketStartTime=" + actTicketStartTime + ", actTicketEndTime=" + actTicketEndTime + ", actType="
+				+ actType + ", actStartDate=" + actStartDate + ", actEndDate=" + actEndDate + ", actStartTime="
+				+ actStartTime + ", actEndTime=" + actEndTime + ", actCity=" + actCity + ", actZone=" + actZone
+				+ ", actAddress=" + actAddress + ", actOrganization=" + actOrganization + ", actEmail=" + actEmail
+				+ ", actPhone=" + actPhone + ", actTicketTotal=" + actTicketTotal + ", actContent=" + actContent
+				+ ", actCoverPicture=" + Arrays.toString(actCoverPicture) + ", actPicture1="
+				+ Arrays.toString(actPicture1) + ", actPicture2=" + Arrays.toString(actPicture2) + ", actPicture3="
+				+ Arrays.toString(actPicture3) + ", actLikeTimes=" + actLikeTimes + ", actViews=" + actViews
+				+ ", actApproalStatus=" + actApproalStatus + ", actStatus=" + actStatus + ", actLongitude="
+				+ actLongitude + ", actLatitude=" + actLatitude + ", actTicketTotalSell=" + actTicketTotalSell
+				+ ", actLastModifiedTime=" + actLastModifiedTime + ", actResultContent=" + actResultContent + "]";
 	}
+
+	
 	
 }
