@@ -27,7 +27,9 @@ import javax.servlet.http.*;
 
 import com.mysql.cj.util.Util;
 import com.tha103.artion.activity.model.*;
-import com.tha103.artion.activity.service.*;
+import com.tha103.artion.activity.service.ActivityService;
+import com.tha103.artion.seller.model.SellerVO;
+
 import javax.servlet.annotation.MultipartConfig;
 import javax.sql.DataSource;
 
@@ -36,7 +38,6 @@ import org.apache.tomcat.util.http.fileupload.RequestContext;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
-@WebServlet("/activity/activity.do")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class ActivityServlet extends HttpServlet {
 
@@ -49,6 +50,11 @@ public class ActivityServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
+	
+		
+		
+		
+		
 		if ("getOne_For_Display".equals(action))
 
 		{ // 來自select_page.jsp的請求
@@ -349,23 +355,23 @@ public class ActivityServlet extends HttpServlet {
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 			String act_name = req.getParameter("act_name");
 			System.out.println(act_name);
-			
+		
 			Integer act_ticketPrice = Integer.valueOf(req.getParameter("act_ticketPrice").trim());
 
-			java.sql.Timestamp act_ticketStartTime = null;
+			java.sql.Date act_ticketStartTime = null;
 			try {
-				act_ticketStartTime = java.sql.Timestamp.valueOf(req.getParameter("act_ticketStartTime").trim());
+				act_ticketStartTime = java.sql.Date.valueOf(req.getParameter("act_ticketStartTime").trim());
 			} catch (IllegalArgumentException e) {
-				act_ticketStartTime = new java.sql.Timestamp(System.currentTimeMillis());
+				act_ticketStartTime = new java.sql.Date(System.currentTimeMillis());
 				errorMsgs.add("請輸入日期!");
 				System.out.println("1");
 			}
 
-			java.sql.Timestamp act_ticketEndTime = null;
+			java.sql.Date act_ticketEndTime = null;
 			try {
-				act_ticketEndTime = java.sql.Timestamp.valueOf(req.getParameter("act_ticketEndTime").trim());
+				act_ticketEndTime = java.sql.Date.valueOf(req.getParameter("act_ticketEndTime").trim());
 			} catch (IllegalArgumentException e) {
-				act_ticketEndTime = new java.sql.Timestamp(System.currentTimeMillis());
+				act_ticketEndTime = new java.sql.Date(System.currentTimeMillis());
 				errorMsgs.add("請輸入日期!");
 				System.out.println("2");
 			}
@@ -488,7 +494,7 @@ public class ActivityServlet extends HttpServlet {
 			Timestamp act_lastModifiedTime = new Timestamp(System.currentTimeMillis());
 	
 			ActivityVO activityVO = new ActivityVO();
-
+			
 			activityVO.setActName(act_name);
 			activityVO.setActTicketPrice(act_ticketPrice);
 			activityVO.setActTicketStartTime(act_ticketStartTime);
@@ -515,23 +521,28 @@ public class ActivityServlet extends HttpServlet {
 			byte[] act_picture3 = byteArrayOutputStream.toByteArray();
 			activityVO.setActPicture3(act_picture3);
 			activityVO.setActLastModifiedTime(act_lastModifiedTime);
-	
+//			activityVO.setActResultContent(act_ResultContent);
+			
+			SellerVO sellerVO = new SellerVO();
+			sellerVO.setSelId(2001);
+activityVO.setSeller(sellerVO);
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("activityVO", activityVO); // 含有輸入格式錯誤的empVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/activity/sel_actadd.jsp");
 				failureView.forward(req, res);
-				System.out.println("1");
 				return;
 			}
 
 			/*************************** 2.開始新增資料 ***************************************/
 			ActivityService activitySvc = new ActivityService();
-			activityVO = activitySvc.addActivity(act_name, act_ticketPrice, act_ticketStartTime, act_ticketEndTime,
-					act_type, act_startDate, act_endDate, act_startTime, act_endTime, act_city, act_zone, act_address,
-					act_organization, act_email, act_phone, act_ticketTotal, act_content, act_coverPicture,
-					act_picture1, act_picture2, act_picture3, act_lastModifiedTime);
+			activitySvc.addActivity(activityVO);
+//			activityVO = activitySvc.addActivity(act_name, act_ticketPrice, act_ticketStartTime,
+//					act_ticketEndTime, act_type, act_startDate, act_endDate, act_startTime,
+//				    act_endTime, act_city, act_zone, act_address, act_organization,
+//					act_email, act_phone, act_ticketTotal, act_content, act_coverPicture,
+//					act_picture1, act_picture2, act_picture3, act_lastModifiedTime);
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 			String url = "/activity/listAllActivity.jsp";
@@ -546,6 +557,17 @@ public class ActivityServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
+			/*************************** 1.接收請求參數 ***************************************/
+			Integer act_id = Integer.valueOf(req.getParameter("act_id"));
+
+			/*************************** 2.開始刪除資料 ***************************************/
+			ActivityService activitySvc = new ActivityService();
+//			activitySvc.deleteActivity(act_id);
+
+			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
+			String url = "/activity/sel_index.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+			successView.forward(req, res);
 		}
 	}
 }

@@ -8,7 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="../../css/activity/member.css">
+    <link rel="stylesheet" href="../../css/member/member.css">
+    <link href="../../css/merch/singleMerch.css" rel="stylesheet" />
 
 </head>
 
@@ -51,10 +52,10 @@
                                 活動類型
                             </a>
                             <ul class="dropdown-menu text_align_center" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item hover" href="#" id="allAct">全部</a></li>
-                                <li><a class="dropdown-item hover" href="#" id="exhiAct">展覽</a></li>
-                                <li><a class="dropdown-item hover" href="#" id="marAct">市集</a></li>
-                                <li><a class="dropdown-item hover" href="#" id="perAct">表演</a></li>
+                                <li><a class="dropdown-item hover" href="#">全部</a></li>
+                                <li><a class="dropdown-item hover" href="#">展覽</a></li>
+                                <li><a class="dropdown-item hover" href="#">市集</a></li>
+                                <li><a class="dropdown-item hover" href="#">表演</a></li>
                             </ul>
                         </li>
                         <li class="nav-item ">
@@ -90,7 +91,7 @@
                     </svg>
                 </div>
                 <a class="nav-link display_none_6  mx-3" href="./member_logUp.html">
-                    <button type="button" class="colortest btn_old">登入/註冊</button>
+                    <button type="button" class="colortest btn_old   ">登入/註冊</button>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -145,30 +146,65 @@
         <!-- navbar top (sign_up)end -->
         <div class="container-fluid">
             <!--除了navbar 以外的東西放裡面 -->
-            <div style="height: 50px;width: auto; margin: 20px 0px;">
-                <p style="font-size: 25px; margin-left: 100px;" id="al">全部活動</p>
-            </div>
             <div class="container">
-                <div class="row" id="cardRow">
-                    <!-- 卡片將透過 JavaScript 動態生成並添加到這裡 -->
-                    <div class="card" style="width: 18rem; padding: 0px; margin-right: 10px;" >
-                        <img src="./image/2023台北國際咖啡節.jpg" class="card-img-top" alt="..." >
-                        <div class="card-body">
-                            <h5 class="card-title">活動名稱</h5>
-                            <h5 style="font-size: 12px;">活動時間</h5>
-                            <h5 style="font-size: 12px;">活動地點</h5>
-                            <button type="button" class="btn btn-secondary btn-sm">活動類型</button>
-                            <span style="font-size: 12px;">觀看次數</span><span style="font-size: 12px;">按讚次數</span>
+                <!-- 大正方形圖片 -->
+                <div class="big-square">
+                    <img src="./image/雙口袋短褲-海軍藍.jpg" alt="">
+                </div>
+
+                <!-- 右側小正方形圖片容器 -->
+                <div class="small-square-container">
+                    <div class="small-square">
+                        <img src="./image/雙口袋短褲-海軍藍.jpg" alt="">
+                    </div>
+                    <div class="small-square">
+                        <img src="./image/雙口袋短褲-海軍藍2.jpg" alt="">
+                    </div>
+                    <div class="small-square">
+                        <img src="./image/雙口袋短褲-海軍藍3.jpg" alt="">
+                    </div>
+                    <div class="small-square">
+                        <img src="./image/雙口袋短褲-海軍藍4.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 商品簡介區域 -->
+            <div class="product-description">
+                <h2>商品名稱</h2>
+                <p>商品說明</p>
+                <p>這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~</p>
+
+                <!-- 商品價格和數量選擇 -->
+                <div class="product-info">
+                    <span>商品價格:</span>
+                    <span>200元</span>
+                    <br>
+                    <span>剩餘件數: </span>
+                    <span id="remainingQuantity">100 </span>
+                    <span>件</span>
+                    <br>
+                    <div style="display: flex; align-items: center;">
+                        <label for="quantity">數量: </label>
+                        <input type="number" id="quantity" min="1" style="width: 60px; margin-left: 10px;" value="1" >
+                        <!-- 加入購物車和立即購買按鈕 -->
+                        <div class="buttons">
+                            <button type="button" class="btn btn-outline-danger" style="margin-left: 10px;"
+                                id="addToCart">加入購物車</button>
+                            <button type="button" class="btn btn-outline-danger" style="margin-left: 10px;"
+                                id="buyNow">立即購買</button>
                         </div>
+                        <span id="errorMessage" style="color: red; margin-left: 10px;"></span>
                     </div>
                 </div>
 
 
             </div>
 
-
         </div>
-        <!-- 整個頁面容器結束 -->
+
+    </div>
+    <!-- 整個頁面容器結束 -->
     </div>
     <!-- 即時客服開始 -->
     <div class="fixed-bottom heading member_svg">
@@ -180,108 +216,51 @@
         </svg>
     </div>
     <!-- 即時客結束 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 <script>
-
+    //周邊商品圖片切換功能
     $(document).ready(function () {
-        $("#allAct").click(function () {
-            console.log("all");
-            // $.ajax({
-            //     type: "GET",
-            //     url: "ActivityServlet.do",
-            //     dataType: "JSON",
-            //     success: function (data) {
-            //         var cardRow = $("#cardRow");
-            //         cardRow.empty();
-            //         $.each(data, function (index, act) {
-            //             var acts = `
-            //             <div class="card" style="width: 18rem;margin-right: 10px;margin-top: 20px;">
-            //                 <img src="${act.actCovPic}" class="card-img-top" alt="...">
-            //                 <div class="card-body">
-            //                 <h5 class="card-title">${act.actName}</h5>
-            //                 <h5 style="font-size: 12px;">${act.actStartTime}~${act.actEndTime}</h5>
-            //                 <h5 style="font-size: 12px;">${act.actLoc}</h5>
-            //                 <button type="button" class="btn btn-secondary btn-sm">${act.actType}</button>
-            //                 <span style="font-size: 12px;">觀看次數:${act.actViews}</span><span style="font-size: 12px;">按讚次數:${act.actLikes}</span>
-            //             </div>
-            //         </div> `;
-            //         cardRow.append(acts);
-            //         });
-            //     },
-            //     error: function () {
-            //         alert("無法從伺服器獲取數據。");
+        var smallSquares = $('.small-square');
 
-            //     }
-            // })
-            var actPic = "./image/2023台北國際咖啡節.jpg";
-            var actName = "2023台北國際咖啡節";
-            var actTime = "2022-10-10";
-            var actLoc = "台北市松山區延壽街";
-            var actType = "市集";
-            var actViews = "1000";
-            var actLikes = "999";
-
-            var acts = `
-            <div class="card" style="width: 18rem; padding: 0px;margin-right: 10px;margin-top: 20px;">
-                        <img src="./image/2023台北國際咖啡節.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">${actName}</h5>
-                            <h5 style="font-size: 12px;">${actTime}</h5>
-                            <h5 style="font-size: 12px;">${actLoc}</h5>
-                            <button type="button" class="btn btn-secondary btn-sm">${actType}</button>
-                            <span style="font-size: 12px;">觀看次數${actViews}</span><span style="font-size: 12px;">按讚次數${actLikes}</span>
-                        </div>
-                    </div>`;
-                    $("#cardRow").append(acts);
-        })
+        smallSquares.click(function () {
+            var clickedImg = $(this).find('img');
+            var bigSquare = $('.big-square');
+            bigSquare.html(clickedImg.clone());
+        });
     });
 
+    //判斷周邊商品加入購物車或立即購買是否超過庫存量
+    $(document).ready(function() {
+        const remainingQuantity = $("#remainingQuantity");
+        const quantityInput = $("#quantity");
+        const addToCartButton = $("#addToCart");
+        const buyNowButton = $("#buyNow");
+        const errorMessage = $("#errorMessage");
+        addToCartButton.click(function() {
+            const selectedQuantity = parseInt(quantityInput.val(), 10);
+            const availableQuantity = parseInt(remainingQuantity.text(), 10);
 
-
-
-
-
-
-    //生成卡片功能並取得資料庫參數
-    var cardRow = document.getElementById("cardRow");
-    // 使用 AJAX 請求獲取活動資料
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "your_api_endpoint_here"); // 請替換成實際的 API 端點
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var response = JSON.parse(xhr.responseText); // 假設 API 回傳 JSON 格式資料
-            var cardData = response.data; // 假設資料包含在 "data" 鍵中
-
-            // 使用迴圈生成卡片
-            for (var i = 0; i < cardData.length; i++) {
-                var card = document.createElement("div");
-                card.className = "col-md-3";
-
-                card.innerHTML = `
-                    <div class="card" style="width: 18rem;">
-                        <img src="${cardData[i].image}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">${cardData[i].title}</h5>
-                            <h5 style="font-size: 12px;">${cardData[i].time}</h5>
-                            <h5 style="font-size: 12px;">${cardData[i].location}</h5>
-                            <button type="button" class="btn btn-secondary btn-sm">${cardData[i].type}</button>
-                            <span style="font-size: 12px;">觀看次數: ${cardData[i].views}</span><span style="font-size: 12px;">按讚次數: ${cardData[i].likes}</span>
-                        </div>
-                    </div>
-                `;
-                cardRow.appendChild(card);
+            if (selectedQuantity > availableQuantity) {
+                errorMessage.text("超過庫存量");
+            } else {
+                errorMessage.text("");
             }
-        }
-    };
+        });
+        buyNowButton.click(function() {
+            const selectedQuantity = parseInt(quantityInput.val(), 10);
+            const availableQuantity = parseInt(remainingQuantity.text(), 10);
 
-    xhr.send();
-
-    // 程式碼寫死
-
+            if (selectedQuantity > availableQuantity) {
+                errorMessage.text("超過庫存量");
+            } else {
+                errorMessage.text("");
+            }
+        });
+    });
 </script>
 
 </html>

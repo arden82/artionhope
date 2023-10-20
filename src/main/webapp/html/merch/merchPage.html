@@ -4,12 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sign_up_top</title>
+    <title>merchPage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="../../css/activity/member.css">
-
+    <link rel="stylesheet" href="../../css/merch/member.css">
+    <link rel="stylesheet" href="../../css/merch/merchPage.css">
+    <!-- jquery JS匯入 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- simplePagination JS匯入 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/jquery.simplePagination.min.js"
+        integrity="sha512-9Dh726RTZVE1k5R1RNEzk1ex4AoRjxNMFKtZdcWaG2KUgjEmFYN3n17YLUrbHm47CRQB1mvVBHDFXrcnx/deDA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -51,10 +58,10 @@
                                 活動類型
                             </a>
                             <ul class="dropdown-menu text_align_center" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item hover" href="#" id="allAct">全部</a></li>
-                                <li><a class="dropdown-item hover" href="#" id="exhiAct">展覽</a></li>
-                                <li><a class="dropdown-item hover" href="#" id="marAct">市集</a></li>
-                                <li><a class="dropdown-item hover" href="#" id="perAct">表演</a></li>
+                                <li><a class="dropdown-item hover" href="#">全部</a></li>
+                                <li><a class="dropdown-item hover" href="#">展覽</a></li>
+                                <li><a class="dropdown-item hover" href="#">市集</a></li>
+                                <li><a class="dropdown-item hover" href="#">表演</a></li>
                             </ul>
                         </li>
                         <li class="nav-item ">
@@ -90,7 +97,7 @@
                     </svg>
                 </div>
                 <a class="nav-link display_none_6  mx-3" href="./member_logUp.html">
-                    <button type="button" class="colortest btn_old">登入/註冊</button>
+                    <button type="button" class="colortest btn_old   ">登入/註冊</button>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -118,6 +125,7 @@
                         <button class="colortest btn_old  w-50 me-2" type="submit">搜尋</button>
                     </form>
                     <div class="shoppingCart member_svg p-2 display_none_7">
+
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="bi bi-cart3"
                             viewBox="0 0 16 16">
                             <path
@@ -145,31 +153,115 @@
         <!-- navbar top (sign_up)end -->
         <div class="container-fluid">
             <!--除了navbar 以外的東西放裡面 -->
-            <div style="height: 50px;width: auto; margin: 20px 0px;">
-                <p style="font-size: 25px; margin-left: 100px;" id="al">全部活動</p>
-            </div>
-            <div class="container">
-                <div class="row" id="cardRow">
-                    <!-- 卡片將透過 JavaScript 動態生成並添加到這裡 -->
-                    <div class="card" style="width: 18rem; padding: 0px; margin-right: 10px;" >
-                        <img src="./image/2023台北國際咖啡節.jpg" class="card-img-top" alt="..." >
-                        <div class="card-body">
-                            <h5 class="card-title">活動名稱</h5>
-                            <h5 style="font-size: 12px;">活動時間</h5>
-                            <h5 style="font-size: 12px;">活動地點</h5>
-                            <button type="button" class="btn btn-secondary btn-sm">活動類型</button>
-                            <span style="font-size: 12px;">觀看次數</span><span style="font-size: 12px;">按讚次數</span>
-                        </div>
+            <!-- 標題start -->
+            <div class="product_page_top" style="border:1px green solid;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label for="validationTextarea" class="form-label"
+                        style="font-size: 25px; margin: 0px 240px;">周邊商品</label>
+
+                    <!-- 排序篩選器start -->
+                    <div style="margin-right: 50px;">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">排序方式</button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">時間:由新至舊</a></li>
+                            <li><a class="dropdown-item" href="#">時間:由舊至新</a></li>
+                            <li><a class="dropdown-item" href="#">價格:由高至低</a></li>
+                            <li><a class="dropdown-item" href="#">價格:由低至高</a></li>
+                            <li><a class="dropdown-item" href="#">銷售量:由多至少</a></li>
+                        </ul>
                     </div>
+                    <!-- 排序篩選器end -->
+
                 </div>
-
-
             </div>
+            <!-- 標題end -->
 
+            <!-- 商品種類與商品列表 start -->
+            <span style="display: flex;">
+                <!-- 商品種類與價格區間篩選start -->
+                <span style="border: 2px gray solid; width: 200px; height: 300px; padding: 20px 0px 0px 20px;">
+                    <!-- 商品種類start -->
+                    <p style="border:1px blue solid;font-weight: bold;margin-bottom: 5px; font-size: 20px;">商品種類</p>
+                    <label style="border:1px red solid; margin-left: 20px;">
+                        <input type="checkbox" id="allProducts" onclick="toggleAllCategories()"> 所有商品
+                    </label>
+                    <br>
+                    <label style="border:1px red solid; margin-left: 40px;">
+                        <input type="checkbox" class="category" value="服飾"> 服飾
+                    </label>
+                    <br>
+                    <label style="border:1px red solid; margin-left: 40px;">
+                        <input type="checkbox" class="category" value="配件"> 配件
+                    </label>
+                    <br>
+                    <label style="border:1px red solid; margin-left: 40px;">
+                        <input type="checkbox" class="category" value="其他"> 其他
+                    </label>
+                    <br>
+                    <!-- 價格區間start -->
+                    <p style="border:1px blue solid; margin-bottom: 5px; font-weight: bold;  font-size: 20px;">價格區間</p>
+                    <label style="border:1px blue solid; margin-bottom: 5px; margin-left: 20px;">
+                        <input type="radio" name="priceRange" value="全部" checked> 全部
+                    </label>
+                    <br>
+                    <label style="border:1px blue solid; margin-bottom: 5px;margin-left: 20px;">
+                        <input type="radio" name="priceRange" value="500元以下"> 500元以下
+                    </label>
+                    <br>
+                    <label style="border:1px blue solid; margin-bottom: 5px;margin-left: 20px;">
+                        <input type="radio" name="priceRange" value="500元~1000元"> 500元~1000元
+                    </label>
+                    <br>
+                    <label style="border:1px blue solid; margin-bottom: 5px;margin-left: 20px;">
+                        <input type="radio" name="priceRange" value="1000元以上"> 1000元以上
+                    </label>
+                </span>
+                <!-- 商品種類與價格區間篩選end -->
+                <!-- 商品列表右側區塊start -->
+                <div class="products_page_right" style="border:1px gray solid;">
+                    <!-- 商品列表start -->
+                    <!-- <span class="merchBox">
+                        <a href="" class="merchBox_child">
+                            <img src="./image/Ugly Beauty 夜光Tee黑色.jpeg" class="card-img-top" alt="..."
+                                class="merchStyle">
+                            <p class="merchName">商品名稱</p>
+                            <p class="merchPrice">商品金額</p>
+                        </a>
+                    </span> -->
+                    <div id="merchContainer"></div>
+                    <!-- 商品列表end -->
+                </div>
+                <!-- 商品列表右側區塊end -->
+            </span>
+            <!-- 商品種類與商品列表 end -->
+
+            <!-- 頁籤start -->
+            <nav aria-label="Page navigation example" class="pagination-container">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- 頁籤end -->
 
         </div>
-        <!-- 整個頁面容器結束 -->
     </div>
+
+    <!-- 整個頁面容器結束 -->
+    </div>
+
     <!-- 即時客服開始 -->
     <div class="fixed-bottom heading member_svg">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" class="bi bi-chat-text" viewBox="0 0 16 16">
@@ -183,105 +275,44 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
         crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</body>
-<script>
 
-    $(document).ready(function () {
-        $("#allAct").click(function () {
-            console.log("all");
-            // $.ajax({
-            //     type: "GET",
-            //     url: "ActivityServlet.do",
-            //     dataType: "JSON",
-            //     success: function (data) {
-            //         var cardRow = $("#cardRow");
-            //         cardRow.empty();
-            //         $.each(data, function (index, act) {
-            //             var acts = `
-            //             <div class="card" style="width: 18rem;margin-right: 10px;margin-top: 20px;">
-            //                 <img src="${act.actCovPic}" class="card-img-top" alt="...">
-            //                 <div class="card-body">
-            //                 <h5 class="card-title">${act.actName}</h5>
-            //                 <h5 style="font-size: 12px;">${act.actStartTime}~${act.actEndTime}</h5>
-            //                 <h5 style="font-size: 12px;">${act.actLoc}</h5>
-            //                 <button type="button" class="btn btn-secondary btn-sm">${act.actType}</button>
-            //                 <span style="font-size: 12px;">觀看次數:${act.actViews}</span><span style="font-size: 12px;">按讚次數:${act.actLikes}</span>
-            //             </div>
-            //         </div> `;
-            //         cardRow.append(acts);
-            //         });
-            //     },
-            //     error: function () {
-            //         alert("無法從伺服器獲取數據。");
+    <!----------------------- JS --------------------------->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/products_page.js"></script>
+    <script>
+        // 商品篩選功能
+        function toggleAllCategories() {
+            var allProductsCheckbox = document.getElementById("allProducts");
+            var categoryCheckboxes = document.getElementsByClassName("category");
 
-            //     }
-            // })
-            var actPic = "./image/2023台北國際咖啡節.jpg";
-            var actName = "2023台北國際咖啡節";
-            var actTime = "2022-10-10";
-            var actLoc = "台北市松山區延壽街";
-            var actType = "市集";
-            var actViews = "1000";
-            var actLikes = "999";
-
-            var acts = `
-            <div class="card" style="width: 18rem; padding: 0px;margin-right: 10px;margin-top: 20px;">
-                        <img src="./image/2023台北國際咖啡節.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">${actName}</h5>
-                            <h5 style="font-size: 12px;">${actTime}</h5>
-                            <h5 style="font-size: 12px;">${actLoc}</h5>
-                            <button type="button" class="btn btn-secondary btn-sm">${actType}</button>
-                            <span style="font-size: 12px;">觀看次數${actViews}</span><span style="font-size: 12px;">按讚次數${actLikes}</span>
-                        </div>
-                    </div>`;
-                    $("#cardRow").append(acts);
-        })
-    });
-
-
-
-
-
-
-
-    //生成卡片功能並取得資料庫參數
-    var cardRow = document.getElementById("cardRow");
-    // 使用 AJAX 請求獲取活動資料
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "your_api_endpoint_here"); // 請替換成實際的 API 端點
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var response = JSON.parse(xhr.responseText); // 假設 API 回傳 JSON 格式資料
-            var cardData = response.data; // 假設資料包含在 "data" 鍵中
-
-            // 使用迴圈生成卡片
-            for (var i = 0; i < cardData.length; i++) {
-                var card = document.createElement("div");
-                card.className = "col-md-3";
-
-                card.innerHTML = `
-                    <div class="card" style="width: 18rem;">
-                        <img src="${cardData[i].image}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">${cardData[i].title}</h5>
-                            <h5 style="font-size: 12px;">${cardData[i].time}</h5>
-                            <h5 style="font-size: 12px;">${cardData[i].location}</h5>
-                            <button type="button" class="btn btn-secondary btn-sm">${cardData[i].type}</button>
-                            <span style="font-size: 12px;">觀看次數: ${cardData[i].views}</span><span style="font-size: 12px;">按讚次數: ${cardData[i].likes}</span>
-                        </div>
-                    </div>
-                `;
-                cardRow.appendChild(card);
+            for (var i = 0; i < categoryCheckboxes.length; i++) {
+                categoryCheckboxes[i].checked = allProductsCheckbox.checked;
             }
         }
-    };
+        //商品陳列
+        $(document).ready(function () {
+            $.ajax({
+                url: '',//getMerch
+                type: 'get',
+                success: function (args) {
 
-    xhr.send();
+                }
+            })
+        })
+            for (var i = 1; i <= 16; i++) {
+            var $span = $('<span>', {
+                'class': 'merchBox',
+                'html': '<a href="" class="merchBox_child">' +
+                    '<img src="./image/Ugly Beauty 夜光Tee黑色.jpeg" class="card-img-top merchStyle" alt="...">' +
+                    '<p class="merchName">商品名稱</p>' +
+                    '<p class="merchPrice">商品金額</p>' +
+                    '</a>'
+            });
+            $('#merchContainer').append($span);
+        }
+        
+    </script>
 
-    // 程式碼寫死
-
-</script>
+</body>
 
 </html>

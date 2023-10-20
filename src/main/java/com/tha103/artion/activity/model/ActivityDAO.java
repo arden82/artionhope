@@ -1,186 +1,215 @@
 package com.tha103.artion.activity.model;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
+import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.tha103.artion.seller.model.SellerVO;
 import com.tha103.artion.administrator.model.AdministratorVO;
-
+import com.tha103.artion.seller.model.SellerVO;
 import com.tha103.artion.util.HibernateUtil;
 
 public class ActivityDAO implements ActivityDAO_interface {
 
-	private static final String INSERT_STMT = "INSERT INTO activity (act_name, act_ticketID,"
-			+ "	act_ticketPrice, act_ticketStartTime, act_ticketEndTime, act_type, act_startDate,"
-			+ "	act_endDate, act_startTime, act_endTime, act_city, act_zone, act_address, act_organization,"
-			+ "	act_email, act_phone, act_ticketTotal, act_content, act_coverPicture, act_picture1,"
-			+ "	act_picture2, act_picture3, act_likeTimes, act_views, act_approalStatus, act_status,"
-			+ "	sel_id, act_longitude, act_latitude, act_ticketTotalSell, adm_id, act_lastModifiedTime,"
-			+ "	act_ResultContent)"
-			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private SessionFactory factory;
 
-	private static final String GET_ALL_STMT = "SELECT act_id, act_name, act_ticketID,"
-			+ "act_ticketPrice, act_ticketStartTime, act_ticketEndTime, act_type, act_startDate,"
-			+ "act_endDate, act_startTime, act_endTime, act_city, act_zone, act_address, act_organization,"
-			+ "act_email, act_phone, act_ticketTotal, act_content, act_coverPicture, act_picture1,"
-			+ "act_picture2, act_picture3, act_likeTimes, act_views, act_approalStatus, act_status,"
-			+ "sel_id, act_longitude, act_latitude, act_ticketTotalSell, adm_id, act_lastModifiedTime,"
-			+ "act_ResultContent" + " FROM activity order by act_id";
+	public ActivityDAO(SessionFactory factory) {
+		this.factory = factory;
+	}
 
-	private static final String GET_ONE_STMT = "SELECT act_id, act_name, act_ticketID,"
-			+ "act_ticketPrice, act_ticketStartTime, act_ticketEndTime, act_type, act_startDate,"
-			+ "act_endDate, act_startTime, act_endTime, act_city, act_zone, act_address, act_organization,"
-			+ "act_email, act_phone, act_ticketTotal, act_content, act_coverPicture, act_picture1,"
-			+ "act_picture2, act_picture3, act_likeTimes, act_views, act_approalStatus, act_status,"
-			+ "sel_id, act_longitude, act_latitude, act_ticketTotalSell, adm_id, act_lastModifiedTime,"
-			+ "act_ResultContent" + " FROM activity where act_id = ?";
-	
-	private static final String UPDATE = "UPDATE activity set act_name = ?, act_ticketID = ?, "
-			+ "act_ticketPrice = ?, act_ticketStartTime = ?, act_ticketEndTime = ?, act_type = ?, act_startDate = ?,"
-			+ "act_endDate = ?, act_startTime = ?, act_endTime = ?, act_city = ?, act_zone = ?, act_address = ?, "
-			+ "act_organization = ?, act_email = ?, act_phone = ?, act_ticketTotal = ?, act_content = ?, "
-			+ "act_coverPicture = ?, act_picture1 = ?, act_picture2 = ?, act_picture3 = ?, act_likeTimes = ?, "
-			+ "act_views = ?, act_approalStatus = ?, act_status = ? ,sel_id = ?, act_longitude = ?, act_latitude = ?,"
-			+ "act_ticketTotalSell = ?, adm_id = ?, act_lastModifiedTime = ?, act_ResultContent = ? where act_id = ?";
-
-	@Override
-	public void insert(ActivityVO activityVO) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try {
-			session.beginTransaction();
-			session.saveOrUpdate(activityVO);
-			session.getTransaction().commit();
-		} catch (RuntimeException ex) {
-			session.getTransaction().rollback();
-			throw ex;
-		}
+	private Session getSession() {
+		return factory.getCurrentSession();
 	}
 
 	@Override
-	public void update(ActivityVO activityVO) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	public int insert(ActivityVO activityVO) {
 		try {
-			session.beginTransaction();
-			session.saveOrUpdate(activityVO);
-			session.getTransaction().commit();
-		} catch (RuntimeException ex) {
-			session.getTransaction().rollback();
-			throw ex;
+			getSession().getTransaction().begin();
+			int actId = (int) (getSession().save(activityVO));
+			getSession().getTransaction().commit();
+			return actId;
+		} catch (Exception e) {
+			e.printStackTrace();
+			getSession().getTransaction().rollback();
 		}
+		return -1;
 	}
 
 	@Override
-	public ActivityVO findByPrimaryKey(Integer actId) {
-		ActivityVO activityVO = null;
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	public int update(ActivityVO activityVO) {
 		try {
-			session.beginTransaction();
-			activityVO = (ActivityVO) session.get(ActivityVO.class, actId);
-			session.getTransaction().commit();
-		} catch (RuntimeException ex) {
-			session.getTransaction().rollback();
-			throw ex;
+			getSession().getTransaction().begin();
+			getSession().update(activityVO);
+			getSession().getTransaction().commit();
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			getSession().getTransaction().rollback();
 		}
-		return activityVO;
+		return -1;
+	}
+
+	@Override
+	public ActivityVO findByPK(Integer actId) {
+		try {
+			getSession().beginTransaction();
+			ActivityVO activity = getSession().get(ActivityVO.class, actId);
+			getSession().getTransaction().commit();
+			return activity;
+		} catch (Exception e) {
+			e.printStackTrace();
+			getSession().getTransaction().rollback();
+		}
+		return null;
 	}
 
 	@Override
 	public List<ActivityVO> getAll() {
-		List<ActivityVO> list = null;
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
-			session.beginTransaction();
-			Query<ActivityVO> query = session.createQuery(GET_ALL_STMT, ActivityVO.class);
-			list = query.getResultList();
-			session.getTransaction().commit();
-		} catch (RuntimeException ex) {
-			session.getTransaction().rollback();
-			throw ex;
+			getSession().beginTransaction();
+			List<ActivityVO> list = getSession().createQuery("from Activity", ActivityVO.class).list();
+			getSession().getTransaction().commit();
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			getSession().getTransaction().rollback();
 		}
-		return list;
+		return null;
+	}
+	//透過種類查詢
+	public List<ActivityVO> getActType(String type) {
+		try {
+			getSession().beginTransaction();
+			String hql = "FROM Activity WHERE actType = :type";
+			Query<ActivityVO> query = getSession().createQuery(hql, ActivityVO.class);
+			query.setParameter("type", type);
+			return query.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+			getSession().getTransaction().rollback();
+		}
+		return null;
 	}
 
+//	@Override
+//	public List<ActivityVO> getExhAct() {
+//	    SessionFactory sessionFactory = null;
+//		try {
+//			Session session = sessionFactory.getCurrentSession();
+//	        Query<ActivityVO> query = session.createQuery("FROM Activity WHERE actType like '展覽'", ActivityVO.class);
+//	        query.setParameter("type", type);
+//	        return query.getResultList();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			getSession().getTransaction().rollback();
+//		}
+//		return null;
+//	}
+
+//	@Override
+//	public List<ActivityVO> getMarAct() {
+//	    SessionFactory sessionFactory = null;
+//		try {
+//			Session session = sessionFactory.getCurrentSession();
+//	        Query<ActivityVO> query = session.createQuery("FROM Activity WHERE actType like '市集'", ActivityVO.class);
+//	        query.setParameter("type", type);
+//	        return query.getResultList();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			getSession().getTransaction().rollback();
+//		}
+//		return null;
+//	}
+//	
+//	@Override
+//	public List<ActivityVO> getPerAct() {
+//	    SessionFactory sessionFactory = null;
+//		try {
+//			Session session = sessionFactory.getCurrentSession();
+//	        Query<ActivityVO> query = session.createQuery("FROM Activity WHERE actType like '表演'", ActivityVO.class);
+//	        query.setParameter("type", type);
+//	        return query.getResultList();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			getSession().getTransaction().rollback();
+//		}
+//		return null;
+//	}
+//	
+
+
+	// DAO測試
 	public static void main(String[] args) throws Exception {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
 			// 新增資料
-			ActivityVO activityVO = new ActivityVO();
+//			ActivityVO activityVO = new ActivityVO();
 
-			activityVO.setActName("天母啤酒節");
-			activityVO.setActTicketID(200);
-			activityVO.setActTicketPrice(120);
-			activityVO.setActTicketStartTime(Timestamp.valueOf("2023-09-12 00:00:00"));
-			activityVO.setActTicketEndTime(Timestamp.valueOf("2023-09-20 00:00:00"));
-			activityVO.setActType(1);
-			activityVO.setActStartDate(Date.valueOf("2023-10-10"));
-			activityVO.setActEndDate(Date.valueOf("2023-10-31"));
-			activityVO.setActStartTime(Time.valueOf("00:00:00"));
-			activityVO.setActEndTime(Time.valueOf("00:00:00"));
-			activityVO.setActCity("台北市");
-			activityVO.setActZone("中正區");
-			activityVO.setActAddress("台北市中正區博愛路1號");
-			activityVO.setActOrganization("寬宏藝術");
-			activityVO.setActEmail("abc@gmail.com");
-			activityVO.setActPhone("0912345678");
-			activityVO.setActTicketTotal(2000);
-			activityVO.setActContent("歡迎來玩");
-			try {
-			    // 
-			    byte[] picture1 = writePicture("C:\\Users\\Tibame_T14\\Desktop\\pics\\OIP.jpg");
-			    byte[] picture2 = writePicture("C:\\Users\\Tibame_T14\\Desktop\\pics\\OIP.jpg");
-			    byte[] picture3 = writePicture("C:\\Users\\Tibame_T14\\Desktop\\pics\\OIP.jpg");
-			    byte[] picture4 = writePicture("C:\\Users\\Tibame_T14\\Desktop\\pics\\OIP.jpg");
-	
-			    activityVO.setActCoverPicture(picture1);
-			    activityVO.setActPicture1(picture2);
-			    activityVO.setActPicture2(picture3);
-			    activityVO.setActPicture3(picture4);
-			} catch (IOException e) {
-			    e.printStackTrace(); // 这里可以根据需要处理异常，例如记录日志或显示错误消息
-			}
-			activityVO.setActLikeTimes(200);
-			activityVO.setActViews(58);
-			activityVO.setActApproalStatus(1);
-			activityVO.setActStatus(1);
-			SellerVO seller = session.get(SellerVO.class, 2001);
-			activityVO.setSeller(seller);
-			
-			activityVO.setActLongitude(new BigDecimal("55.40338"));
-			activityVO.setActLatitude(new BigDecimal("55.40338"));
-			activityVO.setActTicketTotalSell(158);
-			
-			AdministratorVO administrator = session.get(AdministratorVO.class, 1001);
-			activityVO.setAdmId(administrator);
-			activityVO.setActLastModifiedTime(Timestamp.valueOf("2023-09-23 01:12:36"));
-			activityVO.setActResultContent("你好!我是寬宏藝術");
+//			activityVO.setActName("汐止啤酒節");
+//			activityVO.setActTicketID(200);
+//			activityVO.setActTicketPrice(120);
+//			activityVO.setActTicketStartTime(Timestamp.valueOf("2023-09-12 00:00:00"));
+//			activityVO.setActTicketEndTime(Timestamp.valueOf("2023-09-12 00:00:00"));
+//			activityVO.setActType(1);
+//			activityVO.setActStartDate(Date.valueOf("2023-10-10"));
+//			activityVO.setActEndDate(Date.valueOf("2023-10-31"));
+//			activityVO.setActStartTime(Time.valueOf("00:00:00"));
+//			activityVO.setActEndTime(Time.valueOf("00:00:00"));
+//			activityVO.setActCity("台北市");
+//			activityVO.setActZone("中正區");
+//			activityVO.setActAddress("台北市中正區博愛路1號");
+//			activityVO.setActOrganization("寬宏藝術");
+//			activityVO.setActEmail("abc@gmail.com");
+//			activityVO.setActPhone("0912345678");
+//			activityVO.setActTicketTotal(2000);
+//			activityVO.setActContent("歡迎來玩");
+//			try {
+//				byte[] actCoverPicture = writePicture("C:\\Users\\Tibame_T14\\Desktop\\pics\\OIP.jpg");
+//				byte[] actPicture1 = writePicture("C:\\Users\\Tibame_T14\\Desktop\\pics\\OIP.jpg");
+//				byte[] actPicture2 = writePicture("C:\\Users\\Tibame_T14\\Desktop\\pics\\OIP.jpg");
+//				byte[] actPicture3 = writePicture("C:\\Users\\Tibame_T14\\Desktop\\pics\\OIP.jpg");
+//				activityVO.setActCoverPicture(actCoverPicture);
+//				activityVO.setActPicture1(actPicture1);
+//				activityVO.setActPicture2(actPicture2);
+//				activityVO.setActPicture3(actPicture3);
+//
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			activityVO.setActLikeTimes(200);
+//			activityVO.setActViews(58);
+//			activityVO.setActApproalStatus(1);
+//			activityVO.setActStatus(1);
+//
+//			SellerVO sellerVO = session.get(SellerVO.class, 2001);
+//			activityVO.setActLongitude(new BigDecimal("55.40338"));
+//			activityVO.setActLatitude(new BigDecimal("22.17403"));
+//			activityVO.setActTicketTotalSell(158);
+//			AdministratorVO administratorVO = session.get(AdministratorVO.class, 1001);
+//
+//			activityVO.setActLastModifiedTime(Timestamp.valueOf("2023-09-23 01:12:36"));
+//			activityVO.setActResultContent("你好!我是寬宏藝術");
+//
+//			session.save(activityVO);
 
-			session.save(activityVO);
-			
 			// 查詢單筆資料
-//		SellerVO sellerVO1 = session.get(SellerVO.class, 2001);
-//		System.out.println(sellerVO1);
+			ActivityVO activityVO1 = session.get(ActivityVO.class, 10001);
+			System.out.println(activityVO1);
 
-			// 查詢全部資料
-//		List<SellerVO> list = session.createQuery("from SellerVO", SellerVO.class).list();
-//		System.out.println(list);
+//			List<ActivityVO> list = session.createQuery("from ActivityVO", ActivityVO.class).list();
+//			System.out.println(list);
 
 			session.getTransaction().commit();
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
