@@ -10,5 +10,6 @@ public interface SellerDAO_interface {
       public void update(SellerVO seller);
       public SellerVO findByPrimaryKey(Integer selId);
       public List<SellerVO> getAll();
+	public SellerVO getSellerByAccount(String account);
 		
 	}

@@ -42,7 +42,7 @@
 
 </style>
 <body>
-	<form action="loginhandler" method="post"></form>
+	<form action="<%=request.getContextPath()%>/seller/LoginHandler.do" method="post">
     <div class="container-xxl position-relative bg-white d-flex p-0">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -68,11 +68,11 @@
                             <h3>嗨！歡迎來到Artion後台管理系統</h3>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" name="account" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" name="selAccount" class="form-control" id="floatingInput">
                             <label for="floatingInput">帳號 Account</label>
                         </div>
                         <div class="form-floating mb-4">
-                            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+                            <input type="password" name="selPassword" class="form-control" id="floatingPassword">
                             <label for="floatingPassword">密碼 Password</label>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mb-4">
@@ -82,8 +82,11 @@
                             </div>
                             <a href="sel_forget_password.html">忘記密碼</a>
                         </div>
-                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4" onclick="redirectToHomepage()">登入</button>
-                        <p class="text-center mb-0">立即申請線上註冊 <a href="/sel_signup.html">註冊</a></p>
+<!--                         <input -->
+<!--                             type="hidden" name="action" value="getOne_For_Update"> -->
+                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">登入</button>
+                        <p class="text-center mb-0">立即申請線上註冊 <a href="sel_signup.jsp">註冊</a></p>
+                        </form>
                     </div>
                 </div>
             </div>

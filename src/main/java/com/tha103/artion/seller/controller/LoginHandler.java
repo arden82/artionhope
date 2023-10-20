@@ -17,10 +17,8 @@ import com.tha103.artion.seller.model.SellerDAO;
 
 import javax.sql.DataSource;
 
-@WebServlet("/seller/loginhandler.do")
+@WebServlet("/seller/LoginHandler.do")
 public class LoginHandler extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
 	private SellerDAO sellerDAO;
 
 	@Override
@@ -30,39 +28,42 @@ public class LoginHandler extends HttpServlet {
 	}
 
 	protected boolean allowUser(String account, String password) {
-		// 使用SellerDAO中的方法来验证用户
 		return sellerDAO.checkUser(account, password);
 	}
 
-	protected void successfulLogin(HttpServletResponse res) throws IOException {
-		// 密码匹配，可以执行登录成功后的操作
-		// 例如，可以设置用户会话或重定向到其他页面
-		// 以下是一个重定向的示例：
-		res.sendRedirect("/Artionhope/activity/sel_index.jsp");
-		System.out.println("登入成功");
+	protected void successfulLogin(HttpServletRequest req, HttpServletResponse res, String account) throws IOException {
+	    HttpSession session = req.getSession();
+	    session.setAttribute("userAccount", account);
+
+	    String selName = sellerDAO.getSelName(account);
+	    session.setAttribute("userSelName", selName);
+
+	    // 將密碼存入Session，或者存入其他需要的資訊
+	    String password = req.getParameter("selPassword");
+	    session.setAttribute("userPassword", password);
+
+	    String contextPath = req.getContextPath();
+	    res.sendRedirect(contextPath + "/seller/sel_profile.jsp");
+	}
+	protected void failedLogin(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setAttribute("error", "Incorrect account or password. Please try again.");
+		req.getRequestDispatcher("/seller/sel_login.jsp").forward(req, res);
 	}
 
-	protected void failedLogin(HttpServletResponse res) throws IOException {
-		// 密码不匹配，可以返回错误消息
-		System.out.println("登入失敗");
-		res.sendRedirect("login.jsp");
-	}
-
-	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		res.setContentType("text/html; charset=utf-8");
-		PrintWriter out = res.getWriter();
 
-		// 从请求参数中获取帐户和密码
-		String account = req.getParameter("sel_account");
+		String account = req.getParameter("selAccount");
 		System.out.println(account);
-		String password = req.getParameter("sel_password");
+		String password = req.getParameter("selPassword");
 		System.out.println(password);
-
+		
 		if (allowUser(account, password)) {
-			successfulLogin(res);
+			successfulLogin(req, res, account);
 		} else {
-			failedLogin(res);
+			failedLogin(req, res);
 		}
 	}
 }
