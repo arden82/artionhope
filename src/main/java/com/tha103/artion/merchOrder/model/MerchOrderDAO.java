@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import com.tha103.artion.member.model.MemberVO;
 import com.tha103.artion.util.HibernateUtil;
 
 public class MerchOrderDAO implements MerchOrderDAO_interface {
@@ -84,5 +85,87 @@ public class MerchOrderDAO implements MerchOrderDAO_interface {
 			session.getTransaction().rollback();
 		}
 		return null;
+	}
+//
+//	@Override
+//	public Set<MerchOrderVO> getMerchOrdersBymerOrderId(Integer merOrderId) {
+//		Set<MerchOrderVO> set = null;
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//		try {
+//			session.beginTransaction();
+//			Query<MerchOrderVO> query = session.createQuery(GET_Emps_ByDeptno_STMT, MerchOrderVO.class);
+//			query.setParameter(0, merOrderId);
+//			List<MerchOrderVO> list = query.getResultList();
+//			set = new HashSet<MerchOrderVO>(list);
+//			session.getTransaction().commit();
+//		} catch (RuntimeException ex) {
+//			session.getTransaction().rollback();
+//			throw ex;
+//		}
+//		return set;
+//	}
+
+	public static void main(String[] args) throws Exception {
+		MerchOrderDAO_interface dao = new MerchOrderDAO();
+
+//		MemberVO membervo = new MemberVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
+//		membervo.setMemId(7001);
+////		// 新增
+//		MerchOrderVO merchorderVO = new MerchOrderVO();
+//		merchorderVO.setMember(membervo);
+//		merchorderVO.setMerOrderActuallyAmount(1000);
+//		merchorderVO.setMerOrderPayStatus(1);
+//		merchorderVO.setMerOrderStatus(1);
+//		merchorderVO.setMerOrderAddress("新北市三芝區");
+//		merchorderVO.setMerOrderCode("anx2755");
+//		dao.insert(merchorderVO);
+//
+//		// 修改
+//		MemberVO membervo = new MemberVO();
+//		membervo.setMemId(7002);
+//
+//		MerchOrderVO merchorderVO1 = new MerchOrderVO();
+//		merchorderVO1.setMerOrderId(134799);
+//		merchorderVO1.setMember(membervo);
+//		merchorderVO1.setMerOrderActuallyAmount(1000);
+//		merchorderVO1.setMerOrderPayStatus(2);
+//		merchorderVO1.setMerOrderStatus(2);
+//		merchorderVO1.setMerOrderAddress("新北市三芝區中正路");
+//		merchorderVO1.setMerOrderCode("anx27558888");
+//		dao.update(merchorderVO1);
+////
+////		// 刪除
+//		dao.delete(134789);
+////
+////		// 查詢單筆
+//		MemberVO membervo = new MemberVO();
+//		membervo.setMemId(7001);
+
+//		MerchOrderVO merchorderVO2 = dao.getById(134790);
+//		System.out.print(merchorderVO2.getMember() + ",");
+//		System.out.print(merchorderVO2.getMerOrderActuallyAmount() + ",");
+//		System.out.print(merchorderVO2.getMerOrderPayStatus() + ",");
+//		System.out.print(merchorderVO2.getMerOrderStatus() + ",");
+//		System.out.print(merchorderVO2.getMerOrderAddress() + ",");
+//		System.out.print(merchorderVO2.getMerOrderCode() + ",");
+//		System.out.println("---------------------");
+//
+//		// 查詢多筆
+		MemberVO membervo = new MemberVO();
+		membervo.setMemId(7001);
+
+		List<MerchOrderVO> list = dao.getAll();
+		for (MerchOrderVO merchorderVO2 : list) {
+			System.out.print(merchorderVO2.getMerOrderId() + ",");
+			System.out.print(merchorderVO2.getMember() + ",");
+			System.out.print(merchorderVO2.getMerOrderActuallyAmount() + ",");
+			System.out.print(merchorderVO2.getMerOrderTime() + ",");
+			System.out.print(merchorderVO2.getMerOrderPayStatus() + ",");
+			System.out.print(merchorderVO2.getMerOrderStatus() + ",");
+			System.out.print(merchorderVO2.getMerOrderAddress() + ",");
+			System.out.print(merchorderVO2.getMerOrderCode() + ",");
+
+			System.out.println();
+		}
 	}
 }

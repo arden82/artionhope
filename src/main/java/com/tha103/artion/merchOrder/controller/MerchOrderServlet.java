@@ -1,4 +1,4 @@
-package com.tha103.artion.merchOrderDetail.controller;
+package com.tha103.artion.merchOrder.controller;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -12,12 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.tha103.artion.merchOrder.model.MerchOrderService;
-import com.tha103.artion.merchOrder.model.merchorderdetailVO;
-import com.tha103.artion.merchOrderDetail.model.MerchOrderDetailService;
-import com.tha103.artion.merchOrderDetail.model.MerchOrderDetailVO;
+import com.tha103.artion.merchOrder.model.MerchOrderVO;
 
-@WebServlet("/MerchOrderDetailServlet")
-public class MerchOrderDetailServlet extends HttpServlet {
+@WebServlet("/MerchOrderServlet")
+public class MerchOrderServlet extends HttpServlet {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -38,9 +36,9 @@ public class MerchOrderDetailServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			String str = req.getParameter("merchOrdDetailId");
+			String str = req.getParameter("merOrderId");
 			if (str == null || (str.trim()).length() == 0) {
-				errorMsgs.add("請輸入周邊商品明細編號");
+				errorMsgs.add("請輸入員工編號");
 			}
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
@@ -49,11 +47,11 @@ public class MerchOrderDetailServlet extends HttpServlet {
 				return;// 程式中斷
 			}
 
-			Integer merchOrdDetailId = null;
+			Integer merOrderId = null;
 			try {
-				merchOrdDetailId = Integer.valueOf(str);
+				merOrderId = Integer.valueOf(str);
 			} catch (Exception e) {
-				errorMsgs.add("周邊商品明細編號格式不正確");
+				errorMsgs.add("員工編號格式不正確");
 			}
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
@@ -64,8 +62,8 @@ public class MerchOrderDetailServlet extends HttpServlet {
 
 			/*************************** 2.開始查詢資料 *****************************************/
 			MerchOrderService merchorderSvc = new MerchOrderService();
-			MerchOrderDetailVO merchorderdetailVO = merchorderSvc.getOneMerchOrder(merchOrdDetailId);
-			if (merchorderdetailVO == null) {
+			MerchOrderVO merchorderVO = merchorderSvc.getOneEmp(merOrderId);
+			if (merchorderVO == null) {
 				errorMsgs.add("查無資料");
 			}
 			// Send the use back to the form, if there were errors
@@ -76,8 +74,8 @@ public class MerchOrderDetailServlet extends HttpServlet {
 			}
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-			req.setAttribute("merchorderdetailVO", merchorderdetailVO); // 資料庫取出的memberNotifyVO物件,存入req
-			String url = "/merchorder/listOneMerchOrderDetail.jsp";
+			req.setAttribute("merchorderVO", merchorderVO); // 資料庫取出的memberNotifyVO物件,存入req
+			String url = "/merchorder/listOneMerchOrder.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
 		}
@@ -90,15 +88,15 @@ public class MerchOrderDetailServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 ****************************************/
-			Integer merchOrdDetailId = Integer.valueOf(req.getParameter("merchOrdDetailId"));
+			Integer merOrderId = Integer.valueOf(req.getParameter("merOrderId"));
 
 			/*************************** 2.開始查詢資料 ****************************************/
 			MerchOrderService merchorderSvc = new MerchOrderService();
-			MerchOrderDetailVO merchorderdetailVO = merchorderSvc.getOneMerchOrderDetail(merchOrdDetailId);
+			MerchOrderVO merchorderVO = merchorderSvc.getOneEmp(merOrderId);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			req.setAttribute("merchorderdetailVO", merchorderdetailVO); // 資料庫取出的memberNotifyVO物件,存入req
-			String url = "/merchorder/update_merchOrderDetail_input.jsp";
+			req.setAttribute("merchorderVO", merchorderVO); // 資料庫取出的memberNotifyVO物件,存入req
+			String url = "/merchorder/update_merchorder_input.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 			successView.forward(req, res);
 		}
@@ -111,39 +109,52 @@ public class MerchOrderDetailServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			Integer merchOrdDetailId = Integer.valueOf(req.getParameter("merchOrdDetailId"));
+			Integer merOrderId = Integer.valueOf(req.getParameter("merOrderId"));
 
-			Integer merchorder = Integer.valueOf(req.getParameter("merchorder"));
+			Integer member = Integer.valueOf(req.getParameter("member"));
 
-			Integer merch = Integer.valueOf(req.getParameter("merch").trim());
+			Integer merOrderActuallyAmount = Integer.valueOf(req.getParameter("merOrderActuallyAmount").trim());
 
-			Integer merOrderDetailQuantity = Integer.valueOf(req.getParameter("merOrderDetailQuantity").trim());
+			Integer merOrderPayStatus = Integer.valueOf(req.getParameter("merOrderPayStatus").trim());
 
-			Integer merOrderDetailPrice = Integer.valueOf(req.getParameter("merOrderDetailPrice").trim());
+			Integer merOrderStatus = Integer.valueOf(req.getParameter("merOrderStatus").trim());
 
-			MerchOrderDetailVO merchorderdetailVO = new MerchOrderDetailVO();
-			merchorderdetailVO.setMerchOrdDetailId(merchOrdDetailId);
-			merchorderdetailVO.setMerchorder(merchorder);
-			merchorderdetailVO.setMerch(merch);
-			merchorderdetailVO.setMerOrderDetailQuantity(merOrderDetailQuantity);
-			merchorderdetailVO.setMerOrderDetailPrice(merOrderDetailPrice);
+			String merOrderAddress = req.getParameter("merOrderAddress");
+			String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+			if (merOrderAddress == null || merOrderAddress.trim().length() == 0) {
+				errorMsgs.add("員工姓名: 請勿空白");
+			}
+
+			String merOrderCode = req.getParameter("merOrderCode");
+			String enameReg1 = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+			if (merOrderCode == null || merOrderCode.trim().length() == 0) {
+				errorMsgs.add("員工姓名: 請勿空白");
+			}
+
+			MerchOrderVO merchorderVO = new MerchOrderVO();
+			merchorderVO.setMerOrderId(merOrderId);
+			merchorderVO.setMember(member);
+			merchorderVO.setMerOrderActuallyAmount(merOrderActuallyAmount);
+			merchorderVO.setMerOrderPayStatus(merOrderPayStatus);
+			merchorderVO.setMerOrderStatus(merOrderStatus);
+			merchorderVO.setMerOrderAddress(merOrderAddress);
+			merchorderVO.setMerOrderCode(merOrderCode);
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("merchorderdetailVO", merchorderdetailVO); // 含有輸入格式錯誤的memberNotifyVO物件,也存入req
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/merchorder/update_merchOrderDetail_input.jsp");
+				req.setAttribute("merchorderVO", merchorderVO); // 含有輸入格式錯誤的memberNotifyVO物件,也存入req
+				RequestDispatcher failureView = req.getRequestDispatcher("/merchorder/update_emp_input.jsp");
 				failureView.forward(req, res);
 				return; // 程式中斷
 			}
 
 			/*************************** 2.開始修改資料 *****************************************/
-			MerchOrderDetailService merchorderdetailSvc = new MerchOrderDetailService();
-			merchorderdetailVO = merchorderdetailSvc.updateMerchOrderDetail(merchOrdDetailId, merchorder, merch,
-					merOrderDetailQuantity, merOrderDetailPrice);
+			MerchOrderService merchorderSvc = new MerchOrderService();
+			merchorderVO = merchorderSvc.updateMerchorderVO(merOrderId, member, merOrderActuallyAmount,
+					merOrderPayStatus, merOrderStatus, merOrderAddress, merOrderCode);
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-			req.setAttribute("merchorderdetailVO", merchorderdetailVO); // 資料庫update成功後,正確的的empVO物件,存入req
+			req.setAttribute("merchorderVO", merchorderVO); // 資料庫update成功後,正確的的empVO物件,存入req
 			String url = "/merchorder/listOneEmp.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 			successView.forward(req, res);
@@ -157,55 +168,57 @@ public class MerchOrderDetailServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-			Integer mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
+			Integer merOrderId = Integer.valueOf(req.getParameter("merOrderId").trim());
 
-			Integer merOrder_actuallyAmount = Integer.valueOf(req.getParameter("merOrder_actuallyAmount").trim());
+			Integer member = Integer.valueOf(req.getParameter("member").trim());
 
-			Integer merOrder_payStatus = Integer.valueOf(req.getParameter("merOrder_payStatus").trim());
+			Integer merOrderActuallyAmount = Integer.valueOf(req.getParameter("merOrderActuallyAmount").trim());
 
-			Integer merOrder_status = Integer.valueOf(req.getParameter("merOrder_status").trim());
+			Integer merOrderPayStatus = Integer.valueOf(req.getParameter("merOrderPayStatus").trim());
 
-			String merOrder_address = req.getParameter("merOrder_address");
+			Integer merOrderStatus = Integer.valueOf(req.getParameter("merOrderStatus").trim());
+
+			String merOrderAddress = req.getParameter("merOrderAddress");
 			String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-			if (merOrder_address == null || merOrder_address.trim().length() == 0) {
+			if (merOrderAddress == null || merOrderAddress.trim().length() == 0) {
 				errorMsgs.add("員工姓名: 請勿空白");
 			}
 //			else if (!merOrder_address.trim().matches(enameReg)) { // 以下練習正則(規)表示式(regular-expression)
 //				errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 //			}
 
-			String merOrder_code = req.getParameter("merOrder_code");
+			String merOrderCode = req.getParameter("merOrderCode");
 			String enameReg1 = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-			if (merOrder_code == null || merOrder_code.trim().length() == 0) {
+			if (merOrderCode == null || merOrderCode.trim().length() == 0) {
 				errorMsgs.add("員工姓名: 請勿空白");
 			}
 //			else if (!merOrder_code.trim().matches(enameReg)) { // 以下練習正則(規)表示式(regular-expression)
 //				errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 //			}
 
-			merchorderdetailVO merchorderdetailVO = new merchorderdetailVO();
-			merchorderdetailVO.setMem_id(mem_id);
-			merchorderdetailVO.setMerOrder_actuallyAmount(merOrder_actuallyAmount);
-			merchorderdetailVO.setMerOrder_payStatus(merOrder_payStatus);
-			merchorderdetailVO.setMerOrder_status(merOrder_status);
-			merchorderdetailVO.setMerOrder_address(merOrder_address);
-			merchorderdetailVO.setMerOrder_code(merOrder_code);
+			MerchOrderVO merchorderVO = new MerchOrderVO();
+			merchorderVO.setMember(member);
+			merchorderVO.setMerOrderActuallyAmount(merOrderActuallyAmount);
+			merchorderVO.setMerOrderPayStatus(merOrderPayStatus);
+			merchorderVO.setMerOrderStatus(merOrderStatus);
+			merchorderVO.setMerOrderAddress(merOrderAddress);
+			merchorderVO.setMerOrderCode(merOrderCode);
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("merchorderdetailVO", merchorderdetailVO); // 含有輸入格式錯誤的empVO物件,也存入req
-				RequestDispatcher failureView = req.getRequestDispatcher("/merchorder/addEmp.jsp");
+				req.setAttribute("merchorderVO", merchorderVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				RequestDispatcher failureView = req.getRequestDispatcher("/merchorder/addMerchOrder.jsp");
 				failureView.forward(req, res);
 				return;
 			}
 
 			/*************************** 2.開始新增資料 ***************************************/
 			MerchOrderService merchorderSvc = new MerchOrderService();
-			merchorderdetailVO = merchorderSvc.addEmp(mem_id, merOrder_actuallyAmount, merOrder_payStatus,
-					merOrder_status, merOrder_address, merOrder_code);
+			merchorderVO = merchorderSvc.addMerchorder(member, merOrderActuallyAmount, merOrderPayStatus,
+					merOrderStatus, merOrderAddress, merOrderCode, MerOrdDets);
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			String url = "/merchorder/listAllMerchOrderDetail.jsp";
+			String url = "/merchorder/listAllMerchOrder.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 			successView.forward(req, res);
 		}
@@ -218,14 +231,14 @@ public class MerchOrderDetailServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 ***************************************/
-			Integer merchOrdDetailId = Integer.valueOf(req.getParameter("merchOrdDetailId"));
+			Integer merOrderId = Integer.valueOf(req.getParameter("merOrderId"));
 
 			/*************************** 2.開始刪除資料 ***************************************/
-			MerchOrderDetailService merchorderdetailSvc = new MerchOrderDetailService();
-			merchorderdetailSvc.deleteMerchOrderDetail(merchOrdDetailId);
+			MerchOrderService merchorderSvc = new MerchOrderService();
+			merchorderSvc.deleteMerchOrder(merOrderId);
 
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-			String url = "/merchorder/listAllMerchOrderDetail.jsp";
+			String url = "/merchorder/listAllMerchOrder.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 			successView.forward(req, res);
 		}

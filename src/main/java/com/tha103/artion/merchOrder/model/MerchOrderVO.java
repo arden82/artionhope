@@ -64,6 +64,11 @@ public class MerchOrderVO {
 	@OneToMany(mappedBy = "merchorder", cascade = CascadeType.ALL)
 	private Set<MerchOrderDetailVO> MerOrdDets;
 
+	public MerchOrderVO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public MerchOrderVO(Integer merOrderId, MemberVO member, Integer merOrderActuallyAmount, Timestamp merOrderTime,
 			Integer merOrderPayStatus, Integer merOrderStatus, String merOrderAddress, String merOrderCode,
 			Set<MerchOrderDetailVO> merOrdDets) {

@@ -1,21 +1,56 @@
 package com.tha103.artion.ticketOrderDetail.model;
 
 import java.util.List;
-import java.util.Map;
 
-public interface TicketOrderDetailService {
+import com.tha103.artion.ticketOrder.model.TicketOrderVO;
 
-	TicketOrderDetailVO addEmp(TicketOrderDetailVO ticketorderetailVO);
+public class TicketOrderDetailService {
+	private TicketOrderDetailDAO_interface dao;
 
-	TicketOrderDetailVO updateEmp(TicketOrderDetailVO emp);
+	public TicketOrderDetailService() {
+		dao = new TicketOrderDetailDAO();
+	}
 
-	void deleteEmp(Integer empno);
+	public TicketOrderDetailVO insertTicketorderdetail(TicketOrderVO ticketorder, Integer ticOrdDetQuantity,
+			Double ticOrdDetPrice, ActivityVO activity) {
 
-	TicketOrderDetailVO getEmpByEmpno(Integer empno);
+		TicketOrderDetailVO ticketorderetailVO = new TicketOrderDetailVO();
 
-	List<TicketOrderDetailVO> getAllEmps(int currentPage);
+		ticketorderetailVO.setTicketorder(ticketorder);
+		ticketorderetailVO.setTicOrdDetQuantity(ticOrdDetQuantity);
+		ticketorderetailVO.setTicOrdDetPrice(ticOrdDetPrice);
+		ticketorderetailVO.setActivity(activity);
 
-	int getPageTotal();
+		dao.insert(ticketorderetailVO);
 
-	List<TicketOrderDetailVO> getEmpsByCompositeQuery(Map<String, String[]> map);
+		return ticketorderetailVO;
+	}
+
+	public TicketOrderDetailVO updateTicketorderdetail(TicketOrderVO ticketorder, Integer ticOrdDetQuantity,
+			Double ticOrdDetPrice, ActivityVO activity) {
+
+		TicketOrderDetailVO ticketorderetailVO = new TicketOrderDetailVO();
+
+		ticketorderetailVO.setTicketorder(ticketorder);
+		ticketorderetailVO.setTicOrdDetQuantity(ticOrdDetQuantity);
+		ticketorderetailVO.setTicOrdDetPrice(ticOrdDetPrice);
+		ticketorderetailVO.setActivity(activity);
+
+		dao.insert(ticketorderetailVO);
+
+		return ticketorderetailVO;
+	}
+
+	public void deleteTicketorderdetail(Integer ticOrdDetId) {
+		dao.delete(ticOrdDetId);
+	}
+
+	public TicketOrderDetailVO getById(Integer ticOrdDetId) {
+		return dao.getById(ticOrdDetId);
+	}
+
+	public List<TicketOrderDetailVO> getAll() {
+		return dao.getAll();
+	}
+
 }

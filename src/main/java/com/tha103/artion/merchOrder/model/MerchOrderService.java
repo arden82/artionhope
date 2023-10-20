@@ -1,21 +1,62 @@
 package com.tha103.artion.merchOrder.model;
 
+import java.lang.reflect.Member;
 import java.util.List;
-import java.util.Map;
 
-public interface MerchOrderService {
-	MerchOrderVO insertMerchorder(MerchOrderVO merchorderVO);
+import com.tha103.artion.merchOrderDetail.model.MerchOrderDetailVO;
 
-	MerchOrderVO updateMerchorder(MerchOrderVO merchorderVO);
+public class MerchOrderService {
+	private MerchOrderDAO_interface dao;
 
-	void deleteMerchorder(Integer merOrderId);
+	public MerchOrderService() {
+		dao = new MerchOrderDAO();
+	}
 
-	MerchOrderVO getMerchorderBymerOrderId(Integer merOrderId);
+	public MerchOrderVO insertMerchrder(Member member, Integer merOrderActuallyAmount, Integer merOrderPayStatus,
+			Integer merOrderStatus, String merOrderAddress, String merOrderCode, MerchOrderDetailVO MerOrdDets) {
 
-	List<MerchOrderVO> getAllMerchorders(int currentPage);
+		MerchOrderVO merchorderVO = new MerchOrderVO();
 
-	int getPageTotal();
+		merchorderVO.setMember(member);
+		merchorderVO.setMerOrderActuallyAmount(merOrderActuallyAmount);
+		merchorderVO.setMerOrderPayStatus(merOrderPayStatus);
+		merchorderVO.setMerOrderStatus(merOrderStatus);
+		merchorderVO.setMerOrderAddress(merOrderAddress);
+		merchorderVO.setMerOrderCode(merOrderCode);
+		merchorderVO.setMerOrdDets(merOrdDets);
+		dao.insert(merchorderVO);
 
-	List<MerchOrderVO> getMerchordersByCompositeQuery(Map<String, String[]> map);
+		return merchorderVO;
+	}
+
+	public MerchOrderVO updateMerchrder(Member member, Integer merOrderActuallyAmount, Integer merOrderPayStatus,
+			Integer merOrderStatus, String merOrderAddress, String merOrderCode, MerchOrderDetailVO MerOrdDets) {
+
+		MerchOrderVO merchorderVO = new MerchOrderVO();
+
+		merchorderVO.setMember(member);
+		merchorderVO.setMerOrderActuallyAmount(merOrderActuallyAmount);
+		merchorderVO.setMerOrderPayStatus(merOrderPayStatus);
+		merchorderVO.setMerOrderStatus(merOrderStatus);
+		merchorderVO.setMerOrderAddress(merOrderAddress);
+		merchorderVO.setMerOrderCode(merOrderCode);
+		merchorderVO.setMerOrdDets(merOrdDets);
+		dao.insert(merchorderVO);
+
+		return merchorderVO;
+
+	}
+
+	public void deleteMerchrder(Integer merOrderId) {
+		dao.delete(merOrderId);
+	}
+
+	public MerchOrderVO getOneMerchrder(Integer merOrderId) {
+		return dao.getById(merOrderId);
+	}
+
+	public List<MerchOrderVO> getAll() {
+		return dao.getAll();
+	}
 
 }
