@@ -2,13 +2,6 @@ package com.tha103.artion.administrator.model;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Date;
-import java.util.List;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
-import com.tha103.artion.util.*;
 
 public class AdministratorVO_Test {
 	
@@ -74,9 +67,11 @@ public class AdministratorVO_Test {
 //		}
 		
 		
-		AdministratorDAO_Interface dao = new AdministratorDAO(HibernateUtil.getSessionFactory());
+		AdministratorDAO_Interface dao = new AdministratorDAO();
 		
 		AdministratorVO admin = dao.getById(1001);
 		System.out.println(admin);
+		
+		
 	}
 }

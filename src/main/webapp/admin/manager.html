@@ -254,12 +254,11 @@
     <!-- ==================================================================== -->
 
     <script>
-      $("#table-body").on("click", function () {
-        console.log("AAA");
-
+      // 定義一個函數來獲取管理員數據並填充表格
+      function getAdminData() {
         $.ajax({
-          url: "http://localhost:8081/com.tha103.artion/getalladmins",
-          type: "GET",
+          url: "http://localhost:8081/artion/getalladmins",
+          type: "POST",
           dataType: "json",
           success: function (data) {
             var tableBody = $("#table-body");
@@ -268,23 +267,23 @@
             if (data.length > 0) {
               $.each(data, function (index, admin) {
                 var newRowHTML = `
-						<tr>
-                            <th scope="row">${admin.admId}</th>
-                            <td><img src='${admin.admProfilePhoto}' alt='頭貼'></td>
-                            <td>${admin.admName}</td>
-                            <td>${admin.admIdentity}</td>
-                            <td>${admin.admStatus}</td>
-                            <td>${admin.admMail}</td>
-                            <td>${admin.admPassword}</td>
-                            <td>${admin.admBirthday}</td>
-                            <td>${admin.admMobile}</td>
-                            <td>${admin.admAddTime}</td>
-                            <td>${admin.admLastModifiedTime}</td>
-                            <td>${admin.admRight}</td>
-                            <td><button>修改</button></td>
-                            <td><button>刪除</button></td>
-                        </tr>
-                        `;
+                              <tr>
+                                  <th scope="row">${admin.admId}</th>
+                                  <td><img src='${admin.admProfilePhoto}' alt='頭貼'></td>
+                                  <td>${admin.admName}</td>
+                                  <td>${admin.admIdentity}</td>
+                                  <td>${admin.admStatus}</td>
+                                  <td>${admin.admMail}</td>
+                                  <td>${admin.admPassword}</td>
+                                  <td>${admin.admBirthday}</td>
+                                  <td>${admin.admMobile}</td>
+                                  <td>${admin.admAddTime}</td>
+                                  <td>${admin.admLastModifiedTime}</td>
+                                  <td>${admin.admRight}</td>
+                                  <td><button>修改</button></td>
+                                  <td><button>刪除</button></td>
+                              </tr>
+                          `;
                 tableBody.append(newRowHTML);
               });
             } else {
@@ -296,43 +295,11 @@
             alert("請求失敗。");
           },
         });
+      }
 
-        //     // 這裡的資料是示例資料，你需要替換為實際的資料
-        //     var id = 1;
-        //     var profilePhoto = "picture.jpg";
-        //     var name = "John";
-        //     var identity = "Admin";
-        //     var status = "Active";
-        //     var mail = "john@email.com";
-        //     var password = "********";
-        //     var birthday = "1990-01-01";
-        //     var mobile = "123-456-7890";
-        //     var addTime = "2023-01-01";
-        //     var lastModifiedTime = "2023-10-19";
-        //     var right = "Admin";
-
-        //     // 使用模板字符串創建HTML代碼
-        //     var newRowHTML = `
-        //     <tr>
-        //         <th scope="row">${id}</th>
-        //         <td>${profilePhoto}</td>
-        //         <td>${name}</td>
-        //         <td>${identity}</td>
-        //         <td>${status}</td>
-        //         <td>${mail}</td>
-        //         <td>${password}</td>
-        //         <td>${birthday}</td>
-        //         <td>${mobile}</td>
-        //         <td>${addTime}</td>
-        //         <td>${lastModifiedTime}</td>
-        //         <td>${right}</td>
-        //         <td><button>修改</button></td>
-        //         <td><button>刪除</button></td>
-        //     </tr>
-        // `;
-
-        //     // 插入新的HTML代碼到tbody中
-        //     $("#table-body").append(newRowHTML);
+      // 在頁面載入時自動調用getAdminData函數
+      $(document).ready(function () {
+        getAdminData();
       });
     </script>
 

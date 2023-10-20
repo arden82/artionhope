@@ -8,67 +8,46 @@ import com.tha103.artion.administrator.model.AdministratorDAO;
 import com.tha103.artion.administrator.model.AdministratorVO;
 import com.tha103.artion.util.HibernateUtil;
 
-public class AdministratorService implements AdministratorService_Interface{
-	
+public class AdministratorService implements AdministratorService_Interface {
+
 	private AdministratorDAO dao;
-	
-	
-	
-public AdministratorService() {
-		
-		dao = new AdministratorDAO(HibernateUtil.getSessionFactory());
+
+	public AdministratorService() {
+
+		dao = new AdministratorDAO();
 	}
 
+	@Override
+	public int addAdmin(AdministratorVO admin) {
+		return dao.insert(admin);
+	}
 
+	@Override
+	public int updateAdmin(AdministratorVO admin) {
+		return dao.update(admin);
+	}
 
-@Override
-public AdministratorVO addAdmin(AdministratorVO admin) {
-	// TODO Auto-generated method stub
-	return null;
-}
+	@Override
+	public void deleteAdmin(Integer admId) {
+		// TODO Auto-generated method stub
 
+	}
 
+	@Override
+	public AdministratorVO getAdminByAdmId(Integer admId) {
+		return dao.getById(admId);
+	}
 
-@Override
-public AdministratorVO updateAdmin(AdministratorVO admin) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-
-
-@Override
-public void deleteAdmin(Integer admId) {
-	// TODO Auto-generated method stub
-	
-}
-
-
-
-@Override
-public AdministratorVO getAdminByAdmId(Integer admId) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-
-
-@Override
-public List<AdministratorVO> getAllAdmins() {
-	// TODO Auto-generated method stub
-	Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-	try {
-		session.beginTransaction();
+	@Override
+	public List<AdministratorVO> getAllAdmins() {
+		// TODO Auto-generated method stub
 		List<AdministratorVO> list = dao.getAll();
-		session.getTransaction().commit();
 		return list;
-	} catch (Exception e) {
-		session.getTransaction().rollback();
-		e.printStackTrace();
-		return null;
 	}
-}
 
-	
-	
+	public static void main(String[] args) {
+		AdministratorService svc = new AdministratorService();
+		System.out.println(svc.getAllAdmins());
+	}
+
 }
