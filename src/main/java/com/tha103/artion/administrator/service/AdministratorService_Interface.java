@@ -5,9 +5,9 @@ import java.util.List;
 import com.tha103.artion.administrator.model.AdministratorVO;
 
 public interface AdministratorService_Interface {
-	AdministratorVO addAdmin(AdministratorVO admin);
+	int addAdmin(AdministratorVO admin);
 	
-	AdministratorVO updateAdmin(AdministratorVO admin);
+	int updateAdmin(AdministratorVO admin);
 	
 	void deleteAdmin(Integer admId);
 	

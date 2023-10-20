@@ -20,17 +20,31 @@ import com.tha103.artion.administrator.service.AdministratorService;
 @WebServlet("/getalladmins")
 public class AdminServlet extends HttpServlet {
 
+	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		doPost(req, res);
+
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+		res.setContentType("text/html; charset=UTF-8");
+		res.setCharacterEncoding("UTF-8");
 
 		res.setHeader("Access-Control-Allow-Origin", "*");
-
-		// 创建AdministratorService实例
+		
 		AdministratorService adminService = new AdministratorService();
-
-		// 获取管理员数据
 		List<AdministratorVO> adminList = adminService.getAllAdmins();
+//		System.out.println(adminList.size());
+//
+//		Gson gson = new Gson();
+//		String json = gson.toJson(adminList);
+//System.out.println(json);
+//		PrintWriter out = res.getWriter();
+//		out.print(json); // 將 JSON 字符串寫入響應
 
-		// 将AdministratorVO列表转换为Map列表
+		// 將AdministratorVO列表轉換為Map列表
 		List<Map<String, Object>> adminMapList = new ArrayList<>();
 		for (AdministratorVO admin : adminList) {
 			Map<String, Object> adminMap = new HashMap<>();
@@ -45,22 +59,14 @@ public class AdminServlet extends HttpServlet {
 			adminMap.put("admAddTime", admin.getAdmAddTime());
 			adminMap.put("admLastModifiedTime", admin.getAdmLastModifiedTime());
 			adminMap.put("admRight", admin.getAdmRight());
-			// 添加其他属性...
-
 			adminMapList.add(adminMap);
 		}
 
-		// 使用Gson库将Map列表转换为JSON字符串
 		Gson gson = new Gson();
 		String json = gson.toJson(adminMapList);
 
-		// 发送JSON数据到前端
-		res.setContentType("application/json");
 		PrintWriter out = res.getWriter();
-		out.print(json);
-	}
-
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doGet(req, res);
+		out.print(json); // 將JSON字串寫入響應
+		out.flush();
 	}
 }

@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -73,7 +74,7 @@ public class AdministratorVO {
 //-----------------------以下為OneToMany-----------------------
 	//管理者(pk)>優惠碼(fk)
 	@Expose
-	@OneToMany(mappedBy = "administrator", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "administrator", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<PromoCodeVO> proCodes;
 
 //-------------------------------------------------------------
