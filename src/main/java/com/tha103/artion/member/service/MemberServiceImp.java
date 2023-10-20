@@ -50,6 +50,24 @@ public class MemberServiceImp implements MemberService {
 			return -1;
 		}
 	}
+	
+
+	@Override
+	public int login(MemberVO member) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			session
+			memberVO=dao.getMember(mem_id);
+			session.getTransaction().commit();
+		
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			e.printStackTrace();
+			return null;
+		}
+	
+	}
 
 	@Override
 	public MemberVO getMember(Integer mem_id) {

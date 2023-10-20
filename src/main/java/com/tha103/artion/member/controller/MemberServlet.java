@@ -12,19 +12,20 @@ import java.text.SimpleDateFormat;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
-import  com.tha103.artion.member.controller.*;
+import com.tha103.artion.member.controller.*;
 import com.tha103.artion.member.model.MemberVO;
 import com.tha103.artion.member.service.MemberService;
 import com.tha103.artion.member.service.MemberServiceImp;
 import com.tha103.artion.memberLevel.model.MemberLevelVO;
 
-
+@WebServlet("/member/member.do")
 @MultipartConfig
 public class MemberServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -48,19 +49,10 @@ public class MemberServlet extends HttpServlet {
 			String billAddress = req.getParameter("mem_billAddress");
 			Part profilePhoto = req.getPart("mem_profilePhoto"); // 沒有選圖片也不會null而是空物件
 			System.out.println(profilePhoto);
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-			java.util.Date utilD = null;
-			java.sql.Date birthday = null;
-			try {
-				utilD = format.parse(birthdaystr);
-				birthday = new java.sql.Date(utilD.getTime());
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
 			byte[] profilePhotoByte = null;
-			// 沒有選圖片也不會null而是空物件
-			if (profilePhoto != null && profilePhoto.getSize() > 0) {
-				System.out.println("profilePhoto1," + profilePhoto);
+			// 使用ajax不選圖使用profilePhoto.getSize()也部會小於0
+			if (profilePhoto.getSubmittedFileName() != null) {
+//				System.out.println("profilePhoto1," + profilePhoto);
 				InputStream is = profilePhoto.getInputStream();
 				ByteArrayOutputStream byteArros = new ByteArrayOutputStream();
 				byte[] buf = new byte[4 * 1024];
@@ -71,13 +63,13 @@ public class MemberServlet extends HttpServlet {
 				profilePhotoByte = byteArros.toByteArray();
 				byteArros.close();
 			} else {
-				profilePhotoByte=null;
 				try {
+//					System.out.println("未選圖片");
 					ServletContext context = getServletContext();// 開發與上線路徑會不一樣
 					// randomInteger = min + (int)(Math.random() * ((max - min) + 1))
-					int random = 1 + (int) (Math.random() * (3) + 1);
-					String imgPath = context.getRealPath("/images/member" + random + ".jpg");
-					System.out.println("imgPath ," + imgPath);
+					int random = 1 + (int) (Math.random() * (4) + 1);
+					String imgPath = context.getRealPath("/images/member/" + random + ".jpg");
+					System.out.println("a2imgPath ," + imgPath);
 					FileInputStream fis = new FileInputStream(imgPath);
 					byte[] buffer = fis.readAllBytes();
 					fis.close();
@@ -87,7 +79,7 @@ public class MemberServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-		
+
 			memberVO.setMemName(name);
 			memberVO.setMemNickname(name);
 			memberVO.setMemAccount(account);
@@ -100,7 +92,12 @@ public class MemberServlet extends HttpServlet {
 			memberVO.setMemProfilePhoto(profilePhotoByte);
 			memberVO.setMemTotalCost(0);
 			memSvc.insert(memberVO);
+			break;
+		case "login":
+			account = req.getParameter("mem_account");
+			password = req.getParameter("mem_password");
+			memSvc 
 		}
-		
+
 	}
 }

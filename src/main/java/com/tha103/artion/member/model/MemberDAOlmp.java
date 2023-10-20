@@ -29,6 +29,13 @@ public class MemberDAOlmp implements MemberDAO {
 		}
 	}
 
+	
+	@Override
+	public int login(MemberVO entity) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	@Override
 	public MemberVO getMember(Integer id) {
 		return getSession().get(MemberVO.class,id);
