@@ -18,8 +18,7 @@ public class SellerService {
 			String sel_phone, String sel_address, String sel_url, String sel_facebook, String sel_contactPerson,
 			String sel_introduction, String sel_bankCode, String sel_bankNumber, String sel_bankName, 
 			String sel_remark, String sel_title, String sel_principal, String sel_uniformNumbers, 
-			String sel_registeredAddress, Timestamp sel_registerdTime, 
-			Timestamp sel_lastModifiedTime, Integer sel_status) {
+			String sel_registeredAddress) {
 
 		SellerVO sellerVO = new SellerVO();
 
@@ -40,9 +39,9 @@ public class SellerService {
 		sellerVO.setSelPrincipal(sel_principal);
 		sellerVO.setSelUniformNumbers(sel_uniformNumbers);
 		sellerVO.setSelRegisteredAddress(sel_registeredAddress);
-		sellerVO.setSelRegisterdTime(sel_registerdTime);
-		sellerVO.setSelLastModifiedTime(sel_lastModifiedTime);
-		sellerVO.setSelStatus(sel_status);
+		sellerVO.setSelRegisterdTime(new Timestamp(System.currentTimeMillis())); 
+        sellerVO.setSelLastModifiedTime(new Timestamp(System.currentTimeMillis()));
+		sellerVO.setSelStatus(1);
 
 		return sellerVO;
 	}
@@ -88,5 +87,14 @@ public class SellerService {
 
 	public List<SellerVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public String getSelNameByAccount(String account) {
+	    SellerVO sellerVO = dao.getSellerByAccount(account);
+	    if (sellerVO != null) {
+	        return sellerVO.getSelName();
+	    } else {
+	        return null; // 或者您可以返回一个默认值
+	    }
 	}
 }

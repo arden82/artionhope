@@ -1,6 +1,7 @@
 package com.tha103.artion.seller.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,12 +14,16 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import com.tha103.artion.seller.model.*;
 import com.tha103.artion.util.HibernateUtil;
 
 public class SellerDAO implements SellerDAO_interface {
+    private Connection connection;  // 在SellerDAO类中定义Connection对象
+
 	/*
 	 * �`�N: A. �ثe�u�O��B����Hibernate���򥻥\�� B. �ثe�|�ݤ��XHibernate���¤O�Ҧb
 	 */
@@ -48,11 +53,11 @@ public class SellerDAO implements SellerDAO_interface {
 
 	@Override
 	public void insert(SellerVO sellerVO) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			session.beginTransaction();
+//			session.beginTransaction();
 			session.saveOrUpdate(sellerVO);
-			session.getTransaction().commit();
+//			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
 			throw ex;
@@ -103,17 +108,6 @@ public class SellerDAO implements SellerDAO_interface {
 		return list;
 	}
 
-	public boolean checkUser(String account, String password) {
-		SellerVO sellerVO = getSellerByAccount(account);
-
-		if (sellerVO != null) {
-			if (sellerVO.getSelPassword() != null && sellerVO.getSelPassword().equals(password)) {
-				return true; // Password matches
-			}
-		}
-		return false; // Password doesn't match
-	}
-
 	public SellerVO getSellerByAccount(String selAccount) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		SellerVO sellerVO = null;
@@ -143,6 +137,68 @@ public class SellerDAO implements SellerDAO_interface {
 		}
 
 		return sellerVO;
+	}
+
+	public static byte[] writePicture(String path) throws IOException {
+		FileInputStream fis = new FileInputStream(path);
+		byte[] buffer = fis.readAllBytes();
+		fis.close();
+		return buffer;
+	}
+
+	public String getSelName(String account) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		SellerVO sellerVO = null;
+
+		try {
+			session.beginTransaction();
+
+			// 假设你有一个通过卖家账户（account）获取卖家信息的方法
+			sellerVO = getSellerByAccount(account);
+
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			if (session.getTransaction() != null) {
+				session.getTransaction().rollback();
+			}
+			throw ex;
+		}
+
+		if (sellerVO != null) {
+			return sellerVO.getSelName();
+		} else {
+			return null; // 或者你可以返回一个默认值
+		}
+	}
+
+	public boolean checkUser(String account, String password) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+
+		// 使用 Hibernate Criteria API 执行查询
+		Criteria criteria = session.createCriteria(SellerVO.class).add(Restrictions.eq("selAccount", account))
+				.add(Restrictions.eq("selPassword", password));
+
+		SellerVO sellerVO = (SellerVO) criteria.uniqueResult();
+
+		session.getTransaction().commit();
+
+		return sellerVO != null;
+	}
+
+	   public void close() {
+	        try {
+	            if (connection != null) {
+	                connection.close();
+	            }
+	            // 如果有其他资源需要关闭，也在这里关闭
+	        } catch (SQLException e) {
+	            // 处理关闭资源时可能出现的异常
+	            e.printStackTrace();
+	        }
+	    }
 	}
 
 //	@Override
@@ -199,11 +255,11 @@ public class SellerDAO implements SellerDAO_interface {
 //
 //			session.save(sellerVO);
 
-			// 查詢單筆資料
+// 查詢單筆資料
 //		SellerVO sellerVO1 = session.get(SellerVO.class, 2001);
 //		System.out.println(sellerVO1);
 
-			// 查詢全部資料
+// 查詢全部資料
 //		List<SellerVO> list = session.createQuery("from SellerVO", SellerVO.class).list();
 //		System.out.println(list);
 
@@ -217,11 +273,3 @@ public class SellerDAO implements SellerDAO_interface {
 //		HibernateUtil.shutdown();
 //	}
 
-	public static byte[] writePicture(String path) throws IOException {
-		FileInputStream fis = new FileInputStream(path);
-		byte[] buffer = fis.readAllBytes();
-		fis.close();
-		return buffer;
-	}
-
-}
