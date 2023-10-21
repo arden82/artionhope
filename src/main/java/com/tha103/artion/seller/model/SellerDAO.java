@@ -22,7 +22,7 @@ import com.tha103.artion.seller.model.*;
 import com.tha103.artion.util.HibernateUtil;
 
 public class SellerDAO implements SellerDAO_interface {
-    private Connection connection;  // 在SellerDAO类中定义Connection对象
+	private Connection connection; // 在SellerDAO类中定义Connection对象
 
 	/*
 	 * �`�N: A. �ثe�u�O��B����Hibernate���򥻥\�� B. �ثe�|�ݤ��XHibernate���¤O�Ҧb
@@ -55,19 +55,6 @@ public class SellerDAO implements SellerDAO_interface {
 	public void insert(SellerVO sellerVO) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-//			session.beginTransaction();
-			session.saveOrUpdate(sellerVO);
-//			session.getTransaction().commit();
-		} catch (RuntimeException ex) {
-			session.getTransaction().rollback();
-			throw ex;
-		}
-	}
-
-	@Override
-	public void update(SellerVO sellerVO) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try {
 			session.beginTransaction();
 			session.saveOrUpdate(sellerVO);
 			session.getTransaction().commit();
@@ -76,11 +63,25 @@ public class SellerDAO implements SellerDAO_interface {
 			throw ex;
 		}
 	}
+	@Override
+	public void update(SellerVO sellerVO) {
+	    Session session = HibernateUtil.getSessionFactory().openSession(); // 使用 openSession 获取当前会话
+	    try {
+	        session.beginTransaction();
+	        session.merge(sellerVO);	      
+	        session.getTransaction().commit();
+	    } catch (RuntimeException ex) {
+	        session.getTransaction().rollback();
+	        throw ex;
+	    } finally {
+	        session.close(); // 在完成操作后关闭会话
+	    }
+	}
 
 	@Override
 	public SellerVO findByPrimaryKey(Integer selId) {
 		SellerVO sellerVO = null;
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
 			sellerVO = (SellerVO) session.get(SellerVO.class, selId);
@@ -95,7 +96,7 @@ public class SellerDAO implements SellerDAO_interface {
 	@Override
 	public List<SellerVO> getAll() {
 		List<SellerVO> list = null;
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
 			Query<SellerVO> query = session.createQuery(GET_ALL_STMT, SellerVO.class);
@@ -109,11 +110,11 @@ public class SellerDAO implements SellerDAO_interface {
 	}
 
 	public SellerVO getSellerByAccount(String selAccount) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		SellerVO sellerVO = null;
 
 		try {
-			session.beginTransaction();
+			// session.beginTransaction();
 
 			CriteriaBuilder builder = session.getCriteriaBuilder();
 			CriteriaQuery<SellerVO> criteria = builder.createQuery(SellerVO.class);
@@ -128,7 +129,7 @@ public class SellerDAO implements SellerDAO_interface {
 				sellerVO = results.get(0); // 如果有結果，取第一個
 			}
 
-			session.getTransaction().commit();
+			// session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			if (session.getTransaction() != null) {
 				session.getTransaction().rollback();
@@ -144,32 +145,6 @@ public class SellerDAO implements SellerDAO_interface {
 		byte[] buffer = fis.readAllBytes();
 		fis.close();
 		return buffer;
-	}
-
-	public String getSelName(String account) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		SellerVO sellerVO = null;
-
-		try {
-			session.beginTransaction();
-
-			// 假设你有一个通过卖家账户（account）获取卖家信息的方法
-			sellerVO = getSellerByAccount(account);
-
-			session.getTransaction().commit();
-		} catch (RuntimeException ex) {
-			if (session.getTransaction() != null) {
-				session.getTransaction().rollback();
-			}
-			throw ex;
-		}
-
-		if (sellerVO != null) {
-			return sellerVO.getSelName();
-		} else {
-			return null; // 或者你可以返回一个默认值
-		}
 	}
 
 	public boolean checkUser(String account, String password) {
@@ -188,19 +163,49 @@ public class SellerDAO implements SellerDAO_interface {
 		return sellerVO != null;
 	}
 
-	   public void close() {
-	        try {
-	            if (connection != null) {
-	                connection.close();
-	            }
-	            // 如果有其他资源需要关闭，也在这里关闭
-	        } catch (SQLException e) {
-	            // 处理关闭资源时可能出现的异常
-	            e.printStackTrace();
-	        }
-	    }
+	public void close() {
+		try {
+			if (connection != null) {
+				connection.close();
+			}
+			// 如果有其他资源需要关闭，也在这里关闭
+		} catch (SQLException e) {
+			// 处理关闭资源时可能出现的异常
+			e.printStackTrace();
+		}
 	}
 
+	@Override
+	public SellerVO getSingleSeller() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		SellerVO sellerVO = null;
+
+		try {
+			session.beginTransaction();
+
+			// 在此处执行查询以获取单一的卖家对象，你可以使用 Hibernate Criteria API 或 HQL 查询
+			// 这里假设你使用 Hibernate Criteria API
+			Criteria criteria = session.createCriteria(SellerVO.class);
+
+			// 添加查询条件，例如根据卖家ID、卖家名称等来获取单一卖家
+			// 例如：criteria.add(Restrictions.eq("selId", 1));
+			criteria.setMaxResults(1);
+			sellerVO = (SellerVO) criteria.uniqueResult();
+
+			System.out.print(sellerVO);
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			if (session.getTransaction() != null && session.getTransaction().isActive()) {
+				session.getTransaction().rollback();
+			}
+			throw ex;
+		} finally {
+			session.close();
+		}
+
+		return sellerVO;
+	}
+}
 //	@Override
 //	public Set<EmpVO> getEmpsByDeptno(Integer deptno) {		
 //		Set<EmpVO> set = null;
@@ -272,4 +277,3 @@ public class SellerDAO implements SellerDAO_interface {
 //		}
 //		HibernateUtil.shutdown();
 //	}
-

@@ -11,5 +11,7 @@ public interface SellerDAO_interface {
       public SellerVO findByPrimaryKey(Integer selId);
       public List<SellerVO> getAll();
 	public SellerVO getSellerByAccount(String account);
+	SellerVO getSingleSeller();
+	public SellerVO getSellerById(String id);
 		
 	}
