@@ -1,0 +1,22 @@
+@charset "BIG5";
+.display-3 text-black {
+    font-size: 1px;
+}
+
+.btn_goshop {
+
+ /* position: relative;
+    left: 70%;
+    top: 1%; */
+    display: inline-block;
+    width:100px;
+    padding: 4px 9px;
+    border: 1px;
+    color: #ffffff;
+    background: #2f2f2f;
+    border-color: #2f2f2f;
+    /* font-weight: 550; */
+    border-radius: 30px;
+
+}
+

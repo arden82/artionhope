@@ -1,7 +1,6 @@
 package com.tha103.artion.ticketOrder.model;
 
 import java.util.List;
-import java.util.Map;
 
 public interface TicketOrderDAO_interface {
 	int insert(TicketOrderVO ticketOrderVO);
@@ -14,9 +13,9 @@ public interface TicketOrderDAO_interface {
 
 	List<TicketOrderVO> getAll();
 
-	List<TicketOrderVO> getByCompositeQuery(Map<String, String> map);
-
-	List<TicketOrderVO> getAll(int currentPage);
-
-	long getTotal();
+//	List<TicketOrderVO> getByCompositeQuery(Map<String, String> map);
+//
+//	List<TicketOrderVO> getAll(int currentPage);
+//
+//	long getTotal();
 }

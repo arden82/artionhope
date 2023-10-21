@@ -1,0 +1,49 @@
+@charset "BIG5";
+
+
+
+
+.btn_usediscount {
+    position: relative;
+    left: 135%;
+    top: -35px;
+    
+    display: inline-block;
+    width:100px;
+    padding: 2px 2px;
+    border: 1px;
+    color: #ffffff;
+    background: #2f2f2f;
+    border-color: #2f2f2f;
+    font-weight: 550;
+    border-radius: 30px;
+}
+
+
+.input-group-append {
+    display: inline-block;
+}
+
+.form-control {
+    height: 50px;
+    border-radius: 10px;
+    font-family: "Inter", sans-serif;
+    position: relative;
+    left: 25%;
+    top:9px;
+}
+
+.btn_checkorder {
+    position: relative;
+    left: 70%;
+    top: 20%;
+    display: inline-block;
+    width:100px;
+    padding: 4px 9px;
+    border: 1px;
+    color: #ffffff;
+    background: #2f2f2f;
+    border-color: #2f2f2f;
+    font-weight: 550;
+    border-radius: 30px;
+}

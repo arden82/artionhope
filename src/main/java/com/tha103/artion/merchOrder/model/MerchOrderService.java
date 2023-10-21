@@ -1,9 +1,9 @@
 package com.tha103.artion.merchOrder.model;
 
-import java.lang.reflect.Member;
+import java.sql.Timestamp;
 import java.util.List;
 
-import com.tha103.artion.merchOrderDetail.model.MerchOrderDetailVO;
+import com.tha103.artion.member.model.MemberVO;
 
 public class MerchOrderService {
 	private MerchOrderDAO_interface dao;
@@ -12,46 +12,52 @@ public class MerchOrderService {
 		dao = new MerchOrderDAO();
 	}
 
-	public MerchOrderVO insertMerchrder(Member member, Integer merOrderActuallyAmount, Integer merOrderPayStatus,
-			Integer merOrderStatus, String merOrderAddress, String merOrderCode, MerchOrderDetailVO MerOrdDets) {
+	public MerchOrderVO insertMerchorder(MemberVO member, Integer merOrderActuallyAmount, Timestamp merOrderTime,
+			Integer merOrderPayStatus, Integer merOrderStatus, String merOrderAddress, String merOrderCode) {
+
+		MemberVO membervo = new MemberVO();
+		membervo.setMemId(7002);
 
 		MerchOrderVO merchorderVO = new MerchOrderVO();
 
-		merchorderVO.setMember(member);
+		merchorderVO.setMember(membervo);
 		merchorderVO.setMerOrderActuallyAmount(merOrderActuallyAmount);
 		merchorderVO.setMerOrderPayStatus(merOrderPayStatus);
 		merchorderVO.setMerOrderStatus(merOrderStatus);
 		merchorderVO.setMerOrderAddress(merOrderAddress);
 		merchorderVO.setMerOrderCode(merOrderCode);
-		merchorderVO.setMerOrdDets(merOrdDets);
+
 		dao.insert(merchorderVO);
 
 		return merchorderVO;
 	}
 
-	public MerchOrderVO updateMerchrder(Member member, Integer merOrderActuallyAmount, Integer merOrderPayStatus,
-			Integer merOrderStatus, String merOrderAddress, String merOrderCode, MerchOrderDetailVO MerOrdDets) {
+	public MerchOrderVO updateMerchorder(Integer merOrderId, MemberVO member, Integer merOrderActuallyAmount,
+			Timestamp merOrderTime, Integer merOrderPayStatus, Integer merOrderStatus, String merOrderAddress,
+			String merOrderCode) {
+
+		MemberVO membervo = new MemberVO();
+		membervo.setMemId(7002);
 
 		MerchOrderVO merchorderVO = new MerchOrderVO();
 
-		merchorderVO.setMember(member);
+		merchorderVO.setMember(membervo);
 		merchorderVO.setMerOrderActuallyAmount(merOrderActuallyAmount);
 		merchorderVO.setMerOrderPayStatus(merOrderPayStatus);
 		merchorderVO.setMerOrderStatus(merOrderStatus);
 		merchorderVO.setMerOrderAddress(merOrderAddress);
 		merchorderVO.setMerOrderCode(merOrderCode);
-		merchorderVO.setMerOrdDets(merOrdDets);
 		dao.insert(merchorderVO);
 
 		return merchorderVO;
 
 	}
 
-	public void deleteMerchrder(Integer merOrderId) {
+	public void deleteMerchorder(Integer merOrderId) {
 		dao.delete(merOrderId);
 	}
 
-	public MerchOrderVO getOneMerchrder(Integer merOrderId) {
+	public MerchOrderVO getOneMerchorder(Integer merOrderId) {
 		return dao.getById(merOrderId);
 	}
 

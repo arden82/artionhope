@@ -1,0 +1,72 @@
+@charset "BIG5";
+
+
+
+
+.btn_usediscount {
+    position: relative;
+    right: -119%;
+    top: -35px;
+    
+    /* display: inline-block; */
+    width:100px;
+    padding: 2px 2px;
+    border: 1px;
+    color: #ffffff;
+    background: #2f2f2f;
+    border-color: #2f2f2f;
+    font-weight: 550;
+    border-radius: 30px;
+    
+}
+
+.btn_checkorder {
+    position: relative;
+    left: 69%;
+    top: -10%;
+    /* display: inline-block; */
+    width:100px;
+    padding: 4px 9px;
+    border: 1px;
+    color: #ffffff;
+    background: #2f2f2f;
+    border-color: #2f2f2f;
+    font-weight: 550;
+    border-radius: 30px;
+}
+
+
+.input-group-append {
+    display: inline-block;
+}
+
+.form-control {
+    height: 50px;
+    border-radius: 10px;
+    font-family: "Inter", sans-serif;
+    position: relative;
+    left: 25%;
+    top:9px;
+    display:inline-block;
+    
+    width: 80%;
+}
+
+
+
+button:hover {
+    background-color: rgb(159, 155, 148);
+  }
+
+  /* 使用 border-bottom 属性为 div 元素添加横线 */
+  .horizontal-line {
+    border-bottom: 1.5px solid #000; /* 1px 线宽，黑色线条 */
+    /* display: block; */
+    margin: 0 auto;
+    width: 97%;
+}
+
+.p-lg-5 {
+    padding: 2rem !important;
+}
+

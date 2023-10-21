@@ -63,7 +63,7 @@ public class TicketOrderDetailServlet extends HttpServlet {
 
 			/*************************** 2.開始查詢資料 *****************************************/
 			TicketOrderDetailService ticketorderSvc = new TicketOrderDetailService();
-			TicketOrderDetailVO ticketorderdetailVO = ticketorderSvc.getOneTicketOrderDetail(ticOrdDetId);
+			TicketOrderDetailVO ticketorderdetailVO = ticketorderSvc.getById(ticOrdDetId);
 			if (ticketorderdetailVO == null) {
 				errorMsgs.add("查無資料");
 			}
@@ -93,7 +93,7 @@ public class TicketOrderDetailServlet extends HttpServlet {
 
 			/*************************** 2.開始查詢資料 ****************************************/
 			TicketOrderDetailService ticketorderSvc = new TicketOrderDetailService();
-			TicketOrderDetailVO ticketorderdetailVO = ticketorderSvc.getOneTicketOrderDetail(ticOrdDetId);
+			TicketOrderDetailVO ticketorderdetailVO = ticketorderSvc.getById(ticOrdDetId);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("ticketorderdetailVO", ticketorderdetailVO); // 資料庫取出的memberNotifyVO物件,存入req
@@ -112,11 +112,11 @@ public class TicketOrderDetailServlet extends HttpServlet {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			Integer ticOrdDetId = Integer.valueOf(req.getParameter("ticOrdDetId"));
 
-			TicketOrderVO ticketorder = Integer.valueOf(req.getParameter("ticketorder"));
+			TicketOrderVO ticketorder = TicketOrderVO.valueOf(req.getParameter("ticketorder"));
 
 			Integer ticOrdDetQuantity = Integer.valueOf(req.getParameter("ticOrdDetQuantity").trim());
 
-			Double ticOrdDetPrice = Integer.valueOf(req.getParameter("ticOrdDetPrice").trim());
+			Double ticOrdDetPrice = Double.valueOf(req.getParameter("ticOrdDetPrice").trim());
 
 			ActivityVO activity = Integer.valueOf(req.getParameter("activity").trim());
 
@@ -138,7 +138,7 @@ public class TicketOrderDetailServlet extends HttpServlet {
 
 			/*************************** 2.開始修改資料 *****************************************/
 			TicketOrderDetailService ticketorderSvc = new TicketOrderDetailService();
-			ticketorderdetailVO = ticketorderSvc.updateticketorderdetailVO(ticOrdDetId, ticketorder, ticOrdDetQuantity,
+			ticketorderdetailVO = ticketorderSvc.updateTicketorderdetail(ticOrdDetId, ticketorder, ticOrdDetQuantity,
 					ticOrdDetPrice, activity);
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
@@ -162,7 +162,7 @@ public class TicketOrderDetailServlet extends HttpServlet {
 
 			Integer ticOrdDetQuantity = Integer.valueOf(req.getParameter("ticOrdDetQuantity").trim());
 
-			Double ticOrdDetPrice = Integer.valueOf(req.getParameter("ticOrdDetPrice").trim());
+			Double ticOrdDetPrice = Double.valueOf(req.getParameter("ticOrdDetPrice").trim());
 
 			ActivityVO activity = Integer.valueOf(req.getParameter("activity").trim());
 
@@ -183,7 +183,7 @@ public class TicketOrderDetailServlet extends HttpServlet {
 
 			/*************************** 2.開始新增資料 ***************************************/
 			TicketOrderDetailService ticketorderSvc = new TicketOrderDetailService();
-			ticketorderdetailVO = ticketorderSvc.addTicketorderdetailVO(ticOrdDetId, ticketorder, ticOrdDetQuantity,
+			ticketorderdetailVO = ticketorderSvc.insertTicketorderdetail(ticOrdDetId, ticketorder, ticOrdDetQuantity,
 					ticOrdDetPrice, activity);
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
@@ -204,7 +204,7 @@ public class TicketOrderDetailServlet extends HttpServlet {
 
 			/*************************** 2.開始刪除資料 ***************************************/
 			TicketOrderDetailService ticketorderdetailSvc = new TicketOrderDetailService();
-			ticketorderdetailSvc.deleteTicketOrderDetail(ticOrdDetId);
+			ticketorderdetailSvc.deleteTicketorderdetail(ticOrdDetId);
 
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 			String url = "/ticketorder/listAllTicketOrderDetail.jsp";
