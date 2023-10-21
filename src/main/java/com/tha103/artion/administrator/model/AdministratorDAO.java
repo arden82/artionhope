@@ -10,7 +10,8 @@ public class AdministratorDAO implements AdministratorDAO_Interface {
 
 	@Override
 	public int insert(AdministratorVO admin) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		int admId = 0;
 
 		try {
@@ -27,7 +28,8 @@ public class AdministratorDAO implements AdministratorDAO_Interface {
 
 	@Override
 	public int update(AdministratorVO admin) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 
 		try {
 			session.beginTransaction();
@@ -42,7 +44,9 @@ public class AdministratorDAO implements AdministratorDAO_Interface {
 
 	@Override
 	public int delete(Integer admId) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
 
 		try {
 			session.beginTransaction();
@@ -61,8 +65,8 @@ public class AdministratorDAO implements AdministratorDAO_Interface {
 
 	@Override
 	public AdministratorVO getById(Integer admId) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
 			AdministratorVO admin = session.get(AdministratorVO.class, admId);
