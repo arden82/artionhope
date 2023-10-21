@@ -18,13 +18,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.tha103.artion.seller.model.SellerVO;
-import com.tha103.artion.ticketOrderDetail.model.TicketOrderDetailVO;
 import com.google.gson.annotations.Expose;
 import com.tha103.artion.activityComment.model.ActivityCommentVO;
 import com.tha103.artion.activityLike.model.ActivityLikeVO;
 import com.tha103.artion.administrator.model.AdministratorVO;
 import com.tha103.artion.memberCollection.model.MemberCollectionVO;
+import com.tha103.artion.seller.model.SellerVO;
+import com.tha103.artion.ticketOrderDetail.model.TicketOrderDetailVO;
 
 @Entity
 @Table(name = "activity")
@@ -168,22 +168,22 @@ public class ActivityVO {
 
 //-----------------------以下為OneToMany-----------------------
 	// 活動(pk)>活動收藏(fk)
-	@Expose
+	@Expose(serialize = false)
 	@OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
 	private Set<MemberCollectionVO> memCols;
 	
 	// 活動(pk)>活動按讚(fk)
-	@Expose
+	@Expose(serialize = false)
 	@OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
 	private Set<ActivityLikeVO> actLikes;
 	
 	// 活動(pk)>活動留言(fk)
-	@Expose
+	@Expose(serialize = false)
 	@OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
 	private Set<ActivityCommentVO> actComs;
 	
 	//活動(pk)>票卷訂單明細(fk)
-	@Expose
+	@Expose(serialize = false)
 	@OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
 	private Set<TicketOrderDetailVO> ticOrdDets;
 

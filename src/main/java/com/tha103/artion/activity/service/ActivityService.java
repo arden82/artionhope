@@ -30,7 +30,7 @@ public class ActivityService {
 	private ActivityDAO_interface dao;
 
 	public ActivityService() {
-		dao = new ActivityDAO(HibernateUtil.getSessionFactory());
+		dao = new ActivityDAO();
 	}
 
 	// 新增活動
