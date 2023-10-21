@@ -1,8 +1,10 @@
 package com.tha103.artion.administrator.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +19,8 @@ import com.google.gson.Gson;
 import com.tha103.artion.administrator.model.AdministratorVO;
 import com.tha103.artion.administrator.service.AdministratorService;
 
-@WebServlet("/getalladmins")
-public class AdminServlet extends HttpServlet {
+@WebServlet("/ShowAllAdmins")
+public class ShowAllAdmins extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -36,13 +38,7 @@ public class AdminServlet extends HttpServlet {
 		
 		AdministratorService adminService = new AdministratorService();
 		List<AdministratorVO> adminList = adminService.getAllAdmins();
-//		System.out.println(adminList.size());
-//
-//		Gson gson = new Gson();
-//		String json = gson.toJson(adminList);
-//System.out.println(json);
-//		PrintWriter out = res.getWriter();
-//		out.print(json); // 將 JSON 字符串寫入響應
+
 
 		// 將AdministratorVO列表轉換為Map列表
 		List<Map<String, Object>> adminMapList = new ArrayList<>();
@@ -58,7 +54,14 @@ public class AdminServlet extends HttpServlet {
 			adminMap.put("admMobile", admin.getAdmMobile());
 			adminMap.put("admAddTime", admin.getAdmAddTime());
 			adminMap.put("admLastModifiedTime", admin.getAdmLastModifiedTime());
+			adminMap.put("admProfilePhoto", admin.getAdmProfilePhoto());
 			adminMap.put("admRight", admin.getAdmRight());
+			
+			// 將圖片轉換為Base64字符串
+//			String base64Image = Base64.getEncoder().encodeToString(admin.getAdmProfilePhoto());
+//            adminMap.put("admProfilePhoto", base64Image);
+
+			
 			adminMapList.add(adminMap);
 		}
 
@@ -69,4 +72,5 @@ public class AdminServlet extends HttpServlet {
 		out.print(json); // 將JSON字串寫入響應
 		out.flush();
 	}
+	
 }

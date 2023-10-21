@@ -188,28 +188,7 @@
                     <th scope="col"></th>
                   </tr>
                 </thead>
-                <tbody id="table-body">
-                  <tr>
-                    <th scope="row">number</th>
-                    <td>picture</td>
-                    <td>name</td>
-                    <td>role</td>
-                    <td>status</td>
-                    <td>jhon@email.com</td>
-                    <td>password</td>
-                    <td>birthdate</td>
-                    <td>cellphone</td>
-                    <td>createdDate</td>
-                    <td>updateDate</td>
-                    <td>authority</td>
-                    <td>
-                      <button>修改</button>
-                    </td>
-                    <td>
-                      <button>刪除</button>
-                    </td>
-                  </tr>
-                </tbody>
+                <tbody id="table-body"></tbody>
               </table>
             </div>
           </div>
@@ -257,7 +236,7 @@
       // 定義一個函數來獲取管理員數據並填充表格
       function getAdminData() {
         $.ajax({
-          url: "http://localhost:8081/artion/getalladmins",
+          url: "http://localhost:8081/artion/ShowAllAdmins",
           type: "POST",
           dataType: "json",
           success: function (data) {
@@ -268,8 +247,8 @@
               $.each(data, function (index, admin) {
                 var newRowHTML = `
                               <tr>
-                                  <th scope="row">${admin.admId}</th>
-                                  <td><img src='${admin.admProfilePhoto}' alt='頭貼'></td>
+                                  <th scope="row" id="admId">${admin.admId}</th>
+                                  <td><img src='http://localhost:8081/artion/adminphoto?admId=${admin.admId}' alt='頭貼'></td>
                                   <td>${admin.admName}</td>
                                   <td>${admin.admIdentity}</td>
                                   <td>${admin.admStatus}</td>
@@ -280,7 +259,7 @@
                                   <td>${admin.admAddTime}</td>
                                   <td>${admin.admLastModifiedTime}</td>
                                   <td>${admin.admRight}</td>
-                                  <td><button>修改</button></td>
+                                  <td><button type="submit" id="commit">修改</button></td>
                                   <td><button>刪除</button></td>
                               </tr>
                           `;
@@ -297,9 +276,35 @@
         });
       }
 
-      // 在頁面載入時自動調用getAdminData函數
+      var admId = "";
+      function updateOneAdmin(admId) {
+        var updateItem = {
+          admId: admId,
+        };
+
+        $.ajax({
+          url: "http://localhost:8081/artion/updateadmin",
+          type: "POST",
+          data: updateItem,
+          dataType: "json",
+          success: function (data) {
+            alert("success");
+            console.log(data);
+            location.href = "managerDetails.html";
+          },
+        });
+      }
+
       $(document).ready(function () {
         getAdminData();
+
+        $("#table-body").on("click", "#commit", function (e) {
+          e.preventDefault();
+          console.log("click update");
+          var admId = $(this).closest("tr").find("#admId").text();
+          console.log(admId);
+          updateOneAdmin(admId);
+        });
       });
     </script>
 
