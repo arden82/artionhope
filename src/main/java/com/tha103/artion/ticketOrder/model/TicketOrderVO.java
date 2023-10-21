@@ -20,7 +20,6 @@ import com.tha103.artion.myPromoCode.model.MyPromoCodeVO;
 import com.tha103.artion.seller.model.SellerVO;
 import com.tha103.artion.ticketOrderDetail.model.TicketOrderDetailVO;
 
-
 @Entity
 @Table(name = "ticketorder")
 // 配合 TestHQLWithParameter.java
@@ -36,7 +35,7 @@ public class TicketOrderVO {
 	@Column(name = "ticketOrd_time", insertable = false, updatable = false)
 	private Timestamp ticketOrdTime;
 
-	//票卷訂單(fk)>會員(pk)
+	// 票卷訂單(fk)>會員(pk)
 	@ManyToOne
 	@JoinColumn(name = "mem_id", referencedColumnName = "mem_id")
 	private MemberVO member;
@@ -61,7 +60,7 @@ public class TicketOrderVO {
 	@Column(name = "ticketOrd_payStatus")
 	private Integer ticketOrdPayStatus;
 
-	//票卷訂單(fk)>我的優惠碼(pk)
+	// 票卷訂單(fk)>我的優惠碼(pk)
 	@ManyToOne
 	@JoinColumn(name = "myProCode_id", referencedColumnName = "myProCode_id")
 	private MyPromoCodeVO mypromocode;
@@ -80,7 +79,7 @@ public class TicketOrderVO {
 	private String ticketOrdCode;
 
 //-----------------------以下為OneToMany-----------------------
-	//票卷訂單(pk)>票卷訂單明細(fk)
+	// 票卷訂單(pk)>票卷訂單明細(fk)
 	@Expose
 	@OneToMany(mappedBy = "ticketorder", cascade = CascadeType.ALL)
 	private Set<TicketOrderDetailVO> ticOrdDets;
@@ -103,9 +102,9 @@ public class TicketOrderVO {
 		this.ticketOrdProCodeAmount = ticketOrdProCodeAmount;
 		this.ticketOrdActuallyAmount = ticketOrdActuallyAmount;
 		this.ticketOrdPayStatus = ticketOrdPayStatus;
-		this.myProCodeId = myProCodeId;
+		this.mypromocode = mypromocode;
 		this.ticketOrdAddress = ticketOrdAddress;
-		this.sel = sel;
+		this.seller = seller;
 		this.ticketOrdCode = ticketOrdCode;
 		this.ticOrdDets = ticOrdDets;
 	}
@@ -126,11 +125,11 @@ public class TicketOrderVO {
 		this.ticketOrdTime = ticketOrdTime;
 	}
 
-	public MemberVO getMemId() {
+	public MemberVO getMember() {
 		return member;
 	}
 
-	public void setMemId(MemberVO member) {
+	public void setMember(MemberVO member) {
 		this.member = member;
 	}
 
@@ -174,12 +173,12 @@ public class TicketOrderVO {
 		this.ticketOrdPayStatus = ticketOrdPayStatus;
 	}
 
-	public MyPromoCodeVO getMyProCodeId() {
-		return myProCodeId;
+	public MyPromoCodeVO getMypromocode() {
+		return mypromocode;
 	}
 
-	public void setMyProCodeId(MyPromoCodeVO myProCodeId) {
-		this.myProCodeId = myProCodeId;
+	public void setMypromocode(MyPromoCodeVO mypromocode) {
+		this.mypromocode = mypromocode;
 	}
 
 	public String getTicketOrdAddress() {
@@ -190,12 +189,12 @@ public class TicketOrderVO {
 		this.ticketOrdAddress = ticketOrdAddress;
 	}
 
-	public SellerVO getSel() {
-		return sel;
+	public SellerVO getSeller() {
+		return seller;
 	}
 
-	public void setSel(SellerVO sel) {
-		this.sel = sel;
+	public void setSeller(SellerVO seller) {
+		this.seller = seller;
 	}
 
 	public String getTicketOrdCode() {
@@ -216,11 +215,11 @@ public class TicketOrderVO {
 
 	@Override
 	public String toString() {
-		return "TicketOrderVO [ticketOrdId=" + ticketOrdId + ", ticketOrdTime=" + ticketOrdTime + ", ticketOrdStatus="
-				+ ticketOrdStatus + ", ticketOrdTotalPrice=" + ticketOrdTotalPrice + ", ticketOrdProCodeAmount="
-				+ ticketOrdProCodeAmount + ", ticketOrdActuallyAmount=" + ticketOrdActuallyAmount
-				+ ", ticketOrdPayStatus=" + ticketOrdPayStatus + ", ticketOrdAddress=" + ticketOrdAddress
-				+ ", ticketOrdCode=" + ticketOrdCode + "]";
+		return "TicketOrderVO [ticketOrdId=" + ticketOrdId + ", ticketOrdTime=" + ticketOrdTime + ", member=" + member
+				+ ", ticketOrdStatus=" + ticketOrdStatus + ", ticketOrdTotalPrice=" + ticketOrdTotalPrice
+				+ ", ticketOrdProCodeAmount=" + ticketOrdProCodeAmount + ", ticketOrdActuallyAmount="
+				+ ticketOrdActuallyAmount + ", ticketOrdPayStatus=" + ticketOrdPayStatus + ", mypromocode="
+				+ mypromocode + ", ticketOrdAddress=" + ticketOrdAddress + ", seller=" + seller + ", ticketOrdCode="
+				+ ticketOrdCode + ", ticOrdDets=" + ticOrdDets + "]";
 	}
-
 }

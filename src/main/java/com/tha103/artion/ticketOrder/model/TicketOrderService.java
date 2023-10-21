@@ -2,7 +2,9 @@ package com.tha103.artion.ticketOrder.model;
 
 import java.util.List;
 
-import com.tha103.artion.ticketOrderDetail.model.TicketOrderDetailVO;
+import com.tha103.artion.member.model.MemberVO;
+import com.tha103.artion.myPromoCode.model.MyPromoCodeVO;
+import com.tha103.artion.seller.model.SellerVO;
 
 public class TicketOrderService {
 	private TicketOrderDAO_interface dao;
@@ -13,9 +15,17 @@ public class TicketOrderService {
 
 	public TicketOrderVO insertTicketorder(MemberVO member, Integer ticketOrdStatus, Double ticketOrdTotalPrice,
 			Double ticketOrdProCodeAmount, Double ticketOrdActuallyAmount, Integer ticketOrdPayStatus,
-			MyPromoCodeVO mypromocode, String ticketOrdAddress, SellerVO seller, String ticketOrdCode,
-			TicketOrderDetailVO ticOrdDets) {
-
+			MyPromoCodeVO mypromocode, String ticketOrdAddress, SellerVO seller, String ticketOrdCode) {
+//
+//		SellerVO sellerVO = new SellerVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
+//		sellerVO.setSelId(2001);
+//
+//		MyPromoCodeVO mypromocodeVO = new MyPromoCodeVO();
+//		mypromocodeVO.setMyProCodeId(1);
+//
+//		MemberVO membervo = new MemberVO();
+//		membervo.setMemId(7001);
+//
 		TicketOrderVO ticketOrderVO = new TicketOrderVO();
 
 		ticketOrderVO.setMember(member);
@@ -28,17 +38,15 @@ public class TicketOrderService {
 		ticketOrderVO.setTicketOrdAddress(ticketOrdAddress);
 		ticketOrderVO.setSeller(seller);
 		ticketOrderVO.setTicketOrdCode(ticketOrdCode);
-		ticketOrderVO.setTicOrdDets(ticOrdDets);
-
 		dao.insert(ticketOrderVO);
 
 		return ticketOrderVO;
 	}
 
-	public TicketOrderVO updateTicketorder(MemberVO member, Integer ticketOrdStatus, Double ticketOrdTotalPrice,
-			Double ticketOrdProCodeAmount, Double ticketOrdActuallyAmount, Integer ticketOrdPayStatus,
-			MyPromoCodeVO mypromocode, String ticketOrdAddress, SellerVO seller, String ticketOrdCode,
-			TicketOrderDetailVO ticOrdDets) {
+	public TicketOrderVO updateTicketorder(Integer ticketOrdId, MemberVO member, Integer ticketOrdStatus,
+			Double ticketOrdTotalPrice, Double ticketOrdProCodeAmount, Double ticketOrdActuallyAmount,
+			Integer ticketOrdPayStatus, MyPromoCodeVO mypromocode, String ticketOrdAddress, SellerVO seller,
+			String ticketOrdCode) {
 
 		TicketOrderVO ticketOrderVO = new TicketOrderVO();
 
@@ -52,7 +60,6 @@ public class TicketOrderService {
 		ticketOrderVO.setTicketOrdAddress(ticketOrdAddress);
 		ticketOrderVO.setSeller(seller);
 		ticketOrderVO.setTicketOrdCode(ticketOrdCode);
-		ticketOrderVO.setTicOrdDets(ticOrdDets);
 
 		dao.insert(ticketOrderVO);
 
@@ -63,7 +70,7 @@ public class TicketOrderService {
 		dao.delete(ticketOrdId);
 	}
 
-	public TicketOrderVO getOneTicketorder(Integer ticketOrdId) {
+	public TicketOrderVO getById(Integer ticketOrdId) {
 		return dao.getById(ticketOrdId);
 	}
 

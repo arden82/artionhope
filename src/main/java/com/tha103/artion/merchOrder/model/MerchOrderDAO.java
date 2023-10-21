@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import com.tha103.artion.member.model.MemberVO;
 import com.tha103.artion.util.HibernateUtil;
 
 public class MerchOrderDAO implements MerchOrderDAO_interface {
@@ -106,7 +105,7 @@ public class MerchOrderDAO implements MerchOrderDAO_interface {
 //	}
 
 	public static void main(String[] args) throws Exception {
-		MerchOrderDAO_interface dao = new MerchOrderDAO();
+		MerchOrderDAO dao = new MerchOrderDAO();
 
 //		MemberVO membervo = new MemberVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
 //		membervo.setMemId(7001);
@@ -125,7 +124,7 @@ public class MerchOrderDAO implements MerchOrderDAO_interface {
 //		membervo.setMemId(7002);
 //
 //		MerchOrderVO merchorderVO1 = new MerchOrderVO();
-//		merchorderVO1.setMerOrderId(134799);
+//		merchorderVO1.setMerOrderId(134805);
 //		merchorderVO1.setMember(membervo);
 //		merchorderVO1.setMerOrderActuallyAmount(1000);
 //		merchorderVO1.setMerOrderPayStatus(2);
@@ -138,12 +137,13 @@ public class MerchOrderDAO implements MerchOrderDAO_interface {
 //		dao.delete(134789);
 ////
 ////		// 查詢單筆
-//		MemberVO membervo = new MemberVO();
-//		membervo.setMemId(7001);
-
+//		MemberVO membervo1 = new MemberVO();
+//		membervo1.setMemId(7001);
+//
 //		MerchOrderVO merchorderVO2 = dao.getById(134790);
 //		System.out.print(merchorderVO2.getMember() + ",");
 //		System.out.print(merchorderVO2.getMerOrderActuallyAmount() + ",");
+//		System.out.print(merchorderVO2.getMerOrderTime() + ",");
 //		System.out.print(merchorderVO2.getMerOrderPayStatus() + ",");
 //		System.out.print(merchorderVO2.getMerOrderStatus() + ",");
 //		System.out.print(merchorderVO2.getMerOrderAddress() + ",");
@@ -151,21 +151,51 @@ public class MerchOrderDAO implements MerchOrderDAO_interface {
 //		System.out.println("---------------------");
 //
 //		// 查詢多筆
-		MemberVO membervo = new MemberVO();
-		membervo.setMemId(7001);
+//		MemberVO membervo = new MemberVO();
+//		membervo.setMemId(7001);
+
+//		List<MerchOrderVO> list = dao.getAll();
+//		for (MerchOrderVO merchorderVO2 : list) {
+//			System.out.print(merchorderVO2.getMerOrderId() + ",");
+//			System.out.print(merchorderVO2.getMember() + ",");
+//			System.out.print(merchorderVO2.getMerOrderActuallyAmount() + ",");
+//			System.out.print(merchorderVO2.getMerOrderTime() + ",");
+//			System.out.print(merchorderVO2.getMerOrderPayStatus() + ",");
+//			System.out.print(merchorderVO2.getMerOrderStatus() + ",");
+//			System.out.print(merchorderVO2.getMerOrderAddress() + ",");
+//			System.out.print(merchorderVO2.getMerOrderCode() + ",");
+//
+//			System.out.println();
+//		}
+//
+//		List<MerchOrderVO> merchOrder = dao.getAll();
+//
+//		if (merchOrder != null) {
+//			System.out.println("MerchOrder List:");
+//			for (MerchOrderVO detail : merchOrder) {
+//				System.out.println(detail); // 假设MerchOrderDetailVO有适当的toString方法
+//			}
+//		} else {
+//			System.out.println("Failed to retrieve MerchOrderDetail List.");
+//		}
 
 		List<MerchOrderVO> list = dao.getAll();
-		for (MerchOrderVO merchorderVO2 : list) {
-			System.out.print(merchorderVO2.getMerOrderId() + ",");
-			System.out.print(merchorderVO2.getMember() + ",");
-			System.out.print(merchorderVO2.getMerOrderActuallyAmount() + ",");
-			System.out.print(merchorderVO2.getMerOrderTime() + ",");
-			System.out.print(merchorderVO2.getMerOrderPayStatus() + ",");
-			System.out.print(merchorderVO2.getMerOrderStatus() + ",");
-			System.out.print(merchorderVO2.getMerOrderAddress() + ",");
-			System.out.print(merchorderVO2.getMerOrderCode() + ",");
 
-			System.out.println();
+		if (list != null) {
+			for (MerchOrderVO merchorderVO : list) {
+				System.out.print("MerchOrderID: " + merchorderVO.getMerOrderId() + ", ");
+				System.out.print("Member: " + merchorderVO.getMember() + ", ");
+				System.out.print("Actually Amount: " + merchorderVO.getMerOrderActuallyAmount() + ", ");
+				System.out.print("Order Time: " + merchorderVO.getMerOrderTime() + ", ");
+				System.out.print("Pay Status: " + merchorderVO.getMerOrderPayStatus() + ", ");
+				System.out.print("Order Status: " + merchorderVO.getMerOrderStatus() + ", ");
+				System.out.print("Order Address: " + merchorderVO.getMerOrderAddress() + ", ");
+				System.out.print("Order Code: " + merchorderVO.getMerOrderCode());
+
+				System.out.println();
+			}
+		} else {
+			System.out.println("Failed to retrieve MerchOrder List.");
 		}
 	}
 }

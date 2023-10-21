@@ -85,4 +85,91 @@ public class TicketOrderDetailDAO implements TicketOrderDetailDAO_interface {
 		return null;
 	}
 
+	public static void main(String[] args) throws Exception {
+		TicketOrderDetailDAO dao = new TicketOrderDetailDAO();
+
+//		TicketOrderVO ticketorderVO = new TicketOrderVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
+//		ticketorderVO.setTicketOrdId(134789);
+//
+//		ActivityVO activityVO = new ActivityVO();
+//		activityVO.setActId(10001);
+//		// 新增
+//		TicketOrderDetailVO ticketorderdetailVO = new TicketOrderDetailVO();
+//
+//		ticketorderdetailVO.setTicketorder(ticketorderVO);
+//		ticketorderdetailVO.setTicOrdDetQuantity(20);
+//		ticketorderdetailVO.setTicOrdDetPrice(200.0);
+//		ticketorderdetailVO.setActivity(activityVO);
+//
+//		dao.insert(ticketorderdetailVO);
+
+//		// 修改
+//		
+//		TicketOrderVO ticketorderVO = new TicketOrderVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
+//		ticketorderVO.setTicketOrdId(134789);
+//
+//		ActivityVO activityVO = new ActivityVO();
+//		activityVO.setActId(10001);
+//
+//		TicketOrderDetailVO ticketorderdetailVO1 = new TicketOrderDetailVO();
+//		ticketorderdetailVO1.setTicOrdDetId(1);
+//		ticketorderdetailVO1.setTicketorder(ticketorderVO);
+//		ticketorderdetailVO1.setTicOrdDetQuantity(50);
+//		ticketorderdetailVO1.setTicOrdDetPrice(900.0);
+//		ticketorderdetailVO1.setActivity(activityVO);
+//
+//		dao.update(ticketorderdetailVO1);
+//
+////		// 刪除
+//		dao.delete(14790);
+////
+////		// 查詢單筆
+
+//		TicketOrderVO ticketorderVO = new TicketOrderVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
+//		ticketorderVO.setTicketOrdId(134789);
+//
+//		ActivityVO activityVO = new ActivityVO();
+//		activityVO.setActId(10001);
+//
+//		TicketOrderDetailVO ticketorderdetailVO = dao.getById(1);
+//		System.out.print(ticketorderdetailVO.getTicketorder() + ",");
+//		System.out.print(ticketorderdetailVO.getTicOrdDetQuantity() + ",");
+//		System.out.print(ticketorderdetailVO.getTicOrdDetPrice() + ",");
+//		System.out.print(ticketorderdetailVO.getActivity() + ",");
+//		System.out.println("---------------------");
+//
+//		// 查詢多筆 QQ**
+//		TicketOrderVO ticketorderVO = new TicketOrderVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
+//		ticketorderVO.setTicketOrdId(134789);
+//
+//		ActivityVO activityVO = new ActivityVO();
+//		activityVO.setActId(10001);
+//
+//		List<TicketOrderDetailVO> list = dao.getAll();
+//		for (TicketOrderDetailVO ticketorderdetailVO : list) {
+//			System.out.print(ticketorderdetailVO.getTicOrdDetId() + ",");
+//			System.out.print(ticketorderdetailVO.getTicketorder() + ",");
+//			System.out.print(ticketorderdetailVO.getTicOrdDetQuantity() + ",");
+//			System.out.print(ticketorderdetailVO.getTicOrdDetPrice() + ",");
+//			System.out.print(ticketorderdetailVO.getActivity() + ",");
+//
+//			System.out.println();
+//		}
+
+		List<TicketOrderDetailVO> list = dao.getAll();
+
+		if (list != null) {
+			for (TicketOrderDetailVO ticketorderdetailVO : list) {
+				System.out.print("TicketOrderDetailID: " + ticketorderdetailVO.getTicOrdDetId() + ", ");
+				System.out.print("TicketOrder: " + ticketorderdetailVO.getTicketorder() + ", ");
+				System.out.print("Quantity: " + ticketorderdetailVO.getTicOrdDetQuantity() + ", ");
+				System.out.print("Price: " + ticketorderdetailVO.getTicOrdDetPrice() + ", ");
+				System.out.print("Activity: " + ticketorderdetailVO.getActivity());
+
+				System.out.println();
+			}
+		} else {
+			System.out.println("Failed to retrieve TicketOrderDetail List.");
+		}
+	}
 }

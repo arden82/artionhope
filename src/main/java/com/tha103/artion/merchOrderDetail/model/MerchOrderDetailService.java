@@ -2,6 +2,7 @@ package com.tha103.artion.merchOrderDetail.model;
 
 import java.util.List;
 
+import com.tha103.artion.merch.model.MerchVO;
 import com.tha103.artion.merchOrder.model.MerchOrderVO;
 
 public class MerchOrderDetailService {
@@ -11,12 +12,12 @@ public class MerchOrderDetailService {
 		dao = new MerchOrderDetailDAO();
 	}
 
-	public MerchOrderDetailVO insertMerchrderdetail(MerchOrderVO merchorder, MerchVO merch,
+	public MerchOrderDetailVO insertMerchorderdetail(MerchOrderVO merchorder, MerchVO merch,
 			Integer merOrderDetailQuantity, Integer merOrderDetailPrice) {
 
 		MerchOrderDetailVO merchorderdetailVO = new MerchOrderDetailVO();
 
-		merchorderdetailVO.setMerchorder(merchorder);
+		merchorderdetailVO.setMerchOrder(merchorder);
 		merchorderdetailVO.setMerch(merch);
 		merchorderdetailVO.setMerOrderDetailQuantity(merOrderDetailQuantity);
 		merchorderdetailVO.setMerOrderDetailPrice(merOrderDetailPrice);
@@ -26,12 +27,12 @@ public class MerchOrderDetailService {
 		return merchorderdetailVO;
 	}
 
-	public MerchOrderDetailVO updateMerchrderdetail(MerchOrderVO merchorder, MerchVO merch,
+	public MerchOrderDetailVO updateMerchrderdetail(Integer merchOrdDetailId, MerchOrderVO merchorder, MerchVO merch,
 			Integer merOrderDetailQuantity, Integer merOrderDetailPrice) {
 
 		MerchOrderDetailVO merchorderdetailVO = new MerchOrderDetailVO();
 
-		merchorderdetailVO.setMerchorder(merchorder);
+		merchorderdetailVO.setMerchOrder(merchorder);
 		merchorderdetailVO.setMerch(merch);
 		merchorderdetailVO.setMerOrderDetailQuantity(merOrderDetailQuantity);
 		merchorderdetailVO.setMerOrderDetailPrice(merOrderDetailPrice);
@@ -46,7 +47,7 @@ public class MerchOrderDetailService {
 	}
 
 	public MerchOrderDetailVO getOneMerchrderdetail(Integer merchOrdDetailId) {
-		return dao.findByPK(merchOrdDetailId);
+		return dao.getById(merchOrdDetailId);
 	}
 
 	public List<MerchOrderDetailVO> getAll() {

@@ -17,7 +17,6 @@ import com.tha103.artion.merchOrder.model.MerchOrderVO;
 @Table(name = "merchorderdetail")
 // 配合 TestHQLWithParameter.java
 
-
 public class MerchOrderDetailVO {
 	@Expose
 	@Id
@@ -25,12 +24,12 @@ public class MerchOrderDetailVO {
 	@Column(name = "merchOrdDetail_id", updatable = false)
 	private Integer merchOrdDetailId;
 
-	//周邊商品訂單明細(fk)>周邊商品(pk)
+	// 周邊商品訂單明細(fk)>周邊商品(pk)
 	@ManyToOne
 	@JoinColumn(name = "merOrder_id", referencedColumnName = "merOrder_id")
-	private MerchOrderVO merchorder;
+	private MerchOrderVO merchOrder;
 
-	//周邊商品訂單明細(fk)>周邊商品(pk)
+	// 周邊商品訂單明細(fk)>周邊商品(pk)
 	@ManyToOne
 	@JoinColumn(name = "merch_id", referencedColumnName = "merch_id")
 	private MerchVO merch;
@@ -52,7 +51,7 @@ public class MerchOrderDetailVO {
 			Integer merOrderDetailQuantity, Integer merOrderDetailPrice) {
 		super();
 		this.merchOrdDetailId = merchOrdDetailId;
-		this.merchorder = merchorder;
+		this.merchOrder = merchOrder;
 		this.merch = merch;
 		this.merOrderDetailQuantity = merOrderDetailQuantity;
 		this.merOrderDetailPrice = merOrderDetailPrice;
@@ -66,12 +65,12 @@ public class MerchOrderDetailVO {
 		this.merchOrdDetailId = merchOrdDetailId;
 	}
 
-	public MerchOrderVO getMerchorder() {
-		return merchorder;
+	public MerchOrderVO getMerchOrder() {
+		return merchOrder;
 	}
 
-	public void setMerchorder(MerchOrderVO merchorder) {
-		this.merchorder = merchorder;
+	public void setMerchOrder(MerchOrderVO merchorder) {
+		this.merchOrder = merchorder;
 	}
 
 	public MerchVO getMerch() {
@@ -103,6 +102,5 @@ public class MerchOrderDetailVO {
 		return "MerchOrderDetailVO [merchOrdDetailId=" + merchOrdDetailId + ", merOrderDetailQuantity="
 				+ merOrderDetailQuantity + ", merOrderDetailPrice=" + merOrderDetailPrice + "]";
 	}
-
 
 }

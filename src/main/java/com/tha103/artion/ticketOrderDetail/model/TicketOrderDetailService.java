@@ -2,6 +2,7 @@ package com.tha103.artion.ticketOrderDetail.model;
 
 import java.util.List;
 
+import com.tha103.artion.activity.model.ActivityVO;
 import com.tha103.artion.ticketOrder.model.TicketOrderVO;
 
 public class TicketOrderDetailService {
@@ -11,8 +12,8 @@ public class TicketOrderDetailService {
 		dao = new TicketOrderDetailDAO();
 	}
 
-	public TicketOrderDetailVO insertTicketorderdetail(TicketOrderVO ticketorder, Integer ticOrdDetQuantity,
-			Double ticOrdDetPrice, ActivityVO activity) {
+	public TicketOrderDetailVO insertTicketorderdetail(Integer ticOrdDetId, TicketOrderVO ticketorder,
+			Integer ticOrdDetQuantity, Double ticOrdDetPrice, ActivityVO activity) {
 
 		TicketOrderDetailVO ticketorderetailVO = new TicketOrderDetailVO();
 
@@ -26,8 +27,8 @@ public class TicketOrderDetailService {
 		return ticketorderetailVO;
 	}
 
-	public TicketOrderDetailVO updateTicketorderdetail(TicketOrderVO ticketorder, Integer ticOrdDetQuantity,
-			Double ticOrdDetPrice, ActivityVO activity) {
+	public TicketOrderDetailVO updateTicketorderdetail(Integer Integer, TicketOrderVO ticketorder,
+			Integer ticOrdDetQuantity, Double ticOrdDetPrice, ActivityVO activity) {
 
 		TicketOrderDetailVO ticketorderetailVO = new TicketOrderDetailVO();
 
