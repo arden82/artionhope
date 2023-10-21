@@ -7,7 +7,7 @@
 //見com.emp.controller.EmpServlet.java第238行存入req的empVO物件 (此為輸入格式有錯誤時的empVO物件)
 SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 %>
---<%= sellerVO==null %>--
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -164,7 +164,7 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 				</div>
 
 				<!-- 分隔線 -->
-				<div class="col-sm-12 col-xl-12 mt-4"></div>
+<!-- 				<div class="col-sm-12 col-xl-12 mt-4"></div> -->
 
 				<!-- 下方區塊 廠商簡介-->
 				<div class="row g-4 justify-content-center">
@@ -185,7 +185,7 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 				</div>
 
 				<!-- 分隔線 -->
-				<div class="col-sm-12 col-xl-12 mt-2"></div>
+<!-- 				<div class="col-sm-12 col-xl-12 mt-2"></div> -->
 
 				<!-- 下方區塊 帳務資訊-->
 
@@ -246,7 +246,7 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 					</div>
 
 					<!-- 分隔線 -->
-					<div class="col-sm-12 col-xl-12 mt-4"></div>
+<!-- 					<div class="col-sm-12 col-xl-12 mt-4"></div> -->
 
 					<!-- 下方區塊 單位資料-->
 					<div class="container-fluid pt-4 px-4">

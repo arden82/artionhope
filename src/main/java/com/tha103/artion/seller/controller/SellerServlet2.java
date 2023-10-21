@@ -8,6 +8,7 @@ import java.util.Base64;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,7 @@ import com.tha103.artion.seller.model.*;
 import com.tha103.artion.seller.service.*;
 import com.tha103.artion.seller.service.SellerService;
 
-
+@WebServlet("/seller/SellerServlet2.do")
 public class SellerServlet2 extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

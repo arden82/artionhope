@@ -103,7 +103,7 @@ public class SellerServlet extends HttpServlet {
 //			successView.forward(req, res);
 //		}
 //
-		if ("Seller_Update".equals(action)) { // 來自listAllEmp.jsp的請求
+		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -112,14 +112,14 @@ public class SellerServlet extends HttpServlet {
 
 //			/*************************** 1.接收請求參數 ****************************************/
 			Integer sel_id = Integer.valueOf(req.getParameter("sel_id"));
-//
+
 //			/*************************** 2.開始查詢資料 ****************************************/
 			SellerService sellerSvc = new SellerService();
 			SellerVO sellerVO = sellerSvc.getOneSeller(sel_id);
 //
 //			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("sellerVO", sellerVO); // 資料庫取出的empVO物件,存入req
-			String url = "/seller/sel_profile.jsp";
+			String url = "/seller/sel_profileRevise.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 			successView.forward(req, res);
 		}
@@ -132,9 +132,9 @@ public class SellerServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 //			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			Integer sel_id = Integer.valueOf(req.getParameter("sel_id"));
+			Integer sel_id = (Integer) req.getAttribute("selId");
 
-			String sel_account = req.getParameter("sel_account");
+			String sel_account = req.getParameter("selAccount");
 			String sel_accountReg = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 			if (sel_account == null || sel_account.trim().length() == 0) {
 				errorMsgs.add("帳號: 請勿空白");
@@ -142,7 +142,7 @@ public class SellerServlet extends HttpServlet {
 				errorMsgs.add("帳號: 只能是email");
 			}
 
-			String sel_password = req.getParameter("sel_password");
+			String sel_password = req.getParameter("selPassword");
 			String sel_passwordReg = "^[((a-zA-Z0-9)]{2,10}$";
 			if (sel_password == null || sel_password.trim().length() == 0) {
 				errorMsgs.add("密碼: 請勿空白");
@@ -150,100 +150,100 @@ public class SellerServlet extends HttpServlet {
 				errorMsgs.add("密碼: 只能是英文字母、數字,且長度必需在2到10之間");
 			}
 
-			String sel_name = req.getParameter("sel_name");
+			String sel_name = req.getParameter("selName");
 			if (sel_name == null || sel_name.trim().length() == 0) {
 				errorMsgs.add("廠商名稱: 請勿空白");
 			}
 
-			String sel_phone = req.getParameter("sel_phone").trim();
+			String sel_phone = req.getParameter("selPhone").trim();
 			if (sel_phone == null || sel_phone.trim().length() == 0) {
 				errorMsgs.add("電話請勿空白");
 			}
 
-			String sel_address = req.getParameter("sel_address").trim();
+			String sel_address = req.getParameter("selAddress").trim();
 			if (sel_address == null || sel_address.trim().length() == 0) {
 				errorMsgs.add("地址請勿空白");
 			}
 
-			String sel_url = req.getParameter("sel_url").trim();
+			String sel_url = req.getParameter("selUrl").trim();
 			if (sel_url == null || sel_url.trim().length() == 0) {
 				errorMsgs.add("官方網站請勿空白");
 			}
 
-			String sel_facebook = req.getParameter("sel_facebook").trim();
-			if (sel_facebook == null || sel_facebook.trim().length() == 0) {
-				errorMsgs.add("Facebook請勿空白");
+			String sel_facebook = req.getParameter("selFacebook");
+			if (sel_facebook != null && sel_facebook.trim().length() == 0) {
+			    errorMsgs.add("Facebook請勿空白");
 			}
 
-			String sel_contactPerson = req.getParameter("sel_contactPerson").trim();
+			String sel_contactPerson = req.getParameter("selContactPerson").trim();
 			if (sel_contactPerson == null || sel_contactPerson.trim().length() == 0) {
 				errorMsgs.add("單位連絡人");
 			}
 
-			String sel_introduction = req.getParameter("sel_introduction").trim();
+			String sel_introduction = req.getParameter("selIntroduction").trim();
 			if (sel_introduction == null || sel_introduction.trim().length() == 0) {
 				errorMsgs.add("廠商介紹請勿空白");
 			}
 
-			String sel_bankCode = req.getParameter("sel_bankCode").trim();
+			String sel_bankCode = req.getParameter("selBankCode");
 			if (sel_bankCode == null || sel_bankCode.trim().length() == 0) {
 				errorMsgs.add("銀行代碼請勿空白");
 			}
 
-			String sel_bankNumber = req.getParameter("sel_bankNumber").trim();
+			String sel_bankNumber = req.getParameter("selBankNumber").trim();
 			if (sel_bankNumber == null || sel_bankNumber.trim().length() == 0) {
 				errorMsgs.add("銀行帳號請勿空白");
 			}
 
-			String sel_bankName = req.getParameter("sel_bankName").trim();
+			String sel_bankName = req.getParameter("selBankName").trim();
 			if (sel_bankName == null || sel_bankName.trim().length() == 0) {
 				errorMsgs.add("戶名請勿空白");
 			}
 
-			String sel_remark = req.getParameter("sel_remark").trim();
+			String sel_remark = req.getParameter("selRemark").trim();
 
-			String sel_title = req.getParameter("sel_title").trim();
+			String sel_title = req.getParameter("selTitle").trim();
 			if (sel_title == null || sel_title.trim().length() == 0) {
 				errorMsgs.add("單位名稱請勿空白");
 			}
 
-			String sel_principal = req.getParameter("sel_principal").trim();
+			String sel_principal = req.getParameter("selPrincipal").trim();
 			if (sel_principal == null || sel_principal.trim().length() == 0) {
 				errorMsgs.add("單位負責人請勿空白");
 			}
 
-			String sel_uniformNumbers = req.getParameter("sel_uniformNumbers").trim();
+			String sel_uniformNumbers = req.getParameter("selUniformNumbers").trim();
 			if (sel_uniformNumbers == null || sel_uniformNumbers.trim().length() == 0) {
 				errorMsgs.add("統一編號請勿空白");
 			}
 
-			String sel_registeredAddress = req.getParameter("sel_registeredAddress").trim();
+			String sel_registeredAddress = req.getParameter("selRegisteredAddress").trim();
 			if (sel_registeredAddress == null || sel_registeredAddress.trim().length() == 0) {
 				errorMsgs.add("單位立案地址請勿空白");
 			}
 
-			Part newSelProfilePicture = req.getPart("newSelProfilePicture");
-			byte[] profilePhotoByte = null;
-			// 沒有選圖片也不會null而是空物件 與insert 處理方式不同(未選圖就抓原本的圖)
-			if (newSelProfilePicture != null && newSelProfilePicture.getSize() > 0) {
-				System.out.println("profilePhoto1," + newSelProfilePicture);
-				InputStream is = newSelProfilePicture.getInputStream();
-				ByteArrayOutputStream byteArros = new ByteArrayOutputStream();
-				byte[] buf = new byte[4 * 1024];
-				int len;
-				while ((len = is.read(buf)) != -1) {
-					byteArros.write(buf, 0, len);
-				}
-				profilePhotoByte = byteArros.toByteArray();
-				byteArros.close();
-			} else {
-				SellerVO sellerVO = new SellerVO();
-				SellerService sellerSvc = new SellerService();
-				sellerVO = sellerSvc.getOneSeller(sel_id);
-				profilePhotoByte = sellerVO.getSelProfilePicture();// 抓原本舊圖
-			}
+//			Part newSelProfilePicture = req.getPart("newSelProfilePicture");
+//			byte[] profilePhotoByte = null;
+//			// 沒有選圖片也不會null而是空物件 與insert 處理方式不同(未選圖就抓原本的圖)
+//			if (newSelProfilePicture != null && newSelProfilePicture.getSize() > 0) {
+//				System.out.println("profilePhoto1," + newSelProfilePicture);
+//				InputStream is = newSelProfilePicture.getInputStream();
+//				ByteArrayOutputStream byteArros = new ByteArrayOutputStream();
+//				byte[] buf = new byte[4 * 1024];
+//				int len;
+//				while ((len = is.read(buf)) != -1) {
+//					byteArros.write(buf, 0, len);
+//				}
+//				profilePhotoByte = byteArros.toByteArray();
+//				byteArros.close();
+//			} else {
+//				SellerVO sellerVO = new SellerVO();
+//				SellerService sellerSvc = new SellerService();
+//				sellerVO = sellerSvc.getOneSeller(sel_id);
+//				profilePhotoByte = sellerVO.getSelProfilePicture();// 抓原本舊圖
+//			}
 
-			String sel_registerdTimeStr = req.getParameter("sel_registerdTime");
+			String sel_registerdTimeStr = req.getParameter("selRegisterdTime");
 			Timestamp sel_registerdTime = null;
 
 			if (sel_registerdTimeStr != null && !sel_registerdTimeStr.trim().isEmpty()) {
@@ -258,8 +258,6 @@ public class SellerServlet extends HttpServlet {
 
 			Timestamp sel_lastModifiedTime = new Timestamp(System.currentTimeMillis());
 
-			Integer sel_status = Integer.valueOf(req.getParameter("sel_status").trim());
-			
 			SellerVO sellerVO = new SellerVO();
 			sellerVO.setSelId(sel_id);
 			sellerVO.setSelAccount(sel_account);
@@ -281,16 +279,16 @@ public class SellerServlet extends HttpServlet {
 			sellerVO.setSelRegisteredAddress(sel_registeredAddress);
 
 //			byte[] sel_profilePicture = byteArrayOutputStream.toByteArray();
-			sellerVO.setSelProfilePicture(profilePhotoByte);
+//			sellerVO.setSelProfilePicture(profilePhotoByte);
 
 			sellerVO.setSelRegisterdTime(sel_registerdTime);
 			sellerVO.setSelLastModifiedTime(sel_lastModifiedTime);
-			sellerVO.setSelStatus(sel_status);
+//			sellerVO.setSelStatus(sel_status);
 
 			// Send the use back to the form, if here were errors
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("sellerVO", sellerVO); // 含有輸入格式錯誤的empVO物件,也存入req
-				RequestDispatcher failureView = req.getRequestDispatcher("/seller/update_seller_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/seller/sel_profileRevise.jsp");
 				failureView.forward(req, res);
 				return; // 程式中斷
 			}
@@ -299,8 +297,7 @@ public class SellerServlet extends HttpServlet {
 			SellerService sellerSvc = new SellerService();
 			sellerVO = sellerSvc.updateSeller(sel_id, sel_account, sel_password, sel_name, sel_phone, sel_address,
 					sel_url, sel_facebook, sel_contactPerson, sel_introduction, sel_bankCode, sel_bankNumber,
-					sel_bankName, sel_remark, sel_title, sel_principal, sel_uniformNumbers, sel_registeredAddress,
-					profilePhotoByte, sel_registerdTime, sel_lastModifiedTime, sel_status);
+					sel_bankName, sel_remark, sel_title, sel_principal, sel_uniformNumbers, sel_registeredAddress);
 //			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("sellerVO", sellerVO); // 使用更新后的卖家信息
 			String url = "/seller/sel_profile.jsp";
@@ -439,7 +436,6 @@ public class SellerServlet extends HttpServlet {
 			sellerVO.setSelRemark(sel_remark);
 			sellerVO.setSelTitle(sel_title);
 			sellerVO.setSelPrincipal(sel_principal);
-			sellerVO.setSelUniformNumbers(sel_uniformNumbers);
 			sellerVO.setSelRegisteredAddress(sel_registeredAddress);
 
 //			byte[] sel_profilePicture = byteArrayOutputStream.toByteArray();
