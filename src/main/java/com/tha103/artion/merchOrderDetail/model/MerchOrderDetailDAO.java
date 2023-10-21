@@ -156,17 +156,17 @@ public class MerchOrderDetailDAO implements MerchOrderDetailDAO_interface {
 //			System.out.println();
 //		}
 
-		List<MerchOrderDetailVO> merchOrderDetails = dao.getAll();
-
-		if (merchOrderDetails != null) {
-			System.out.println("MerchOrderDetail List:");
-			for (MerchOrderDetailVO detail : merchOrderDetails) {
-				System.out.println(detail); // 假设MerchOrderDetailVO有适当的toString方法
-			}
-		} else {
-			System.out.println("Failed to retrieve MerchOrderDetail List.");
-		}
-
+//		List<MerchOrderDetailVO> merchOrderDetails = dao.getAll();
+//
+//		if (merchOrderDetails != null) {
+//			System.out.println("MerchOrderDetail List:");
+//			for (MerchOrderDetailVO detail : merchOrderDetails) {
+//				System.out.println(detail); // 假设MerchOrderDetailVO有适当的toString方法
+//			}
+//		} else {
+//			System.out.println("Failed to retrieve MerchOrderDetail List.");
+//		}
+//
+//	}
 	}
-
 }

@@ -27,7 +27,7 @@ public class MerchOrderDetailVO {
 	// 周邊商品訂單明細(fk)>周邊商品(pk)
 	@ManyToOne
 	@JoinColumn(name = "merOrder_id", referencedColumnName = "merOrder_id")
-	private MerchOrderVO merchOrder;
+	private MerchOrderVO merchorder;
 
 	// 周邊商品訂單明細(fk)>周邊商品(pk)
 	@ManyToOne
@@ -42,16 +42,16 @@ public class MerchOrderDetailVO {
 	@Column(name = "merOrderDetail_price")
 	private Integer merOrderDetailPrice;
 
-//-------------------------------------------------------------
 	public MerchOrderDetailVO() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public MerchOrderDetailVO(Integer merchOrdDetailId, MerchOrderVO merchorder, MerchVO merch,
 			Integer merOrderDetailQuantity, Integer merOrderDetailPrice) {
 		super();
 		this.merchOrdDetailId = merchOrdDetailId;
-		this.merchOrder = merchOrder;
+		this.merchorder = merchorder;
 		this.merch = merch;
 		this.merOrderDetailQuantity = merOrderDetailQuantity;
 		this.merOrderDetailPrice = merOrderDetailPrice;
@@ -65,12 +65,12 @@ public class MerchOrderDetailVO {
 		this.merchOrdDetailId = merchOrdDetailId;
 	}
 
-	public MerchOrderVO getMerchOrder() {
-		return merchOrder;
+	public MerchOrderVO getMerchorder() {
+		return merchorder;
 	}
 
-	public void setMerchOrder(MerchOrderVO merchorder) {
-		this.merchOrder = merchorder;
+	public void setMerchorder(MerchOrderVO merchorder) {
+		this.merchorder = merchorder;
 	}
 
 	public MerchVO getMerch() {
@@ -102,5 +102,7 @@ public class MerchOrderDetailVO {
 		return "MerchOrderDetailVO [merchOrdDetailId=" + merchOrdDetailId + ", merOrderDetailQuantity="
 				+ merOrderDetailQuantity + ", merOrderDetailPrice=" + merOrderDetailPrice + "]";
 	}
+
+//-------------------------------------------------------------
 
 }
