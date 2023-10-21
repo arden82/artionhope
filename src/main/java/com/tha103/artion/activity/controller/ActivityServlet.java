@@ -39,6 +39,7 @@ import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
+
 public class ActivityServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -50,86 +51,126 @@ public class ActivityServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-	
-		
-		
-		
-		
-		if ("getOne_For_Display".equals(action))
+		ActivityService actSvc = new ActivityService();
+		List<ActivityVO> actList = actSvc.getAll();
 
-		{ // 來自select_page.jsp的請求
+		// 將ActVO列表轉換為Map列表
+		List<Map<String, Object>> actMapList = new ArrayList<>();
+		for (ActivityVO act : actList) {
+			Map<String, Object> actMap = new HashMap<>();
+			actMap.put("actId", act.getActId());
+			actMap.put("actName", act.getActName());
+			actMap.put("actTicPrice", act.getActTicketPrice());
+			actMap.put("actTicStrTime", act.getActTicketStartTime());
+			actMap.put("actTicEndTime", act.getActTicketEndTime());
+			actMap.put("actType", act.getActType());
+			actMap.put("actStartDate", act.getActStartDate());
+			actMap.put("actEndDate", act.getActEndDate());
+			actMap.put("ActStartTime", act.getActStartTime());
+			actMap.put("ActEndTime", act.getActEndTime());
+			actMap.put("ActCity", act.getActCity());
+			actMap.put("ActZone", act.getActZone());
+			actMap.put("ActAdd", act.getActAddress());
+			actMap.put("ActOrg", act.getActOrganization());
+			actMap.put("ActEmail", act.getActEmail());
+			actMap.put("ActPhone", act.getActPhone());
+			actMap.put("ActTicTotal", act.getActTicketTotal());
+			actMap.put("ActContent", act.getActContent());
+			actMap.put("ActCovPic", act.getActCoverPicture());
+			actMap.put("ActPic1", act.getActPicture1());
+			actMap.put("ActPic2", act.getActPicture2());
+			actMap.put("ActPic3", act.getActPicture3());
+			actMap.put("ActLikeTimes", act.getActLikeTimes());
+			actMap.put("ActViews", act.getActViews());
+			actMap.put("ActAppStatus", act.getActApproalStatus());
+			actMap.put("sel", act.getSeller());
+			actMap.put("ActLongitude", act.getActLongitude());
+			actMap.put("ActLatitude", act.getActLatitude());
+			actMap.put("ActTicTotSel", act.getActTicketTotalSell());
+			actMap.put("AdmId", act.getAdmId());
+			actMap.put("ActLastModTime", act.getActLastModifiedTime());
+			actMap.put("ActResContent", act.getActResultContent());
+			actMap.put("MemCols", act.getMemCols());
+			actMap.put("ActComs", act.getActComs());
+			actMap.put("TicOrdDets", act.getTicOrdDets());
+			actMapList.add(actMap);
 
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
+//==============================================================================================================
+			if ("getOne_For_Display".equals(action))
+
+			{ // 來自select_page.jsp的請求
+
+				List<String> errorMsgs = new LinkedList<String>();
+				// Store this set in the request scope, in case we need to
+				// send the ErrorPage view.
+				req.setAttribute("errorMsgs", errorMsgs);
 
 //			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			String str = req.getParameter("act_id");
-			if (str == null || (str.trim()).length() == 0) {
-				errorMsgs.add("請輸入活動編號");
-			}
-			// Send the use back to the form, if there were errors
-			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/activity/sel_index.jsp");
-				System.out.println("錯誤!!!");
-				failureView.forward(req, res);
-				return;// 程式中斷
-			}
+				String str = req.getParameter("act_id");
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("請輸入活動編號");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/activity/sel_index.jsp");
+					System.out.println("錯誤!!!");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
 
-			Integer act_id = null;
-			try {
-				act_id = Integer.valueOf(str);
-			} catch (Exception e) {
-				errorMsgs.add("活動編號不正確");
-			}
-			// Send the use back to the form, if there were errors
-			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/activity/sel_index.jsp");
-				failureView.forward(req, res);
-				return;// 程式中斷
-			}
+				Integer act_id = null;
+				try {
+					act_id = Integer.valueOf(str);
+				} catch (Exception e) {
+					errorMsgs.add("活動編號不正確");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/activity/sel_index.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
 
 //			/*************************** 2.開始查詢資料 *****************************************/
-			ActivityService activitySvc = new ActivityService();
-			ActivityVO activityVO = activitySvc.getOneActivity(act_id);
-			if (activityVO == null) {
-				errorMsgs.add("查無資料");
-			}
-			// Send the use back to the form, if there were errors
-			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/activity/sel_index.jsp");
-				failureView.forward(req, res);
-				return;// 程式中斷
-			}
+				ActivityService activitySvc = new ActivityService();
+				ActivityVO activityVO = activitySvc.getOneActivity(act_id);
+				if (activityVO == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/activity/sel_index.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
 
 //			/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-			req.setAttribute("activityVO", activityVO); // 資料庫取出的empVO物件,存入req
-			String url = "/activity/listOneActivity.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-			successView.forward(req, res);
-		}
+				req.setAttribute("activityVO", activityVO); // 資料庫取出的empVO物件,存入req
+				String url = "/activity/listOneActivity.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				successView.forward(req, res);
+			}
 
-		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
+			if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
 
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
+				List<String> errorMsgs = new LinkedList<String>();
+				// Store this set in the request scope, in case we need to
+				// send the ErrorPage view.
+				req.setAttribute("errorMsgs", errorMsgs);
 //
 //			/*************************** 1.接收請求參數 ****************************************/
-			Integer act_id = Integer.valueOf(req.getParameter("act_id"));
+				Integer act_id = Integer.valueOf(req.getParameter("act_id"));
 //
 //			/*************************** 2.開始查詢資料 ****************************************/
-			ActivityService activitySvc = new ActivityService();
-			ActivityVO activityVO = activitySvc.getOneActivity(act_id);
+				ActivityService activitySvc = new ActivityService();
+				ActivityVO activityVO = activitySvc.getOneActivity(act_id);
 //
 //			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			req.setAttribute("activityVO", activityVO); // 資料庫取出的empVO物件,存入req
-			String url = "/activity/update_seller_input.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
-			successView.forward(req, res);
-		}
+				req.setAttribute("activityVO", activityVO); // 資料庫取出的empVO物件,存入req
+				String url = "/activity/update_seller_input.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+				successView.forward(req, res);
+			}
 //
 //		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 //
@@ -345,229 +386,230 @@ public class ActivityServlet extends HttpServlet {
 //			successView.forward(req, res);
 //		}
 
-		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
+			if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
+				List<String> errorMsgs = new LinkedList<String>();
+				// Store this set in the request scope, in case we need to
+				// send the ErrorPage view.
+				req.setAttribute("errorMsgs", errorMsgs);
 
-			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-			String act_name = req.getParameter("act_name");
-			System.out.println(act_name);
-		
-			Integer act_ticketPrice = Integer.valueOf(req.getParameter("act_ticketPrice").trim());
+				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+				String act_name = req.getParameter("act_name");
+				System.out.println(act_name);
 
-			java.sql.Date act_ticketStartTime = null;
-			try {
-				act_ticketStartTime = java.sql.Date.valueOf(req.getParameter("act_ticketStartTime").trim());
-			} catch (IllegalArgumentException e) {
-				act_ticketStartTime = new java.sql.Date(System.currentTimeMillis());
-				errorMsgs.add("請輸入日期!");
-				System.out.println("1");
-			}
+				Integer act_ticketPrice = Integer.valueOf(req.getParameter("act_ticketPrice").trim());
 
-			java.sql.Date act_ticketEndTime = null;
-			try {
-				act_ticketEndTime = java.sql.Date.valueOf(req.getParameter("act_ticketEndTime").trim());
-			} catch (IllegalArgumentException e) {
-				act_ticketEndTime = new java.sql.Date(System.currentTimeMillis());
-				errorMsgs.add("請輸入日期!");
-				System.out.println("2");
-			}
+				java.sql.Date act_ticketStartTime = null;
+				try {
+					act_ticketStartTime = java.sql.Date.valueOf(req.getParameter("act_ticketStartTime").trim());
+				} catch (IllegalArgumentException e) {
+					act_ticketStartTime = new java.sql.Date(System.currentTimeMillis());
+					errorMsgs.add("請輸入日期!");
+					System.out.println("1");
+				}
 
-			Integer act_type = Integer.valueOf(req.getParameter("act_type").trim());
+				java.sql.Date act_ticketEndTime = null;
+				try {
+					act_ticketEndTime = java.sql.Date.valueOf(req.getParameter("act_ticketEndTime").trim());
+				} catch (IllegalArgumentException e) {
+					act_ticketEndTime = new java.sql.Date(System.currentTimeMillis());
+					errorMsgs.add("請輸入日期!");
+					System.out.println("2");
+				}
 
-			java.sql.Date act_startDate = null;
-			try {
-				act_startDate = java.sql.Date.valueOf(req.getParameter("act_startDate").trim());
-			} catch (IllegalArgumentException e) {
-				act_startDate = new java.sql.Date(System.currentTimeMillis());
-				errorMsgs.add("請輸入日期!");
-			}
+				Integer act_type = Integer.valueOf(req.getParameter("act_type").trim());
 
-			java.sql.Date act_endDate = null;
-			try {
-				act_endDate = java.sql.Date.valueOf(req.getParameter("act_endDate").trim());
-			} catch (IllegalArgumentException e) {
-				act_endDate = new java.sql.Date(System.currentTimeMillis());
-				errorMsgs.add("請輸入日期!");
-			}
+				java.sql.Date act_startDate = null;
+				try {
+					act_startDate = java.sql.Date.valueOf(req.getParameter("act_startDate").trim());
+				} catch (IllegalArgumentException e) {
+					act_startDate = new java.sql.Date(System.currentTimeMillis());
+					errorMsgs.add("請輸入日期!");
+				}
 
-			java.sql.Time act_startTime = null;
-			try {
-				act_startTime = java.sql.Time.valueOf(req.getParameter("act_startTime").trim());
-			} catch (IllegalArgumentException e) {
-				
-				errorMsgs.add("請輸入活動開始時間!");
-			}
+				java.sql.Date act_endDate = null;
+				try {
+					act_endDate = java.sql.Date.valueOf(req.getParameter("act_endDate").trim());
+				} catch (IllegalArgumentException e) {
+					act_endDate = new java.sql.Date(System.currentTimeMillis());
+					errorMsgs.add("請輸入日期!");
+				}
 
-			java.sql.Time act_endTime = null;
-			try {
-				act_endTime = java.sql.Time.valueOf(req.getParameter("act_endTime").trim());
-			} catch (IllegalArgumentException e) {
-			
-				errorMsgs.add("請輸入活動結束時間!");
-			}
+				java.sql.Time act_startTime = null;
+				try {
+					act_startTime = java.sql.Time.valueOf(req.getParameter("act_startTime").trim());
+				} catch (IllegalArgumentException e) {
 
-			String act_city = req.getParameter("act_city").trim();
-			if (act_city == null || act_city.trim().length() == 0) {
-				errorMsgs.add("縣市請勿空白");
-			}
+					errorMsgs.add("請輸入活動開始時間!");
+				}
 
-			String act_zone = req.getParameter("act_zone").trim();
-			if (act_zone == null || act_zone.trim().length() == 0) {
-				errorMsgs.add("鄉鎮區域請勿空白");
-			}
+				java.sql.Time act_endTime = null;
+				try {
+					act_endTime = java.sql.Time.valueOf(req.getParameter("act_endTime").trim());
+				} catch (IllegalArgumentException e) {
 
-			String act_address = req.getParameter("act_address").trim();
-			if (act_address == null || act_address.trim().length() == 0) {
-				errorMsgs.add("活動地址請勿空白");
-			}
+					errorMsgs.add("請輸入活動結束時間!");
+				}
 
-			String act_organization = req.getParameter("act_organization").trim();
-			if (act_organization == null || act_organization.trim().length() == 0) {
-				errorMsgs.add("主辦單位請勿空白");
-			}
+				String act_city = req.getParameter("act_city").trim();
+				if (act_city == null || act_city.trim().length() == 0) {
+					errorMsgs.add("縣市請勿空白");
+				}
 
-			String act_email = req.getParameter("act_email").trim();
-			if (act_email == null || act_email.trim().length() == 0) {
-				errorMsgs.add("email請勿空白");
-			}
+				String act_zone = req.getParameter("act_zone").trim();
+				if (act_zone == null || act_zone.trim().length() == 0) {
+					errorMsgs.add("鄉鎮區域請勿空白");
+				}
 
-			String act_phone = req.getParameter("act_phone").trim();
-			if (act_phone == null || act_phone.trim().length() == 0) {
-				errorMsgs.add("連絡電話請勿空白");
-			}
+				String act_address = req.getParameter("act_address").trim();
+				if (act_address == null || act_address.trim().length() == 0) {
+					errorMsgs.add("活動地址請勿空白");
+				}
 
-			Integer act_ticketTotal = Integer.valueOf(req.getParameter("act_ticketTotal").trim());
+				String act_organization = req.getParameter("act_organization").trim();
+				if (act_organization == null || act_organization.trim().length() == 0) {
+					errorMsgs.add("主辦單位請勿空白");
+				}
 
-			String act_content = req.getParameter("act_content").trim();
-			if (act_content == null || act_content.trim().length() == 0) {
-				errorMsgs.add("票券總數");
-			}
+				String act_email = req.getParameter("act_email").trim();
+				if (act_email == null || act_email.trim().length() == 0) {
+					errorMsgs.add("email請勿空白");
+				}
 
-			Part part = req.getPart("act_coverPicture");
-			InputStream in = part.getInputStream();
+				String act_phone = req.getParameter("act_phone").trim();
+				if (act_phone == null || act_phone.trim().length() == 0) {
+					errorMsgs.add("連絡電話請勿空白");
+				}
 
-			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+				Integer act_ticketTotal = Integer.valueOf(req.getParameter("act_ticketTotal").trim());
 
-			byte[] buf = new byte[4 * 1024]; // 4K buffer
-			int len;
-			while ((len = in.read(buf)) != -1) {
-				byteArrayOutputStream.write(buf, 0, len);
-			}
+				String act_content = req.getParameter("act_content").trim();
+				if (act_content == null || act_content.trim().length() == 0) {
+					errorMsgs.add("票券總數");
+				}
 
-			Part part1 = req.getPart("act_picture1");
-			InputStream in1 = part1.getInputStream();
+				Part part = req.getPart("act_coverPicture");
+				InputStream in = part.getInputStream();
 
-			ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream();
+				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-			byte[] buf1 = new byte[4 * 1024]; // 4K buffer
-			int len1;
-			while ((len1 = in1.read(buf1)) != -1) {
-				byteArrayOutputStream1.write(buf1, 0, len1);
-			}
+				byte[] buf = new byte[4 * 1024]; // 4K buffer
+				int len;
+				while ((len = in.read(buf)) != -1) {
+					byteArrayOutputStream.write(buf, 0, len);
+				}
 
-			Part part2 = req.getPart("act_picture2");
-			InputStream in2 = part2.getInputStream();
+				Part part1 = req.getPart("act_picture1");
+				InputStream in1 = part1.getInputStream();
 
-			ByteArrayOutputStream byteArrayOutputStream2 = new ByteArrayOutputStream();
+				ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream();
 
-			byte[] buf2 = new byte[4 * 1024]; // 4K buffer
-			int len2;
-			while ((len2 = in2.read(buf2)) != -1) {
-				byteArrayOutputStream2.write(buf2, 0, len2);
-			}
+				byte[] buf1 = new byte[4 * 1024]; // 4K buffer
+				int len1;
+				while ((len1 = in1.read(buf1)) != -1) {
+					byteArrayOutputStream1.write(buf1, 0, len1);
+				}
 
-			Part part3 = req.getPart("act_picture3");
-			InputStream in3 = part3.getInputStream();
+				Part part2 = req.getPart("act_picture2");
+				InputStream in2 = part2.getInputStream();
 
-			ByteArrayOutputStream byteArrayOutputStream3 = new ByteArrayOutputStream();
+				ByteArrayOutputStream byteArrayOutputStream2 = new ByteArrayOutputStream();
 
-			byte[] buf3 = new byte[4 * 1024]; // 4K buffer
-			int len3;
-			while ((len3 = in3.read(buf3)) != -1) {
-				byteArrayOutputStream3.write(buf3, 0, len3);
-			}
-			
-			Timestamp act_lastModifiedTime = new Timestamp(System.currentTimeMillis());
-	
-			ActivityVO activityVO = new ActivityVO();
-			
-			activityVO.setActName(act_name);
-			activityVO.setActTicketPrice(act_ticketPrice);
-			activityVO.setActTicketStartTime(act_ticketStartTime);
-			activityVO.setActTicketEndTime(act_ticketEndTime);
-			activityVO.setActType(act_type);
-			activityVO.setActStartDate(act_startDate);
-			activityVO.setActEndDate(act_endDate);
-			activityVO.setActStartTime(act_startTime);
-			activityVO.setActEndTime(act_endTime);
-			activityVO.setActCity(act_city);
-			activityVO.setActZone(act_zone);
-			activityVO.setActAddress(act_address);
-			activityVO.setActOrganization(act_organization);
-			activityVO.setActEmail(act_email);
-			activityVO.setActPhone(act_phone);
-			activityVO.setActTicketTotal(act_ticketTotal);
-			activityVO.setActContent(act_content);
-			byte[] act_coverPicture = byteArrayOutputStream.toByteArray();
-			activityVO.setActCoverPicture(act_coverPicture);
-			byte[] act_picture1 = byteArrayOutputStream.toByteArray();
-			activityVO.setActPicture1(act_picture1);
-			byte[] act_picture2 = byteArrayOutputStream.toByteArray();
-			activityVO.setActPicture2(act_picture2);
-			byte[] act_picture3 = byteArrayOutputStream.toByteArray();
-			activityVO.setActPicture3(act_picture3);
-			activityVO.setActLastModifiedTime(act_lastModifiedTime);
+				byte[] buf2 = new byte[4 * 1024]; // 4K buffer
+				int len2;
+				while ((len2 = in2.read(buf2)) != -1) {
+					byteArrayOutputStream2.write(buf2, 0, len2);
+				}
+
+				Part part3 = req.getPart("act_picture3");
+				InputStream in3 = part3.getInputStream();
+
+				ByteArrayOutputStream byteArrayOutputStream3 = new ByteArrayOutputStream();
+
+				byte[] buf3 = new byte[4 * 1024]; // 4K buffer
+				int len3;
+				while ((len3 = in3.read(buf3)) != -1) {
+					byteArrayOutputStream3.write(buf3, 0, len3);
+				}
+
+				Timestamp act_lastModifiedTime = new Timestamp(System.currentTimeMillis());
+
+				ActivityVO activityVO = new ActivityVO();
+
+				activityVO.setActName(act_name);
+				activityVO.setActTicketPrice(act_ticketPrice);
+				activityVO.setActTicketStartTime(act_ticketStartTime);
+				activityVO.setActTicketEndTime(act_ticketEndTime);
+				activityVO.setActType(act_type);
+				activityVO.setActStartDate(act_startDate);
+				activityVO.setActEndDate(act_endDate);
+				activityVO.setActStartTime(act_startTime);
+				activityVO.setActEndTime(act_endTime);
+				activityVO.setActCity(act_city);
+				activityVO.setActZone(act_zone);
+				activityVO.setActAddress(act_address);
+				activityVO.setActOrganization(act_organization);
+				activityVO.setActEmail(act_email);
+				activityVO.setActPhone(act_phone);
+				activityVO.setActTicketTotal(act_ticketTotal);
+				activityVO.setActContent(act_content);
+				byte[] act_coverPicture = byteArrayOutputStream.toByteArray();
+				activityVO.setActCoverPicture(act_coverPicture);
+				byte[] act_picture1 = byteArrayOutputStream.toByteArray();
+				activityVO.setActPicture1(act_picture1);
+				byte[] act_picture2 = byteArrayOutputStream.toByteArray();
+				activityVO.setActPicture2(act_picture2);
+				byte[] act_picture3 = byteArrayOutputStream.toByteArray();
+				activityVO.setActPicture3(act_picture3);
+				activityVO.setActLastModifiedTime(act_lastModifiedTime);
 //			activityVO.setActResultContent(act_ResultContent);
-			
-			SellerVO sellerVO = new SellerVO();
-			sellerVO.setSelId(2001);
-activityVO.setSeller(sellerVO);
 
-			// Send the use back to the form, if there were errors
-			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("activityVO", activityVO); // 含有輸入格式錯誤的empVO物件,也存入req
-				RequestDispatcher failureView = req.getRequestDispatcher("/activity/sel_actadd.jsp");
-				failureView.forward(req, res);
-				return;
-			}
+				SellerVO sellerVO = new SellerVO();
+				sellerVO.setSelId(2001);
+				activityVO.setSeller(sellerVO);
 
-			/*************************** 2.開始新增資料 ***************************************/
-			ActivityService activitySvc = new ActivityService();
-			activitySvc.addActivity(activityVO);
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("activityVO", activityVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("/activity/sel_actadd.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				/*************************** 2.開始新增資料 ***************************************/
+				ActivityService activitySvc = new ActivityService();
+				activitySvc.addActivity(activityVO);
 //			activityVO = activitySvc.addActivity(act_name, act_ticketPrice, act_ticketStartTime,
 //					act_ticketEndTime, act_type, act_startDate, act_endDate, act_startTime,
 //				    act_endTime, act_city, act_zone, act_address, act_organization,
 //					act_email, act_phone, act_ticketTotal, act_content, act_coverPicture,
 //					act_picture1, act_picture2, act_picture3, act_lastModifiedTime);
 
-			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			String url = "/activity/listAllActivity.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-			successView.forward(req, res);
-		}
+				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				String url = "/activity/listAllActivity.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				successView.forward(req, res);
+			}
 
-		if ("delete".equals(action)) { // 來自listAllEmp.jsp
+			if ("delete".equals(action)) { // 來自listAllEmp.jsp
 
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
+				List<String> errorMsgs = new LinkedList<String>();
+				// Store this set in the request scope, in case we need to
+				// send the ErrorPage view.
+				req.setAttribute("errorMsgs", errorMsgs);
 
-			/*************************** 1.接收請求參數 ***************************************/
-			Integer act_id = Integer.valueOf(req.getParameter("act_id"));
+				/*************************** 1.接收請求參數 ***************************************/
+				Integer act_id = Integer.valueOf(req.getParameter("act_id"));
 
-			/*************************** 2.開始刪除資料 ***************************************/
-			ActivityService activitySvc = new ActivityService();
+				/*************************** 2.開始刪除資料 ***************************************/
+				ActivityService activitySvc = new ActivityService();
 //			activitySvc.deleteActivity(act_id);
 
-			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-			String url = "/activity/sel_index.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
-			successView.forward(req, res);
+				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
+				String url = "/activity/sel_index.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+				successView.forward(req, res);
+			}
 		}
 	}
 }

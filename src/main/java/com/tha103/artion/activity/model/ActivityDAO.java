@@ -19,82 +19,104 @@ import com.tha103.artion.util.HibernateUtil;
 
 public class ActivityDAO implements ActivityDAO_interface {
 
-	private SessionFactory factory;
-
-	public ActivityDAO(SessionFactory factory) {
-		this.factory = factory;
-	}
-
-	private Session getSession() {
-		return factory.getCurrentSession();
-	}
+//	private SessionFactory factory;
+//
+//	public ActivityDAO(SessionFactory factory) {
+//		this.factory = factory;
+//	}
+//
+//	private Session getSession() {
+//		return factory.getCurrentSession();
+//	}
 
 	@Override
 	public int insert(ActivityVO activityVO) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		int actId = 0;
 		try {
-			getSession().getTransaction().begin();
-			int actId = (int) (getSession().save(activityVO));
-			getSession().getTransaction().commit();
+			session.getTransaction().begin();
+			actId = (int) session.save(activityVO);
+			session.getTransaction().commit();
 			return actId;
 		} catch (Exception e) {
 			e.printStackTrace();
-			getSession().getTransaction().rollback();
+			session.getTransaction().rollback();
 		}
 		return -1;
 	}
 
 	@Override
 	public int update(ActivityVO activityVO) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			getSession().getTransaction().begin();
-			getSession().update(activityVO);
-			getSession().getTransaction().commit();
+			session.getTransaction().begin();
+			session.update(activityVO);
+			session.getTransaction().commit();
 			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
-			getSession().getTransaction().rollback();
+			session.getTransaction().rollback();
 		}
 		return -1;
 	}
 
 	@Override
 	public ActivityVO findByPK(Integer actId) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			getSession().beginTransaction();
-			ActivityVO activity = getSession().get(ActivityVO.class, actId);
-			getSession().getTransaction().commit();
+			session.beginTransaction();
+			ActivityVO activity = session.get(ActivityVO.class, actId);
+			session.getTransaction().commit();
 			return activity;
 		} catch (Exception e) {
 			e.printStackTrace();
-			getSession().getTransaction().rollback();
+			session.getTransaction().rollback();
 		}
 		return null;
 	}
 
+//	@Override
+//	public List<ActivityVO> getAll() {
+//	    List<ActivityVO> list = null;
+//	    try {
+//	    	System.out.println("ooo");
+//	        list = getSession().createQuery("from Activity", ActivityVO.class).list();
+//	        
+//	        System.out.println("aaa");
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	    }
+//	    return list;
+//	}
+	
+	
+	
 	@Override
 	public List<ActivityVO> getAll() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			getSession().beginTransaction();
-			List<ActivityVO> list = getSession().createQuery("from Activity", ActivityVO.class).list();
-			getSession().getTransaction().commit();
+			session.beginTransaction();
+			List<ActivityVO> list = session.createQuery("from ActivityVO", ActivityVO.class).list();
+			session.getTransaction().commit();
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
-			getSession().getTransaction().rollback();
+			session.getTransaction().rollback();
 		}
 		return null;
 	}
 	//透過種類查詢
 	public List<ActivityVO> getActType(String type) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			getSession().beginTransaction();
+			session.beginTransaction();
 			String hql = "FROM Activity WHERE actType = :type";
-			Query<ActivityVO> query = getSession().createQuery(hql, ActivityVO.class);
+			Query<ActivityVO> query = session.createQuery(hql, ActivityVO.class);
 			query.setParameter("type", type);
 			return query.list();
 		} catch (Exception e) {
 			e.printStackTrace();
-			getSession().getTransaction().rollback();
+			session.getTransaction().rollback();
 		}
 		return null;
 	}
@@ -144,7 +166,6 @@ public class ActivityDAO implements ActivityDAO_interface {
 //		return null;
 //	}
 //	
-
 
 	// DAO測試
 	public static void main(String[] args) throws Exception {
@@ -202,12 +223,19 @@ public class ActivityDAO implements ActivityDAO_interface {
 //			session.save(activityVO);
 
 			// 查詢單筆資料
-			ActivityVO activityVO1 = session.get(ActivityVO.class, 10001);
-			System.out.println(activityVO1);
+//			ActivityVO activityVO1 = session.get(ActivityVO.class, 10001);
+//			System.out.println(activityVO1);
 
 //			List<ActivityVO> list = session.createQuery("from ActivityVO", ActivityVO.class).list();
 //			System.out.println(list);
-
+			
+//			ActivityDAO dao = new ActivityDAO();
+//			System.out.println(dao.getAll());
+			
+			//刪除單筆資料
+			 ActivityVO activity = session.get(ActivityVO.class, 10001);
+			 session.delete(activity);
+			
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
