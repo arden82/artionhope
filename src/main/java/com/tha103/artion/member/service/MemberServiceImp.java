@@ -22,10 +22,10 @@ public class MemberServiceImp implements MemberService {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			MemberLevelVO level=session.get(MemberLevelVO.class, 1);
+			MemberLevelVO level = session.get(MemberLevelVO.class, 1);
 			memberVO = member;
 			memberVO.setMemLevLevel(level);
-			memId=dao.insert(member);
+			memId = dao.insert(member);
 			session.getTransaction().commit();
 			return memId;
 		} catch (Exception e) {
@@ -41,7 +41,7 @@ public class MemberServiceImp implements MemberService {
 		try {
 			session.beginTransaction();
 			memberVO = member;
-			memId=dao.update(member);
+			memId = dao.update(member);
 			session.getTransaction().commit();
 			return memId;
 		} catch (Exception e) {
@@ -50,23 +50,30 @@ public class MemberServiceImp implements MemberService {
 			return -1;
 		}
 	}
-	
 
 	@Override
-	public int login(MemberVO member) {
+	public MemberVO login(String account, String password) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			session
-			memberVO=dao.getMember(mem_id);
+			MemberVO member = session.createQuery("from member where mem_account =" + account, MemberVO.class)
+					.uniqueResult();
 			session.getTransaction().commit();
-		
+			if(member!=null) {
+				String check = member.getMemPassword();
+				if(!(check.equals(password))) {
+					member.setMemPassword("密碼錯誤");//有註冊過的帳號但密碼錯誤
+					
+				}
+				return member;
+			}
+			return null;//沒有註冊過的帳號回傳null
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			e.printStackTrace();
 			return null;
 		}
-	
+
 	}
 
 	@Override
@@ -74,7 +81,7 @@ public class MemberServiceImp implements MemberService {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			memberVO=dao.getMember(mem_id);
+			memberVO = dao.getMember(mem_id);
 			session.getTransaction().commit();
 			return memberVO;
 		} catch (Exception e) {

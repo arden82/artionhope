@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
@@ -96,7 +97,40 @@ public class MemberServlet extends HttpServlet {
 		case "login":
 			account = req.getParameter("mem_account");
 			password = req.getParameter("mem_password");
-			memSvc 
+			memberVO = memSvc.login(account, password);
+			HttpSession session = req.getSession();
+			Gson gson = new Gson();
+			if (memberVO != null) {
+				if ("密碼錯誤".equals(memberVO.getMemPassword())) {
+					session.setAttribute("errmsg", "密碼錯誤");
+					String sessionStr = (String) session.getAttribute("errmsg");
+					String sessionJson = gson.toJson(sessionStr);
+					res.setContentType("application/json");
+					res.getWriter().write(sessionJson);
+					res.sendRedirect(req.getContextPath() + "/memberLogin.html");
+					return;
+				}
+				session.setAttribute("account", account);
+				try {
+					String location = (String) session.getAttribute("location");
+					if (location != null) {
+						session.removeAttribute(location);// 移出session裡的location
+						res.sendRedirect(location);
+						return;
+					}
+				} catch (Exception e) {
+					System.out.println("login Exception");
+				}
+				res.sendRedirect(req.getContextPath() + "/memberforgetPassword.html");// 之後要改成首頁網址
+			}
+			session.setAttribute("errmsg", "此帳號沒有註冊過");
+			String sessionStr = (String) session.getAttribute("errmsg");
+			String sessionJson = gson.toJson(sessionStr);
+			res.setContentType("application/json");
+			res.getWriter().write(sessionJson);
+			res.sendRedirect(req.getContextPath() + "/memberLogin.html"); // 回去登入頁
+			break;
+
 		}
 
 	}
