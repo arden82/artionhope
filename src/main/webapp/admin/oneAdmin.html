@@ -233,77 +233,27 @@
     <!-- ==================================================================== -->
 
     <script>
-      // 定義一個函數來獲取管理員數據並填充表格
-      function getAdminData() {
-        $.ajax({
-          url: "http://localhost:8081/artion/ShowAllAdmins",
-          type: "POST",
-          dataType: "json",
-          success: function (data) {
-            var tableBody = $("#table-body");
-            tableBody.empty();
-
-            if (data.length > 0) {
-              $.each(data, function (index, admin) {
-                var newRowHTML = `
-                              <tr>
-                                  <th scope="row" id="admId">${admin.admId}</th>
-                                  <td><img src='http://localhost:8081/artion/adminphoto?admId=${admin.admId}' alt='頭貼'></td>
-                                  <td>${admin.admName}</td>
-                                  <td>${admin.admIdentity}</td>
-                                  <td>${admin.admStatus}</td>
-                                  <td>${admin.admMail}</td>
-                                  <td>${admin.admPassword}</td>
-                                  <td>${admin.admBirthday}</td>
-                                  <td>${admin.admMobile}</td>
-                                  <td>${admin.admAddTime}</td>
-                                  <td>${admin.admLastModifiedTime}</td>
-                                  <td>${admin.admRight}</td>
-                                  <td><button type="submit" id="commit">修改</button></td>
-                                  <td><button>刪除</button></td>
-                              </tr>
-                          `;
-                tableBody.append(newRowHTML);
-              });
-            } else {
-              tableBody.html("<tr><td colspan='13'>沒有管理員資料。</td></tr>");
-            }
-          },
-          error: function () {
-            // 處理錯誤
-            alert("請求失敗。");
-          },
-        });
-      }
-
-      function updateOneAdmin(admId) {
-        let updateItem = {
-          admId: admId,
-        };
-        console.log(admId);
-        $.ajax({
-          url: "http://localhost:8081/artion/ShowOneAdmin",
-          type: "POST",
-          data: updateItem,
-          dataType: "json",
-          success: function (data) {
-            alert("success");
-            console.log(data);
-            location.href = "managerDetails.html?admId=" + admId; // 在URL中包含admId
-          },
-        });
-      }
-
       $(document).ready(function () {
-        getAdminData();
+        var urlParams = new URLSearchParams(window.location.search);
+        var admId = urlParams.get("admId");
 
-        $("#table-body").on("click", "#commit", function (e) {
-          e.preventDefault();
-          console.log("click update");
-          let admId = $(this).closest("tr").find("#admId").text();
-          console.log(admId);
-          updateOneAdmin(admId);
-        });
+        if (admId) {
+          $.ajax({
+            url: "http://localhost:8081/artion/ShowOneAdmin",
+            type: "POST",
+            data: { admId: admId },
+            dataType: "json",
+            success: function (data) {
+              console.log(data);
+              // 在页面中显示管理员数据
+              // ...
+            },
+            error: function () {
+              // 处理错误
+              alert("请求失败。");
+            },
+          });
+        }
       });
     </script>
 
