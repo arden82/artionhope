@@ -86,9 +86,9 @@
           <a href="#" class="sidebar-toggler flex-shrink-0">
             <i class="fa fa-bars"></i>
           </a>
-          <form class="d-none d-md-flex ms-4">
-            <input class="form-control border-0" type="search" placeholder="Search" />
-          </form>
+
+          <input class="form-control border-0" type="search" placeholder="Search" />
+
           <div class="navbar-nav align-items-center ms-auto">
             <div class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -172,14 +172,14 @@
           <div class="row g-4">
             <!-- 左侧卡片区块，占据6列，即半屏宽度 -->
             <div class="col-sm-12 col-xl-12">
-              <form id="adminDetailsForm">
+              <form id="adminDetailsForm" method="post" enctype="multipart/form-data">
                 <div class="bg-light rounded h-100 p-4">
                   <h6 class="mb-4" style="font-size: 24px; color: #009cff">修改管理者基本資料</h6>
                   <div class="mb-3"><label for="adminIdInput" class="form-label">管理者編號:</label><span id="adminIdSpan"></span></div>
                   <div class="mb-3"><label for="exampleInputEmail1" class="form-label">上傳你的頭貼:</label></div>
                   <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
-                      <input type="file" id="uploadImage" accept="image/*" style="display: none" />
+                      <input type="file" id="admProfilePhoto" accept="image/*" style="display: none" />
                       <div id="userImageContainer" class="rounded-circle" style="width: 40px; height: 40px; cursor: pointer">
                         <i class="fa-solid fa-user-tie"></i>
                       </div>
@@ -189,53 +189,61 @@
 
                   <div class="row">
                     <div class="col-md-3 mb-3">
-                      <label for="adminNameInput" class="form-label">名稱</label>
-                      <input type="text" class="form-control" id="adminNameInput" style="color: lightgrey" />
+                      <label for="admName" class="form-label">名稱</label>
+                      <input type="text" class="form-control" id="admName" style="color: lightgrey" />
                     </div>
                     <div class="col-md-3 mb-3">
-                      <label for="adminIdentityInput" class="form-label">身分</label>
-                      <select class="form-select" id="adminIdentityInput" aria-label="Floating label select example">
+                      <label for="admIdentity" class="form-label">身分</label>
+                      <select class="form-select" id="admIdentity" aria-label="Floating label select example">
                         <option selected>請選擇等級</option>
                         <option value="1">一般管理者</option>
                         <option value="2">主要管理者</option>
                       </select>
                     </div>
                     <div class="col-md-3 mb-3">
-                      <label for="adminStatusInput" class="form-label">狀態</label>
-                      <select class="form-select" id="adminStatusInput" aria-label="Floating label select example">
+                      <label for="admStatus" class="form-label">狀態</label>
+                      <select class="form-select" id="admStatus" aria-label="Floating label select example">
                         <option selected>請選擇</option>
                         <option value="1">停權</option>
                         <option value="2">正常</option>
                       </select>
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label for="adminEmailInput" class="form-label">E-mail</label>
-                      <input type="email" class="form-control" id="adminEmailInput" style="color: lightgrey" value="" autocomplete="username" />
+                      <label for="admMail" class="form-label">E-mail</label>
+                      <input type="email" class="form-control" id="admMail" style="color: lightgrey" value="" autocomplete="username" />
                     </div>
                     <div class="row">
                       <div class="col">
                         <div class="mb-2">
-                          <label for="adminPasswordInput" class="form-label">密碼</label>
+                          <label for="admPassword" class="form-label">密碼</label>
                           <div class="d-flex">
-                            <input type="password" class="form-control" id="adminPasswordInput" style="width: 25%" autocomplete="current-password" />
+                            <input type="password" class="form-control" id="admPassword" style="width: 25%" autocomplete="current-password" />
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-3 mb-3">
-                    <label for="adminBirthdayInput" class="form-label">生日</label>
-                    <input type="date" class="form-control" id="adminBirthdayInput" />
+                    <label for="admBirthday" class="form-label">生日</label>
+                    <input type="date" class="form-control" id="admBirthday" />
                   </div>
                   <div class="col-md-3 mb-3">
-                    <label for="adminPhoneNumberInput" class="form-label">手機電話</label>
-                    <input type="number" class="form-control" id="adminPhoneNumberInput" value="" />
+                    <label for="admMobile" class="form-label">手機電話</label>
+                    <input type="number" class="form-control" id="admMobile" value="" />
+                  </div>
+                  <div class="col-md-3 mb-3">
+                    <label for="admRight" class="form-label">權限</label>
+                    <select class="form-select" id="admRight" aria-label="Floating label select example">
+                      <option selected>請選擇</option>
+                      <option value="1">一般管理者</option>
+                      <option value="2">正常</option>
+                    </select>
                   </div>
                   <div class="row">
-                    <div class="col-md-3 mb-3"><label for="adminCreateTimeInput" class="form-label">創建時間:</label><span id="adminCreateTimeSpan"></span></div>
-                    <div class="col-md-3 mb-3"><label for="adminLastModifiedTimeInput" class="form-label">最新更改時間:</label><span id="adminLastModifiedTimeSpan"></span></div>
+                    <div class="col-md-3 mb-3"><label for="admAddTime" class="form-label">創建時間:</label><span id="adminCreateTimeSpan"></span></div>
+                    <div class="col-md-3 mb-3"><label for="admLastModifiedTime" class="form-label">最新更改時間:</label><span id="adminLastModifiedTimeSpan"></span></div>
                   </div>
-                  <button type="button" class="btn btn-secondary m-2">取消</button> <button type="submit" class="btn btn-primary">更改</button>
+                  <button type="button" class="btn btn-secondary m-2">取消</button> <button type="submit" class="btn btn-primary" id="update">更改</button>
                 </div>
               </form>
             </div>
@@ -265,7 +273,7 @@
     </div>
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/chart/chart.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
@@ -279,7 +287,7 @@
     <script src="js/main.js"></script>
     <script>
       // 获取上传照片的 input 元素
-      const uploadInput = document.getElementById("uploadImage");
+      const uploadInput = document.getElementById("admProfilePhoto");
 
       // 获取用于显示用户照片的容器元素
       const userImageContainer = document.getElementById("userImageContainer");
@@ -306,50 +314,106 @@
       });
     </script>
 
+    <!-- <script>
+      $(document).ready(function () {
+        // 綁定點擊事件到整個文檔
+        $(document).click(function (event) {
+          // 在這裡可以執行您的操作
+          // 您可以通過 event 對象來獲取單擊事件的詳細信息
+          // 這個示例將 adminNameInput 的值設置為 "點擊了頁面"
+          $("#adminNameInput").val("點擊了頁面");
+        });
+      });
+    </script> -->
+
     <script>
-      $(function () {
-        // })
-        // $(document).ready(function () {
+      //畫面先渲染原本的資料
+
+      $(document).ready(function () {
         // 获取查询参数中的管理员 ID
         var urlParams = new URLSearchParams(window.location.search);
         var admId = urlParams.get("admId");
 
-        // 发送 AJAX 请求以获取管理员详细信息
+        if (admId) {
+          $.ajax({
+            url: "http://localhost:8081/artion/ShowOneAdmin",
+            type: "POST",
+            data: { admId: admId },
+            dataType: "json",
+            success: function (data) {
+              console.log(data);
+
+              // showdata(data);
+
+              // 填充表单字段
+              $("#adminIdSpan").text(data.admId);
+              $("#admName").val(data.admName);
+              $("#admIdentity").val(data.admIdentity);
+              $("#admStatus").val(data.admStatus);
+              $("#admMail").val(data.admMail);
+              $("#admPassword").val(data.admPassword);
+              $("#admBirthday").val(data.admBirthday);
+              $("#admMobile").val(data.admMobile);
+              $("#admRight").val(data.admRight);
+              $("#adminCreateTimeSpan").text(data.admAddTime);
+              $("#adminLastModifiedTimeSpan").text(data.admLastModifiedTime);
+
+              // 点击“取消”按钮时返回上一页
+              $("#cancelButton").on("click", function () {
+                history.back();
+              });
+
+              // 点击“更改”按钮时提交表单或执行其他操作
+              $("#updateButton").on("click", function () {
+                // 这里可以添加表单提交的代码或其他操作
+                // 例如，通过 AJAX 请求将修改后的数据发送到后端
+              });
+            },
+            error: function () {
+              // 处理错误
+              alert("请求失败。");
+            },
+          });
+        }
+      });
+
+      //點擊更改資料
+
+      $("#update").on("click", function (e) {
+        let amdin_item = {
+          admId: $("#adminIdSpan").text(),
+          admName: $("#admName").val(),
+          admIdentity: $("#admIdentity").val(),
+          admStatus: $("#admStatus").val(),
+          admMail: $("#admMail").val(),
+          admPassword: $("#admPassword").val(),
+          admBirthday: $("#admBirthday").val(),
+          admMobile: $("#admMobile").val(),
+          admProfilePhoto: $("#admProfilePhoto")[0].files[0],
+          admRight: $("#admRight").val(),
+        };
+
+        console.log(amdin_item);
+
         $.ajax({
-          url: "http://localhost:8081/artion/updateadmin?admId=" + admId,
-          type: "POST",
-          dataType: "json",
-          success: function (data) {
-            console.log(data);
+          url: "http://localhost:8081/artion/updateadmin", // 替换为用于更新数据的后端URL
+          type: "POST", // 根据你的需要选择请求类型
+          data: amdin_item, // 发送的数据
+          processData: false, // 必须禁用 processData
+          // contentType: false, // 必须禁用 contentType
+          success: function (response) {
+            // 在成功时执行的操作
+            console.log(response);
+            // 可以添加其他处理成功后的操作，例如重定向或显示成功消息
 
-            // 填充表单字段
-            $("#adminIdSpan").text(data.adminId);
-            $("#adminNameInput").val(data.adminName);
-            $("#adminIdentityInput").val(data.adminIdentity);
-            $("#adminStatusInput").val(data.adminStatus);
-            $("#adminEmailInput").val(data.adminEmail);
-            $("#adminPasswordInput").val(data.adminPassword);
-            $("#adminBirthdayInput").val(data.adminBirthday);
-            $("#adminPhoneNumberInput").val(data.adminMobile);
-            $("#adminCreateTimeSpan").text(data.adminAddTime);
-            $("#adminLastModifiedTimeSpan").text(data.admLastModifiedTime);
-            // 填充其他字段，根据实际字段名填写
+            // 执行重定向到oneAdmin.html
+            window.location.href = "oneAdmin.html?admId=" + data.admId;
           },
-          error: function () {
-            // 处理错误
-            alert("请求失败。");
+          error: function (error) {
+            // 在请求失败时执行的操作
+            console.error(error);
+            // 可以添加其他处理请求失败后的操作，例如显示错误消息
           },
-        });
-
-        // 点击“取消”按钮时返回上一页
-        $("#cancelButton").on("click", function () {
-          history.back();
-        });
-
-        // 点击“更改”按钮时提交表单或执行其他操作
-        $("#updateButton").on("click", function () {
-          // 这里可以添加表单提交的代码或其他操作
-          // 例如，通过 AJAX 请求将修改后的数据发送到后端
         });
       });
     </script>
