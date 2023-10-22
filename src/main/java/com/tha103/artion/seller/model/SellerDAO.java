@@ -68,13 +68,16 @@ public class SellerDAO implements SellerDAO_interface {
 	    Session session = HibernateUtil.getSessionFactory().openSession(); // 使用 openSession 获取当前会话
 	    try {
 	        session.beginTransaction();
-	        session.merge(sellerVO);	      
+	        session.merge(sellerVO);	  
+	        System.out.println("a");
 	        session.getTransaction().commit();
 	    } catch (RuntimeException ex) {
 	        session.getTransaction().rollback();
+	        System.out.println("b");
 	        throw ex;
 	    } finally {
 	        session.close(); // 在完成操作后关闭会话
+	        System.out.println("c");
 	    }
 	}
 
@@ -148,32 +151,21 @@ public class SellerDAO implements SellerDAO_interface {
 	}
 
 	public boolean checkUser(String account, String password) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
+	    Session session = HibernateUtil.getSessionFactory().openSession();
+	    session.beginTransaction();
 
-		// 使用 Hibernate Criteria API 执行查询
-		Criteria criteria = session.createCriteria(SellerVO.class).add(Restrictions.eq("selAccount", account))
-				.add(Restrictions.eq("selPassword", password));
+	    // 使用 Hibernate Criteria API 执行查询
+	    Criteria criteria = session.createCriteria(SellerVO.class)
+	            .add(Restrictions.eq("selAccount", account))
+	            .add(Restrictions.eq("selPassword", password));
 
-		SellerVO sellerVO = (SellerVO) criteria.uniqueResult();
+	    SellerVO sellerVO = (SellerVO) criteria.uniqueResult();
 
-		session.getTransaction().commit();
+	    session.getTransaction().commit();
 
-		return sellerVO != null;
+	    return sellerVO != null;
 	}
 
-	public void close() {
-		try {
-			if (connection != null) {
-				connection.close();
-			}
-			// 如果有其他资源需要关闭，也在这里关闭
-		} catch (SQLException e) {
-			// 处理关闭资源时可能出现的异常
-			e.printStackTrace();
-		}
-	}
 
 	@Override
 	public SellerVO getSingleSeller() {
@@ -204,6 +196,21 @@ public class SellerDAO implements SellerDAO_interface {
 		}
 
 		return sellerVO;
+	}
+	@Override
+	public SellerVO getSellerById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public SellerVO getOneSeller(Integer sel_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Timestamp getSetSelRegisterdTime(Integer sel_id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 //	@Override

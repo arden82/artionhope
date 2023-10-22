@@ -8,6 +8,8 @@
 
 <%
 SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
+System.out.println(sellerVO.getSelName());
+System.out.println(sellerVO.getSelName());
 %>
 
 <!DOCTYPE html>
@@ -221,6 +223,16 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 					</div>
 			</nav>
 			<!-- Navbar End -->
+			<c:if test="${not empty errorMsgs}">
+				<font style="color: red">請修正以下錯誤:</font>
+				<ul>
+					<c:forEach var="message" items="${errorMsgs}">
+						<li style="color: red">${message}</li>
+					</c:forEach>
+				</ul>
+			</c:if>
+
+
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/seller/SellerServlet.do"
 				name="form1">
@@ -244,13 +256,13 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 												<label for="sellpassword" class="form-label">密碼</label>
 												<div class="d-flex">
 													<input type="password" class="form-control"
-														id="sellpassword" name="selPassword"
+														id="selPassword" name="selPassword"
 														value="${sellerVO.selPassword}">
 												</div>
 												<div class="mb-3">
 													<label for="selId" class="form-label">廠商編號</label> <input
 														type="text" class="form-control" id="selId" name="selId"
-														value="${sellerVO.selId}">
+														value="${sellerVO.selId}" readonly>
 												</div>
 											</div>
 										</div>
@@ -258,7 +270,7 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 								</div>
 								<div class="mb-3">
 									<label for="sellName" class="form-label">廠商名稱</label> <input
-										type="text" class="form-control" id="sellName" name="selName"
+										type="text" class="form-control" id="selName" name="selName"
 										value="${sellerVO.selName}">
 								</div>
 								<div class="mb-3">
@@ -423,8 +435,8 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 							<div class="text-center" style="margin-top: 30px;">
 								<!-- 文本置中並設定上邊距 -->
 								<input type="hidden" name="action" value="update"> <input
-									type="hidden" name="selId" value="<%=sellerVO.getSelId()%>">
-								<input type="submit" value="送出修改">
+									type="hidden" name="selId" value="${sellerVO.selId}"> <input
+									type="submit" value="送出修改">
 			</FORM>
 
 		</div>

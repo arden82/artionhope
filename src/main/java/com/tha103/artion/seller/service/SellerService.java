@@ -80,10 +80,11 @@ public class SellerService {
 		        Integer existingStatus = sellerVO.getSelStatus();
 		        // 恢復現有的sel_status值
 		        sellerVO.setSelStatus(existingStatus);
-
+System.out.println(1);
 		        dao.update(sellerVO);
+		        
 		    }
-
+System.out.println(2);
 		    return sellerVO;
 		}
 

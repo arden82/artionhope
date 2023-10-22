@@ -28,7 +28,8 @@ public class LoginHandler extends HttpServlet {
 	}
 
 	protected boolean allowUser(String account, String password) {
-		return sellerDAO.checkUser(account, password);
+	    SellerVO sellerVO = sellerDAO.getSingleSeller();
+	    return sellerVO != null;
 	}
 
 	protected void successfulLogin(HttpServletRequest req, HttpServletResponse res, String account) throws IOException {
