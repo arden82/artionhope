@@ -24,6 +24,7 @@ import com.tha103.artion.member.controller.*;
 import com.tha103.artion.member.model.MemberVO;
 import com.tha103.artion.member.service.MemberService;
 import com.tha103.artion.member.service.MemberServiceImp;
+import com.tha103.artion.member.service.Membermsg;
 import com.tha103.artion.memberLevel.model.MemberLevelVO;
 
 @WebServlet("/member/member.do")
@@ -36,9 +37,14 @@ public class MemberServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		System.out.println(action);
-		MemberService memSvc = new MemberServiceImp();
+		action = (action != null) ? action : "";
+		System.out.println("action " + action);
+		MemberService memSvc = null;
+		memSvc = new MemberServiceImp();
 		MemberVO memberVO = new MemberVO();
+		HttpSession session = null;
+		Gson gson = null;
+		Membermsg msg = null;
 		switch (action) {
 		case "insert":
 			String account = req.getParameter("mem_account");
@@ -68,7 +74,7 @@ public class MemberServlet extends HttpServlet {
 //					System.out.println("未選圖片");
 					ServletContext context = getServletContext();// 開發與上線路徑會不一樣
 					// randomInteger = min + (int)(Math.random() * ((max - min) + 1))
-					int random = 1 + (int) (Math.random() * (4) + 1);
+					int random = 1 + (int) (Math.random() * (3) + 1);
 					String imgPath = context.getRealPath("/images/member/" + random + ".jpg");
 					System.out.println("a2imgPath ," + imgPath);
 					FileInputStream fis = new FileInputStream(imgPath);
@@ -92,46 +98,96 @@ public class MemberServlet extends HttpServlet {
 			memberVO.setMemRegisterdTime(new java.sql.Timestamp(new java.util.Date().getTime()));
 			memberVO.setMemProfilePhoto(profilePhotoByte);
 			memberVO.setMemTotalCost(0);
-			memSvc.insert(memberVO);
+			if (memSvc.insert(memberVO) == -1) {
+				session = req.getSession();
+				gson = null;
+				msg = null;
+				session.setAttribute("errmsg", "此帳號已註冊");
+				String sessionStr = (String) session.getAttribute("errmsg");
+				msg = new Membermsg(sessionStr);
+				System.out.println("msg:" + msg);
+				gson = new Gson();
+				String sessionJson = gson.toJson(msg);
+				System.out.println("sessionJson," + sessionJson);
+				res.setContentType("application/json");
+				res.setCharacterEncoding("UTF-8");
+				res.getWriter().write(sessionJson);
+				break;
+			}
+			;
 			break;
 		case "login":
 			account = req.getParameter("mem_account");
-			password = req.getParameter("mem_password");
+			password = req.getParameter("password");
+			memSvc = new MemberServiceImp();
 			memberVO = memSvc.login(account, password);
-			HttpSession session = req.getSession();
-			Gson gson = new Gson();
+			session = req.getSession();
+			System.out.println("login case");
+			System.out.println("memberVO != null:" + (memberVO != null));
+			String streql = null;
 			if (memberVO != null) {
-				if ("密碼錯誤".equals(memberVO.getMemPassword())) {
-					session.setAttribute("errmsg", "密碼錯誤");
-					String sessionStr = (String) session.getAttribute("errmsg");
-					String sessionJson = gson.toJson(sessionStr);
-					res.setContentType("application/json");
-					res.getWriter().write(sessionJson);
-					res.sendRedirect(req.getContextPath() + "/memberLogin.html");
-					return;
-				}
-				session.setAttribute("account", account);
-				try {
+				streql = memberVO.getMemPassword();
+			} else {
+				streql = "";
+			}
+			try {
+				System.out.println("streql:"+streql);
+				if (memberVO != null && !(("密碼錯誤".equals(streql)))) {
+					session.setAttribute("account", account);
 					String location = (String) session.getAttribute("location");
 					if (location != null) {
 						session.removeAttribute(location);// 移出session裡的location
+						System.out.println("location , 成功" + location);
 						res.sendRedirect(location);
 						return;
 					}
-				} catch (Exception e) {
-					System.out.println("login Exception");
+					System.out.println("login 成功要轉換");
+					System.out.println(req.getContextPath() + "/html/member/memberforgetPassword.html");
+					res.sendRedirect(req.getContextPath() + "/html/member/memberforgetPassword.html");
+					return;
+
+				} else {
+					if ("密碼錯誤".equals(streql)) {
+						session.setAttribute("errmsg", "密碼錯誤");
+						String sessionStr = (String) session.getAttribute("errmsg");
+						msg = new Membermsg(sessionStr);
+						System.out.println("msg:" + msg);
+
+					} else {
+						session.setAttribute("errmsg", "此帳號沒有註冊過");
+						String sessionStr = (String) session.getAttribute("errmsg");
+						msg = new Membermsg(sessionStr);
+						System.out.println("msg:" + msg);
+
+					}
+					gson = new Gson();
+					String sessionJson = gson.toJson(msg);
+					System.out.println("sessionJson," + sessionJson);
+					res.setContentType("application/json");
+					res.setCharacterEncoding("UTF-8");
+					res.getWriter().write(sessionJson);
+					break;
 				}
-				res.sendRedirect(req.getContextPath() + "/memberforgetPassword.html");// 之後要改成首頁網址
+
+			} catch (Exception e) {
+				System.out.println("login Exception:" + e);
 			}
-			session.setAttribute("errmsg", "此帳號沒有註冊過");
-			String sessionStr = (String) session.getAttribute("errmsg");
-			String sessionJson = gson.toJson(sessionStr);
-			res.setContentType("application/json");
-			res.getWriter().write(sessionJson);
-			res.sendRedirect(req.getContextPath() + "/memberLogin.html"); // 回去登入頁
-			break;
-
+		case "examine":
+			account = req.getParameter("mem_account");
+			memSvc = new MemberServiceImp();
+			if (1 == memSvc.examine(account)) {
+				session = req.getSession();
+				session.setAttribute("errmsg", "此帳號已註冊");
+				String sessionStr = (String) session.getAttribute("errmsg");
+				msg = new Membermsg(sessionStr);
+				System.out.println("msg:" + msg);
+				gson = new Gson();
+				String sessionJson = gson.toJson(msg);
+				res.setContentType("application/json");
+				res.setCharacterEncoding("UTF-8");
+				res.getWriter().write(sessionJson);
+				break;
+			}
 		}
-
 	}
 }

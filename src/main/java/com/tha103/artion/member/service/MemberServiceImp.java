@@ -10,85 +10,44 @@ import com.tha103.artion.util.HibernateUtil;
 
 public class MemberServiceImp implements MemberService {
 	MemberDAO dao;
-	MemberVO memberVO = null;
-	Integer memId;
-
 	public MemberServiceImp() {
 		dao = new MemberDAOlmp(HibernateUtil.getSessionFactory());
 	}
 
 	@Override
+	public int examine(String account) {
+		return dao.examine(account);
+	}
+
+	@Override
 	public int insert(MemberVO member) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try {
-			session.beginTransaction();
-			MemberLevelVO level = session.get(MemberLevelVO.class, 1);
-			memberVO = member;
-			memberVO.setMemLevLevel(level);
-			memId = dao.insert(member);
-			session.getTransaction().commit();
-			return memId;
-		} catch (Exception e) {
-			session.getTransaction().rollback();
-			e.printStackTrace();
-			return -1;
-		}
+			return dao.insert(member);
 	}
 
 	@Override
 	public int update(MemberVO member) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try {
-			session.beginTransaction();
-			memberVO = member;
-			memId = dao.update(member);
-			session.getTransaction().commit();
-			return memId;
-		} catch (Exception e) {
-			session.getTransaction().rollback();
-			e.printStackTrace();
-			return -1;
-		}
+		return dao.update(member);
 	}
 
 	@Override
 	public MemberVO login(String account, String password) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try {
-			session.beginTransaction();
-			MemberVO member = session.createQuery("from member where mem_account =" + account, MemberVO.class)
-					.uniqueResult();
-			session.getTransaction().commit();
-			if(member!=null) {
-				String check = member.getMemPassword();
-				if(!(check.equals(password))) {
-					member.setMemPassword("密碼錯誤");//有註冊過的帳號但密碼錯誤
-					
-				}
-				return member;
-			}
-			return null;//沒有註冊過的帳號回傳null
-		} catch (Exception e) {
-			session.getTransaction().rollback();
-			e.printStackTrace();
-			return null;
+		 MemberVO member=dao.login(account, password); 
+		 MemberVO msg=new MemberVO();
+		if(member!=null) {
+			String check = member.getMemPassword();
+			if(!(check.equals(password))) {
+				 msg.setMemPassword("密碼錯誤");
+				return   msg;//有註冊過的帳號但密碼錯誤
+			}			
+			return member;
 		}
-
+		return null;
+		
 	}
 
 	@Override
 	public MemberVO getMember(Integer mem_id) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try {
-			session.beginTransaction();
-			memberVO = dao.getMember(mem_id);
-			session.getTransaction().commit();
-			return memberVO;
-		} catch (Exception e) {
-			session.getTransaction().rollback();
-			e.printStackTrace();
-			return null;
-		}
+			return  dao.getMember(mem_id);
 	}
 
 }
