@@ -111,8 +111,8 @@ public class SellerServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 //			/*************************** 1.接收請求參數 ****************************************/
-			Integer sel_id = Integer.valueOf(req.getParameter("sel_id"));
-
+			Integer sel_id = Integer.valueOf(req.getParameter("selId"));
+			
 //			/*************************** 2.開始查詢資料 ****************************************/
 			SellerService sellerSvc = new SellerService();
 			SellerVO sellerVO = sellerSvc.getOneSeller(sel_id);
@@ -132,7 +132,7 @@ public class SellerServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 //			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			Integer sel_id = (Integer) req.getAttribute("selId");
+			Integer sel_id = Integer.valueOf(req.getParameter("selId"));
 
 			String sel_account = req.getParameter("selAccount");
 			String sel_accountReg = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
@@ -243,21 +243,22 @@ public class SellerServlet extends HttpServlet {
 //				profilePhotoByte = sellerVO.getSelProfilePicture();// 抓原本舊圖
 //			}
 
-			String sel_registerdTimeStr = req.getParameter("selRegisterdTime");
-			Timestamp sel_registerdTime = null;
+//			String sel_registerdTimeStr = req.getParameter("selRegisterdTime");
+//			Timestamp sel_registerdTime = null;
 
-			if (sel_registerdTimeStr != null && !sel_registerdTimeStr.trim().isEmpty()) {
-				try {
-					sel_registerdTime = Timestamp.valueOf(sel_registerdTimeStr);
-				} catch (IllegalArgumentException e) {
-					errorMsgs.add("无效的时间戳格式");
-				}
-			} else {
-				errorMsgs.add("廠商註冊時間請勿空白");
-			}
+//			if (sel_registerdTimeStr != null && !sel_registerdTimeStr.trim().isEmpty()) {
+//				try {
+//					sel_registerdTime = Timestamp.valueOf(sel_registerdTimeStr);
+//				} catch (IllegalArgumentException e) {
+//					errorMsgs.add("无效的时间戳格式");
+//				}
+//			} else {
+//				errorMsgs.add("廠商註冊時間請勿空白");
+//			}
 
-			Timestamp sel_lastModifiedTime = new Timestamp(System.currentTimeMillis());
+//			Timestamp sel_lastModifiedTime = new Timestamp(System.currentTimeMillis());
 
+			
 			SellerVO sellerVO = new SellerVO();
 			sellerVO.setSelId(sel_id);
 			sellerVO.setSelAccount(sel_account);
@@ -281,8 +282,8 @@ public class SellerServlet extends HttpServlet {
 //			byte[] sel_profilePicture = byteArrayOutputStream.toByteArray();
 //			sellerVO.setSelProfilePicture(profilePhotoByte);
 
-			sellerVO.setSelRegisterdTime(sel_registerdTime);
-			sellerVO.setSelLastModifiedTime(sel_lastModifiedTime);
+//			sellerVO.setSelRegisterdTime(sel_registerdTime);
+//			sellerVO.setSelLastModifiedTime(sel_lastModifiedTime);
 //			sellerVO.setSelStatus(sel_status);
 
 			// Send the use back to the form, if here were errors

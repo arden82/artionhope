@@ -49,11 +49,14 @@
 }
 </style>
 <body>
+
+
 	<div class="error-message">
-		<c:if test="${not empty requestScope.error}">
-			<p class="text-danger">${requestScope.error}</p>
-		</c:if>
-	</div>
+				<c:if test="${not empty requestScope.error}">
+					<p class="text-danger">${requestScope.error}</p>
+				</c:if>
+			</div>
+
 
 	<form action="<%=request.getContextPath()%>/seller/LoginHandler.do"
 		method="post">
@@ -67,12 +70,7 @@
 				</div>
 			</div>
 			<!-- Spinner End -->
-			<div class="error-message">
-				<c:if test="${not empty requestScope.error}">
-					<p class="text-danger">${requestScope.error}</p>
-				</c:if>
-			</div>
-
+		
 			<!-- Sign In Start -->
 			<div class="container-fluid">
 				<div class="row h-100 align-items-center justify-content-center"

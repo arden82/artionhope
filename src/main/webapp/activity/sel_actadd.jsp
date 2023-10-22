@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.activity.model.*"%>
-
-
+<%@ page import="com.tha103.artion.activity.model.*"%>
 
 <%
 //見com.emp.controller.EmpServlet.java第238行存入req的empVO物件 (此為輸入格式有錯誤時的empVO物件)
@@ -264,7 +262,7 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 			</c:if>
 
 			<!-- Form Start -->
-			<FORM METHOD="post" ACTION="activity.do"
+			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/ActivityServlet.do"
 				enctype="multipart/form-data" name="form1">
 				<div class="container-fluid pt-4 px-4">
 					<div class="row g-4">
@@ -273,8 +271,8 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 								<h6 class="mb-4" style="font-size: 24px; color: #009CFF">新增活動</h6>
 								<div class="mb-3">
 									<label for="actname" class="form-label">活動名稱</label> <input
-										type="text" class="form-control" name="act_name"
-										value="<%=(activityVO == null) ? "清涼一下天母啤酒節" : activityVO.getAct_name()%>">
+										type="text" class="form-control" name="actName"
+										value="<%=(activityVO == null) ? "" : activityVO.getActName()%>">
 								</div>
 								<div class="row">
 									<div class="col">
@@ -283,8 +281,8 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 												<label for="actprice" class="form-label">票券定價</label>
 												<div class="d-flex">
 													<input type="number" class="form-control"
-														name="act_ticketPrice"
-														value="<%=(activityVO == null) ? "100" : activityVO.getAct_ticketPrice()%>">
+														name="actTicketPrice"
+														value="<%=(activityVO == null) ? "" : activityVO.getActTicketPrice()%>">
 												</div>
 
 											</div>
@@ -295,8 +293,8 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 											<label for="ticketnumbers" class="form-label">票卷總數</label>
 											<div class="d-flex">
 												<input type="number" class="form-control"
-													name="act_ticketTotal"
-													value="<%=(activityVO == null) ? "200" : activityVO.getAct_ticketTotal()%>">
+													name="actTicketTotal"
+													value="<%=(activityVO == null) ? "" : activityVO.getActTicketTotal()%>">
 											</div>
 										</div>
 									</div>
@@ -304,7 +302,7 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 									<div class="col">
 										<div class="mb-3">
 											<label for="acttype" class="form-label">活動類型</label> <select
-												name="act_type" class="acttype form-select">
+												name="actType" class="acttype form-select">
 												<option value="0">全部</option>
 												<option value="1">市集</option>
 												<option value="2">展覽</option>
@@ -320,8 +318,8 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 													<label for="ticketstartdate" class="form-label">票券開賣日期</label>
 													<div class="d-flex">
 														<input type="date" class="form-control"
-															name=act_ticketStartTime
-															value="<%=(activityVO == null) ? "" : activityVO.getAct_ticketStartTime()%>">
+															name=actTicketStartTime
+															value="<%=(activityVO == null) ? "" : activityVO.getActTicketStartTime()%>">
 													</div>
 												</div>
 											</div>
@@ -332,8 +330,8 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 												<label for="ticketenddate" class="form-label">票券結束日期</label>
 												<div class="d-flex">
 													<input type="date" class="form-control"
-														name="act_ticketEndTime"
-														value="<%=(activityVO == null) ? "" : activityVO.getAct_ticketEndTime()%>">
+														name="actTicketEndTime"
+														value="<%=(activityVO == null) ? "" : activityVO.getActTicketEndTime()%>">
 												</div>
 											</div>
 										</div>
@@ -345,8 +343,8 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 													<label for="actstartdate" class="form-label">活動開始日期</label>
 													<div class="d-flex">
 														<input type="date" class="form-control"
-															name="act_startDate"
-															value="<%=(activityVO == null) ? "" : activityVO.getAct_startDate()%>">
+															name="actStartDate"
+															value="<%=(activityVO == null) ? "" : activityVO.getActStartDate()%>">
 													</div>
 												</div>
 											</div>
@@ -356,8 +354,8 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 												<div class="form-group"></div>
 												<label for="actenddate" class="form-label">活動結束日期</label>
 												<div class="d-flex">
-													<input type="date" class="form-control" name="act_endDate"
-														value="<%=(activityVO == null) ? "" : activityVO.getAct_endDate()%>">
+													<input type="date" class="form-control" name="actEndDate"
+														value="<%=(activityVO == null) ? "" : activityVO.getActEndDate()%>">
 
 												</div>
 											</div>
@@ -370,8 +368,8 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 													<label for="actstarttime" class="form-label">活動開始時間</label>
 													<div class="d-flex">
 														<input type="time" class="form-control"
-															name="act_startTime" id="actStartTimeInput"
-															value="<%=(activityVO == null) ? "" : activityVO.getAct_startTime()%>">
+															name="actStartTime" id="actStartTimeInput"
+															value="<%=(activityVO == null) ? "" : activityVO.getActStartTime()%>">
 													</div>
 												</div>
 											</div>
@@ -381,9 +379,9 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 												<div class="form-group"></div>
 												<label for="actendtime" class="form-label">活動結束時間</label>
 												<div class="d-flex">
-													<input type="time" class="form-control" name="act_endTime"
+													<input type="time" class="form-control" name="actEndTime"
 														id="actEndTimeInput"
-														value="<%=(activityVO == null) ? "" : activityVO.getAct_endTime()%>">
+														value="<%=(activityVO == null) ? "" : activityVO.getActEndTime()%>">
 												</div>
 											</div>
 										</div>
@@ -394,8 +392,8 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 												<div class="form-group">
 													<label for="act_city" class="form-label">活動縣市</label>
 													<div class="d-flex">
-														<input type="text" class="form-control" name=act_city
-															value="<%=(activityVO == null) ? "台北市" : activityVO.getAct_city()%>">
+														<input type="text" class="form-control" name=actCity
+															value="<%=(activityVO == null) ? "" : activityVO.getActCity()%>">
 													</div>
 												</div>
 											</div>
@@ -405,8 +403,8 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 												<div class="form-group"></div>
 												<label for="act_zone" class="form-label">活動區域</label>
 												<div class="d-flex">
-													<input type="text" class="form-control" name="act_zone"
-														value="<%=(activityVO == null) ? "大安區" : activityVO.getAct_zone()%>">
+													<input type="text" class="form-control" name="actZone"
+														value="<%=(activityVO == null) ? "" : activityVO.getActZone()%>">
 												</div>
 											</div>
 										</div>
@@ -441,23 +439,24 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 									<!--                             </div> -->
 									<div class="mb-3">
 										<label for="actaddress" class="form-label">活動地址</label> <input
-											type="text" class="form-control" name="act_address"
-											value="<%=(activityVO == null) ? "台北市大安區仁愛路300號" : activityVO.getAct_address()%>">
+											type="text" class="form-control" name="actAddress"
+											value="<%=(activityVO == null) ? "" : activityVO.getActAddress()%>">
 									</div>
 									<div class="mb-3">
 										<label for="acthost" class="form-label">主辦單位</label> <input
-											type="text" class="form-control" name="act_organization"
-											value="<%=(activityVO == null) ? "橘子工坊" : activityVO.getAct_organization()%>">
+											type="text" class="form-control" name="actOrganization"
+											value="<%=(activityVO == null) ? "" : activityVO.getActOrganization()%>">
+											
 									</div>
 									<div class="mb-3">
 										<label for="exampleInputEmail1" class="form-label">Email信箱</label>
-										<input type="email" class="form-control" name="act_email"
-											value="<%=(activityVO == null) ? "orange@yahoo.com.tw" : activityVO.getAct_email()%>">
+										<input type="email" class="form-control" name="actEmail"
+											value="<%=(activityVO == null) ? "" : activityVO.getActEmail()%>">
 									</div>
 									<div class="mb-3">
 										<label for="acrphonenumber" class="form-label">連絡電話</label> <input
-											type="tel" class="form-control" name="act_phone"
-											value="<%=(activityVO == null) ? "0975727514" : activityVO.getAct_phone()%>">
+											type="tel" class="form-control" name="actPhone"
+											value="<%=(activityVO == null) ? "" : activityVO.getActPhone()%>">
 									</div>
 
 								</div>
@@ -470,15 +469,15 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 								<div class="col">
 									<div class="mb-3">
 										<label for="actcontent" class="form-label">活動內容</label> <input
-											type="text" class="form-control" name="act_content"
+											type="text" class="form-control" name="actContent"
 											style="width: 400px; height: 300px; vertical-align: top; padding: 0"
-											value="<%=(activityVO == null) ? "夏日最好玩的活動，天母啤酒節來了!" : activityVO.getAct_content()%>">
+											value="<%=(activityVO == null) ? "" : activityVO.getActContent()%>">
 									</div>
 
 									<!-- 圖片上傳 -->
 									<div class="mb-3">
 										<label for="formFile1" class="form-label">活動封面</label> <input
-											class="form-control" type="file" name="act_coverPicture"
+											class="form-control" type="file" name="actCoverPicture"
 											onchange="previewFile(1)">
 									</div>
 									<div id="imagePreview1">
@@ -487,7 +486,7 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 
 									<div class="mb-3">
 										<label for="formFile2" class="form-label">活動圖片1</label> <input
-											class="form-control" type="file" name="act_picture1"
+											class="form-control" type="file" name="actPicture1"
 											onchange="previewFile(2)">
 									</div>
 									<div id="imagePreview2">
@@ -496,7 +495,7 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 
 									<div class="mb-3">
 										<label for="formFile3" class="form-label">活動圖片2</label> <input
-											class="form-control" type="file" name="act_picture2"
+											class="form-control" type="file" name="actPicture2"
 											onchange="previewFile(3)">
 									</div>
 									<div id="imagePreview3">
@@ -505,7 +504,7 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 
 									<div class="mb-3">
 										<label for="formFile4" class="form-label">活動圖片3</label> <input
-											class="form-control" type="file" name="act_picture3"
+											class="form-control" type="file" name="actPicture3"
 											onchange="previewFile(4)">
 									</div>
 									<div id="imagePreview4">
@@ -513,11 +512,6 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 									</div>
 									<!-- 添加更多文件上传输入框和预览图按照相同的结构 -->
 
-
-									<!-- 									<button type="button" class="btn btn-outline-secondary m-2" -->
-									<!-- 										id="modifyButton">修改</button> -->
-									<!-- 									<button type="button" class="btn btn-outline-secondary m-2" -->
-									<!-- 										id="saveButton">儲存</button> -->
 									<input type="hidden" name="action" value="insert"
 										class="btn btn-outline-secondary m-2"> <input
 										type="submit" value="送出" class="btn btn-outline-secondary m-2">

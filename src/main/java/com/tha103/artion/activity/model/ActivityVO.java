@@ -553,6 +553,7 @@ public class ActivityVO {
 				+ ", actLastModifiedTime=" + actLastModifiedTime + ", actResultContent=" + actResultContent + "]";
 	}
 
+
 	
 	
 }

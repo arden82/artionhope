@@ -1,7 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.activity.model.*"%>
+<%@ page import="com.tha103.artion.activity.model.*"%>
+<%@ page import="com.tha103.artion.activity.service.*"%>
+
 <%-- 此頁練習採用 S 的寫法取值 --%>
 
 <%
@@ -303,24 +305,59 @@ System.out.println(list.size());
 								</thead>
 
 								<%@ include file="page1.file"%>
-								<c:forEach var="activityVO" items="${list}"
-									begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+							<c:forEach var="activityVO" items="${list}">
 
 									<tr>
 										<td><input type="checkbox"></td>
-										<td>${activityVO.act_id}</td>
-										<td>${activityVO.act_name}</td>
-										<td>${activityVO.act_type}</td>
-										<td>${activityVO.act_ticketPrice}</td>
-										<td>${activityVO.act_ticketTotalSell}</td>
-										<td>${activityVO.act_approalStatus}</td>
-										<td>${activityVO.act_status}</td>
-										<td>${activityVO.act_startDate}</td>
-										<td>${activityVO.act_endDate}</td>
+										<td>${activityVO.actId}</td>
+										<td>${activityVO.actName}</td>
+												<td><c:choose>
+												<c:when test="${activityVO.actType == 1}">
+                   								 草稿
+                								</c:when>
+												<c:when test="${activityVO.actType == 2}">
+                    							未審核
+                								</c:when>
+												<c:when test="${activityVO.actType == 3}">
+                    							審核通過
+                								</c:when>
+												<c:when test="${activityVO.actType == 4}">
+                   								 審核未通過
+                								</c:when>
+											</c:choose></td>
+										<td>${activityVO.actTicketPrice}</td>
+										<td>${activityVO.actTicketTotalSell}</td>
+										<td><c:choose>
+												<c:when test="${activityVO.actApproalStatus == 1}">
+                   								 草稿
+                								</c:when>
+												<c:when test="${activityVO.actApproalStatus == 2}">
+                    							未審核
+                								</c:when>
+												<c:when test="${activityVO.actApproalStatus == 3}">
+                    							審核通過
+                								</c:when>
+												<c:when test="${activityVO.actApproalStatus == 4}">
+                   								 審核未通過
+                								</c:when>
+											</c:choose></td>
+											<td><c:choose>
+												<c:when test="${activityVO.actStatus == 1}">
+                   								 未開始
+                								</c:when>
+												<c:when test="${activityVO.actStatus == 2}">
+                    							進行中
+                								</c:when>
+												<c:when test="${activityVO.actStatus == 3}">
+                    							結束
+                								</c:when>
+											</c:choose></td>
+										<td>${activityVO.actStartDate}</td>
+										<td>${activityVO.actEndDate}</td>
 									</tr>
 								</c:forEach>
 							</table>
-							<%@ include file="page2.file"%>
+
 						</div>
 					</div>
 				</div>
