@@ -30,9 +30,6 @@ $(document).ready(function () {
     var discountInput = $('#coupon').val();
     $('.price_discount.text-black').text(discountInput);
     updateDiscount();
-   
-    
-
   });
 
   function updatePriceAndTotal(index) {
@@ -69,14 +66,22 @@ $(document).ready(function () {
     totalElement.text('$' + total);
   }
 
-  // function getDiscountAmount(couponCode) {
-    // 在实际应用中，你可以根据折扣码查询数据库或定义折扣规则
-    // 这里简单演示直接返回一个假的折扣金额
-    // return 50; // 这里返回50作为折扣金额，你可以根据实际需求修改
-  // }
-    
  });
 
-/**
- * 
- */
+ var removeButtons = document.querySelectorAll(".product-remove a");
+ for (var i = 0; i < removeButtons.length; i++) {
+     removeButtons[i].addEventListener("click", function (event) {
+         // 找到父级<tr>元素并将其删除
+         var row = event.target.closest("tr");
+         if (row) {
+             row.remove();
+         }
+     });
+ }
+
+$(document).ready(function(){
+  $("#de111").click(function() {
+    $("#tic111").empty();
+  })
+})
+
