@@ -4,8 +4,10 @@ public interface MemberDAO {
 	int insert(MemberVO entity);
 
 	int update(MemberVO entity);
-	
-	int login(MemberVO entity);
+
+	int examine(String account);
+
+	MemberVO login(String account, String password);
 
 	MemberVO getMember(Integer id);
 }

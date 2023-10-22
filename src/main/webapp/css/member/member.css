@@ -631,3 +631,16 @@ border-color: transparent;
 	width: 100%;
 	object-fit: cover;
 }
+div.errmsg{
+   	color:#d83b3b9c;
+	border:1px solid #d83b3b9c;
+	border-radius:2px;
+	padding:5px;
+	margin:10px 0;
+	font-weight: 900;
+  	background:	HSL(0, 0%, 62%,.3);
+  	width:300px;
+}
+input.errmsg{
+    box-shadow: 0 0 5px 1px #d83b3b9c;
+}
