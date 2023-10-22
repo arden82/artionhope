@@ -10,19 +10,19 @@ import com.tha103.artion.activityComment.model.ActivityCommentVO;
 
 public class ActivityCommentService {
 	
-private ActivityCommentDAO_interface dao;
+private ActivityCommentDAO_interface actComDAO;
 	
 	public ActivityCommentService() {
-		dao = new ActivityCommentDAO();
+//		actComDAO = new ActivityCommentDAO();
 	}
 	//新增活動留言
-	public ActivityCommentVO addActCom(ActivityVO activityVO) {
-		dao.add(activityVO);
-		return activityVO;
+	public ActivityCommentVO addActCom(ActivityCommentVO activityCommentVO) {
+		actComDAO.add(activityCommentVO);
+		return activityCommentVO;
 	}
-	
+	//取得活動留言
 	public List<ActivityCommentVO>getAll(){
-		return dao.getAll();
+		return actComDAO.getAll();
 	}
 
 	public static byte[] getActCoverPicture() {

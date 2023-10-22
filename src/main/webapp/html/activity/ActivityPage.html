@@ -19,7 +19,7 @@
         <!--  navbar_mob_state 開始-->
         <nav class="navbar_mob navbar navbar-expand-lg navbar-light bg-light  sticky-top navbar_mob_state ">
             <div class="container-fluid  relative d-flex justify-content-end">
-                <a class="navbar-brand mx-auto fixed_center logo" href="#">Artion</a>
+                <!--                 <a class="navbar-brand mx-auto fixed_center logo" href="#">Artion</a> -->
 
 
                 <div class="shoppingCart p-2 member_svg">
@@ -75,7 +75,7 @@
         <!--   navbar_sm_state 開始-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light  sticky-top navbar_sm_state p-0">
             <div class="container-fluid ">
-                <a class="navbar-brand mx-5 logo " href="#">Artion</a>
+                <!--                 <a class="navbar-brand mx-5 logo " href="#">Artion</a> -->
 
                 <div class="shoppingCart member_svg p-2 margin_auto display_none_6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="bi bi-cart3"
@@ -168,6 +168,7 @@
                     integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
                     crossorigin="anonymous"></script>
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </body>
 <script>
 
@@ -181,7 +182,7 @@
         });
     });
 
-    // 點進網頁時，取得所有活動
+    // 測試!!!點進網頁時，取得所有活動
     $(document).ready(function () {
         if (window.location.href.endsWith("http://localhost:8081/artion/html/activity/ActivityPage.html")) {
             $.ajax({
@@ -194,26 +195,27 @@
                     $.each(data, function (index, act) {
                         var actTypeText = '';
                         if (act.actType === 1) {
-                            actTypeText = '市集';
-                        } else if (act.actType === 2) {
                             actTypeText = '展覽';
+                        } else if (act.actType === 2) {
+                            actTypeText = '市集';
                         } else if (act.actType === 3) {
                             actTypeText = '表演';
                         }
                         var acts = `
-                            <div class="card col-3" style="padding:0px; margin: 10px 5px; width:270px">
-                            <img src="http://localhost:8081/artion/actComPicServlet?actId=${act.actId}" class="card-img top" alt="...">
-                            <div class="card-body">
+                        <div class="card col-3 clickable-card" data-actid="${act.actId}" style=" padding:0px; margin: 10px 5px; width:250px;">
+                        <img src="http://localhost:8081/artion/actComPicServlet?actId=${act.actId}" class="card-img top" alt="...">
+                        <div class="card-body">
                         <h5 class="card-title">${act.actName}</h5>
                         <h5 style="font-size: 12px;">${act.actStartDate}~${act.actEndDate}</h5>
                         <h5 style="font-size: 12px;">${act.ActAdd}</h5>
                         <button type="button" class="btn btn-secondary btn-sm">${actTypeText}</button>
                         <span style="font-size: 12px;">觀看次數:${act.ActViews}</span><span style="font-size: 12px;">按讚次數:${act.ActLikeTimes}</span>
-                    </div>
-                </div>
-                `;
+                        </div>
+                        </div>
+                        `;
                         cardRow.append(acts);
                     });
+                    console.log($("div"));
                 },
                 error: function () {
                     alert("無法獲取數據");
@@ -221,6 +223,74 @@
             });
         }
     });
+
+    // 測試!!!點擊活動卡片取得actId
+    $(".card").click(function () {
+        var actId = $(this).data('actid');
+        var url = `http://127.0.0.1:5500/src/main/webapp/html/activity/SingleActivity.html?actId=${actId}`;
+        window.location.href = url;
+    });
+
+
+
+
+    // 點進網頁時，取得所有活動
+    // $(document).ready(function () {
+    //     if (window.location.href.endsWith("http://localhost:8081/artion/html/activity/ActivityPage.html")) {
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "http://localhost:8081/artion/getAllAct",
+    //             dataType: "JSON",
+    //             success: function (data) {
+    //                 var cardRow = $("#cardRow");
+    //                 cardRow.empty();
+    //                 $.each(data, function (index, act) {
+    //                     var actTypeText = '';
+    //                     if (act.actType === 1) {
+    //                         actTypeText = '展覽';
+    //                     } else if (act.actType === 2) {
+    //                         actTypeText = '市集';
+    //                     } else if (act.actType === 3) {
+    //                         actTypeText = '表演';
+    //                     }
+    //                     var acts = `
+    //                     <div class="card col-3" style=" padding:0px; margin: 10px 5px; width:250px; cursor: pointer;">
+    //                     <img src="http://localhost:8081/artion/actComPicServlet?actId=${act.actId}" class="card-img top" alt="...">
+    //                     <div class="card-body">
+    //                         <h5 class="card-title">${act.actName}</h5>
+    //                         <h5 style="font-size: 12px;">${act.actStartDate}~${act.actEndDate}</h5>
+    //                         <h5 style="font-size: 12px;">${act.ActAdd}</h5>
+    //                         <button type="button" class="btn btn-secondary btn-sm">${actTypeText}</button>
+    //                         <span style="font-size: 12px;">觀看次數:${act.ActViews}</span><span style="font-size: 12px;">按讚次數:${act.ActLikeTimes}</span>
+    //                     </div>
+    //                 </div> 
+    //                 `;
+    //                     cardRow.append(acts);
+    //                 });
+    //                 console.log($("div"));
+    //             },
+    //             error: function () {
+    //                 alert("無法獲取數據");
+    //             }
+    //         });
+    //     }
+    // });
+
+
+    // 點擊活動卡片取得actId
+    //     $(".card").click(function () {
+    //     var actId = $(this).data('actid');
+    //     var url = `http://127.0.0.1:5500/src/main/webapp/html/activity/SingleActivity.html?actId=${actId}`;
+    //     window.location.href = url;
+    // });
+
+
+    //form表單傳送方式
+    //         $("img").click(function () {
+    //             console.log("clickPic");
+    //             $(this).closest("form").find("button").click();
+    //         })
+
 
     //取得資料庫所有活動
     $(document).ready(function () {
@@ -236,15 +306,14 @@
                     $.each(data, function (index, act) {
                         var actTypeText = '';
                         if (act.actType === 1) {
-                            actTypeText = '市集';
-                        } else if (act.actType === 2) {
                             actTypeText = '展覽';
+                        } else if (act.actType === 2) {
+                            actTypeText = '市集';
                         } else if (act.actType === 3) {
                             actTypeText = '表演';
                         }
                         var acts = `
-                        
-                    <div class="card col-3" style=" padding:0px; margin: 10px 5px; width:250px">
+                    <div class="card col-3" style=" padding:0px; margin: 10px 5px; width:250px ;cursor: pointer;">
                         <img src="http://localhost:8081/artion/actComPicServlet?actId=${act.actId}" class="card-img top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">${act.actName}</h5>
@@ -265,6 +334,138 @@
         });
     });
 
+    //點擊展覽的按鈕時
+    $(document).ready(function () {
+        $(".exhiAct").click(function () {
+            console.log("exhiAct");
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8081/artion/getAllAct",
+                dataType: "JSON",
+                success: function (data) {
+                    var cardRow = $("#cardRow");
+                    cardRow.empty();
+                    $.each(data, function (index, act) {
+                        if (act.actType === 1) {
+                            var actTypeText = '';
+                            if (act.actType === 1) {
+                                actTypeText = '展覽';
+                            } else if (act.actType === 2) {
+                                actTypeText = '市集';
+                            } else if (act.actType === 3) {
+                                actTypeText = '表演';
+                            }
+                            var acts = `
+                        <div class="card col-3" style="padding: 0px; margin: 10px 5px; width: 250px">
+                            <img src="http://localhost:8081/artion/actComPicServlet?actId=${act.actId}" class="card-img top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">${act.actName}</h5>
+                                <h5 style="font-size: 12px;">${act.actStartDate}~${act.actEndDate}</h5>
+                                <h5 style="font-size: 12px;">${act.ActAdd}</h5>
+                                <button type="button" class="btn btn-secondary btn-sm">${actTypeText}</button>
+                                <span style="font-size: 12px;">觀看次數:${act.ActViews}</span><span style="font-size: 12px;">按讚次數:${act.ActLikeTimes}</span>
+                            </div>
+                        </div> 
+                        `;
+                            cardRow.append(acts);
+                        }
+                    });
+                },
+                error: function () {
+                    alert("無法獲取資料");
+                }
+            });
+        });
+    });
+
+    //點擊市集的按鈕時
+    $(document).ready(function () {
+        $(".marAct").click(function () {
+            console.log("marAct");
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8081/artion/getAllAct",
+                dataType: "JSON",
+                success: function (data) {
+                    var cardRow = $("#cardRow");
+                    cardRow.empty();
+                    $.each(data, function (index, act) {
+                        if (act.actType === 2) {
+                            var actTypeText = '';
+                            if (act.actType === 1) {
+                                actTypeText = '展覽';
+                            } else if (act.actType === 2) {
+                                actTypeText = '市集';
+                            } else if (act.actType === 3) {
+                                actTypeText = '表演';
+                            }
+                            var acts = `
+                        <div class="card col-3" style="padding: 0px; margin: 10px 5px; width: 250px">
+                            <img src="http://localhost:8081/artion/actComPicServlet?actId=${act.actId}" class="card-img top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">${act.actName}</h5>
+                                <h5 style="font-size: 12px;">${act.actStartDate}~${act.actEndDate}</h5>
+                                <h5 style="font-size: 12px;">${act.ActAdd}</h5>
+                                <button type="button" class="btn btn-secondary btn-sm">${actTypeText}</button>
+                                <span style="font-size: 12px;">觀看次數:${act.ActViews}</span><span style="font-size: 12px;">按讚次數:${act.ActLikeTimes}</span>
+                            </div>
+                        </div> 
+                        `;
+                            cardRow.append(acts);
+                        }
+                    });
+                },
+                error: function () {
+                    alert("無法獲取資料");
+                }
+            });
+        });
+    });
+
+
+    //點擊市集的按鈕時
+    $(document).ready(function () {
+        $(".perAct").click(function () {
+            console.log("perAct");
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8081/artion/getAllAct",
+                dataType: "JSON",
+                success: function (data) {
+                    var cardRow = $("#cardRow");
+                    cardRow.empty();
+                    $.each(data, function (index, act) {
+                        if (act.actType === 3) {
+                            var actTypeText = '';
+                            if (act.actType === 1) {
+                                actTypeText = '展覽';
+                            } else if (act.actType === 2) {
+                                actTypeText = '市集';
+                            } else if (act.actType === 3) {
+                                actTypeText = '表演';
+                            }
+                            var acts = `
+                        <div class="card col-3" style="padding: 0px; margin: 10px 5px; width: 250px">
+                            <img src="http://localhost:8081/artion/actComPicServlet?actId=${act.actId}" class="card-img top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">${act.actName}</h5>
+                                <h5 style="font-size: 12px;">${act.actStartDate}~${act.actEndDate}</h5>
+                                <h5 style="font-size: 12px;">${act.ActAdd}</h5>
+                                <button type="button" class="btn btn-secondary btn-sm">${actTypeText}</button>
+                                <span style="font-size: 12px;">觀看次數:${act.ActViews}</span><span style="font-size: 12px;">按讚次數:${act.ActLikeTimes}</span>
+                            </div>
+                        </div> 
+                        `;
+                            cardRow.append(acts);
+                        }
+                    });
+                },
+                error: function () {
+                    alert("無法獲取資料");
+                }
+            });
+        });
+    });
 
 
 
