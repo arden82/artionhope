@@ -342,8 +342,12 @@
 				formData.append("mem_billAddress", mem_billAddress);
 				formData.append("mem_profilePhoto", mem_profilePhoto);
 				formData.append("action", "insert");
-				console.log(location.origin);
-				fetch(`${location.origin}/artion/member/member.do`, {
+			
+				
+			
+				let path = window.location.pathname;
+				path =path.substring(0, path.indexOf('/', 1));
+				fetch(`${window.location,path}/member/member.do`, {
 					method: "POST",
 					body: formData
 				})
