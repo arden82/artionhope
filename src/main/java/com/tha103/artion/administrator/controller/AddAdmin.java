@@ -23,74 +23,75 @@ import com.tha103.artion.administrator.model.AdministratorVO;
 import com.tha103.artion.administrator.service.AdministratorService;
 import com.tha103.artion.administrator.service.AdministratorService_Interface;
 
-@WebServlet("/updateadmin")
+@WebServlet("/AddAdmin")
 @MultipartConfig
-public class AdminUpdate extends HttpServlet {
-
+public class AddAdmin extends HttpServlet{
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
-
+	
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
-		req.setCharacterEncoding("UTF-8");
 		
-
+		req.setCharacterEncoding("UTF-8");
 		res.setHeader("Access-Control-Allow-Origin", "*");
-
 		PrintWriter out = res.getWriter();
 		HttpSession session = req.getSession();
 		List<String> errorMsgs = new LinkedList<>();
 		// Store this set in the request scope, in case we need to
 		// send the ErrorPage view.
-		session.setAttribute("errorMsgs", errorMsgs);
-
-		// 获取来自前端的管理员详细信息
+		session.setAttribute("errorMsgs", errorMsgs);	
 		
-		String head = req.getHeader("Content-Type");
 		
-		System.out.println(head);
-			
-		String strAdminId = req.getParameter("admId");
-
-		System.out.println(strAdminId);
-
-		String adminName = req.getParameter("admName");
-
-		String strAdminIdentity = req.getParameter("admIdentity");
-
-		Integer adminIdentity = null;
+		//============接受請求參數==============================
+		
+		String strAdmId = req.getParameter("admId");
+		Integer admId = null;
 		try {
-			adminIdentity = Integer.valueOf(strAdminIdentity);
+			admId = Integer.valueOf(strAdmId);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String admName = req.getParameter("admName");
+		
+		String strAdmIdentity = req.getParameter("admIdentity");
+		
+		Integer admIdentity = null;
+		try {
+			admIdentity = Integer.valueOf(strAdmIdentity);
 		} catch (NumberFormatException e) {
 			errorMsgs.add("請選擇身分!");
 		}
-
-		String strAdminStatus = req.getParameter("admStatus");
-		Integer adminStatus = null;
+		
+		String strAdmStatus = req.getParameter("admStatus");
+		Integer admStatus = null;
 		try {
-			adminStatus = Integer.valueOf(strAdminStatus);
+			admStatus = Integer.valueOf(strAdmStatus);
 		} catch (NumberFormatException e) {
 			errorMsgs.add("請選擇身分!");
 		}
+		
+		String admMail = req.getParameter("admMail");
 
-		String adminEmail = req.getParameter("admMail");
-
-		String adminPassword = req.getParameter("admPassword");
-
-		String strAdminBirthday = req.getParameter("admBirthday");
-		java.sql.Date adminBirthday = null;
+		String admPassword = req.getParameter("admPassword");
+		
+		String strAdmBirthday = req.getParameter("admBirthday");
+		java.sql.Date admBirthday = null;
 		try {
-			adminBirthday = java.sql.Date.valueOf(strAdminBirthday);
+			admBirthday = java.sql.Date.valueOf(strAdmBirthday);
 		} catch (IllegalArgumentException e) {
-			adminBirthday = new java.sql.Date(System.currentTimeMillis());
+			admBirthday = new java.sql.Date(System.currentTimeMillis());
 			errorMsgs.add("請輸入有效日期!");
 		}
 
 		String admMobile = req.getParameter("admMobile");
-
+		
 		Part part = req.getPart("admProfilePhoto"); // 获取上传的文件部分
+		
 		byte[] admProfilePhoto = null;
 		if (part != null && part.getSize() > 0) {
 			System.out.println(part);
@@ -101,6 +102,7 @@ public class AdminUpdate extends HttpServlet {
 
 			byte[] buf = new byte[4 * 1024]; // 4K buffer
 			int len;
+			
 			while ((len = in.read(buf)) != -1) {
 				byteArrayOutputStream.write(buf, 0, len);
 			}
@@ -112,52 +114,53 @@ public class AdminUpdate extends HttpServlet {
 			System.out.println("沒有照片");
 		}
 		
-		
-		String strAdminRight = req.getParameter("admRight");
+		String strAdmRight = req.getParameter("admRight");
 		Integer admRight = null;
 		try {
-			admRight = Integer.valueOf(strAdminRight);
+			admRight = Integer.valueOf(strAdmRight);
 		} catch (NumberFormatException e) {
 			errorMsgs.add("請選擇身分!");
 		}
 		
-		System.out.println(admProfilePhoto);
-		System.out.println(adminName);
+		//============接受請求參數==============================
+		
+		
+		
+		//============開始新增==============================
 		try {
-			Integer admId = Integer.valueOf(strAdminId);
-
+			
 			AdministratorService_Interface admSvc = new AdministratorService();
 			AdministratorVO adminVO = new AdministratorVO();
 
 			
-			//要修改區域	
+			
 			adminVO.setAdmProfilePhoto(admProfilePhoto);
-			adminVO.setAdmName(adminName);
-			adminVO.setAdmIdentity(adminIdentity);
-			adminVO.setAdmStatus(adminStatus);
-			adminVO.setAdmMail(adminEmail);
-			adminVO.setAdmPassword(adminPassword);
-			adminVO.setAdmBirthday(adminBirthday);
+			adminVO.setAdmName(admName);
+			adminVO.setAdmIdentity(admIdentity);
+			adminVO.setAdmStatus(admStatus);
+			adminVO.setAdmMail(admMail);
+			adminVO.setAdmPassword(admPassword);
+			adminVO.setAdmBirthday(admBirthday);
 			adminVO.setAdmMobile(admMobile);
 			adminVO.setAdmRight(admRight);
 			
-			//不修改區域
-			adminVO.setAdmId(admSvc.getAdminByAdmId(admId).getAdmId());
-//			adminVO.setAdmAddTime(admSvc.getAdminByAdmId(adminId).getAdmAddTime());
-			
 
-			// 调用更新方法
+			// 調用新增方法
 
 			System.out.println(adminVO);
-			int updateResult = admSvc.updateAdmin(adminVO);
+			int addResult = admSvc.addAdmin(adminVO);
 			
-			System.out.println(updateResult);
-			if (updateResult > 0) {
+			System.out.println(addResult);
+			if (addResult > 0) {
 				// 返回成功信息
 				Map<String, Object> response = new HashMap<>();
 				response.put("status", "success");
 				response.put("message", "管理员信息已成功更新。");
-				out.write(new Gson().toJson(response));
+				
+				Gson gson = new Gson();
+				String json = gson.toJson(response);
+				out.print(json);
+				out.flush();
 			} else {
 				// 返回错误信息
 				Map<String, Object> response = new HashMap<>();
@@ -173,5 +176,7 @@ public class AdminUpdate extends HttpServlet {
 			response.put("message", "无效的管理员 ID 参数.");
 			out.write(new Gson().toJson(response));
 		}
+		
 	}
+
 }

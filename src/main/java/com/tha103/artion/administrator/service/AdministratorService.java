@@ -29,7 +29,7 @@ public class AdministratorService implements AdministratorService_Interface {
 
 	@Override
 	public void deleteAdmin(Integer admId) {
-		// TODO Auto-generated method stub
+		dao.delete(admId);
 
 	}
 
@@ -45,9 +45,17 @@ public class AdministratorService implements AdministratorService_Interface {
 		return list;
 	}
 
-	public static void main(String[] args) {
-		AdministratorService svc = new AdministratorService();
-		System.out.println(svc.getAllAdmins());
+	
+
+	@Override
+	public AdministratorVO checkAdminMail(String admMail) {
+		
+		return dao.checkMail(admMail);
+		
 	}
+
+	
+	
+	
 
 }

@@ -20,6 +20,7 @@ public class AdminPhoto extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
+		res.setHeader("Access-Control-Allow-Origin", "*");
 		String str = req.getParameter("admId");
 		if (str == null || str.trim().isEmpty()) {
 		    

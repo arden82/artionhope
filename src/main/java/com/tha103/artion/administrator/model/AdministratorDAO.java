@@ -2,6 +2,7 @@ package com.tha103.artion.administrator.model;
 
 import java.util.List;
 
+import org.apache.catalina.User;
 import org.hibernate.Session;
 
 import com.tha103.artion.util.HibernateUtil;
@@ -35,6 +36,8 @@ public class AdministratorDAO implements AdministratorDAO_Interface {
 			session.beginTransaction();
 			session.update(admin);
 			session.getTransaction().commit();
+			
+			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
@@ -70,7 +73,7 @@ public class AdministratorDAO implements AdministratorDAO_Interface {
 		try {
 			session.beginTransaction();
 			AdministratorVO admin = session.get(AdministratorVO.class, admId);
-			admin.getProCodes().size();
+//			admin.getProCodes().size();
 			session.getTransaction().commit();
 			return admin;
 		} catch (Exception e) {
@@ -96,8 +99,26 @@ public class AdministratorDAO implements AdministratorDAO_Interface {
 		}
 		return null;
 	}
-	
-	
+
+	@Override
+	public AdministratorVO checkMail(String admMail) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		
+		try {
+			
+			session.beginTransaction();
+			String hql = "from AdministratorVO where admMail = :admMail";
+			AdministratorVO admin = (AdministratorVO) session.createQuery(hql).setParameter("admMail",admMail).uniqueResult();
+			session.getTransaction().commit();
+			
+			return admin;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
+		
+	}
 
 
 }

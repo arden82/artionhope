@@ -15,6 +15,9 @@ public interface AdministratorDAO_Interface {
 	
 	public List<AdministratorVO> getAll();
 	
+	public AdministratorVO checkMail(String admMail);
+
+	
 	
 	
 }

@@ -52,7 +52,7 @@
           </a>
           <div class="d-flex align-items-center ms-4 mb-4">
             <div class="position-relative">
-              <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px" />
+              <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto1" />
               <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
             </div>
             <div class="ms-3">
@@ -155,7 +155,7 @@
             </div>
             <div class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px" />
+                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto2" />
                 <span class="d-none d-lg-inline-flex">John Doe</span>
               </a>
               <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -182,7 +182,6 @@
               <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
                   <tr class="text-dark">
-                    <th scope="col"><input class="form-check-input" type="checkbox" /></th>
                     <th scope="col">廠商編號</th>
                     <th scope="col">活動編號</th>
                     <th scope="col">活動日期</th>
@@ -190,60 +189,10 @@
                     <th scope="col">活動名稱</th>
                     <th scope="col">地址</th>
                     <th scope="col">狀態</th>
+                    <th scope="col">狀態</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td><input class="form-check-input" type="checkbox" /></td>
-                    <td>01 Jan 2045</td>
-                    <td>INV-0123</td>
-                    <td>Jhon Doe</td>
-                    <td>$123</td>
-                    <td>Paid</td>
-                    <td>地址</td>
-                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input" type="checkbox" /></td>
-                    <td>01 Jan 2045</td>
-                    <td>INV-0123</td>
-                    <td>Jhon Doe</td>
-                    <td>$123</td>
-                    <td>Paid</td>
-                    <td>地址</td>
-                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input" type="checkbox" /></td>
-                    <td>01 Jan 2045</td>
-                    <td>INV-0123</td>
-                    <td>Jhon Doe</td>
-                    <td>$123</td>
-                    <td>Paid</td>
-                    <td>地址</td>
-                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input" type="checkbox" /></td>
-                    <td>01 Jan 2045</td>
-                    <td>INV-0123</td>
-                    <td>Jhon Doe</td>
-                    <td>$123</td>
-                    <td>Paid</td>
-                    <td>地址</td>
-                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input" type="checkbox" /></td>
-                    <td>01 Jan 2045</td>
-                    <td>INV-0123</td>
-                    <td>Jhon Doe</td>
-                    <td>$123</td>
-                    <td>Paid</td>
-                    <td>地址</td>
-                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                  </tr>
-                </tbody>
+                <tbody id="table-body"></tbody>
               </table>
             </div>
           </div>
@@ -285,5 +234,67 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <script>
+      function getActivityData() {
+        $.ajax({
+          url: "http://localhost:8081/artion/getAllAct", // 更新为你的活动数据接口
+          type: "POST",
+          dataType: "json",
+          success: function (data) {
+            var tableBody = $("#table-body");
+            tableBody.empty();
+
+            console.log(data);
+
+            if (data.length > 0) {
+              $.each(data, function (index, activity) {
+                var newRowHTML = `
+            <tr>
+              <td>${activity.actId}</td>
+              <td>${activity.actName}</td>
+              <td>${activity.actType}</td>
+              <td>${activity.actStartDate}</td>
+              <td>${activity.actEndDate}</td>
+              <td>${activity.ActAdd}</td>
+              <td>${activity.ActLikeTimes}</td>
+              <td>${activity.ActViews}</td>
+              <td><img src='/artion/actComPicServlet?actId=${activity.actId}' alt='頭貼' style='max-width: 100px'></td>
+            </tr>
+          `;
+                tableBody.append(newRowHTML);
+              });
+            } else {
+              tableBody.html("<tr><td colspan='7'>没有活动数据。</td></tr>");
+            }
+          },
+          error: function () {
+            // 处理错误
+            alert("请求失败。");
+          },
+        });
+      }
+
+      $(document).ready(function () {
+        const admId = localStorage.getItem("admId");
+
+        console.log(admId);
+
+        const adminPhoto1 = $("#adminPhoto1");
+        const adminPhoto2 = $("#adminPhoto2");
+
+        console.log(adminPhoto1);
+
+        // const initialImageUrl = "img/user.jpg";
+        const alternateImageUrl = "http://localhost:8081/artion/adminphoto?admId=" + admId;
+
+        // let isInitialImage = true;
+
+        adminPhoto1.attr("src", alternateImageUrl);
+        adminPhoto2.attr("src", alternateImageUrl);
+        getActivityData();
+        console.log("aaa");
+      });
+    </script>
   </body>
 </html>
