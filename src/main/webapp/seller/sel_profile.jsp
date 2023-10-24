@@ -109,19 +109,20 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 
 				<div class="navbar-nav w-100">
 					<div class="nav-item">
-						<a href="/activity/sel_index.jsp" class="nav-item nav-link">
+						<a href="sel_index.jsp" class="nav-item nav-link">
 						<i class="fa-solid fa-users me-2"></i>
 						</i>活動總覽</a> 
 						
-						<a href="/artion/activity/sel_actadd.jsp" class="nav-item nav-link">
-						<i class="fa-solid fa-heart-circle-plus me-2"></i></i>新增活動</a> 
+						<a href="sel_actadd.jsp" class="nav-item nav-link">
+						<i class="fa-solid fa-heart-circle-plus me-2"></i>
+						</i>新增活動</a> 
 						
 						<a href="sel_actadd.jsp" class="nav-item nav-link"><i
-							class="fa-solid fa-magnifying-glass me-2"></i></i>訂單總覽</a> 
+							class="fa-solid fa-magnifying-glass me-2"></i>
+							</i>訂單總覽</a> 
 							
-							<a href="sel_notification.html" class="nav-item nav-link"> <i
-							class="fa-solid fa-envelope me-2"></i>通知訊息
-						</a> 
+							<a href="sel_notification.html" class="nav-item nav-link"> 
+							<i class="fa-solid fa-envelope me-2"></i>通知訊息</a> 
 						
 						<a href="sel_profile.jsp" class="nav-item nav-link"> <i
 							class="fa-solid fa-address-card me-2"></i>廠商基本資料

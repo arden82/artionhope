@@ -96,23 +96,24 @@
 									id="floatingPassword"> <label for="floatingPassword">密碼
 									Password</label>
 							</div>
-							<div
-								class="d-flex align-items-center justify-content-between mb-4">
-								<div class="form-check">
-									<input type="checkbox" class="form-check-input"
-										id="rememberMyPassword"> <label
-										class="form-check-label" for="rememberMyPassword">記住我的帳號</label>
-								</div>
+<!-- 							<div -->
+<!-- 								class="d-flex align-items-center justify-content-between mb-4"> -->
+<!-- 								<div class="form-check"> -->
+<!-- 									<input type="checkbox" class="form-check-input" -->
+<!-- 										id="rememberMyPassword"> <label -->
+<!-- 										class="form-check-label" for="rememberMyPassword">記住我的帳號</label> -->
+<!-- 								</div> -->
 								<a href="sel_forget_password.html">忘記密碼</a>
-							</div>
+					
 							<!--                         <input -->
 							<!--                             type="hidden" name="action" value="getOne_For_Update"> -->
 							<button type="submit" class="btn btn-primary py-3 w-100 mb-4">登入</button>
 							<input type="hidden" name="action" value="getOne_For_Update"></input>
-
+	
 							<p class="text-center mb-0">
 								立即申請線上註冊 <a href="sel_signup.jsp">註冊</a>
 							</p>
+								</div>
 	</form>
 	</div>
 	</div>

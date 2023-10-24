@@ -1,30 +1,16 @@
 package com.tha103.artion.activity.service;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
-
-import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
-
 import com.tha103.artion.activity.model.ActivityDAO;
 import com.tha103.artion.activity.model.ActivityDAO_interface;
 import com.tha103.artion.activity.model.ActivityVO;
-import com.tha103.artion.activityComment.model.ActivityCommentVO;
-import com.tha103.artion.activityLike.model.ActivityLikeVO;
 import com.tha103.artion.administrator.model.AdministratorVO;
-import com.tha103.artion.memberCollection.model.MemberCollectionVO;
 import com.tha103.artion.seller.model.SellerVO;
-import com.tha103.artion.ticketOrderDetail.model.TicketOrderDetailVO;
-import com.tha103.artion.util.HibernateUtil;
+
 
 public class ActivityService {
 
@@ -37,8 +23,9 @@ public class ActivityService {
 	public ActivityVO addActivity(String act_name, Integer act_ticketPrice, Date act_ticketStartTime,
 			Date act_ticketEndTime, Integer act_type, Date act_startDate, Date act_endDate, Time act_startTime,
 			Time act_endTime, String act_city, String act_zone, String act_address, String act_organization,
-			String act_email, String act_phone, Integer act_ticketTotal, String act_content, byte[] act_coverPicture,
-			byte[] act_picture1, byte[] act_picture2, byte[] act_picture3, Integer selId) {
+			String act_email, String act_phone, Integer act_ticketTotal, String act_content, 
+		    Integer sel_id, byte[] act_coverPicture, byte[] act_picture1, byte[] act_picture2,
+		    byte[] act_picture3) {
 
 		ActivityVO activityVO = new ActivityVO();
 
@@ -66,43 +53,36 @@ public class ActivityService {
 
 		activityVO.setActLikeTimes(0);
 		activityVO.setActViews(0);
-		activityVO.setActApproalStatus(2);
-		activityVO.setActStatus(2);
-		
+		activityVO.setActApproalStatus(1);
+		activityVO.setActStatus(1);
+
+		// 创建一个SellerVO对象并设置sel_id
+		SellerVO sellerVO = new SellerVO();
+		sellerVO.setSelId(sel_id);
+		// 将SellerVO对象设置为ActivityVO的卖家
+		activityVO.setSeller(sellerVO);
+
 		activityVO.setActLongitude(new BigDecimal("00.00000"));
 		activityVO.setActLatitude(new BigDecimal("00.00000"));
 		activityVO.setActTicketTotalSell(0);
-		
-	    SellerVO sellerVO = new SellerVO();
-	    sellerVO.setSelId(selId); // 使用賣家的ID
-	    activityVO.setSeller(sellerVO);
 
 		AdministratorVO administrator = new AdministratorVO();
-		administrator.setAdmId(10001); // 这里假设管理员的 ID 为 10001
+		administrator.setAdmId(1001); // 这里假设管理员的 ID 为 1001
 		activityVO.setAdmId(administrator);
-
-		
-//		AdministratorVO administrator = session.get(AdministratorVO.class, 1001);
-//		activityVO.setAdmId(administrator);
-		
-		System.out.println("here");
-		activityVO.setActLastModifiedTime(new Timestamp(System.currentTimeMillis()));
 		activityVO.setActResultContent("無");
 
+		activityVO.setActLastModifiedTime(new Timestamp(System.currentTimeMillis()));
+
 		dao.insert(activityVO);
-		System.out.println("here2");
 
 		return activityVO;
 	}
-		
+
 	public ActivityVO updateActivity(Integer act_id, String act_name , Integer act_ticketPrice,
 			Date act_ticketStartTime, Date act_ticketEndTime, Integer act_type, Date act_startDate,
 			Date act_endDate, Time act_startTime, Time act_endTime, String act_city, String act_zone,
 			String act_address, String act_organization, String act_email, String act_phone, Integer act_ticketTotal,
-			String act_content, byte[] act_coverPicture, byte[] act_picture1, byte[] act_picture2, byte[] act_picture3,
-			Integer act_likeTimes, Integer act_views, Integer act_approalStatus, Integer act_status,
-			BigDecimal act_longitude, BigDecimal act_latitude, Integer act_ticketTotalSell,
-			Timestamp act_lastModifiedTime, String act_ResultContent) {
+			String act_content, byte[] act_coverPicture) {
 
 		ActivityVO activityVO = new ActivityVO();
 
@@ -125,54 +105,42 @@ public class ActivityService {
 		activityVO.setActTicketTotal(act_ticketTotal);
 		activityVO.setActContent(act_content);
 		activityVO.setActCoverPicture(act_coverPicture);
-		activityVO.setActPicture1(act_picture1);
-		activityVO.setActPicture2(act_picture2);
-		activityVO.setActPicture3(act_picture3);
-		activityVO.setActLikeTimes(0);
-		activityVO.setActViews(0);
-		activityVO.setActApproalStatus(2);
-		activityVO.setActStatus(2);
-	
-		activityVO.setActLongitude(new BigDecimal("00.00000"));
-		activityVO.setActLatitude(new BigDecimal("00.00000"));
-		activityVO.setActTicketTotalSell(0);
-
-		activityVO.setActLastModifiedTime(new Timestamp(System.currentTimeMillis()));
-		activityVO.setActResultContent("無");
-
+//		activityVO.setActPicture1(act_picture1);
+//		activityVO.setActPicture2(act_picture2);
+//		activityVO.setActPicture3(act_picture3);
+		activityVO.setActApproalStatus(1);
+		
 		dao.update(activityVO);
 
 		return activityVO;
 	}
 
-	// 查詢全部活動
+	// 查詢全部活動//皓瑄
 	public List<ActivityVO> getAll() {
 		return dao.getAll();
 	}
 
-	public ActivityVO getOneActivity(Integer actId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ActivityVO> getActivitiesBySellerId(Integer selId) {
+	    // 修改dao方法，使其返回List<ActivityVO>，並根據selId取得多個活動
+	    List<ActivityVO> activityList = dao.getActivitiesBySellerId(selId);
+	    return activityList;
 	}
 
+	// 皓瑄
+	public ActivityVO getOneActivity(Integer act_Id) {
+		// 连接到数据库并检索指定ID的ActivityVO对象
+		ActivityVO activityVO = dao.findByPK(act_Id);
 
-//	// 查詢展覽活動
-//	public List<ActivityVO> getExhAct(String type) {
-//      return ActivityDAO.getExhAct(type);
-//
-//    //查詢市集活動
-//	public List<ActivityVO> getMarAct(String type) {
-//		return ActivityDAO.getActType("市集");
-//	}
-//
-//	// 查詢市集活動
-//	public List<ActivityVO> getPerAct(String type) {
-//		return ActivityDAO.getPerType("表演");
-//	}
+		// 如果找到了匹配的ActivityVO对象，则返回它
+		if (activityVO != null) {
+			return activityVO;
+		} else {
+			// 如果未找到匹配的对象，您可以选择返回一个空的ActivityVO对象或null，或者执行其他逻辑
+			return null;
+		}
+	}
 
-	// 查詢分類活動
-//	@Transactional
-//    public List<ActivityVO> getActType(String type) {
-//        return ActivityDAO.getActType(type);
-//    }
+	public void delete(Integer actId) {
+		dao.delete(actId);
+	}
 }
