@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div id="actData">
+        
+    </div>
+
+    <script>
+
+
+
+    </script>
+</body>
+
+</html>
+<script>
+$(document).ready(function () {
+    // 從URL中獲取actId參數值
+    var urlParams = new URLSearchParams(window.location.search);
+    var actId = urlParams.get("actId");
+
+    if (actId) {
+        // 向伺服器請求數據
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8081/artion/getAllAct",
+            dataType: "JSON",
+            success: function (data) {
+                var actData = data.find(function (act) {
+                    return act.actId == actId;
+                });
+
+                if (actData) {
+                    // 使用數據呈現頁面
+                    var actDetails = `
+                        <h1>${actData.actName}</h1>
+                        <p>活動ID: ${actData.actId}</p>
+                        <!-- 在這裡添加其他要呈現的數據 -->
+                    `;
+                    $("#actData").html(actDetails);
+                } else {
+                    $("#actData").html("找不到該活動的數據");
+                }
+            },
+            error: function () {
+                alert("無法獲取數據");
+            }
+        });
+    } else {
+        $("#actData").html("未提供活動ID");
+    }
+});
+</script>

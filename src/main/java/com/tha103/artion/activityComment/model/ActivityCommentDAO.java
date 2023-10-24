@@ -14,45 +14,34 @@ import com.tha103.artion.util.HibernateUtil;
 
 public class ActivityCommentDAO implements ActivityCommentDAO_interface {
 
-	private SessionFactory factory;
-
-	public ActivityCommentDAO(SessionFactory factory) {
-		this.factory = factory;
-	}
+//	private SessionFactory factory;
+//
+//	public ActivityCommentDAO(SessionFactory factory) {
+//		this.factory = factory;
+//	}
+//	
+//	private Session getSession() {
+//		return factory.getCurrentSession();
+//	}
 	
-	private Session getSession() {
-		return factory.getCurrentSession();
-	}
-	
+	//新增
 	@Override
-	public int add(ActivityCommentVO actCom) {
+	public int add(ActivityCommentVO actComVO) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		int actComId = 0;
 		try {
-			getSession().getTransaction().begin();
-			Integer id = (Integer) getSession().save(actCom);
-			getSession().getTransaction().commit();
+			session.getTransaction().begin();
+			Integer id = (Integer) session.save(actComVO);
+			session.getTransaction().commit();
 			return id;
 		} catch (Exception e) {
 			e.printStackTrace();
-			getSession().getTransaction().rollback();
+			session.getTransaction().rollback();
 		}
 		return -1;
 	}
-
-
-	@Override
-	public List<ActivityCommentVO> getAll() {
-		try {
-			getSession().beginTransaction();
-			List<ActivityCommentVO> list = getSession().createQuery("from activitycomment", ActivityCommentVO.class).list();
-			getSession().getTransaction().commit();
-			return list;
-		} catch (Exception e) {
-			e.printStackTrace();
-			getSession().getTransaction().rollback();
-		}
-		return null;
-	}	
 	
+	//更新(目前用不到，未修改)
 //	@Override
 //	public int update(ActivityCommentVO actCom) {
 //		try {
@@ -67,19 +56,37 @@ public class ActivityCommentDAO implements ActivityCommentDAO_interface {
 //		return -1;
 //	}
 	
-//	@Override
-//	public ActivityCommentVO findByPK(Integer actComId) {
-//		try {
-//			getSession().beginTransaction();
-//			ActivityCommentVO actCom = getSession().get(ActivityCommentVO.class, actComId);
-//			getSession().getTransaction().commit();
-//			return actCom;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			getSession().getTransaction().rollback();
-//		}
-//		return null;
-//	}
+	//查詢全部留言
+	@Override
+	public List<ActivityCommentVO> getAll() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			List<ActivityCommentVO> list = session.createQuery("from ActivityCommentVO", ActivityCommentVO.class).list();
+			session.getTransaction().commit();
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
+	}	
+	
+	//查詢單一留言
+	@Override
+	public ActivityCommentVO findByPK(Integer actComId) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			ActivityCommentVO actCom = session.get(ActivityCommentVO.class, actComId);
+			session.getTransaction().commit();
+			return actCom;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
+	}
 		
 
 //	public static void main(String[] args) throws Exception {
@@ -144,14 +151,14 @@ public class ActivityCommentDAO implements ActivityCommentDAO_interface {
 //			HibernateUtil.shutdown();
 //		}
 //	}
-	
-	
 //	
-//	public static byte[] writePicture(String path) throws IOException {
-//		FileInputStream fis = new FileInputStream(path);
-//		byte[] buffer = fis.readAllBytes();
-//		fis.close();
-//		return buffer;
-//	}
+	
+	
+	public static byte[] writePicture(String path) throws IOException {
+		FileInputStream fis = new FileInputStream(path);
+		byte[] buffer = fis.readAllBytes();
+		fis.close();
+		return buffer;
+	}
 
 }
