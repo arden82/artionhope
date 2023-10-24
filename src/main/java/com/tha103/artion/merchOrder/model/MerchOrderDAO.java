@@ -150,7 +150,7 @@ public class MerchOrderDAO implements MerchOrderDAO_interface {
 //		System.out.print(merchorderVO2.getMerOrderCode() + ",");
 //		System.out.println("---------------------");
 //
-//		// 查詢多筆
+//		// 查詢多筆 **Q
 //		MemberVO membervo = new MemberVO();
 //		membervo.setMemId(7001);
 
@@ -179,23 +179,23 @@ public class MerchOrderDAO implements MerchOrderDAO_interface {
 //			System.out.println("Failed to retrieve MerchOrderDetail List.");
 //		}
 
-		List<MerchOrderVO> list = dao.getAll();
-
-		if (list != null) {
-			for (MerchOrderVO merchorderVO : list) {
-				System.out.print("MerchOrderID: " + merchorderVO.getMerOrderId() + ", ");
-				System.out.print("Member: " + merchorderVO.getMember() + ", ");
-				System.out.print("Actually Amount: " + merchorderVO.getMerOrderActuallyAmount() + ", ");
-				System.out.print("Order Time: " + merchorderVO.getMerOrderTime() + ", ");
-				System.out.print("Pay Status: " + merchorderVO.getMerOrderPayStatus() + ", ");
-				System.out.print("Order Status: " + merchorderVO.getMerOrderStatus() + ", ");
-				System.out.print("Order Address: " + merchorderVO.getMerOrderAddress() + ", ");
-				System.out.print("Order Code: " + merchorderVO.getMerOrderCode());
-
-				System.out.println();
-			}
-		} else {
-			System.out.println("Failed to retrieve MerchOrder List.");
-		}
+//		List<MerchOrderVO> list = dao.getAll();
+//
+//		if (list != null) {
+//			for (MerchOrderVO merchorderVO : list) {
+//				System.out.print("MerchOrderID: " + merchorderVO.getMerOrderId() + ", ");
+//				System.out.print("Member: " + merchorderVO.getMember() + ", ");
+//				System.out.print("Actually Amount: " + merchorderVO.getMerOrderActuallyAmount() + ", ");
+//				System.out.print("Order Time: " + merchorderVO.getMerOrderTime() + ", ");
+//				System.out.print("Pay Status: " + merchorderVO.getMerOrderPayStatus() + ", ");
+//				System.out.print("Order Status: " + merchorderVO.getMerOrderStatus() + ", ");
+//				System.out.print("Order Address: " + merchorderVO.getMerOrderAddress() + ", ");
+//				System.out.print("Order Code: " + merchorderVO.getMerOrderCode());
+//
+//				System.out.println();
+//			}
+//		} else {
+//			System.out.println("Failed to retrieve MerchOrder List.");
+//		}
 	}
 }

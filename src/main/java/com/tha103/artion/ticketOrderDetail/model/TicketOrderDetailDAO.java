@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import com.tha103.artion.activity.model.ActivityVO;
+import com.tha103.artion.ticketOrder.model.TicketOrderVO;
 import com.tha103.artion.util.HibernateUtil;
 
 public class TicketOrderDetailDAO implements TicketOrderDetailDAO_interface {
@@ -75,7 +77,8 @@ public class TicketOrderDetailDAO implements TicketOrderDetailDAO_interface {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			List<TicketOrderDetailVO> list = session.createQuery("from Emp", TicketOrderDetailVO.class).list();
+			List<TicketOrderDetailVO> list = session.createQuery("from TicketOrderDetailVO", TicketOrderDetailVO.class)
+					.list();
 			session.getTransaction().commit();
 			return list;
 		} catch (Exception e) {
@@ -125,51 +128,51 @@ public class TicketOrderDetailDAO implements TicketOrderDetailDAO_interface {
 ////
 ////		// 查詢單筆
 
-//		TicketOrderVO ticketorderVO = new TicketOrderVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
-//		ticketorderVO.setTicketOrdId(134789);
-//
-//		ActivityVO activityVO = new ActivityVO();
-//		activityVO.setActId(10001);
-//
-//		TicketOrderDetailVO ticketorderdetailVO = dao.getById(1);
-//		System.out.print(ticketorderdetailVO.getTicketorder() + ",");
-//		System.out.print(ticketorderdetailVO.getTicOrdDetQuantity() + ",");
-//		System.out.print(ticketorderdetailVO.getTicOrdDetPrice() + ",");
-//		System.out.print(ticketorderdetailVO.getActivity() + ",");
-//		System.out.println("---------------------");
+		TicketOrderVO ticketorderVO = new TicketOrderVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
+		ticketorderVO.setTicketOrdId(134789);
+
+		ActivityVO activityVO = new ActivityVO();
+		activityVO.setActId(10001);
+
+		TicketOrderDetailVO ticketorderdetailVO = dao.getById(1);
+		System.out.print(ticketorderdetailVO.getTicketorder() + ",");
+		System.out.print(ticketorderdetailVO.getTicOrdDetQuantity() + ",");
+		System.out.print(ticketorderdetailVO.getTicOrdDetPrice() + ",");
+		System.out.print(ticketorderdetailVO.getActivity() + ",");
+		System.out.println("---------------------");
 //
 //		// 查詢多筆 QQ**
 //		TicketOrderVO ticketorderVO = new TicketOrderVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
 //		ticketorderVO.setTicketOrdId(134789);
-//
+////
 //		ActivityVO activityVO = new ActivityVO();
 //		activityVO.setActId(10001);
-//
-//		List<TicketOrderDetailVO> list = dao.getAll();
-//		for (TicketOrderDetailVO ticketorderdetailVO : list) {
-//			System.out.print(ticketorderdetailVO.getTicOrdDetId() + ",");
-//			System.out.print(ticketorderdetailVO.getTicketorder() + ",");
-//			System.out.print(ticketorderdetailVO.getTicOrdDetQuantity() + ",");
-//			System.out.print(ticketorderdetailVO.getTicOrdDetPrice() + ",");
-//			System.out.print(ticketorderdetailVO.getActivity() + ",");
-//
-//			System.out.println();
-//		}
 
 		List<TicketOrderDetailVO> list = dao.getAll();
+		for (TicketOrderDetailVO ticketorderdetailVO1 : list) {
+			System.out.print(ticketorderdetailVO1.getTicOrdDetId() + ",");
+			System.out.print(ticketorderdetailVO1.getTicketorder() + ",");
+			System.out.print(ticketorderdetailVO1.getTicOrdDetQuantity() + ",");
+			System.out.print(ticketorderdetailVO1.getTicOrdDetPrice() + ",");
+			System.out.print(ticketorderdetailVO1.getActivity() + ",");
 
-		if (list != null) {
-			for (TicketOrderDetailVO ticketorderdetailVO : list) {
-				System.out.print("TicketOrderDetailID: " + ticketorderdetailVO.getTicOrdDetId() + ", ");
-				System.out.print("TicketOrder: " + ticketorderdetailVO.getTicketorder() + ", ");
-				System.out.print("Quantity: " + ticketorderdetailVO.getTicOrdDetQuantity() + ", ");
-				System.out.print("Price: " + ticketorderdetailVO.getTicOrdDetPrice() + ", ");
-				System.out.print("Activity: " + ticketorderdetailVO.getActivity());
-
-				System.out.println();
-			}
-		} else {
-			System.out.println("Failed to retrieve TicketOrderDetail List.");
+			System.out.println();
 		}
+
+//		List<TicketOrderDetailVO> list = dao.getAll();
+//
+//		if (list != null) {
+//			for (TicketOrderDetailVO ticketorderdetailVO : list) {
+//				System.out.print("ticOrdDetId: " + ticketorderdetailVO.getTicOrdDetId() + ", ");
+//				System.out.print("TicketOrder: " + ticketorderdetailVO.getTicketorder() + ", ");
+//				System.out.print("TicOrdDetQuantity: " + ticketorderdetailVO.getTicOrdDetQuantity() + ", ");
+//				System.out.print("TicOrdDetPrice: " + ticketorderdetailVO.getTicOrdDetPrice() + ", ");
+//				System.out.print("Activity: " + ticketorderdetailVO.getActivity() + ", ");
+//
+//				System.out.println();
+//			}
+//		} else {
+//			System.out.println("Failed to retrieve TicketOrderDetail List.");
+//		}
 	}
 }

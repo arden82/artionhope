@@ -4,9 +4,6 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import com.tha103.artion.member.model.MemberVO;
-import com.tha103.artion.myPromoCode.model.MyPromoCodeVO;
-import com.tha103.artion.seller.model.SellerVO;
 import com.tha103.artion.util.HibernateUtil;
 
 public class TicketOrderDAO implements TicketOrderDAO_interface {
@@ -116,14 +113,14 @@ public class TicketOrderDAO implements TicketOrderDAO_interface {
 //		dao.insert(ticketorderVO);
 
 //		// 修改
-		SellerVO sellerVO = new SellerVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
-		sellerVO.setSelId(2001);
-
-		MyPromoCodeVO mypromocodeVO = new MyPromoCodeVO();
-		mypromocodeVO.setMyProCodeId(1);
-
-		MemberVO membervo = new MemberVO();
-		membervo.setMemId(7001);
+//		SellerVO sellerVO = new SellerVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
+//		sellerVO.setSelId(2001);
+//
+//		MyPromoCodeVO mypromocodeVO = new MyPromoCodeVO();
+//		mypromocodeVO.setMyProCodeId(1);
+//
+//		MemberVO membervo = new MemberVO();
+//		membervo.setMemId(7001);
 
 //		TicketOrderVO ticketorderVO1 = new TicketOrderVO();
 //		ticketorderVO1.setTicketOrdId(134789);
@@ -179,18 +176,18 @@ public class TicketOrderDAO implements TicketOrderDAO_interface {
 //		membervo.setMemId(7001);
 
 		List<TicketOrderVO> list = dao.getAll();
-		for (TicketOrderVO merchorderVO2 : list) {
-			System.out.print(merchorderVO2.getTicketOrdId() + ",");
-			System.out.print(merchorderVO2.getMember() + ",");
-			System.out.print(merchorderVO2.getTicketOrdStatus() + ",");
-			System.out.print(merchorderVO2.getTicketOrdTotalPrice() + ",");
-			System.out.print(merchorderVO2.getTicketOrdProCodeAmount() + ",");
-			System.out.print(merchorderVO2.getTicketOrdActuallyAmount() + ",");
-			System.out.print(merchorderVO2.getTicketOrdPayStatus() + ",");
-			System.out.print(merchorderVO2.getMypromocode() + ",");
-			System.out.print(merchorderVO2.getTicketOrdAddress() + ",");
-			System.out.print(merchorderVO2.getSeller() + ",");
-			System.out.print(merchorderVO2.getTicketOrdCode() + ",");
+		for (TicketOrderVO ticketorderVO2 : list) {
+			System.out.print(ticketorderVO2.getTicketOrdId() + ",");
+			System.out.print(ticketorderVO2.getMember() + ",");
+			System.out.print(ticketorderVO2.getTicketOrdStatus() + ",");
+			System.out.print(ticketorderVO2.getTicketOrdTotalPrice() + ",");
+			System.out.print(ticketorderVO2.getTicketOrdProCodeAmount() + ",");
+			System.out.print(ticketorderVO2.getTicketOrdActuallyAmount() + ",");
+			System.out.print(ticketorderVO2.getTicketOrdPayStatus() + ",");
+			System.out.print(ticketorderVO2.getMypromocode() + ",");
+			System.out.print(ticketorderVO2.getTicketOrdAddress() + ",");
+			System.out.print(ticketorderVO2.getSeller() + ",");
+			System.out.print(ticketorderVO2.getTicketOrdCode() + ",");
 
 			System.out.println();
 		}

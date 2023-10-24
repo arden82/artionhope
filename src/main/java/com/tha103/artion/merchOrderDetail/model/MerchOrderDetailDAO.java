@@ -145,16 +145,16 @@ public class MerchOrderDetailDAO implements MerchOrderDetailDAO_interface {
 
 //
 
-//		List<MerchOrderDetailVO> list = dao.getAll();
-//		for (MerchOrderDetailVO merchorderdetailVO1 : list) {
-//			System.out.print(merchorderdetailVO1.getMerchOrdDetailId() + ",");
-//			System.out.print(merchorderdetailVO1.getMerchorder() + ",");
-//			System.out.print(merchorderdetailVO1.getMerch() + ",");
-//			System.out.print(merchorderdetailVO1.getMerOrderDetailQuantity() + ",");
-//			System.out.print(merchorderdetailVO1.getMerOrderDetailPrice() + ",");
-//
-//			System.out.println();
-//		}
+		List<MerchOrderDetailVO> list = dao.getAll();
+		for (MerchOrderDetailVO merchorderdetailVO1 : list) {
+			System.out.print(merchorderdetailVO1.getMerchOrdDetailId() + ",");
+			System.out.print(merchorderdetailVO1.getMerchorder() + ",");
+			System.out.print(merchorderdetailVO1.getMerch() + ",");
+			System.out.print(merchorderdetailVO1.getMerOrderDetailQuantity() + ",");
+			System.out.print(merchorderdetailVO1.getMerOrderDetailPrice() + ",");
+
+			System.out.println();
+		}
 
 //		List<MerchOrderDetailVO> merchOrderDetails = dao.getAll();
 //
