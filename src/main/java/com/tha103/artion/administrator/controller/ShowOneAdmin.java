@@ -26,9 +26,11 @@ public class ShowOneAdmin extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
 		res.setContentType("text/html; charset=UTF-8");
 		res.setCharacterEncoding("UTF-8");
-		res.setHeader("Access-Control-Allow-Origin", "*");
+		
+		res.setHeader("Access-Control-Allow-Origin", "*");		
 
 		PrintWriter out = res.getWriter();
 

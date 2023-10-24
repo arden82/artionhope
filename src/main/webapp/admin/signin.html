@@ -54,11 +54,11 @@
                 </a>
               </div>
               <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" />
+                <input type="email" class="form-control" id="mail" placeholder="name@example.com" />
                 <label for="floatingInput">Email address</label>
               </div>
               <div class="form-floating mb-4">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" />
+                <input type="password" class="form-control" id="password" placeholder="Password" />
                 <label for="floatingPassword">Password</label>
               </div>
               <div class="d-flex align-items-center justify-content-between mb-4">
@@ -68,7 +68,7 @@
                 </div>
                 <a href="">Forgot Password</a>
               </div>
-              <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign In</button>
+              <button type="submit" class="btn btn-primary py-3 w-100 mb-4" id="commit">Sign In</button>
             </div>
           </div>
         </div>
@@ -89,5 +89,36 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <script>
+      $("#commit").on("click", function (e) {
+        e.preventDefault;
+
+        let signIn = {
+          mail: $("#mail").val(),
+          password: $("#password").val(),
+        };
+
+        console.log(signIn);
+
+        $.ajax({
+          url: "http://localhost:8081/artion/LoginAdmin",
+          type: "POST",
+          data: signIn,
+          dataType: "json",
+          success: function (data) {
+            if (data.status === "success") {
+              const admId = data.admId;
+              localStorage.setItem("admId", admId);
+
+              window.location.href = "index.html?admId=" + admId;
+            } else {
+              alert("登入失敗");
+              window.location.href = "signin.html";
+            }
+          },
+        });
+      });
+    </script>
   </body>
 </html>

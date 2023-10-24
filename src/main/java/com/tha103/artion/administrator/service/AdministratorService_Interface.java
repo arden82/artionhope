@@ -15,5 +15,8 @@ public interface AdministratorService_Interface {
 	
 	List<AdministratorVO> getAllAdmins();
 	
+	AdministratorVO checkAdminMail(String admMail);
+	
+	
 
 }

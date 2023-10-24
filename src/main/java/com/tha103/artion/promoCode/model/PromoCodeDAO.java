@@ -3,64 +3,101 @@ package com.tha103.artion.promoCode.model;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
+import com.tha103.artion.util.HibernateUtil;
 
 public class PromoCodeDAO implements PromoCodeDAO_Interface{
 
-private SessionFactory factory;
-	
-	public PromoCodeDAO(SessionFactory factory) {
-		this.factory = factory;
-		
-	}
-	
-	private Session getSession() {
-		return factory.getCurrentSession();
-	}
-
 	@Override
 	public int insert(PromoCodeVO promoCode) {
-		// TODO Auto-generated method stub
-		return (Integer) getSession().save(promoCode);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		int promoCodeId = 0;
+
+		try {
+			session.beginTransaction();
+
+			promoCodeId = (int) session.save(promoCode);
+			session.getTransaction().commit();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return promoCodeId;
 	}
 
 	@Override
 	public int update(PromoCodeVO promoCode) {
-		// TODO Auto-generated method stub
+		Session session = HibernateUtil.getSessionFactory().openSession();
+
 		try {
-			getSession().update(promoCode);
+			session.beginTransaction();
+			session.update(promoCode);
+			session.getTransaction().commit();
+			
 			return 1;
 		} catch (Exception e) {
-			return -1;
+			e.printStackTrace();
+			session.getTransaction().rollback();
 		}
+		return -1;
 	}
 
 	@Override
 	public int delete(Integer proCodeId) {
-		// TODO Auto-generated method stub
-		PromoCodeVO promoCode = getSession().get(PromoCodeVO.class,proCodeId);
-		if (promoCode != null) {
-			getSession().delete(promoCode);
-			// 回傳給 service，1代表刪除成功
+		Session session = HibernateUtil.getSessionFactory().openSession();
+
+		try {
+			session.beginTransaction();
+			PromoCodeVO promoCode = session.get(PromoCodeVO.class, proCodeId);
+			if (promoCode != null) {
+				session.delete(promoCode);
+			}
+			session.getTransaction().commit();
 			return 1;
-		} else {
-			// 回傳給 service，-1代表刪除失敗
-			return -1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
 		}
+		return -1;
 	}
 
 	@Override
 	public PromoCodeVO getById(Integer proCodeId) {
-		// TODO Auto-generated method stub
-		return getSession().get(PromoCodeVO.class, proCodeId);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			PromoCodeVO promoCode = session.get(PromoCodeVO.class, proCodeId);
+			promoCode.getMyProCodes().size();
+			session.getTransaction().commit();
+			return promoCode;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
 	}
 
 	@Override
 	public List<PromoCodeVO> getAll() {
-		// TODO Auto-generated method stub
-		return getSession().createQuery("from PromoCodeVO", PromoCodeVO.class).list();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		try {
+			session.beginTransaction();
+			List<PromoCodeVO> list = session.createQuery("from PromoCodeVO", PromoCodeVO.class).list();
+			session.getTransaction().commit();
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
 	}
+
+
+	
 	
 	
 }

@@ -52,7 +52,7 @@
           </a>
           <div class="d-flex align-items-center ms-4 mb-4">
             <div class="position-relative">
-              <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px" />
+              <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto1" />
               <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
             </div>
             <div class="ms-3">
@@ -146,7 +146,7 @@
               </div>
             </div>
             <div class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px" /> <span class="d-none d-lg-inline-flex">John Doe</span> </a>
+              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto2" /> <span class="d-none d-lg-inline-flex">John Doe</span> </a>
               <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0"><a href="#" class="dropdown-item">My Profile</a> <a href="#" class="dropdown-item">Settings</a> <a href="#" class="dropdown-item">Log Out</a></div>
             </div>
           </div>
@@ -248,7 +248,7 @@
                 var newRowHTML = `
                               <tr>
                                   <th scope="row" id="admId">${admin.admId}</th>
-                                  <td><img src='http://localhost:8081/artion/adminphoto?admId=${admin.admId}' alt='頭貼'></td>
+                                  <td><img src='http://localhost:8081/artion/adminphoto?admId=${admin.admId}' alt='頭貼' style='max-width: 100px'></td>
                                   <td>${admin.admName}</td>
                                   <td>${admin.admIdentity}</td>
                                   <td>${admin.admStatus}</td>
@@ -260,7 +260,8 @@
                                   <td>${admin.admLastModifiedTime}</td>
                                   <td>${admin.admRight}</td>
                                   <td><button type="submit" id="commit">修改</button></td>
-                                  <td><button>刪除</button></td>
+                                  <td><button id="delete" data-admin="${admin.admId}">刪除</button></td>
+
                               </tr>
                           `;
                 tableBody.append(newRowHTML);
@@ -276,6 +277,7 @@
         });
       }
 
+      //拿取id並交給修改畫面
       function updateOneAdmin(admId) {
         let updateItem = {
           admId: admId,
@@ -294,15 +296,66 @@
         });
       }
 
+      //刪除方法
+      function deleteAdmin(admId) {
+        if (confirm("確定要刪除此管理員嗎？")) {
+          let deleteItem = {
+            admId: admId,
+          };
+
+          $.ajax({
+            url: "http://localhost:8081/artion/DeleteAdmin",
+            type: "POST",
+            data: deleteItem,
+            dataType: "json",
+            success: function (data) {
+              // 在成功刪除后执行的操作，例如重新加载管理员列表
+              getAdminData();
+            },
+            error: function () {
+              // 處理錯誤
+              alert("刪除管理員失敗。");
+            },
+          });
+        }
+      }
+
+      //畫面開始直接渲染
       $(document).ready(function () {
+        const admId = localStorage.getItem("admId");
+
+        console.log(admId);
+
+        const adminPhoto1 = $("#adminPhoto1");
+        const adminPhoto2 = $("#adminPhoto2");
+
+        console.log(adminPhoto1);
+
+        // const initialImageUrl = "img/user.jpg";
+        const alternateImageUrl = "http://localhost:8081/artion/adminphoto?admId=" + admId;
+
+        // let isInitialImage = true;
+
+        adminPhoto1.attr("src", alternateImageUrl);
+        adminPhoto2.attr("src", alternateImageUrl);
         getAdminData();
 
+        //點擊修改時拿id並交給updateOneAdmin方法
         $("#table-body").on("click", "#commit", function (e) {
           e.preventDefault();
           console.log("click update");
           let admId = $(this).closest("tr").find("#admId").text();
           console.log(admId);
           updateOneAdmin(admId);
+        });
+
+        $("#table-body").on("click", "#delete", function (e) {
+          e.preventDefault();
+
+          console.log($(this));
+          let admId = $(this).data("admin");
+          console.log(admId);
+          deleteAdmin(admId);
         });
       });
     </script>

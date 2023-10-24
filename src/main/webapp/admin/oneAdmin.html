@@ -52,7 +52,7 @@
           </a>
           <div class="d-flex align-items-center ms-4 mb-4">
             <div class="position-relative">
-              <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px" />
+              <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto1" />
               <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
             </div>
             <div class="ms-3">
@@ -146,7 +146,7 @@
               </div>
             </div>
             <div class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px" /> <span class="d-none d-lg-inline-flex">John Doe</span> </a>
+              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto2" /> <span class="d-none d-lg-inline-flex">John Doe</span> </a>
               <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0"><a href="#" class="dropdown-item">My Profile</a> <a href="#" class="dropdown-item">Settings</a> <a href="#" class="dropdown-item">Log Out</a></div>
             </div>
           </div>
@@ -233,27 +233,96 @@
     <!-- ==================================================================== -->
 
     <script>
-      $(document).ready(function () {
+      // 定義一個函數來獲取管理員數據並填充表格
+      function getAdminData() {
         var urlParams = new URLSearchParams(window.location.search);
         var admId = urlParams.get("admId");
 
-        if (admId) {
-          $.ajax({
-            url: "http://localhost:8081/artion/ShowOneAdmin",
-            type: "POST",
-            data: { admId: admId },
-            dataType: "json",
-            success: function (data) {
-              console.log(data);
-              // 在页面中显示管理员数据
-              // ...
-            },
-            error: function () {
-              // 处理错误
-              alert("请求失败。");
-            },
-          });
-        }
+        $.ajax({
+          url: "http://localhost:8081/artion/ShowOneAdmin", // 后端URL，用于根据管理员ID获取数据
+          type: "POST",
+          dataType: "json",
+          data: { admId: admId }, // 发送管理员ID到后端
+          success: function (data) {
+            // 处理从后端获取的管理员数据
+            var tableBody = $("#table-body");
+            tableBody.empty();
+
+            var newRowHTML = `
+        <tr>
+          <th scope="row" id="admId">${data.admId}</th>
+          <td><img src='/artion/adminphoto?admId=${data.admId}' alt='頭貼' style='max-width: 100px'></td>
+          <td>${data.admName}</td>
+          <td>${data.admIdentity}</td>
+          <td>${data.admStatus}</td>
+          <td>${data.admMail}</td>
+          <td>${data.admPassword}</td>
+          <td>${data.admBirthday}</td>
+          <td>${data.admMobile}</td>
+          <td>${data.admAddTime}</td>
+          <td>${data.admLastModifiedTime}</td>
+          <td>${data.admRight}</td>
+          <td><button type="submit" id="commit">修改</button></td>
+          <td><button class="delete-admin" data-admId="${admin.admId}">刪除</button></td>
+
+        </tr>
+      `;
+
+            tableBody.append(newRowHTML);
+          },
+          error: function () {
+            // 处理错误
+            alert("請求失敗。");
+          },
+        });
+      }
+
+      //拿取id並交給下一個畫面
+      function updateOneAdmin(admId) {
+        let updateItem = {
+          admId: admId,
+        };
+        console.log(admId);
+        $.ajax({
+          url: "http://localhost:8081/artion/ShowOneAdmin",
+          type: "POST",
+          data: updateItem,
+          dataType: "json",
+          success: function (data) {
+            alert("success");
+            console.log(data);
+            location.href = "managerDetails.html?admId=" + admId; // 在URL中包含admId
+          },
+        });
+      }
+
+      $(document).ready(function () {
+        const admId = localStorage.getItem("admId");
+
+        console.log(admId);
+
+        const adminPhoto1 = $("#adminPhoto1");
+        const adminPhoto2 = $("#adminPhoto2");
+
+        console.log(adminPhoto1);
+
+        // const initialImageUrl = "img/user.jpg";
+        const alternateImageUrl = "http://localhost:8081/artion/adminphoto?admId=" + admId;
+
+        // let isInitialImage = true;
+
+        adminPhoto1.attr("src", alternateImageUrl);
+        adminPhoto2.attr("src", alternateImageUrl);
+
+        getAdminData();
+
+        $("#table-body").on("click", "#commit", function (e) {
+          e.preventDefault();
+          console.log("click update");
+          let admId = $(this).closest("tr").find("#admId").text();
+          console.log(admId);
+          updateOneAdmin(admId);
+        });
       });
     </script>
 

@@ -172,7 +172,7 @@
           <div class="row g-4">
             <!-- 左侧卡片区块，占据6列，即半屏宽度 -->
             <div class="col-sm-12 col-xl-12">
-              <form id="adminDetailsForm" method="post" enctype="multipart/form-data">
+              <form id="adminDetailsForm" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
                 <div class="bg-light rounded h-100 p-4">
                   <h6 class="mb-4" style="font-size: 24px; color: #009cff">修改管理者基本資料</h6>
                   <div class="mb-3"><label for="adminIdInput" class="form-label">管理者編號:</label><span id="adminIdSpan"></span></div>
@@ -236,14 +236,14 @@
                     <select class="form-select" id="admRight" aria-label="Floating label select example">
                       <option selected>請選擇</option>
                       <option value="1">一般管理者</option>
-                      <option value="2">正常</option>
+                      <option value="2">主要管理者</option>
                     </select>
                   </div>
                   <div class="row">
                     <div class="col-md-3 mb-3"><label for="admAddTime" class="form-label">創建時間:</label><span id="adminCreateTimeSpan"></span></div>
                     <div class="col-md-3 mb-3"><label for="admLastModifiedTime" class="form-label">最新更改時間:</label><span id="adminLastModifiedTimeSpan"></span></div>
                   </div>
-                  <button type="button" class="btn btn-secondary m-2">取消</button> <button type="submit" class="btn btn-primary" id="update">更改</button>
+                  <button type="button" class="btn btn-secondary m-2">取消</button> <button type="button" class="btn btn-primary" id="update">更改</button>
                 </div>
               </form>
             </div>
@@ -327,12 +327,13 @@
     </script> -->
 
     <script>
-      //畫面先渲染原本的資料
+      var admId; // 在 getAdminData 外部定义 admId 变量
 
-      $(document).ready(function () {
+      //畫面先渲染原本的資料
+      function getAdminData() {
         // 获取查询参数中的管理员 ID
         var urlParams = new URLSearchParams(window.location.search);
-        var admId = urlParams.get("admId");
+        admId = urlParams.get("admId");
 
         if (admId) {
           $.ajax({
@@ -375,45 +376,47 @@
             },
           });
         }
-      });
+      }
 
-      //點擊更改資料
+      $(document).ready(function (e) {
+        //渲染畫面
+        getAdminData();
+        //點擊更改資料
+        $("#update").on("click", function () {
+          let admin = new FormData();
 
-      $("#update").on("click", function (e) {
-        let amdin_item = {
-          admId: $("#adminIdSpan").text(),
-          admName: $("#admName").val(),
-          admIdentity: $("#admIdentity").val(),
-          admStatus: $("#admStatus").val(),
-          admMail: $("#admMail").val(),
-          admPassword: $("#admPassword").val(),
-          admBirthday: $("#admBirthday").val(),
-          admMobile: $("#admMobile").val(),
-          admProfilePhoto: $("#admProfilePhoto")[0].files[0],
-          admRight: $("#admRight").val(),
-        };
+          admin.append("admId", $("#adminIdSpan").text());
+          admin.append("admName", $("#admName").val());
+          admin.append("admIdentity", $("#admIdentity").val());
+          admin.append("admStatus", $("#admStatus").val());
+          admin.append("admMail", $("#admMail").val());
+          admin.append("admPassword", $("#admPassword").val());
+          admin.append("admBirthday", $("#admBirthday").val());
+          admin.append("admMobile", $("#admMobile").val());
+          admin.append("admProfilePhoto", $("#admProfilePhoto")[0].files[0]);
+          admin.append("admRight", $("#admRight").val());
 
-        console.log(amdin_item);
+          console.log(admin);
 
-        $.ajax({
-          url: "http://localhost:8081/artion/updateadmin", // 替换为用于更新数据的后端URL
-          type: "POST", // 根据你的需要选择请求类型
-          data: amdin_item, // 发送的数据
-          processData: false, // 必须禁用 processData
-          // contentType: false, // 必须禁用 contentType
-          success: function (response) {
-            // 在成功时执行的操作
-            console.log(response);
-            // 可以添加其他处理成功后的操作，例如重定向或显示成功消息
+          $.ajax({
+            url: "http://localhost:8081/artion/updateadmin", // 替换为用于更新数据的后端URL
+            type: "POST", // 根据你的需要选择请求类型
+            data: admin, // 发送的数据
+            processData: false, // 禁止处理数据
+            contentType: false, // 禁止设置内容类型
 
-            // 执行重定向到oneAdmin.html
-            window.location.href = "oneAdmin.html?admId=" + data.admId;
-          },
-          error: function (error) {
-            // 在请求失败时执行的操作
-            console.error(error);
-            // 可以添加其他处理请求失败后的操作，例如显示错误消息
-          },
+            success: function () {
+              // 在成功时执行的操作
+              console.log("Update successful for admId: " + admId);
+              // 如果更新成功，可以执行重定向到oneAdmin.html
+              window.location.href = "oneAdmin.html?admId=" + admId;
+            },
+            error: function (error) {
+              // 在请求失败时执行的操作
+              console.error(error);
+              // 可以添加其他处理请求失败后的操作，例如显示错误消息
+            },
+          });
         });
       });
     </script>
