@@ -26,33 +26,7 @@ public class LoginHandler extends HttpServlet {
 		super.init();
 		sellerDAO = new SellerDAO();
 	}
-
-	protected boolean allowUser(String account, String password) {
-	    SellerVO sellerVO = sellerDAO.getSingleSeller();
-	    return sellerVO != null;
-	}
-
-	protected void successfulLogin(HttpServletRequest req, HttpServletResponse res, String account) throws IOException {
-	    // 登录成功后，获取卖家的所有数据并存储在 sellerVO 对象中
-	    SellerService sellerSvc = new SellerService();
-	    SellerVO sellerVO = sellerSvc.getSellerByAccount(account);
-
-	    // 将 sellerVO 对象存储在 session 属性中
-	    HttpSession session = req.getSession();
-	    session.setAttribute("sellerVO", sellerVO);
-
-	    // 同时将 sel_id 存储在 session 中
-	    session.setAttribute("sel_id", sellerVO.getSelId());
-
-	    String contextPath = req.getContextPath();
-	    res.sendRedirect(contextPath + "/seller/sel_profile.jsp");
-	}
-
-	protected void failedLogin(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		req.setAttribute("error", "Incorrect account or password. Please try again.");
-		req.getRequestDispatcher("/seller/sel_login.jsp").forward(req, res);
-	}
-
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
@@ -69,4 +43,34 @@ public class LoginHandler extends HttpServlet {
 			failedLogin(req, res);
 		}
 	}
+	
+	protected boolean allowUser(String account, String password) {
+	    SellerVO sellerVO = sellerDAO.getSellerByAccount(account); // 根据帳號从数据库中获取賣家信息
+
+	    if (sellerVO != null && sellerVO.getSelPassword().equals(password)) {
+	        return true; // 帳號和密碼匹配
+	    } else {
+	        return false; // 帳號或密碼不匹配
+	    }
+	}
+
+	protected void successfulLogin(HttpServletRequest req, HttpServletResponse res, String account) throws IOException {
+	    // 登录成功后，获取卖家的所有数据并存储在 sellerVO 对象中
+	    SellerService sellerSvc = new SellerService();
+	    SellerVO sellerVO = sellerSvc.getSellerByAccount(account);
+
+	    // 将 sellerVO 对象存储在 session 属性中
+	    HttpSession session = req.getSession();
+	    session.setAttribute("sel_id", sellerVO.getSelId());
+	    session.setAttribute("sellerVO", sellerVO);
+
+	    String contextPath = req.getContextPath();
+	    res.sendRedirect(contextPath + "/seller/sel_profile.jsp");
+	}
+
+	protected void failedLogin(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setAttribute("error", "Incorrect account or password. Please try again.");
+		req.getRequestDispatcher("/seller/sel_login.jsp").forward(req, res);
+	}
+
 }

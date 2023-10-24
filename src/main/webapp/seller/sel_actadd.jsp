@@ -133,21 +133,25 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 			<nav class="navbar bg-light navbar-light">
 				<a href="sel_index.html" class="navbar-brand mx-4 mb-3 artionimg">
 					<!-- <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Artion</h3> -->
-					<img src="./images/artion-logo.png">
+					<img src="images/artion-logo.png">
 				</a>
 
 				<div class="navbar-nav w-100">
 					<div class="nav-item">
-						<a href="sel_index.html" class="nav-item nav-link"><i
-							class="fa-solid fa-users me-2"></i></i>活動總覽</a> <a href="sel_actadd.html"
-							class="nav-item nav-link"><i
-							class="fa-solid fa-heart-circle-plus me-2"></i></i>新增活動</a> <a
-							href="sel_order.html" class="nav-item nav-link"><i
-							class="fa-solid fa-magnifying-glass me-2"></i></i>訂單總覽</a> <a
-							href="sel_notification.html" class="nav-item nav-link"> <i
-							class="fa-solid fa-envelope me-2"></i>通知訊息
-						</a> <a href="sel_profile.html" class="nav-item nav-link"> <i
-							class="fa-solid fa-address-card me-2"></i>廠商基本資料
+						<a href="sel_index.jsp" class="nav-item nav-link"><i
+							class="fa-solid fa-users me-2"> </i></i>活動總覽</a> 
+							
+							<a href="sel_actadd.jsp" class="nav-item nav-link"><i
+							class="fa-solid fa-heart-circle-plus me-2"> </i></i>新增活動</a> 
+							
+							<a href="sel_order.jsp" class="nav-item nav-link"><i
+							class="fa-solid fa-magnifying-glass me-2"> </i></i>訂單總覽</a> 
+							
+							<a href="sel_notification.jsp" class="nav-item nav-link"> <i
+							class="fa-solid fa-envelope me-2"> </i>通知訊息</a> 
+						
+						<a href="sel_profile.jsp" class="nav-item nav-link"> 
+						<i class="fa-solid fa-address-card me-2"> </i>廠商基本資料
 						</a>
 					</div>
 				</div>
@@ -477,37 +481,34 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 									<!-- 圖片上傳 -->
 									<div class="mb-3">
 										<label for="formFile1" class="form-label">活動封面</label> <input
-											class="form-control" type="file" name="actCoverPicture"
-											onchange="previewFile(1)">
+											class="form-control" type="file" name="actCoverPicture">
 									</div>
-									<div id="imagePreview1">
 										<!--第一個預覽圖-->
-									</div>
 
-									<div class="mb-3">
-										<label for="formFile2" class="form-label">活動圖片1</label> <input
-											class="form-control" type="file" name="actPicture1"
-											onchange="previewFile(2)">
-									</div>
-									<div id="imagePreview2">
-										<!-- 预览图将显示在这里 -->
-									</div>
+<!-- 									<div class="mb-3"> -->
+<!-- 										<label for="formFile2" class="form-label">活動圖片1</label> <input -->
+<!-- 											class="form-control" type="file" name="actPicture1" -->
+<!-- 											onchange="previewFile(2)"> -->
+<!-- 									</div> -->
+<!-- 									<div id="imagePreview2"> -->
+<!-- 										预览图将显示在这里 -->
+<!-- 									</div> -->
 
-									<div class="mb-3">
-										<label for="formFile3" class="form-label">活動圖片2</label> <input
-											class="form-control" type="file" name="actPicture2"
-											onchange="previewFile(3)">
-									</div>
-									<div id="imagePreview3">
-										<!-- 预览图将显示在这里 -->
-									</div>
+<!-- 									<div class="mb-3"> -->
+<!-- 										<label for="formFile3" class="form-label">活動圖片2</label> <input -->
+<!-- 											class="form-control" type="file" name="actPicture2" -->
+<!-- 											onchange="previewFile(3)"> -->
+<!-- 									</div> -->
+<!-- 									<div id="imagePreview3"> -->
+<!-- 										预览图将显示在这里 -->
+<!-- 									</div> -->
 
-									<div class="mb-3">
-										<label for="formFile4" class="form-label">活動圖片3</label> <input
-											class="form-control" type="file" name="actPicture3"
-											onchange="previewFile(4)">
-									</div>
-									<div id="imagePreview4">
+<!-- 									<div class="mb-3"> -->
+<!-- 										<label for="formFile4" class="form-label">活動圖片3</label> <input -->
+<!-- 											class="form-control" type="file" name="actPicture3" -->
+<!-- 											onchange="previewFile(4)"> -->
+<!-- 									</div> -->
+<!-- 									<div id="imagePreview4"> -->
 										<!-- 预览图将显示在这里 -->
 									</div>
 									<!-- 添加更多文件上传输入框和预览图按照相同的结构 -->
@@ -546,22 +547,22 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 
 
 
-	<script>
-		document.getElementById("actStartTimeInput").addEventListener("input", function () {
-   		 // Add seconds ":00" to match the HH:mm:ss format
-    		var inputTime = this.value;
-   		 if (inputTime) {
+ 	<script> 
+ 		document.getElementById("actStartTimeInput").addEventListener("input", function () {
+    		 // Add seconds ":00" to match the HH:mm:ss format
+     		var inputTime = this.value;
+    		 if (inputTime) {
         		this.value = inputTime + ":00";
-    		}
-		});
+     		}
+ 		});
 		
 		document.getElementById("actEndTimeInput").addEventListener("input", function () {
-	   		 // Add seconds ":00" to match the HH:mm:ss format
-	    		var inputTime = this.value;
-	   		 if (inputTime) {
-	        		this.value = inputTime + ":00";
+ 	   		 // Add seconds ":00" to match the HH:mm:ss format
+ 	    		var inputTime = this.value;
+ 	   		 if (inputTime) {
+ 	        		this.value = inputTime + ":00";
 	    		}
-			});
+ 			});
 
 
 </script>
