@@ -7,9 +7,9 @@ import com.tha103.artion.merch.model.MerchVO;
 
 public interface MerchService_Interface {
 	
-	MerchVO addMerch(MerchVO merch);
+	int addMerch(MerchVO merch);
 	
-	MerchVO updateMerch(MerchVO merch);
+	int updateMerch(MerchVO merch);
 	
 	void deleteMerch(Integer merchId);
 	

@@ -52,7 +52,7 @@
           </a>
           <div class="d-flex align-items-center ms-4 mb-4">
             <div class="position-relative">
-              <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto2" />
+              <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto1" />
               <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
             </div>
             <div class="ms-3">
@@ -67,9 +67,9 @@
             <a href="activityManage.html" class="nav-item nav-link"><i class="fa-solid fa-calendar-check"></i> 廠商活動管理</a>
             <a href="complaint.html" class="nav-item nav-link"><i class="fa-solid fa-triangle-exclamation"></i> 客訴處理</a>
             <a href="customerService.html" class="nav-item nav-link"><i class="fa-solid fa-comments"></i> 即時客服</a>
-            <a href="product.html" class="nav-item nav-link"><i class="fa-solid fa-box"></i> 周邊商品</a>
+            <a href="product.html" class="nav-item nav-link active"><i class="fa-solid fa-box"></i> 周邊商品</a>
             <a href="codeSetting.html" class="nav-item nav-link"><i class="fa-solid fa-barcode"></i> 優惠碼設定</a>
-            <a href="manager.html" class="nav-item nav-link active"><i class="fa-solid fa-user-tie"></i> 管理者管理</a>
+            <a href="manager.html" class="nav-item nav-link"><i class="fa-solid fa-user-tie"></i> 管理者管理</a>
             <a href="notification.html" class="nav-item nav-link"><i class="fa-solid fa-envelope"></i> 通知信</a>
           </div>
         </nav>
@@ -155,7 +155,7 @@
             </div>
             <div class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto1" />
+                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto2" />
                 <span class="d-none d-lg-inline-flex">John Doe</span>
               </a>
               <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -168,85 +168,31 @@
         </nav>
         <!-- Navbar End -->
 
-        <div class="container-fluid pt-4 px-4">
-          <div class="row g-4">
-            <!-- 左侧卡片区块，占据6列，即半屏宽度 -->
-            <div class="col-sm-12 col-xl-12">
-              <form id="adminDetailsForm" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-                <div class="bg-light rounded h-100 p-4">
-                  <h6 class="mb-4" style="font-size: 24px; color: #009cff">新增管理者基本資料</h6>
-
-                  <div class="mb-3"><label for="exampleInputEmail1" class="form-label">上傳你的頭貼:</label></div>
-                  <div class="d-flex align-items-center ms-4 mb-4">
-                    <div class="position-relative">
-                      <input type="file" id="admProfilePhoto" accept="image/*" style="display: none" />
-                      <div id="userImageContainer" class="rounded-circle" style="width: 40px; height: 40px; cursor: pointer">
-                        <i class="fa-solid fa-user-tie"></i>
-                      </div>
-                      <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-3 mb-3">
-                      <label for="admName" class="form-label">名稱</label>
-                      <input type="text" class="form-control" id="admName" style="color: lightgrey" />
-                    </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="admIdentity" class="form-label">身分</label>
-                      <select class="form-select" id="admIdentity" aria-label="Floating label select example">
-                        <option selected>請選擇等級</option>
-                        <option value="1">一般管理者</option>
-                        <option value="2">主要管理者</option>
-                      </select>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="admStatus" class="form-label">狀態</label>
-                      <select class="form-select" id="admStatus" aria-label="Floating label select example">
-                        <option selected>請選擇</option>
-                        <option value="1">停權</option>
-                        <option value="2">正常</option>
-                      </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="admMail" class="form-label">E-mail</label>
-                      <input type="email" class="form-control" id="admMail" style="color: lightgrey" value="" autocomplete="username" />
-                    </div>
-                    <div class="row">
-                      <div class="col">
-                        <div class="mb-2">
-                          <label for="admPassword" class="form-label">密碼</label>
-                          <div class="d-flex">
-                            <input type="password" class="form-control" id="admPassword" style="width: 25%" autocomplete="current-password" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 mb-3">
-                    <label for="admBirthday" class="form-label">生日</label>
-                    <input type="date" class="form-control" id="admBirthday" />
-                  </div>
-                  <div class="col-md-3 mb-3">
-                    <label for="admMobile" class="form-label">手機電話</label>
-                    <input type="number" class="form-control" id="admMobile" value="" />
-                  </div>
-                  <div class="col-md-3 mb-3">
-                    <label for="admRight" class="form-label">權限</label>
-                    <select class="form-select" id="admRight" aria-label="Floating label select example">
-                      <option selected>請選擇</option>
-                      <option value="1">一般管理者</option>
-                      <option value="2">主要管理者</option>
-                    </select>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-3 mb-3"><label for="admAddTime" class="form-label">創建時間:</label><span id="adminCreateTimeSpan"></span></div>
-                    <div class="col-md-3 mb-3"><label for="admLastModifiedTime" class="form-label">最新更改時間:</label><span id="adminLastModifiedTimeSpan"></span></div>
-                  </div>
-                  <button type="button" class="btn btn-secondary m-2">取消</button> <button type="button" class="btn btn-primary" id="insert">新增</button>
-                </div>
-              </form>
+        <div class="col-12">
+          <div class="bg-light rounded h-100 p-4">
+            <div class="row">
+              <h6 class="col-md-3 mb-3" style="font-size: 24px"><a href="">商品管理</a></h6>
             </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <div class="input-group">
+                  <input class="form-control border" type="search" placeholder="Search" />
+                  <button type="submit" class="btn btn-primary">搜尋</button>
+                  <button type="button" class="btn btn-secondary">重設</button>
+                </div>
+              </div>
+
+              <div class="col-md-2 mb-3 d-flex align-items-center">
+                <select class="form-select" id="floatingSelect2" aria-label="Floating label select example">
+                  <option selected>類別</option>
+                  <option value="1">男</option>
+                  <option value="2">女</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="bg-light rounded h-100 p-4" id="merchContent"></div>
           </div>
         </div>
 
@@ -285,86 +231,58 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
     <script>
-      $(document).ready(function () {
-        const admId = localStorage.getItem("admId");
+      function getMerchData() {
+        var urlParams = new URLSearchParams(window.location.search);
+        merchId = urlParams.get("merchId");
 
-        console.log(admId);
-
-        const adminPhoto1 = $("#adminPhoto1");
-        const adminPhoto2 = $("#adminPhoto2");
-
-        console.log(adminPhoto1);
-
-        // const initialImageUrl = "img/user.jpg";
-        const alternateImageUrl = "http://localhost:8081/artion/adminphoto?admId=" + admId;
-
-        // let isInitialImage = true;
-
-        adminPhoto1.attr("src", alternateImageUrl);
-        adminPhoto2.attr("src", alternateImageUrl);
-
-        $("#insert").on("click", function (e) {
-          let admin = new FormData();
-
-          admin.append("admName", $("#admName").val());
-          admin.append("admIdentity", $("#admIdentity").val());
-          admin.append("admStatus", $("#admStatus").val());
-          admin.append("admMail", $("#admMail").val());
-          admin.append("admPassword", $("#admPassword").val());
-          admin.append("admBirthday", $("#admBirthday").val());
-          admin.append("admMobile", $("#admMobile").val());
-          admin.append("admProfilePhoto", $("#admProfilePhoto")[0].files[0]);
-          admin.append("admRight", $("#admRight").val());
-
-          console.log(admin);
-
+        console.log(merchId);
+        if (merchId) {
           $.ajax({
-            url: "http://localhost:8081/artion/addAdmin", // 替换为用于更新数据的后端URL
-            type: "POST", // 根据你的需要选择请求类型
-            data: admin, // 发送的数据
-            processData: false, // 禁止处理数据
-            contentType: false, // 禁止设置内容类型
+            type: "GET",
+            url: "http://localhost:8081/artion/showOneMerch", // 指向您的Servlet URL
+            data: { merchId: merchId }, // 替换成您的商品ID
+            dataType: "json",
+            success: function (data) {
+              // data 包含从服务器返回的商品信息
 
-            success: function () {
-              e.preventDefault;
-              window.location.href = "manager.html?admId=" + admId;
+              // 在页面上显示商品信息
+              var merchContent = document.getElementById("merchContent");
+              var merchInfo = document.createElement("div");
+
+              merchInfo.innerHTML = `
+        <div class="merch-info">
+            <div class="product-title">${data.merchName}</div>
+            <div class="product-images">
+                <img src="http://localhost:8081/artion/MerchPhoto?merchId=${data.merchId}&merchPicture=1" alt="商品圖片1" />
+                <img src="http://localhost:8081/artion/MerchPhoto?merchId=${data.merchId}&merchPicture=2" alt="商品圖片2" />
+                <img src="http://localhost:8081/artion/MerchPhoto?merchId=${data.merchId}&merchPicture=3" alt="商品圖片3" />
+                <img src="http://localhost:8081/artion/MerchPhoto?merchId=${data.merchId}&merchPicture=4" alt="商品圖片4" />
+            </div>
+            <div class="product-info"><strong>周边商品編號:</strong> ${data.merchId}</div>
+            <div class="product-info"><strong>周边商品總數:</strong> ${data.merchTotal}</div>
+            <div class="product-info"><strong>周边商品單價:</strong> ${data.merchPrice}</div>
+            <div class="product-info"><strong>周边商品類別:</strong> ${data.merchSort}</div>
+            <div class="product-info"><strong>周边商品上架時間:</strong> ${data.merchStartTime}</div>
+            <div class="product-info"><strong>周边商品下架時間:</strong> ${data.merchEndTime}</div>
+            <div class="product-info"><strong>周边商品描述:</strong> ${data.merchIntroduction}</div>
+            <div class="product-info"><strong>銷售數量:</strong> ${data.merchSellAmount}</div>
+            <div class="product-info"><strong>上下架狀態:</strong> ${data.merchStatus}</div>
+        </div>
+    `;
+
+              merchContent.appendChild(merchInfo);
             },
             error: function (error) {
-              // 在请求失败时执行的操作
-              console.error(error);
-              // 可以添加其他处理请求失败后的操作，例如显示错误消息
+              // 处理Ajax错误
             },
           });
-        });
-      });
-    </script>
-    <script>
-      // 获取上传照片的 input 元素
-      const uploadInput = document.getElementById("admProfilePhoto");
-
-      // 获取用于显示用户照片的容器元素
-      const userImageContainer = document.getElementById("userImageContainer");
-
-      // 当用户选择文件后触发事件
-      uploadInput.addEventListener("change", function () {
-        const file = uploadInput.files[0];
-        if (file) {
-          // 创建一个图片元素来显示用户上传的图像
-          const image = document.createElement("img");
-          image.src = URL.createObjectURL(file);
-          image.classList.add("rounded-circle");
-          image.style.width = "40px";
-          image.style.height = "40px";
-          // 清除容器中的子元素，添加新的图像元素
-          userImageContainer.innerHTML = "";
-          userImageContainer.appendChild(image);
         }
-      });
+      }
 
-      // 当用户点击用户照片容器时触发上传文件的点击事件
-      userImageContainer.addEventListener("click", function () {
-        uploadInput.click();
+      $(document).ready(function () {
+        getMerchData();
       });
     </script>
   </body>

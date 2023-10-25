@@ -28,19 +28,19 @@ public class MerchVO {
 	
 	@Expose
 	@Column(name = "merch_picture1", columnDefinition = "longblob")
-	private Byte[] merchPicture1;
+	private byte[] merchPicture1;
 	
 	@Expose
 	@Column(name = "merch_picture2", columnDefinition = "longblob")
-	private Byte[] merchPicture2;
+	private byte[] merchPicture2;
 	
 	@Expose
 	@Column(name = "merch_picture3", columnDefinition = "longblob")
-	private Byte[] merchPicture3;
+	private byte[] merchPicture3;
 	
 	@Expose
 	@Column(name = "merch_picture4", columnDefinition = "longblob")
-	private Byte[] merchPicture4;
+	private byte[] merchPicture4;
 	
 	@Expose
 	@Column(name = "merch_name")
@@ -88,8 +88,8 @@ public class MerchVO {
 		super();
 	}
 
-	public MerchVO(Integer merchId, Byte[] merchPicture1, Byte[] merchPicture2, Byte[] merchPicture3,
-			Byte[] merchPicture4, String merchName, Integer merchTotal, Integer merchPrice, Integer merchSort,
+	public MerchVO(Integer merchId, byte[] merchPicture1, byte[] merchPicture2, byte[] merchPicture3,
+			byte[] merchPicture4, String merchName, Integer merchTotal, Integer merchPrice, Integer merchSort,
 			Timestamp merchStartTime, Timestamp merchEndTime, String merchIntroduction, Integer merchSellAmount,
 			Integer merchStatus, Set<MerchOrderDetailVO> metOrdDets) {
 		super();
@@ -118,35 +118,35 @@ public class MerchVO {
 		this.merchId = merchId;
 	}
 
-	public Byte[] getMerchPicture1() {
+	public byte[] getMerchPicture1() {
 		return merchPicture1;
 	}
 
-	public void setMerchPicture1(Byte[] merchPicture1) {
+	public void setMerchPicture1(byte[] merchPicture1) {
 		this.merchPicture1 = merchPicture1;
 	}
 
-	public Byte[] getMerchPicture2() {
+	public byte[] getMerchPicture2() {
 		return merchPicture2;
 	}
 
-	public void setMerchPicture2(Byte[] merchPicture2) {
+	public void setMerchPicture2(byte[] merchPicture2) {
 		this.merchPicture2 = merchPicture2;
 	}
 
-	public Byte[] getMerchPicture3() {
+	public byte[] getMerchPicture3() {
 		return merchPicture3;
 	}
 
-	public void setMerchPicture3(Byte[] merchPicture3) {
+	public void setMerchPicture3(byte[] merchPicture3) {
 		this.merchPicture3 = merchPicture3;
 	}
 
-	public Byte[] getMerchPicture4() {
+	public byte[] getMerchPicture4() {
 		return merchPicture4;
 	}
 
-	public void setMerchPicture4(Byte[] merchPicture4) {
+	public void setMerchPicture4(byte[] merchPicture4) {
 		this.merchPicture4 = merchPicture4;
 	}
 

@@ -6,62 +6,99 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 
+import com.tha103.artion.util.HibernateUtil;
+
+
 
 public class MerchDAO implements MerchDAO_Interface{
 
-private SessionFactory factory;
-	
-	public MerchDAO(SessionFactory factory) {
-		this.factory = factory;
-		
-	}
-	
-	private Session getSession() {
-		return factory.getCurrentSession();
-	}
-
 	@Override
 	public int insert(MerchVO merch) {
-		// TODO Auto-generated method stub
-		return (Integer) getSession().save(merch);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		int merchId = 0;
+
+		try {
+			session.beginTransaction();
+
+			merchId = (int) session.save(merch);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return merchId;
 	}
 
 	@Override
 	public int update(MerchVO merch) {
-		// TODO Auto-generated method stub
+		Session session = HibernateUtil.getSessionFactory().openSession();
+
 		try {
-			getSession().update(merch);
+			session.beginTransaction();
+			session.update(merch);
+			session.getTransaction().commit();
+			
 			return 1;
 		} catch (Exception e) {
-			return -1;
+			e.printStackTrace();
+			session.getTransaction().rollback();
 		}
+		return -1;
 	}
 
 	@Override
 	public int delete(Integer merchId) {
-		// TODO Auto-generated method stub
-		MerchVO merch = getSession().get(MerchVO.class,merchId);
-		if (merch != null) {
-			getSession().delete(merch);
-			// 回傳給 service，1代表刪除成功
+		Session session = HibernateUtil.getSessionFactory().openSession();
+
+		try {
+			session.beginTransaction();
+			MerchVO merch = session.get(MerchVO.class, merchId);
+			if (merch != null) {
+				session.delete(merch);
+			}
+			session.getTransaction().commit();
 			return 1;
-		} else {
-			// 回傳給 service，-1代表刪除失敗
-			return -1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
 		}
+		return -1;
 	}
 
 	@Override
 	public MerchVO getById(Integer merchId) {
-		// TODO Auto-generated method stub
-		return getSession().get(MerchVO.class, merchId);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			MerchVO merch = session.get(MerchVO.class, merchId);
+
+			session.getTransaction().commit();
+			return merch;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
 	}
 
 	@Override
 	public List<MerchVO> getAll() {
-		// TODO Auto-generated method stub
-		return getSession().createQuery("from MerchVO", MerchVO.class).list();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		try {
+			session.beginTransaction();
+			List<MerchVO> list = session.createQuery("from MerchVO", MerchVO.class).list();
+			session.getTransaction().commit();
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
 	}
+
+
 	
 	
 }

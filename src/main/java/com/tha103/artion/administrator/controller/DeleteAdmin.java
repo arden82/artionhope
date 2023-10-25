@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.tha103.artion.administrator.service.AdministratorService;
 import com.tha103.artion.administrator.service.AdministratorService_Interface;
 
-@WebServlet("/DeleteAdmin")
+@WebServlet("/deleteAdmin")
 public class DeleteAdmin extends HttpServlet{
 	
 		@Override
@@ -22,6 +22,8 @@ public class DeleteAdmin extends HttpServlet{
 		@Override
 		protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
+			res.setHeader("Access-Control-Allow-Origin", "*");
+			
 			try {
 				
 			String strAdmId = req.getParameter("admId");

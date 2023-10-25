@@ -13,48 +13,38 @@ public class MerchService implements MerchService_Interface{
 	private MerchDAO dao;
 	
 	public MerchService() {
-		dao = new MerchDAO(HibernateUtil.getSessionFactory());
+		
+		dao = new MerchDAO();
+		
+	}
+	
+	@Override
+	public int addMerch(MerchVO merch) {
+		return dao.insert(merch);
 	}
 
 	@Override
-	public MerchVO addMerch(MerchVO merch) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public MerchVO updateMerch(MerchVO merch) {
-		// TODO Auto-generated method stub
-		return null;
+	public int updateMerch(MerchVO merch) {
+		return dao.update(merch);
 	}
 
 	@Override
 	public void deleteMerch(Integer merchId) {
-		// TODO Auto-generated method stub
-		
+		dao.delete(merchId);
 	}
 
 	@Override
 	public MerchVO getMerchByMerchId(Integer merchId) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getById(merchId);
 	}
 
 	@Override
 	public List<MerchVO> getAllMerches() {
-		// TODO Auto-generated method stub
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try {
-			session.beginTransaction();
-			List<MerchVO> list = dao.getAll();
-			session.getTransaction().commit();
-			return list;
-		} catch (Exception e) {
-			session.getTransaction().rollback();
-			e.printStackTrace();
-			return null;
-		}
+		List<MerchVO> list = dao.getAll();
+		return list;
 	}
+
+	
 	
 	
 }

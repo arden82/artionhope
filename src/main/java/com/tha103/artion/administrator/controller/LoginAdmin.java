@@ -20,7 +20,7 @@ import com.tha103.artion.administrator.model.AdministratorVO;
 import com.tha103.artion.administrator.service.AdministratorService;
 import com.tha103.artion.administrator.service.AdministratorService_Interface;
 
-@WebServlet("/LoginAdmin")
+@WebServlet("/loginAdmin")
 public class LoginAdmin extends HttpServlet{
 	
 	@Override
