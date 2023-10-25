@@ -240,7 +240,7 @@
                                 </div>
                                 <button type="button" class="btn btn-outline-danger"
                                     style="display: inline-block; margin-right: 10px;">立即購票</button>
-                                <button type="button" class="btn btn-outline-danger">加入購物車</button>
+                                <button type="button" class="btn btn-outline-danger" id="addtocart">加入購物車</button>
                                 <!-- <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a> -->
                             </header>
                             <!-- Post content-->
@@ -287,15 +287,25 @@
                                         </div>
                                         <div class="mb-3">
                                             <div class="imageUpload_delete">
-                                                <!-- <input name="actComPicUpload" type="file" id="fileInput"
-                                                    class="form-control imageInput" aria-label="file example" required
-                                                    multiple accept="image/*"> -->
-                                                    <input type="file" id="fileInput" multiple accept="image/*" />
-                                                <button type="button" class="btn btn-outline-secondary">清除檔案</button>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <input name="actCom_CoverPicture" id="actComCoverPicture" type="file">
+                                                    </div>
+                                                    <div class="col">
+                                                        <input name="actCom_Picture1" id="actComPicture1" type="file">
+                                                    </div>
+                                                    <div class="col">
+                                                        <input name="actCom_Picture2" id="actComPicture2" type="file">
+                                                    </div>
+                                                    <div class="col">
+                                                        <input name="actCom_Picture3" id="actComPicture3" type="file">
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn btn-outline-secondary" style="margin-left: 10px;" id="clearFiles">清除檔案</button>
                                             </div>
-                                            <div id="imagePreviews">
+                                            <!-- <div id="imagePreviews"> -->
                                                 <!-- 預覽圖 -->
-                                            </div>
+                                            <!-- </div> -->
                                         </div>
                                     </form>
                                 </div>
@@ -313,14 +323,14 @@
                     <!-- 廠商介紹start-->
                     <div class="col-lg-4 ">
                         <div class="card mb-4 sel_introduce">
-                            <div class="card-header card_header_fontstyle">廠商照片和名稱</div>
+                            <div class="card-header card_header_fontstyle" id="selName"><!-- 名稱 --></div>
                             <div class="card-body">
-                                <p class="content-text">
-                                    經濟部中小企業處一路伴隨臺灣城鄉產業的進步與成長，營造城鄉及地方特色的魅力，鼓勵國內中小企業，由創生場域改造活化、在地文化塑造、特色產業發展、商業模式創新。透過一鄉鎮一特產，結合當地特色，發展具有區隔性手工藝或食品特產的產業，推廣城鄉在地美好的人、事、物，透過過去在地深耕的實際行動，一步一步的改變，讓城鄉有不同的樣貌，對社會產生正向的影響力。
+                                <p class="content-text" id="selInfo">
+                                    <!-- 廠商介紹 -->
                                 </p>
                             </div>
                         </div>
-                        <!-- 廠商介紹end-->
+                    <!-- 廠商介紹end-->
                         <!-- 活動地圖start -->
                         <div class="card mb-4 act_map">
                             <div class="card-header card_header_fontstyle">活動地圖</div>
@@ -356,6 +366,7 @@
     <script src="https://kit.fontawesome.com/53f3396f69.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
+    
 <script>
     //================== 獲取活動頁資料並渲染在畫面上 ==================
     $(document).ready(function () {
@@ -465,34 +476,93 @@
         });
     });
 
+    // ================== 將活動id傳給後端，傳到redis使用 ================== 
+    function getActIdFromURL() {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('actId');   
+    console.log(getActIdFromURL());
+    }
+		$(document).ready(function () {
+    		$("#addtocart").click(function () {
+        		var actId = getActIdFromURL();
+        		console.log(actId);
+        	$.ajax({
+            	type: "POST",
+            	url: "http://localhost:8081/artion/addToCartServlet",
+            	data: { actId: actId },
+            		success: function (response) {
+                		alert("成功送送到servlet！");
+            		},
+            	error: function () {
+                	alert("傳送失敗");
+            }
+        });
+    });
+});
 
-    //================== 新增活動留言功能 ==================
+
+
+
+    // ================== 載入頁面時取得廠商資訊 ================== 
+//     document.addEventListener("DOMContentLoaded", function () {
+//     // 在这里放置你的代码
+//     var urlParams = new URLSearchParams(window.location.search);
+//     var actIdFromURL = urlParams.get("actId");
+
+//     $.ajax({
+//         type: "GET",
+//         url: "http://localhost:8081/artion/getAllAct",
+//         dataType: "json",
+//         success: function (data) {
+//             if (data) {
+//                 $.each(data, function (index, act) {
+//                     if (actIdFromURL == act.actId) {
+//                         $("#selName").text(act.selName);
+//                         $("#selInfo").text(act.selInfo);
+//                     }
+//                 });
+//             } else {
+//                 alert("无法获取数据111");
+//             }
+//         },
+//         error: function () {
+//             alert("无法获取数据222");
+//         }
+//     });
+// });
+
+    //================== 新增活動留言功能(測試) ==================
     $(document).ready(function () {
     $("#subMes_button").click(function (e) {
-        e.preventDefault(); // 阻止表单默认提交行为
-
-        var actComContent = $("#actComContent").val(); // 获取 textarea 内容
-
-        if (actComContent.trim() !== "") {
-            var actId = getActIdFromCurrentURL(); // 获取 actId，你需要实现这个函数
-
-            var formData = {
-                actComContent: actComContent,
-                actId: actId
-            };
-
+        e.preventDefault();
+        var actComContent = $("#actComContent").val();
+        var actComCovPic = $("actComCoverPicture").get(0).files;;
+        var actComPicture1 = $("actComPicture1").get(0).files;;
+        var actComPicture2 = $("actComPicture2").get(0).files;;
+        var actComPicture3 = $("actComPicture3").get(0).files;;
+        if(actComContent.trim() != ""){
+            // 送出留言資料給servlet
+            var formData = new FormData(); 
+            var actId = getActIdFromCurrentURL();
+            formData.append("actComContent", actComContent);
+            formData.append("actId", actId);
+            formData.append("actComCovPicture", actComCovPicture); 
+            formData.append("actComPicture1", actComPicture1);
+            formData.append("actComPicture1", actComPicture2);
+            formData.append("actComPicture1", actComPicture3);
+            console.log(formData); 
             $.ajax({
-                type: "POST", // 使用 POST 请求
-                url: "http://localhost:8081/artion/addActComServlet", // 你的 Servlet URL
-                data: formData, // 发送的数据对象
+                type: "POST",
+                url: "http://localhost:8081/artion/addActComServlet",
+                data: formData,
+                processData: false,  // 告訴 jQuery 不要處理數據
+                contentType: false,  // 告訴 jQuery 不要設置 content type
                 success: function (response) {
-                    // 处理成功的响应
                     alert("留言傳送成功");
                     $("#actComContent").val(""); // 清空 textarea
-                    location.reload(); // 重新加载页面或执行其他操作
+                    location.reload();
                 },
                 error: function () {
-                    // 处理失败的响应
                     alert("留言傳送失敗");
                 }
             });
@@ -501,6 +571,7 @@
         }
     });
 });
+
 function getActIdFromCurrentURL() {
     const urlParams = new URLSearchParams(window.location.search);
     const actId = urlParams.get('actId');
@@ -511,7 +582,51 @@ function getActIdFromCurrentURL() {
 
 
 
+
+    //================== 新增活動留言功能(文字送出完成版) ==================
+//     $(document).ready(function () {
+//     $("#subMes_button").click(function (e) {
+//         e.preventDefault(); 
+
+//         var actComContent = $("#actComContent").val(); 
+
+//         if (actComContent.trim() !== "") {
+//             var actId = getActIdFromCurrentURL(); 
+
+//             var formData = {
+//                 actComContent: actComContent,
+//                 actId: actId
+//             };
+
+//             $.ajax({
+//                 type: "POST", 
+//                 url: "http://localhost:8081/artion/addActComServlet", 
+//                 data: formData, 
+//                 success: function (response) {
+                    
+//                     alert("留言傳送成功");
+//                     $("#actComContent").val(""); // 清空 textarea
+//                     location.reload(); 
+//                 },
+//                 error: function () {
+                    
+//                     alert("留言傳送失敗");
+//                 }
+//             });
+//         } else {
+//             alert("留言內容請勿空白，請重新留言");
+//         }
+//     });
+// });
+// function getActIdFromCurrentURL() {
+//     const urlParams = new URLSearchParams(window.location.search);
+//     const actId = urlParams.get('actId');
+//     return actId;
+// }
+
 // ================== 新增活動留言圖片功能 ================== 
+
+
 
 
     // ================== 留言按讚功能 ==================
@@ -599,37 +714,37 @@ function getActIdFromCurrentURL() {
 
 
     //  ==================留言板上傳圖片==================
-    const fileInput = document.getElementById('fileInput');
-    const maxImageCount = 4; // 最多允許上傳圖片數量
+    // const fileInput = document.getElementById('fileInput');
+    // const maxImageCount = 4; // 最多允許上傳圖片數量
 
-    fileInput.addEventListener('change', function () {
-        const files = this.files;
-        if (files.length > maxImageCount) {
-            alert('已超過上傳數量，至多上傳4張圖片');
-            this.value = ''; // 清空文件輸入框
-            return;
-        }
+    // fileInput.addEventListener('change', function () {
+    //     const files = this.files;
+    //     if (files.length > maxImageCount) {
+    //         alert('已超過上傳數量，至多上傳4張圖片');
+    //         this.value = ''; // 清空文件輸入框
+    //         return;
+    //     }
 
         // ==================清空之前預覽==================
-        const imagePreviews = document.getElementById('imagePreviews');
-        imagePreviews.innerHTML = '';
+        // const imagePreviews = document.getElementById('imagePreviews');
+        // imagePreviews.innerHTML = '';
 
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            if (file.type.match('image.*')) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.className = 'imagePreview';
-                    imagePreviews.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            } else {
-                alert('請選擇檔案');
-            }
-        }
-    });
+        // for (let i = 0; i < files.length; i++) {
+        //     const file = files[i];
+        //     if (file.type.match('image.*')) {
+        //         const reader = new FileReader();
+        //         reader.onload = function (e) {
+        //             const img = document.createElement('img');
+        //             img.src = e.target.result;
+        //             img.className = 'imagePreview';
+        //             imagePreviews.appendChild(img);
+        //         };
+        //         reader.readAsDataURL(file);
+        //     } else {
+        //         alert('請選擇檔案');
+        //     }
+        // }
+    // });
 
     // ==================點擊清除檔案按鈕==================
     const clearButton = document.querySelector('.imageUpload_delete button');
@@ -637,6 +752,14 @@ function getActIdFromCurrentURL() {
         fileInput.value = '';
         imagePreviews.innerHTML = '';
     });
+
+    // $(document).ready(function () {
+    //         $("#clearFiles").click(function () {
+    //             console.log("aaa");
+    //             var fileInput = $("#files");
+    //             fileInput.val("");
+            // });
+            // })
 
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~ 元素 ~~~~~~~~~~~~~~~~~~~~~~~~~~
