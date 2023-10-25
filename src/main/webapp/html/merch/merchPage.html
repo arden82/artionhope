@@ -7,7 +7,7 @@
     <title>merchPage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../css/merch/member.css">
+    <link rel="stylesheet" href="../../css/member/member.css">
     <link rel="stylesheet" href="../../css/merch/merchPage.css">
     <!-- jquery JS匯入 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
@@ -235,27 +235,6 @@
                 <!-- 商品列表右側區塊end -->
             </span>
             <!-- 商品種類與商品列表 end -->
-
-            <!-- 頁籤start -->
-            <nav aria-label="Page navigation example" class="pagination-container">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <!-- 頁籤end -->
-
         </div>
     </div>
 
@@ -277,10 +256,9 @@
         crossorigin="anonymous"></script>
 
     <!----------------------- JS --------------------------->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/products_page.js"></script>
+    
     <script>
-        // 商品篩選功能
+        // ===================== 商品篩選功能 =====================
         function toggleAllCategories() {
             var allProductsCheckbox = document.getElementById("allProducts");
             var categoryCheckboxes = document.getElementsByClassName("category");
@@ -289,30 +267,66 @@
                 categoryCheckboxes[i].checked = allProductsCheckbox.checked;
             }
         }
-        //商品陳列
-        $(document).ready(function () {
-            $.ajax({
-                url: '',//getMerch
-                type: 'get',
-                success: function (args) {
+        //  ===================== 商品陳列() =====================
+        // $(document).ready(function () {
+        //     $.ajax({
+        //         url: '',//getMerch
+        //         type: 'get',
+        //         success: function (args) {
 
-                }
-            })
-        })
-            for (var i = 1; i <= 16; i++) {
-            var $span = $('<span>', {
-                'class': 'merchBox',
-                'html': '<a href="" class="merchBox_child">' +
-                    '<img src="./image/Ugly Beauty 夜光Tee黑色.jpeg" class="card-img-top merchStyle" alt="...">' +
-                    '<p class="merchName">商品名稱</p>' +
-                    '<p class="merchPrice">商品金額</p>' +
-                    '</a>'
-            });
-            $('#merchContainer').append($span);
-        }
-        
+        //         }
+        //     })
+        // })
+        //     for (var i = 1; i <= 16; i++) {
+        //     var $span = $('<span>', {
+        //         'class': 'merchBox',
+        //         'html': '<a href="" class="merchBox_child">' +
+        //             '<img src="./image/Ugly Beauty 夜光Tee黑色.jpeg" class="card-img-top merchStyle" alt="...">' +
+        //             '<p class="merchName">商品名稱</p>' +
+        //             '<p class="merchPrice">商品金額</p>' +
+        //             '</a>'
+        //     });
+        //     $('#merchContainer').append($span);
+        // }
+     // ===================== 載入網頁時取得所有活動 =====================
+        $(document).ready(function () {
+        	if (window.location.href.includes("http://localhost:8081/artion/html/merch/merchPage.html")) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/artion/getAllMerch",
+                    dataType: "JSON",
+                    success: function (data) {
+                    	console.log("發送請求成功");
+                        var cardRow = $("#cardRow");
+                        cardRow.empty();
+                        $.each(data, function (index, merch) {
+                        	var merches = `
+                        	    <a href="" class="merchBox_child">
+                        	        <img src="http://localhost:8081/artion/merPicServlet?merchId=${merch.mertchId}" class="card-img-top merchStyle" alt="...">
+                        	        <p class="merchName">${merch.merchName}</p>
+                        	        <p class="merchPrice">${merch.merchPrice}</p>
+                        	    </a>
+                        	`;
+                            $("#merchContainer").append(merches);
+                        });
+
+                        // 點擊事件監聽器
+                        $(".merchBox_child").click(function () {
+                            var merchId = $(this).data("merchId");
+                            window.location.href = `SingleMerch.html?merchId=${merchId}`;
+                        });
+                    },
+                    error: function () {
+                        alert("無法取得數據");
+                    }
+                });
+            }
+        });
     </script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<!-- <script src="js/products_page.js"></script> -->
 
 </body>
-
 </html>
