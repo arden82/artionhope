@@ -252,7 +252,7 @@
                     <label for="merchIntroduction" class="form-label">商品描述</label>
                     <textarea class="form-control" id="merchIntroduction" style="width: 600px; max-width: 910px; min-height: 200px; box-sizing: border-box"></textarea>
                   </div>
-                  <button type="button" class="btn btn-secondary m-2">取消</button>
+                  <button type="button" class="btn btn-secondary m-2" id="cancel">取消</button>
                   <button type="submit" class="btn btn-primary" id="update">修改</button>
                 </div>
               </div>
@@ -358,12 +358,6 @@
               $("#cancelButton").on("click", function () {
                 history.back();
               });
-
-              // 点击“更改”按钮时提交表单或执行其他操作
-              $("#updateButton").on("click", function () {
-                // 这里可以添加表单提交的代码或其他操作
-                // 例如，通过 AJAX 请求将修改后的数据发送到后端
-              });
             },
             error: function () {
               // 处理错误
@@ -428,6 +422,9 @@
               // 可以添加其他处理请求失败后的操作，例如显示错误消息
             },
           });
+        });
+        $("#cancel").on("click", function () {
+          location.href = "product.html?admId=" + admId;
         });
       });
     </script>

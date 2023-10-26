@@ -13,47 +13,37 @@ public class PromoCodeService implements PromoCodeService_Interface{
 	private PromoCodeDAO dao;
 	
 	public PromoCodeService() {
-		dao = new PromoCodeDAO(HibernateUtil.getSessionFactory());
+		dao = new PromoCodeDAO();
 	}
 
 	@Override
-	public PromoCodeVO addPromoCode(PromoCodeVO promoCode) {
+	public int addPromoCode(PromoCodeVO promoCode) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.insert(promoCode);
 	}
 
 	@Override
-	public PromoCodeVO updatePromoCode(PromoCodeVO promoCode) {
+	public int updatePromoCode(PromoCodeVO promoCode) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.update(promoCode);
 	}
 
 	@Override
 	public void deletePromoCode(Integer proCodeId) {
-		// TODO Auto-generated method stub
+		dao.delete(proCodeId);
 		
 	}
 
 	@Override
 	public PromoCodeVO getByPromoCodeId(Integer proCodeId) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getById(proCodeId);
 	}
 
 	@Override
 	public List<PromoCodeVO> getAllPromoCodes() {
-		// TODO Auto-generated method stub
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try {
-			session.beginTransaction();
-			List<PromoCodeVO> list = dao.getAll();
-			session.getTransaction().commit();
-			return list;
-		} catch (Exception e) {
-			session.getTransaction().rollback();
-			e.printStackTrace();
-			return null;
-		}
+		List<PromoCodeVO> list = dao.getAll();
+		return list;
 	}
 	
 }

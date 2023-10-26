@@ -7,9 +7,9 @@ import com.tha103.artion.promoCode.model.PromoCodeVO;
 
 public interface PromoCodeService_Interface {
 	
-	PromoCodeVO addPromoCode(PromoCodeVO promoCode);
+	int addPromoCode(PromoCodeVO promoCode);
 	
-	PromoCodeVO updatePromoCode(PromoCodeVO promoCode);
+	int updatePromoCode(PromoCodeVO promoCode);
 	
 	void deletePromoCode(Integer proCodeId);
 	

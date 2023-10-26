@@ -243,7 +243,7 @@
                     <div class="col-md-3 mb-3"><label for="admAddTime" class="form-label">創建時間:</label><span id="adminCreateTimeSpan"></span></div>
                     <div class="col-md-3 mb-3"><label for="admLastModifiedTime" class="form-label">最新更改時間:</label><span id="adminLastModifiedTimeSpan"></span></div>
                   </div>
-                  <button type="button" class="btn btn-secondary m-2">取消</button> <button type="button" class="btn btn-primary" id="update">更改</button>
+                  <button type="button" class="btn btn-secondary m-2" id="cancel">取消</button> <button type="button" class="btn btn-primary" id="update">更改</button>
                 </div>
               </form>
             </div>
@@ -432,6 +432,9 @@
               // 可以添加其他处理请求失败后的操作，例如显示错误消息
             },
           });
+        });
+        $("#cancel").on("click", function () {
+          location.href = "manager.html?admId=" + admId;
         });
       });
     </script>
