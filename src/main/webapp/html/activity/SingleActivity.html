@@ -321,6 +321,7 @@
                     <!-- 廠商介紹start-->
                     <div class="col-lg-4 ">
                         <div class="card mb-4 sel_introduce">
+                        	<img src="" alt="" style="width:120px;" id="selPhoto">
                             <div class="card-header card_header_fontstyle" id="selName"><!-- 名稱 --></div>
                             <div class="card-body">
                                 <p class="content-text" id="selInfo">
@@ -366,6 +367,39 @@
 </body>
     
 <script>
+//================== 取得localstorage + 活動收藏 ==================
+// 測試存一個memId到localstorage
+localStorage.clear();
+// localStorage.setItem('memId', '7001');
+
+//判斷有無localstorage資料並且發送actid給後端進行redis儲存
+function getActIdFromURL() {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('actId');
+}
+$(document).ready(function () {
+    $("#addtocart").click(function () {
+        var memId = localStorage.getItem('memId');
+        if (memId) {
+            var actId = getActIdFromURL();
+            console.log(actId);
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8081/artion/addToCartServlet",
+                data: { actId: actId },
+                success: function (response) {
+                    alert("成功送到 Servlet！");
+                },
+                error: function () {
+                    alert("發送失敗");
+                }
+            });
+        } else {
+            window.location.href = 'http://localhost:8081/artion/html/member/memberLogin.html';
+        }
+    });
+});
+
 
 //================== 新增活動留言功能 ==================
 let button = document.getElementById("commentForm");
@@ -485,30 +519,58 @@ button.addEventListener('click', function(e) {
             }
         });
     });
-
-    // ================== 將活動id傳給後端，傳到redis使用 ================== 
-    function getActIdFromURL() {
+    
+  //================== 載入頁面時取得該活動廠商資訊 ================== 
+    $(document).ready(function () {
     var urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('actId');   
-    console.log(getActIdFromURL());
-    }
-		$(document).ready(function () {
-    		$("#addtocart").click(function () {
-        		var actId = getActIdFromURL();
-        		console.log(actId);
-        	$.ajax({
-            	type: "POST",
-            	url: "http://localhost:8081/artion/addToCartServlet",
-            	data: { actId: actId },
-            		success: function (response) {
-                		alert("成功送送到servlet！");
-            		},
-            	error: function () {
-                	alert("傳送失敗");
+    var actIdFromURL = urlParams.get("actId");
+    
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8081/artion/actGetSel?actId=" + actIdFromURL,
+        dataType: "json",
+        success: function (sellerData) {
+            if (sellerData) {
+                // 渲染卖家信息到页面
+                $("#selName").text(sellerData.selName);
+                $("#selInfo").text(sellerData.selInfo);
+            } else {
+                console.log("无法获取数据");
             }
-        });
+        },
+        error: function () {
+            console.log("无法获取数据");
+        }
     });
 });
+
+
+    
+    
+
+    // ================== 將活動id傳給後端，傳到redis使用 ================== 
+//     function getActIdFromURL() {
+//     var urlParams = new URLSearchParams(window.location.search);
+//     return urlParams.get('actId');   
+//     console.log(getActIdFromURL());
+//     }
+// 		$(document).ready(function () {
+//     		$("#addtocart").click(function () {
+//         		var actId = getActIdFromURL();
+//         		console.log(actId);
+//         	$.ajax({
+//             	type: "POST",
+//             	url: "http://localhost:8081/artion/addToCartServlet",
+//             	data: { actId: actId },
+//             		success: function (response) {
+//                 		alert("成功送送到servlet！");
+//             		},
+//             	error: function () {
+//                 	alert("傳送失敗");
+//             }
+//         });
+//     });
+// });
 
 
 
