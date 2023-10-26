@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>signUp</title>
+<link rel="icon" href="../../images/artionLogo.png" type="image/png">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -272,25 +273,44 @@
 		let read = new FileReader();
 		let mugShotBox = document.querySelector(".mugShotBox");
 		let profilePhoto = document.querySelector("#mem_profilePhoto");
+		let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+		let logupForm = document.querySelector(".btnform");
 		read.addEventListener("load", function () {
 			mugShotBox.innerHTML = `<img src=${read.result}>`;
 		})
 		profilePhoto.addEventListener("change", function () {
 			if (this.files[0]) {
 				read.readAsDataURL(this.files[0]);
-			} else {
-				mugShotBox.innerHTML = `<img src="memberImg?id=${param.memId}">`;
-			}
+			} 
+			// else {
+			// 	mugShotBox.innerHTML = `<img src="memberImg?id=${param.memId}">`;
+			// }
 		})
 		//註冊帳號檢查
 		let mem_account = document.querySelector("#mem_account");
 		let errmsg = document.querySelector('.errmsg');
 		mem_account.addEventListener("blur",function(){
-			let logupForm = document.querySelector(".btnform");
+			if(!emailPattern.test(mem_account.value)){
+				alert("帳號格式不正確");
+				errmsg.classList.remove("display_none");
+				errmsg.innerHTML="帳號格式不正確";
+				mem_account.classList.add("errmsg");
+				logupForm.disabled = true;
+				logupForm.style.cursor = "not-allowed";
+				return
+			}else{
+				errmsg.classList.add("display_none");
+				mem_account.classList.remove("errmsg");
+				logupForm.disabled = false;
+				logupForm.style.cursor = "default";
+			}
+	
 			let formData = new FormData();
 			formData.append("mem_account", mem_account.value);
 			formData.append("action", "examine");
-			fetch(`${location.origin}/artion/member/member.do`, {
+			let path = window.location.pathname;
+			path = path.substring(0, path.indexOf('/', 1));
+			fetch(`${window.location, path}/member/member.do`, {
 				method: "POST",
 				body: formData
 			}).then(res => {
@@ -321,7 +341,7 @@
 		});
 		
 		//送表單
-		let logupForm = document.querySelector(".btnform");
+	
 		logupForm.addEventListener("click", function () {
 			let mem_account = document.querySelector("#mem_account").value;
 			let mem_password = document.querySelector("#mem_password").value;
@@ -352,11 +372,21 @@
 					body: formData
 				})
 					.then(res => {
+						console.log(res);
 						if (res.ok) {
 							console.log("insert member 前端OK");
 						} else {
 							console.error("insert member 前端err");
 						}
+						localStorage.setItem("account", mem_account);
+						sessionStorage.setItem("account",mem_account);
+			let resUrl=res.url;
+			let urlSearchParams = new URLSearchParams(resUrl);
+			let memId=urlSearchParams.get("memId");
+					    localStorage.setItem("memId", memId);
+						sessionStorage.setItem("memId",memId);
+					 resUrl=resUrl.split("?")[0];
+						window.location.href = `${resUrl}`;
 					})
 					.catch(err => {
 						console.error("Error:", err);

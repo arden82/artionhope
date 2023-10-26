@@ -8,5 +8,8 @@ public interface MemberService {
 	int examine(String account);
 	MemberVO login(String account,String password);
 	MemberVO getMember(Integer mem_id);
+	MemberVO getMember(String account);
+
+	
 	
 }

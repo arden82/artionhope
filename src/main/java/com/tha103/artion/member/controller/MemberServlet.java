@@ -5,9 +5,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Date;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.sql.Date;
+import java.util.HashMap;
+
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,13 +21,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+
+
 import com.google.gson.Gson;
-import com.tha103.artion.member.controller.*;
 import com.tha103.artion.member.model.MemberVO;
 import com.tha103.artion.member.service.MemberService;
 import com.tha103.artion.member.service.MemberServiceImp;
 import com.tha103.artion.member.service.Membermsg;
-import com.tha103.artion.memberLevel.model.MemberLevelVO;
+
+
+
 
 @WebServlet("/member/member.do")
 @MultipartConfig
@@ -42,6 +47,7 @@ public class MemberServlet extends HttpServlet {
 		MemberService memSvc = null;
 		memSvc = new MemberServiceImp();
 		MemberVO memberVO = new MemberVO();
+		Integer memId = null;
 		HttpSession session = null;
 		Gson gson = null;
 		Membermsg msg = null;
@@ -98,7 +104,9 @@ public class MemberServlet extends HttpServlet {
 			memberVO.setMemRegisterdTime(new java.sql.Timestamp(new java.util.Date().getTime()));
 			memberVO.setMemProfilePhoto(profilePhotoByte);
 			memberVO.setMemTotalCost(0);
-			if (memSvc.insert(memberVO) == -1) {
+			memId=memSvc.insert(memberVO);
+//			if (memSvc.insert(memberVO) == -1) {
+			if (memId == -1) {
 				session = req.getSession();
 				gson = null;
 				msg = null;
@@ -113,27 +121,48 @@ public class MemberServlet extends HttpServlet {
 				res.setCharacterEncoding("UTF-8");
 				res.getWriter().write(sessionJson);
 				break;
+			};
+			session=req.getSession();
+			session.setAttribute("account", account);
+			session.setAttribute("memId", memId);
+			res.sendRedirect(req.getContextPath() + "/html/member/memberProfile.html?memId="+ memId);
+			break;
+		case "update":
+			String passwordType = req.getParameter("passwordType");
+			if (passwordType != null && "remake".equals(passwordType)) {
+				account = req.getParameter("mem_account");
+				password = req.getParameter("mem_password");
+				memSvc = new MemberServiceImp();
+				memberVO = memSvc.getMember(account);
+				memberVO.setMemPassword(password);
+				int result = memSvc.update(memberVO);
+				if (result == 1) {
+					System.out.println("remake轉向:" + req.getContextPath() + "/html/member/memberLogin.html");
+					res.sendRedirect(req.getContextPath() + "/html/member/memberLogin.html");
+					return;
+				}
+
 			}
-			;
+
 			break;
 		case "login":
 			account = req.getParameter("mem_account");
-			password = req.getParameter("password");
+			password = req.getParameter("mem_password");
 			memSvc = new MemberServiceImp();
 			memberVO = memSvc.login(account, password);
+			memId = memberVO.getMemId();
 			session = req.getSession();
 			System.out.println("login case");
 			System.out.println("memberVO != null:" + (memberVO != null));
 			String streql = null;
 			if (memberVO != null) {
 				streql = memberVO.getMemPassword();
-			} else {
-				streql = "";
 			}
 			try {
-				System.out.println("streql:"+streql);
+				System.out.println("streql:" + streql);
 				if (memberVO != null && !(("密碼錯誤".equals(streql)))) {
 					session.setAttribute("account", account);
+					session.setAttribute("memId", memId);
 					String location = (String) session.getAttribute("location");
 					if (location != null) {
 						session.removeAttribute(location);// 移出session裡的location
@@ -142,8 +171,8 @@ public class MemberServlet extends HttpServlet {
 						return;
 					}
 					System.out.println("login 成功要轉換");
-					System.out.println(req.getContextPath() + "/html/member/memberforgetPassword.html");
-					res.sendRedirect(req.getContextPath() + "/html/member/memberforgetPassword.html");
+					System.out.println(req.getContextPath() + "/html/member/memberProfile.html");
+					res.sendRedirect(req.getContextPath() + "/html/member/memberProfile.html?memId="+memId);
 					return;
 
 				} else {
@@ -188,6 +217,41 @@ public class MemberServlet extends HttpServlet {
 				res.getWriter().write(sessionJson);
 				break;
 			}
+		case "profile":
+			account = req.getParameter("mem_account");
+			memSvc = new MemberServiceImp();
+			memberVO=memSvc.getMember(account);
+			MemberVO tojson =memSvc.getMember(memberVO.getMemId());
+			toObject obj = new  toObject();
+			SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date=tojson.getMemBirthday();
+			java.util.Date utilDate = new Date(date.getTime());
+			String birdthday=dateformat.format(utilDate);
+			 obj.getData().put("mem_id", tojson.getMemId());
+			 obj.getData().put("mem_account", tojson.getMemAccount());
+			 obj.getData().put("mem_name", tojson.getMemName());
+			 obj.getData().put("mem_nickname", tojson.getMemNickname());
+			 obj.getData().put("mem_password",tojson.getMemPassword());
+			 obj.getData().put("mem_gender", tojson.getMemGender());
+			 obj.getData().put("mem_birthday", birdthday);
+			 obj.getData().put("mem_mobile", tojson.getMemMobile());
+			 obj.getData().put("mem_address", tojson.getMemAddress());
+			 obj.getData().put("memLev_level", String.valueOf(tojson.getMemLevLevel().getMemLevLevel()));
+			 obj.getData().put("memLev_levelName", String.valueOf(tojson.getMemLevLevel().getMemLevLevelName()));
+			 obj.getData().put("memLev_minimunOrder", Integer.valueOf(tojson.getMemLevLevel().getMemLevMinimunOrder()));
+			 obj.getData().put("mem_totalCost", tojson.getMemTotalCost());
+			gson = new Gson();
+			String json = gson.toJson(obj);
+			res.setContentType("application/json");
+			res.setCharacterEncoding("UTF-8");
+			res.getWriter().write(json);
+			break;
 		}
+	}
+	class toObject {
+	    private Map<String, Object> obj = new HashMap<>();
+	    public Map<String, Object> getData() {
+	        return obj;
+	    }
 	}
 }

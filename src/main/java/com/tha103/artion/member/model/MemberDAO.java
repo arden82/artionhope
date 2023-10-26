@@ -8,6 +8,8 @@ public interface MemberDAO {
 	int examine(String account);
 
 	MemberVO login(String account, String password);
+	
+	MemberVO getMember(String account);
 
 	MemberVO getMember(Integer id);
 }

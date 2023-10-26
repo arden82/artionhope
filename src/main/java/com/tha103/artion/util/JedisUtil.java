@@ -15,8 +15,8 @@ public class JedisUtil {
 			synchronized(JedisUtil.class) {
 				if (pool == null) {
 					JedisPoolConfig config = new JedisPoolConfig();
-					config.setMaxTotal(8);//設置連接池中允許的最大活動（active）連接數
-					config.setMaxIdle(8);//設置連接池中允許的最大閒置（idle）連接數
+					config.setMaxTotal(20);//設置連接池中允許的最大活動（active）連接數
+					config.setMaxIdle(10);//設置連接池中允許的最大閒置（idle）連接數
 					config.setMaxWaitMillis(10000);//設置當連接池中的所有連接都被占用，且沒有可用的連接時，客戶端需要等待的最長時間
 					pool = new JedisPool(config, "localhost", 6379);
 				}
