@@ -13,9 +13,9 @@ public class TicketOrderService {
 		dao = new TicketOrderDAO();
 	}
 
-	public TicketOrderVO insertTicketorder(MemberVO member, Integer ticketOrdStatus, Double ticketOrdTotalPrice,
+	public TicketOrderVO insertTicketorder(Integer memberNo, Integer ticketOrdStatus, Double ticketOrdTotalPrice,
 			Double ticketOrdProCodeAmount, Double ticketOrdActuallyAmount, Integer ticketOrdPayStatus,
-			MyPromoCodeVO mypromocode, String ticketOrdAddress, SellerVO seller, String ticketOrdCode) {
+			Integer mypromocodeNo, String ticketOrdAddress, Integer sellerNo, String ticketOrdCode) {
 //
 //		SellerVO sellerVO = new SellerVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
 //		sellerVO.setSelId(2001);
@@ -28,15 +28,15 @@ public class TicketOrderService {
 //
 		TicketOrderVO ticketOrderVO = new TicketOrderVO();
 
-		ticketOrderVO.setMember(member);
+		ticketOrderVO.setMemberNo(memberNo);
 		ticketOrderVO.setTicketOrdStatus(ticketOrdStatus);
 		ticketOrderVO.setTicketOrdTotalPrice(ticketOrdTotalPrice);
 		ticketOrderVO.setTicketOrdProCodeAmount(ticketOrdProCodeAmount);
 		ticketOrderVO.setTicketOrdActuallyAmount(ticketOrdActuallyAmount);
 		ticketOrderVO.setTicketOrdPayStatus(ticketOrdPayStatus);
-		ticketOrderVO.setMypromocode(mypromocode);
+		ticketOrderVO.setMypromocodeNo(mypromocodeNo);
 		ticketOrderVO.setTicketOrdAddress(ticketOrdAddress);
-		ticketOrderVO.setSeller(seller);
+		ticketOrderVO.setSellerNo(sellerNo);
 		ticketOrderVO.setTicketOrdCode(ticketOrdCode);
 		dao.insert(ticketOrderVO);
 

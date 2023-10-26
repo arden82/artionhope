@@ -1,43 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=BIG5"
     pageEncoding="BIG5"%>
-<!DOCTYPE html>
-<html>
+<!-- /*
+* Bootstrap 5
+* Template Name: Furni
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="BIG5">
-<meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="author" content="Untree.co" />
-    <link rel="shortcut icon" href="images/artion-logo_.png" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="images/artion-logo_.png">
 
-    <meta name="description" content="" />
-    <meta name="keywords" content="bootstrap, bootstrap4" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
 
-    <!-- Bootstrap CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link href="css/tiny-slider.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/member.css" />
-	<link rel="stylesheet" href="css/thankyou.css"/>
+		<!-- Bootstrap CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+		<link href="css/tiny-slider.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/member.css">
+		<link rel="stylesheet" href="css/checkout.css">
+		
 
-    <title>
-      Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites
-      by Untree.co
-    </title>
 
-    <style>
-      .rowthank-6 {
-        background-color: rgba(211, 210, 208, 0.329);
-      }
-    </style>
-</head>
-<body>
-  <!-- 整個頁面容器開始 -->
+		<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
+	</head>
+
+	<body>
+
+		 <!-- 整個頁面容器開始 -->
 		 <div class="container-fluid p-0 ">
 			<!-- navbar top start -->
 			<!--  navbar_mob_state 開始-->
@@ -309,131 +305,90 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
 			integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
 			crossorigin="anonymous"></script>
+		
 
+		<!-- Start Hero Section -->
+			<div class="p-0">
+				<div class="container">
+					<div class="row justify-content-between">
+						<div class="col-lg-5">
+							<div class="intro-excerpt">
+								<h1>結帳</h1>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							
+						</div>
+					</div>
+				</div>
+			</div>				         
+		        <div class="col-md-6 mx-auto">
+	        
+		          <div class="row mb-5">
+		            <div class="col-md-12">
+		              <h2 class="h3 mb-3 text-black">訂單商品</h2>
+		              <div class="p-3 p-lg-5 border bg-white">
+		                <table class="table site-block-order-table mb-5">
+		                  <thead>
+		                    <th>訂單商品</th>
+		                    <th>總計</th>
+		                  </thead>
+		                  <tbody>
+		                    <tr>
+		                      <td>柏克金德國啤酒節 <strong class="mx-2">x</strong> 1</td>
+		                      <td>$500</td>
+		                    </tr>
+		                    <tr>
+		                      <td>柏克金德國啤酒節 <strong class="mx-2">x</strong>   1</td>
+		                      <td>$500</td>
+		                    </tr>
+		                    <tr>
+		                      <td class="text-black font-weight-bold"><strong>商品金額</strong></td>
+		                      <td class="text-black">$1000</td>
+		                    </tr>
+							<tr>
+								<td class="text-black font-weight-bold"><strong>折扣金額</strong></td>
+								<td class="text-black">$200</td>
+							</tr>
+
+		                    <tr>
+		                      <td class="text-black font-weight-bold"><strong>實付金額</strong></td>
+		                      <td class="text-black font-weight-bold"><strong>$800</strong></td>
+		                    </tr>
+		                  </tbody>
+		                </table>
+
+						<div class="row mb-5"> 
+							<div class="col-md-12">
+							
+									<div class="input-group-append">
+										<input type="text" class="form-control" id="coupon" placeholder="請輸入折扣碼">
+
+										<button class="btn_usediscount" type="button" id="button-addon2">使用折扣碼</button>
+									</div>
+								</div>
+							  </div>
+							</div>
+							<button class="btn_checkorder" onclick="window.location='thankyou.html'">下訂單</button>
+						</div>		        		               
+						</div>
+		              </div>
+		            </div>
+		          </div>
+
+		        </div>
+		      </div>
+		      
+		    </div>
+		  </div>
 
 		
-      <!-- Start Hero Section -->
-      <div class="p-0">
-        <div class="container">
-          <div class="row justify-content-between">
-            <div class="col-lg-5">
-              <div class="intro-excerpt">
-                <h1>訂單完成</h1>
-              </div>
-            </div>
-            <div class="col-lg-7"></div>
-          </div>
-        </div>
-      </div>
-      <!-- End Hero Section -->
 
-      <div class="merthank mx-auto">
-        <div class="rowthank-5 row justify-content-center">
-          <div class="rowthank-6 col-8">
-            <h2 class="h3 thank-7 text-black">訂單明細</h2>
-            <div class="p-1 border bg-white col-11 mx-auto mt-2 mb-3">
-              <table class="table site-block-order-table mb-5">
-                <thread>
-                  <th></th>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-md-12 text-center pt-5">
-                        <span class="display-3 thankyou-icon text-primary">
-                          <svg
-                            width="1em"
-                            height="1em"
-                            viewBox="0 0 16 16"
-                            class="bi bi-cart-check mb-5"
-                            fill="currentColor"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z"
-                            />
-                            <path
-                              fill-rule="evenodd"
-                              d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"
-                            />
-                          </svg>
-                        </span>
-                        <!-- <h2 class="display-3 text-black"> -->
-						<h2 class="display-5 text-black">
-                          謝謝您!您的訂單已成立!
-                        </h2>
-                      
-                        <p><a href="shop.html" class="btn_goshop" >再去逛逛^^ </a> </p>
-                      </div>
-                    </div>
-                  </div>
-                </thread>
+		<script src="jquery/jquery-3.4.1.min.js"></script>
+		<script src="jquery/checkout.js"></script>
+		<script src="js/bootstrap.bundle.min.js"></script>
+		<script src="js/tiny-slider.js"></script>
+		<script src="js/custom.js"></script>
+	</body>
 
-                <tbody class="merchcart">
-                  <tr>
-                    <th>訂單資訊</th>
-                  </tr>
-                  <td><span class="large-font">票券訂單代碼:</span> anx12345 <strong class="mx-2"></strong></td>
-                  <td></td>
-
-                  <tr>
-                    <td>
-                     <span class="large-font">訂單確認電郵已發送至您的電子信箱:</span> artion12345@gmail.com
-                    </td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td><span class="large-font">訂單日期:</span> 2023/08/08 01:01PM</td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td><span class="large-font">訂單狀態:</span> 訂單處理中</td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <table class="table site-block-order-table mb-5">
-                <tbody class="merchcart">
-                  <tr>
-                    <th>顧客資訊</th>
-                  </tr>
-                  <tr>
-                    <td><span class="large-font">顧客資訊:</span>王小明</td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td><span class="large-font">電話號碼:</span>09123456712</td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <table class="table site-block-order-table mb-5">
-                <tbody class="merchcart">
-                  <tr>
-                    <th>付款資訊</th>
-                  </tr>
-                  <tr>
-                    <td><span class="large-font">付款狀態:</span> 已付款</td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-
-      <!-- End Header/Navigation -->
-
-    </div>
-
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/tiny-slider.js"></script>
-    <script src="js/custom.js"></script>
-  </body>
 </html>
