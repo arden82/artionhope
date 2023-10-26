@@ -366,6 +366,8 @@
 </body>
     
 <script>
+
+//================== 新增活動留言功能 ==================
 let button = document.getElementById("commentForm");
 let actId = document.getElementById("actId");
 button.addEventListener('click', function(e) { 
@@ -375,41 +377,6 @@ button.addEventListener('click', function(e) {
 	const id = urlParams.get('actId');
 	actId.value = id;
 });
-
-//================== 新增活動留言功能(測試) ==================
-	
-	
-// $(document).ready(function () {
-//     $("#submit").click(function () {
-//         let actCom = new FormData();
-// 		actCom.append("actComContent",$("#actComContent").val());
-// 		actCom.append("actComPicture1", $("#actComPicture1")[0].files[0]);
-// 		actCom.append("actComPicture2", $("#actComPicture2")[0].files[0]);
-// 		actCom.append("actComPicture3", $("#actComPicture3")[0].files[0]);
-// 		console.log(actCom);
-        
-//         $.ajax({
-//             type: "POST",
-//             url: "http://localhost:8081/artion/addActComServlet",
-//             data: actCom,
-//             processData: false,
-//             contentType: false,
-//             success: function (response) {
-//             	alert("傳送成功");
-//             	window.location.href = "singleActivity.htmlactId=" + actId; //                 
-//             },
-//             error: function () {
-//                 alert("傳送失敗");
-//             }
-//         });
-//     });
-	
-    // 清除文件按钮的点击事件处理程序
-//     $("#clearFiles").click(function () {
-//         $("#commentForm")[0].reset();
-//     });
-// });
-		
 
     //================== 獲取活動頁資料並渲染在畫面上 ==================
     $(document).ready(function () {
@@ -573,59 +540,6 @@ button.addEventListener('click', function(e) {
 //         }
 //     });
 // });
-
-    
-
-
-
-
-
-
-    //================== 新增活動留言功能(文字送出完成版) ==================
-//     $(document).ready(function () {
-//     $("#subMes_button").click(function (e) {
-//         e.preventDefault(); 
-
-//         var actComContent = $("#actComContent").val(); 
-
-//         if (actComContent.trim() !== "") {
-//             var actId = getActIdFromCurrentURL(); 
-
-//             var formData = {
-//                 actComContent: actComContent,
-//                 actId: actId
-//             };
-
-//             $.ajax({
-//                 type: "POST", 
-//                 url: "http://localhost:8081/artion/addActComServlet", 
-//                 data: formData, 
-//                 success: function (response) {
-                    
-//                     alert("留言傳送成功");
-//                     $("#actComContent").val(""); // 清空 textarea
-//                     location.reload(); 
-//                 },
-//                 error: function () {
-                    
-//                     alert("留言傳送失敗");
-//                 }
-//             });
-//         } else {
-//             alert("留言內容請勿空白，請重新留言");
-//         }
-//     });
-// });
-// function getActIdFromCurrentURL() {
-//     const urlParams = new URLSearchParams(window.location.search);
-//     const actId = urlParams.get('actId');
-//     return actId;
-// }
-
-// ================== 新增活動留言圖片功能 ================== 
-
-
-
 
     // ================== 留言按讚功能 ==================
     $(document).ready(function () {
