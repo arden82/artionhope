@@ -1,40 +1,13 @@
 package com.tha103.artion.seller.controller;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.*;
-import java.io.ByteArrayOutputStream;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-
-import com.mysql.cj.util.Util;
-import com.tha103.artion.seller.model.*;
-import com.tha103.artion.seller.service.*;
 import com.tha103.artion.seller.service.SellerService;
 import com.tha103.artion.seller.model.SellerVO;
-import javax.servlet.annotation.MultipartConfig;
-import javax.sql.DataSource;
-
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.RequestContext;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 @WebServlet("/seller/SellerServlet.do")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
@@ -222,26 +195,26 @@ public class SellerServlet extends HttpServlet {
 				errorMsgs.add("單位立案地址請勿空白");
 			}
 
-//			Part newSelProfilePicture = req.getPart("newSelProfilePicture");
-//			byte[] profilePhotoByte = null;
-//			// 沒有選圖片也不會null而是空物件 與insert 處理方式不同(未選圖就抓原本的圖)
-//			if (newSelProfilePicture != null && newSelProfilePicture.getSize() > 0) {
-//				System.out.println("profilePhoto1," + newSelProfilePicture);
-//				InputStream is = newSelProfilePicture.getInputStream();
-//				ByteArrayOutputStream byteArros = new ByteArrayOutputStream();
-//				byte[] buf = new byte[4 * 1024];
-//				int len;
-//				while ((len = is.read(buf)) != -1) {
-//					byteArros.write(buf, 0, len);
-//				}
-//				profilePhotoByte = byteArros.toByteArray();
-//				byteArros.close();
-//			} else {
-//				SellerVO sellerVO = new SellerVO();
-//				SellerService sellerSvc = new SellerService();
-//				sellerVO = sellerSvc.getOneSeller(sel_id);
-//				profilePhotoByte = sellerVO.getSelProfilePicture();// 抓原本舊圖
-//			}
+			Part newSelProfilePicture = req.getPart("newSelProfilePicture");
+			byte[] profilePhotoByte = null;
+			// 沒有選圖片也不會null而是空物件 與insert 處理方式不同(未選圖就抓原本的圖)
+			if (newSelProfilePicture != null && newSelProfilePicture.getSize() > 0) {
+				System.out.println("profilePhoto1," + newSelProfilePicture);
+				InputStream is = newSelProfilePicture.getInputStream();
+				ByteArrayOutputStream byteArros = new ByteArrayOutputStream();
+				byte[] buf = new byte[4 * 1024];
+				int len;
+				while ((len = is.read(buf)) != -1) {
+					byteArros.write(buf, 0, len);
+				}
+				profilePhotoByte = byteArros.toByteArray();
+				byteArros.close();
+			} else {
+				SellerVO sellerVO = new SellerVO();
+				SellerService sellerSvc = new SellerService();
+				sellerVO = sellerSvc.getOneSeller(sel_id);
+				profilePhotoByte = sellerVO.getSelProfilePicture();// 抓原本舊圖
+			}
 
 //			String sel_registerdTimeStr = req.getParameter("selRegisterdTime");
 //			Timestamp sel_registerdTime = null;
@@ -298,7 +271,8 @@ public class SellerServlet extends HttpServlet {
 			SellerService sellerSvc = new SellerService();
 			sellerVO = sellerSvc.updateSeller(sel_id, sel_account, sel_password, sel_name, sel_phone, sel_address,
 					sel_url, sel_facebook, sel_contactPerson, sel_introduction, sel_bankCode, sel_bankNumber,
-					sel_bankName, sel_remark, sel_title, sel_principal, sel_uniformNumbers, sel_registeredAddress);
+					sel_bankName, sel_remark, sel_title, sel_principal, sel_uniformNumbers, sel_registeredAddress
+					, profilePhotoByte);
 //			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("sellerVO", sellerVO); // 使用更新后的卖家信息
 			String url = "/seller/sel_profile.jsp";
@@ -409,16 +383,16 @@ public class SellerServlet extends HttpServlet {
 				errorMsgs.add("單位立案地址請勿空白");
 			}
 
-//			Part part = req.getPart("sel_profilePicture");
-//			InputStream in = part.getInputStream();
-//
-//			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//
-//			byte[] buf = new byte[4 * 1024]; // 4K buffer
-//			int len;
-//			while ((len = in.read(buf)) != -1) {
-//				byteArrayOutputStream.write(buf, 0, len);
-//			}
+			Part part = req.getPart("selProfilePicture");
+			InputStream in = part.getInputStream();
+
+			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+			byte[] buf = new byte[4 * 1024]; // 4K buffer
+			int len;
+			while ((len = in.read(buf)) != -1) {
+				byteArrayOutputStream.write(buf, 0, len);
+			}
 
 			SellerVO sellerVO = new SellerVO();
 
@@ -439,8 +413,8 @@ public class SellerServlet extends HttpServlet {
 			sellerVO.setSelPrincipal(sel_principal);
 			sellerVO.setSelRegisteredAddress(sel_registeredAddress);
 
-//			byte[] sel_profilePicture = byteArrayOutputStream.toByteArray();
-//			sellerVO.setSelProfilePicture(sel_profilePicture);
+			byte[] selProfilePicture = byteArrayOutputStream.toByteArray();
+			sellerVO.setSelProfilePicture(selProfilePicture);
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
@@ -454,7 +428,7 @@ public class SellerServlet extends HttpServlet {
 			SellerService sellerSvc = new SellerService();
 			sellerVO = sellerSvc.addSeller(sel_account, sel_password, sel_name, sel_phone, sel_address, sel_url,
 					sel_facebook, sel_contactPerson, sel_introduction, sel_bankCode, sel_bankNumber, sel_bankName,
-					sel_remark, sel_title, sel_principal, sel_uniformNumbers, sel_registeredAddress);
+					sel_remark, sel_title, sel_principal, sel_uniformNumbers, sel_registeredAddress, selProfilePicture);
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 			String url = "/seller/sel_login.jsp";

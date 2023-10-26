@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.tha103.artion.administrator.model.AdministratorVO;
 import com.tha103.artion.administrator.service.AdministratorService;
 
-@WebServlet("/ShowOneAdmin")
+@WebServlet("/showOneAdmin")
 public class ShowOneAdmin extends HttpServlet {
 
 	@Override

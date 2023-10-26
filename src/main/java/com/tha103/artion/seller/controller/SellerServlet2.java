@@ -21,7 +21,7 @@ public class SellerServlet2 extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 	    
-		String str = req.getParameter("sel_id");
+		String str = req.getParameter("selId");
 	    Integer sel_id = Integer.valueOf(str);
 
 	    SellerService sellerSvc = new SellerService();

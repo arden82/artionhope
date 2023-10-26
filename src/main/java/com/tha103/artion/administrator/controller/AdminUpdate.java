@@ -155,6 +155,7 @@ public class AdminUpdate extends HttpServlet {
 			if (updateResult > 0) {
 				// 返回成功信息
 				Map<String, Object> response = new HashMap<>();
+				response.put("admId",admId);
 				response.put("status", "success");
 				response.put("message", "管理员信息已成功更新。");
 				out.write(new Gson().toJson(response));

@@ -236,7 +236,7 @@
       // 定義一個函數來獲取管理員數據並填充表格
       function getAdminData() {
         $.ajax({
-          url: "http://localhost:8081/artion/ShowAllAdmins",
+          url: "http://localhost:8081/artion/showAllAdmins",
           type: "POST",
           dataType: "json",
           success: function (data) {
@@ -259,9 +259,8 @@
                                   <td>${admin.admAddTime}</td>
                                   <td>${admin.admLastModifiedTime}</td>
                                   <td>${admin.admRight}</td>
-                                  <td><button type="submit" id="commit">修改</button></td>
-                                  <td><button id="delete" data-admin="${admin.admId}">刪除</button></td>
-
+                                  <td><button type="submit" id="commit" class="btn btn-primary m-2">修改</button></td>
+                                  <td><button id="delete" data-admin="${admin.admId}" class="btn btn-secondary m-2">刪除</button></td>
                               </tr>
                           `;
                 tableBody.append(newRowHTML);
@@ -284,7 +283,7 @@
         };
         console.log(admId);
         $.ajax({
-          url: "http://localhost:8081/artion/ShowOneAdmin",
+          url: "http://localhost:8081/artion/showOneAdmin",
           type: "POST",
           data: updateItem,
           dataType: "json",
@@ -304,7 +303,7 @@
           };
 
           $.ajax({
-            url: "http://localhost:8081/artion/DeleteAdmin",
+            url: "http://localhost:8081/artion/deleteAdmin",
             type: "POST",
             data: deleteItem,
             dataType: "json",

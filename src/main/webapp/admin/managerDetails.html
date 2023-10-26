@@ -52,7 +52,7 @@
           </a>
           <div class="d-flex align-items-center ms-4 mb-4">
             <div class="position-relative">
-              <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px" />
+              <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto2" />
               <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
             </div>
             <div class="ms-3">
@@ -155,7 +155,7 @@
             </div>
             <div class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px" />
+                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto1" />
                 <span class="d-none d-lg-inline-flex">John Doe</span>
               </a>
               <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -243,7 +243,7 @@
                     <div class="col-md-3 mb-3"><label for="admAddTime" class="form-label">創建時間:</label><span id="adminCreateTimeSpan"></span></div>
                     <div class="col-md-3 mb-3"><label for="admLastModifiedTime" class="form-label">最新更改時間:</label><span id="adminLastModifiedTimeSpan"></span></div>
                   </div>
-                  <button type="button" class="btn btn-secondary m-2">取消</button> <button type="button" class="btn btn-primary" id="update">更改</button>
+                  <button type="button" class="btn btn-secondary m-2" id="cancel">取消</button> <button type="button" class="btn btn-primary" id="update">更改</button>
                 </div>
               </form>
             </div>
@@ -327,6 +327,8 @@
     </script> -->
 
     <script>
+      var localAdmId = localStorage.getItem("admId");
+
       var admId; // 在 getAdminData 外部定义 admId 变量
 
       //畫面先渲染原本的資料
@@ -337,7 +339,7 @@
 
         if (admId) {
           $.ajax({
-            url: "http://localhost:8081/artion/ShowOneAdmin",
+            url: "http://localhost:8081/artion/showOneAdmin",
             type: "POST",
             data: { admId: admId },
             dataType: "json",
@@ -379,6 +381,19 @@
       }
 
       $(document).ready(function (e) {
+        const adminPhoto1 = $("#adminPhoto1");
+        const adminPhoto2 = $("#adminPhoto2");
+
+        console.log(adminPhoto1);
+
+        // const initialImageUrl = "img/user.jpg";
+        const alternateImageUrl = "http://localhost:8081/artion/adminphoto?admId=" + localAdmId;
+
+        // let isInitialImage = true;
+
+        adminPhoto1.attr("src", alternateImageUrl);
+        adminPhoto2.attr("src", alternateImageUrl);
+
         //渲染畫面
         getAdminData();
         //點擊更改資料
@@ -409,7 +424,7 @@
               // 在成功时执行的操作
               console.log("Update successful for admId: " + admId);
               // 如果更新成功，可以执行重定向到oneAdmin.html
-              window.location.href = "oneAdmin.html?admId=" + admId;
+              window.location.href = "manager.html?admId=" + localAdmId;
             },
             error: function (error) {
               // 在请求失败时执行的操作
@@ -417,6 +432,9 @@
               // 可以添加其他处理请求失败后的操作，例如显示错误消息
             },
           });
+        });
+        $("#cancel").on("click", function () {
+          location.href = "manager.html?admId=" + admId;
         });
       });
     </script>

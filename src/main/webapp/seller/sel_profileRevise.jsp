@@ -8,8 +8,6 @@
 
 <%
 SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
-System.out.println(sellerVO.getSelName());
-System.out.println(sellerVO.getSelName());
 %>
 
 <!DOCTYPE html>
@@ -108,21 +106,28 @@ System.out.println(sellerVO.getSelName());
 		<!-- Sidebar Start -->
 		<div class="sidebar pe-4 pb-3 d-flex flex-column">
 			<nav class="navbar bg-light navbar-light">
-				<a href="sel_index.jsp" class="navbar-brand mx-4 mb-3 artionimg">
+				<a href="../activity/sel_index.jsp" class="navbar-brand mx-4 mb-3 artionimg">
 					<img src="./images/artion-logo.png">
 				</a>
 
 				<div class="navbar-nav w-100">
 					<div class="nav-item">
-						<a href="sel_index.html" class="nav-item nav-link"><i
-							class="fa-solid fa-users me-2"></i></i>活動總覽</a> <a href="sel_actadd.jsp"
-							class="nav-item nav-link"><i
-							class="fa-solid fa-heart-circle-plus me-2"></i></i>新增活動</a> <a
-							href="sel_order.html" class="nav-item nav-link"><i
-							class="fa-solid fa-magnifying-glass me-2"></i></i>訂單總覽</a> <a
-							href="sel_notification.html" class="nav-item nav-link"> <i
-							class="fa-solid fa-envelope me-2"></i>通知訊息
-						</a> <a href="sel_profile.jsp" class="nav-item nav-link"> <i
+						<a href="../activity/sel_index.jsp" class="nav-item nav-link">
+						<i class="fa-solid fa-users me-2"></i>
+						</i>活動總覽</a> 
+						
+						<a href="../activity/sel_actadd.jsp" class="nav-item nav-link">
+						<i class="fa-solid fa-heart-circle-plus me-2"></i>
+						</i>新增活動</a> 
+						
+						<a href="sel_actadd.jsp" class="nav-item nav-link"><i
+							class="fa-solid fa-magnifying-glass me-2"></i>
+							</i>訂單總覽</a> 
+							
+							<a href="sel_notification.html" class="nav-item nav-link"> 
+							<i class="fa-solid fa-envelope me-2"></i>通知訊息</a> 
+						
+						<a href="./sel_profile.jsp" class="nav-item nav-link"> <i
 							class="fa-solid fa-address-card me-2"></i>廠商基本資料
 						</a>
 					</div>
@@ -132,15 +137,9 @@ System.out.println(sellerVO.getSelName());
 			<div class="d-flex mt-auto"
 				style="margin-left: 40px; align-items: center; margin-bottom: 40px;">
 				<div class="position-relative">
-					<label for="fileInput"> <img id="userImageSide"
-						class="rounded-circle" src="images/user.jpg" alt=""
-						style="width: 50px; height: 50px; cursor: pointer;">
-						<div id="uploadText"
-							style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 15px; background-color: rgba(0, 0, 0, 0.5); color: white; text-align: center; line-height: 40px; cursor: pointer;">
-							更換</div>
-					</label> <input type="file" id="fileInput" accept="image/*"
-						style="display: none;"
-						onchange="handleImageUpload(this, 'userImageSide')">
+					<img
+						src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
+						width=50px height=50px />
 				</div>
 				<div
 					style="margin-left: 10px; display: flex; flex-direction: column; align-items: center;">
@@ -209,18 +208,24 @@ System.out.println(sellerVO.getSelName());
 					</div>
 					<!-- 右上角头像 -->
 					<div class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle"
-							data-bs-toggle="dropdown"> <img id="userImageNav"
-							class="rounded-circle me-lg-2" src="images/user.jpg" alt=""
-							style="width: 40px; height: 40px;"> <span id="userNameNav"
-							class="d-none d-lg-inline-flex">寬宏藝術</span>
-						</a>
-						<div
-							class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-							<a href="sel_profile.jsp" class="dropdown-item">My Profile</a> <a
-								href="sel_login.jsp" class="dropdown-item">Log Out</a>
+							<a href="#" class="nav-link dropdown-toggle"
+								data-bs-toggle="dropdown"> <img
+								src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
+								width=50px height=50px /> <span id="userNameNav"
+								class="d-none d-lg-inline-flex">寬宏藝術</span>
+							</a>
+							<div
+								class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+								<a href="../seller/sel_profile.jsp" class="dropdown-item">My
+									Profile</a>
+								<form
+									action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
+									method="post">
+									<button type="submit" class="dropdown-item">Log Out</button>
+								</form>
+
+							</div>
 						</div>
-					</div>
 			</nav>
 			<!-- Navbar End -->
 			<c:if test="${not empty errorMsgs}">
@@ -235,7 +240,7 @@ System.out.println(sellerVO.getSelName());
 
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/seller/SellerServlet.do"
-				name="form1">
+				enctype="multipart/form-data" name="form1">
 				<!-- Form Start -->
 				<div class="container-fluid pt-4 px-4">
 					<div class="row g-4">
@@ -428,10 +433,15 @@ System.out.println(sellerVO.getSelName());
 												id="registeredAddress" name="selRegisteredAddress"
 												value="${sellerVO.selRegisteredAddress}">
 										</div>
+
 									</div>
 								</div>
-							</div>
 
+								<div class="mb-3">
+									<label for="formFile1" class="form-label">廠商頭像</label> <input
+										class="form-control" type="file" name="newSelProfilePicture">
+								</div>
+							</div>
 							<div class="text-center" style="margin-top: 30px;">
 								<!-- 文本置中並設定上邊距 -->
 								<input type="hidden" name="action" value="update"> <input

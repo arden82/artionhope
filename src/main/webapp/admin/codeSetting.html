@@ -190,90 +190,13 @@
                     <th scope="col">優惠碼流水號</th>
                     <th scope="col">優惠碼名稱</th>
                     <th scope="col">優惠碼類型</th>
+                    <th scope="col">優惠碼代碼</th>
                     <th scope="col">狀態</th>
                     <th scope="col">優惠時間</th>
                     <th scope="col">操作</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>John</td>
-                    <td>golden</td>
-                    <td>jhon@email.com</td>
-                    <td>2000-07-25</td>
-                    <td>
-                      <button>修改</button>
-                      <button>刪除</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Mark</td>
-                    <td>silver</td>
-                    <td>mark@email.com</td>
-                    <td>2000-01-01</td>
-                    <td>
-                      <button>修改</button>
-                      <button>刪除</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Jacob</td>
-                    <td>bronze</td>
-                    <td>jacob@email.com</td>
-                    <td>2023-08-31</td>
-                    <td>
-                      <button>修改</button>
-                      <button>刪除</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Jacob</td>
-                    <td>bronze</td>
-                    <td>jacob@email.com</td>
-                    <td>2023-08-31</td>
-                    <td>
-                      <button>修改</button>
-                      <button>刪除</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Jacob</td>
-                    <td>bronze</td>
-                    <td>jacob@email.com</td>
-                    <td>2023-08-31</td>
-                    <td>
-                      <button>修改</button>
-                      <button>刪除</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Jacob</td>
-                    <td>bronze</td>
-                    <td>jacob@email.com</td>
-                    <td>2023-08-31</td>
-                    <td>
-                      <button>修改</button>
-                      <button>刪除</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Jacob</td>
-                    <td>bronze</td>
-                    <td>jacob@email.com</td>
-                    <td>2023-08-31</td>
-                    <td>
-                      <button>修改</button>
-                      <button>刪除</button>
-                    </td>
-                  </tr>
-                </tbody>
+                <tbody id="table-body"></tbody>
               </table>
             </div>
           </div>
@@ -315,6 +238,69 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
+      function fillTableWithPromoCodes() {
+        $.ajax({
+          url: "http://localhost:8081/artion/showAllPromoCode", // 修改为您的Servlet的URL
+          type: "POST",
+          dataType: "json",
+          success: function (data) {
+            var tableBody = $("#table-body");
+            tableBody.empty();
+
+            if (data.length > 0) {
+              $.each(data, function (index, promoCode) {
+                var newRowHTML = `
+                        <tr>
+                            <th scope="row">${promoCode.promoCodeId}</th>
+                            <td>${promoCode.promoCodeName}</td>
+                            <td>${promoCode.promoCodeType}</td>
+                            <td>${promoCode.promoCodeCode}</td>
+                            <td>${promoCode.promoCodeStatus}</td>
+                            <td>${promoCode.proCodeStartDate} - ${promoCode.proCodeEndDate}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" id="update" data-promoCode="${promoCode.promoCodeId}">修改</button>
+                                <button type="button" class="btn btn-secondary" id="delete" data-promoCode="${promoCode.promoCodeId}">刪除</button>
+                            </td>
+                        </tr>
+                    `;
+                tableBody.append(newRowHTML);
+              });
+            } else {
+              tableBody.html("<tr><td colspan='7'>没有数据。</td></tr>");
+            }
+          },
+          error: function () {
+            // 处理错误
+            alert("请求失败。");
+          },
+        });
+      }
+
+      function deletePromoCode(promoCodeId) {
+        if (confirm("確定要刪除此優惠碼嗎？")) {
+          let deleteItem = {
+            promoCodeId: promoCodeId,
+          };
+
+          $.ajax({
+            url: "http://localhost:8081/artion/deletePromoCode",
+            type: "POST",
+            data: deleteItem,
+            dataType: "json",
+            success: function (data) {
+              // 在成功刪除后执行的操作，例如重新加载管理员列表
+              fillTableWithPromoCodes();
+            },
+            error: function () {
+              // 處理錯誤
+              alert("刪除管理員失敗。");
+            },
+          });
+        }
+      }
+
+      // 在文档加载完成后调用函数
+
       $(document).ready(function () {
         const admId = localStorage.getItem("admId");
 
@@ -332,6 +318,24 @@
 
         adminPhoto1.attr("src", alternateImageUrl);
         adminPhoto2.attr("src", alternateImageUrl);
+
+        fillTableWithPromoCodes();
+
+        //修改按鈕
+        $("#table-body").on("click", "#update", function () {
+          // 獲取所在行的 merchId
+          console.log($(this));
+          var promoCodeId = $(this).data("promocode");
+          console.log(promoCodeId);
+          location.href = "codeEdit.html?promoCodeId=" + promoCodeId;
+        });
+        //刪除按鈕
+        $("#table-body").on("click", "#delete", function () {
+          // 獲取所在行的 merchId
+          var promoCodeId = $(this).data("promocode");
+          console.log(promoCodeId);
+          deletePromoCode();
+        });
       });
     </script>
   </body>

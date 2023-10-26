@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,16 +31,16 @@
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+<link href="<%=request.getContextPath()%>/seller/lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
-<link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+<link href="<%=request.getContextPath()%>/seller/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/seller/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="css/style.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/seller/css/style.css" rel="stylesheet">
 </head>
 
 <style>
@@ -51,11 +53,17 @@
 <body>
 
 
-	<div class="error-message">
-				<c:if test="${not empty requestScope.error}">
-					<p class="text-danger">${requestScope.error}</p>
-				</c:if>
-			</div>
+<div class="success-message">
+    <c:if test="${not empty sessionScope.logoutMessage}">
+        <p class="text-success">${sessionScope.logoutMessage}</p>
+    </c:if>
+</div>
+
+<div class="error-message">
+    <c:if test="${not empty requestScope.error}">
+        <p class="text-danger">${requestScope.error}</p>
+    </c:if>
+</div>
 
 
 	<form action="<%=request.getContextPath()%>/seller/LoginHandler.do"
@@ -70,7 +78,7 @@
 				</div>
 			</div>
 			<!-- Spinner End -->
-		
+
 			<!-- Sign In Start -->
 			<div class="container-fluid">
 				<div class="row h-100 align-items-center justify-content-center"
@@ -96,43 +104,34 @@
 									id="floatingPassword"> <label for="floatingPassword">密碼
 									Password</label>
 							</div>
-<!-- 							<div -->
-<!-- 								class="d-flex align-items-center justify-content-between mb-4"> -->
-<!-- 								<div class="form-check"> -->
-<!-- 									<input type="checkbox" class="form-check-input" -->
-<!-- 										id="rememberMyPassword"> <label -->
-<!-- 										class="form-check-label" for="rememberMyPassword">記住我的帳號</label> -->
-<!-- 								</div> -->
-								<a href="sel_forget_password.html">忘記密碼</a>
 					
-							<!--                         <input -->
-							<!--                             type="hidden" name="action" value="getOne_For_Update"> -->
+							<a href="sel_forget_password.html">忘記密碼</a>
+
 							<button type="submit" class="btn btn-primary py-3 w-100 mb-4">登入</button>
 							<input type="hidden" name="action" value="getOne_For_Update"></input>
-	
+
 							<p class="text-center mb-0">
 								立即申請線上註冊 <a href="sel_signup.jsp">註冊</a>
 							</p>
-								</div>
+						</div>
+						</div>
+						</div>
 	</form>
-	</div>
-	</div>
-	</div>
-	</div>
+
 	<!-- Sign In End -->
-	</div>
+
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/chart/chart.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/waypoints/waypoints.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="lib/tempusdominus/js/moment.min.js"></script>
-	<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-	<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+	<script src="<%=request.getContextPath()%>/seller/lib/chart/chart.min.js"></script>
+	<script src="<%=request.getContextPath()%>/seller/lib/easing/easing.min.js"></script>
+	<script src="<%=request.getContextPath()%>/seller/lib/waypoints/waypoints.min.js"></script>
+	<script src="<%=request.getContextPath()%>/seller/lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/moment.min.js"></script>
+	<script src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
