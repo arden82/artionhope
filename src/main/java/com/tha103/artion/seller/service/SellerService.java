@@ -18,7 +18,7 @@ public class SellerService {
 			String sel_phone, String sel_address, String sel_url, String sel_facebook, String sel_contactPerson,
 			String sel_introduction, String sel_bankCode, String sel_bankNumber, String sel_bankName, 
 			String sel_remark, String sel_title, String sel_principal, String sel_uniformNumbers, 
-			String sel_registeredAddress) {
+			String sel_registeredAddress, byte[] sel_profilePicture) {
 
 		SellerVO sellerVO = new SellerVO();
 
@@ -39,9 +39,11 @@ public class SellerService {
 		sellerVO.setSelPrincipal(sel_principal);
 		sellerVO.setSelUniformNumbers(sel_uniformNumbers);
 		sellerVO.setSelRegisteredAddress(sel_registeredAddress);
+		sellerVO.setSelProfilePicture(sel_profilePicture);
 		sellerVO.setSelRegisterdTime(new Timestamp(System.currentTimeMillis())); 
         sellerVO.setSelLastModifiedTime(new Timestamp(System.currentTimeMillis()));
 		sellerVO.setSelStatus(1);
+		
 		dao.insert(sellerVO);
 		return sellerVO;
 	}
@@ -49,7 +51,8 @@ public class SellerService {
 	public SellerVO updateSeller(Integer sel_id, String sel_account, String sel_password, String sel_name, 
 			String sel_phone, String sel_address, String sel_url, String sel_facebook, String sel_contactPerson,
 			String sel_introduction, String sel_bankCode, String sel_bankNumber, String sel_bankName, 
-			String sel_remark, String sel_title, String sel_principal, String sel_uniformNumbers, String sel_registeredAddress 
+			String sel_remark, String sel_title, String sel_principal, String sel_uniformNumbers, 
+			String sel_registeredAddress, byte[] sel_profilePicture 
 		    ) {
 
 		   SellerVO sellerVO = dao.getSellerByAccount(sel_account); // 獲取現有的賣家資料
@@ -73,6 +76,7 @@ public class SellerService {
 		        sellerVO.setSelPrincipal(sel_principal);
 		        sellerVO.setSelUniformNumbers(sel_uniformNumbers);
 		        sellerVO.setSelRegisteredAddress(sel_registeredAddress);
+				sellerVO.setSelProfilePicture(sel_profilePicture);
 
 		        // 更新最後修改時間
 		        sellerVO.setSelLastModifiedTime(new Timestamp(System.currentTimeMillis()));

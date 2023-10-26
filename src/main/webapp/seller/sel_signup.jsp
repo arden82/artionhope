@@ -69,7 +69,6 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 		</ul>
 	</c:if>
 
-
 	<FORM METHOD="post"
 		ACTION="<%=request.getContextPath()%>/seller/SellerServlet.do"
 		enctype="multipart/form-data" name="form1">
@@ -83,162 +82,99 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 					<span class="sr-only">Loading...</span>
 				</div>
 			</div>
-		</div>
-		<!-- Spinner End -->
+			<!-- Spinner End -->
 
-		<!-- Form Start -->
-
-		<table>
-			<div class="container-fluid pt-4 px-4">
-				<div class="row g-4 justify-content-center">
-					<!-- 左侧卡片区块，占据6列，即半屏宽度 -->
-					<div class="col-sm-6 col-xl-4 ml-auto">
-						<div class="bg-light rounded h-100 p-4">
-							<h6 class="mb-4" style="font-size: 24px; color: #009CFF">廠商註冊</h6>
-							<div class="mb-3">
-								<label for="sellEmail" class="form-label">Email (將以此
-									E-mail為登入用)</label> <input type="email" class="form-control"
-									name="selAccount"
-									value="<%=(sellerVO == null) ? "" : sellerVO.getSelAccount()%>"
-									size="45">
-							</div>
-
-							<div class="row">
+			<!-- Form Start -->
+			<table>
+				<div class="container-fluid pt-4 px-4">
+					<div class="row g-4 justify-content-center">
+						<!-- 左侧卡片区块，占据6列，即半屏宽度 -->
+						<div class="col-sm-6 col-xl-4 ml-auto">
+							<div class="bg-light rounded h-100 p-4">
+								<h6 class="mb-4" style="font-size: 24px; color: #009CFF">廠商註冊</h6>
 								<div class="mb-3">
-									<label for="sellpassword" class="form-label">密碼
-										(至少7個字元，須包含英文或數字)</label> <input type="text" class="form-control"
-										id="sellName" name="selPassword"
-										value="<%=(sellerVO == null) ? "" : sellerVO.getSelPassword()%>"
+									<label for="sellEmail" class="form-label">Email (將以此
+										E-mail為登入用)</label> <input type="email" class="form-control"
+										name="selAccount"
+										value="<%=(sellerVO == null) ? "" : sellerVO.getSelAccount()%>"
+										size="45">
+								</div>
+								<div class="row">
+									<div class="mb-3">
+										<label for="sellpassword" class="form-label">密碼
+											(至少7個字元，須包含英文或數字)</label> <input type="text" class="form-control"
+											id="sellName" name="selPassword"
+											value="<%=(sellerVO == null) ? "" : sellerVO.getSelPassword()%>"
+											size="45" />
+									</div>
+								</div>
+								<div class="mb-3">
+									<label for="sellName" class="form-label">廠商名稱</label> <input
+										type="text" class="form-control" id="sellName" name="selName"
+										value="<%=(sellerVO == null) ? "" : sellerVO.getSelName()%>"
+										size="45" />
+								</div>
+								<div class="mb-3">
+									<label for="sellPhoneNumber" class="form-label">電話</label> <input
+										type="text" class="form-control" id="sellPhoneNumber"
+										name="selPhone"
+										value="<%=(sellerVO == null) ? "" : sellerVO.getSelPhone()%>"
 										size="45" />
 								</div>
 							</div>
-							<div class="mb-3">
-								<label for="sellName" class="form-label">廠商名稱</label> <input
-									type="text" class="form-control" id="sellName" name="selName"
-									value="<%=(sellerVO == null) ? "" : sellerVO.getSelName()%>"
-									size="45" />
-							</div>
-							<div class="mb-3">
-								<label for="sellPhoneNumber" class="form-label">電話</label> <input
-									type="text" class="form-control" id="sellPhoneNumber"
-									name="selPhone"
-									value="<%=(sellerVO == null) ? "" : sellerVO.getSelPhone()%>"
-									size="45" />
+						</div>
+
+						<!-- 右侧卡片区块，占据6列，即半屏宽度 -->
+
+						<div class="col-sm-6 col-xl-4 mr-auto">
+							<div class="bg-light rounded h-100 p-4">
+								<div class="mb-3">
+									<label for="sellAddress" class="form-label"
+										style="margin-top: 55px;">廠商地址</label> <input type="text"
+										class="form-control" id="sellAddress" name="selAddress"
+										value="<%=(sellerVO == null) ? "" : sellerVO.getSelAddress()%>"
+										size="45" />
+								</div>
+								<div class="mb-3">
+									<label for="sellAddress" class="form-label">官方網址</label> <input
+										type="text" class="form-control" id="sellAddress"
+										name="selUrl"
+										value="<%=(sellerVO == null) ? "" : sellerVO.getSelUrl()%>"
+										size="45" />
+								</div>
+								<div class="mb-3">
+									<label for="sellAddress" class="form-label">Facebook</label> <input
+										type="text" class="form-control" id="sellAddress"
+										name="selFacebook"
+										value="<%=(sellerVO == null) ? "" : sellerVO.getSelFacebook()%>"
+										size="45" />
+								</div>
+								<div class="mb-3">
+									<label for="sellAddress" class="form-label">單位連絡人</label> <input
+										type="text" class="form-control" id="sellAddress"
+										name="selContactPerson"
+										value="<%=(sellerVO == null) ? "" : sellerVO.getSelContactPerson()%>"
+										size="45" />
+								</div>
 							</div>
 						</div>
 					</div>
 
-					<!-- 右侧卡片区块，占据6列，即半屏宽度 -->
+					<!-- 分隔線 -->
+					<div class="col-sm-12 col-xl-12 mt-4"></div>
 
-					<div class="col-sm-6 col-xl-4 mr-auto">
-						<div class="bg-light rounded h-100 p-4">
-							<div class="mb-3">
-								<label for="sellAddress" class="form-label"
-									style="margin-top: 55px;">廠商地址</label> <input type="text"
-									class="form-control" id="sellAddress" name="selAddress"
-									value="<%=(sellerVO == null) ? "" : sellerVO.getSelAddress()%>"
-									size="45" />
-							</div>
-							<div class="mb-3">
-								<label for="sellAddress" class="form-label">官方網址</label> <input
-									type="text" class="form-control" id="sellAddress" name="selUrl"
-									value="<%=(sellerVO == null) ? "" : sellerVO.getSelUrl()%>"
-									size="45" />
-							</div>
-							<div class="mb-3">
-								<label for="sellAddress" class="form-label">Facebook</label> <input
-									type="text" class="form-control" id="sellAddress"
-									name="selFacebook"
-									value="<%=(sellerVO == null) ? "" : sellerVO.getSelFacebook()%>"
-									size="45" />
-							</div>
-							<div class="mb-3">
-								<label for="sellAddress" class="form-label">單位連絡人</label> <input
-									type="text" class="form-control" id="sellAddress"
-									name="selContactPerson"
-									value="<%=(sellerVO == null) ? "" : sellerVO.getSelContactPerson()%>"
-									size="45" />
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- 分隔線 -->
-<!-- 				<div class="col-sm-12 col-xl-12 mt-4"></div> -->
-
-				<!-- 下方區塊 廠商簡介-->
-				<div class="row g-4 justify-content-center">
-					<div class="col-sm-8">
-						<div class="bg-light rounded h-100 p-4">
-							<div class="col">
-								<div class="mb-3">
-									<label for="sellIntroduction" class="form-label">廠商簡介</label>
-									<textarea class="form-control" id="sellIntroduction"
-										name="selIntroduction"
-										value="<%=(sellerVO == null) ? "" : sellerVO.getSelIntroduction()%>"
-										size="45"
-										style="width: 100%; max-width: 910px; min-height: 200px; box-sizing: border-box;"></textarea>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- 分隔線 -->
-<!-- 				<div class="col-sm-12 col-xl-12 mt-2"></div> -->
-
-				<!-- 下方區塊 帳務資訊-->
-
-				<div class="container-fluid pt-4 px-4">
-					<div class="custom-form-container bg-light rounded h-100 p-4">
-						<div class="row">
-							<div class="col">
-								<div class="mb-2">
-									<div class="form-group">
-										<label for="bankCode" class="form-label">銀行代碼</label>
-										<div class="d-flex">
-											<input type="text" class="form-control" id="bankCode"
-												name="selBankCode"
-												value="<%=(sellerVO == null) ? "" : sellerVO.getSelBankCode()%>"
-												size="45" />
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col">
-								<div class="mb-3">
-									<label for="bankAccount" class="form-label">銀行帳號</label>
-									<div class="d-flex">
-										<input type="text" class="form-control" id="bankAccount"
-											name="selBankNumber"
-											value="<%=(sellerVO == null) ? "" : sellerVO.getSelBankNumber()%>"
-											size="45" />
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<div class="mb-2">
-									<div class="form-group">
-										<label for="accountNAme" class="form-label">戶名</label>
-										<div class="d-flex">
-											<input type="text" class="form-control" id="accountNAme"
-												name="selBankName"
-												value="<%=(sellerVO == null) ? "" : sellerVO.getSelBankName()%>"
-												size="45" />
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col">
-								<div class="mb-3">
-									<label for="remark" class="form-label">備註</label>
-									<div class="d-flex">
-										<input type="text" class="form-control" id="remark"
-											name="selRemark"
-											value="<%=(sellerVO == null) ? "" : sellerVO.getSelRemark()%>"
-											size="45" />
+					<!-- 下方區塊 廠商簡介-->
+					<div class="row g-4 justify-content-center">
+						<div class="col-sm-8">
+							<div class="bg-light rounded h-100 p-4">
+								<div class="col">
+									<div class="mb-3">
+										<label for="sellIntroduction" class="form-label">廠商簡介</label>
+										<input class="form-control" id="sellIntroduction"
+											name="selIntroduction"
+											value="<%=(sellerVO == null) ? "" : sellerVO.getSelIntroduction()%>"
+											size="45"
+											style="width: 100%; max-width: 910px; min-height: 200px; box-sizing: border-box;">
 									</div>
 								</div>
 							</div>
@@ -246,20 +182,21 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 					</div>
 
 					<!-- 分隔線 -->
-<!-- 					<div class="col-sm-12 col-xl-12 mt-4"></div> -->
+					<div class="col-sm-12 col-xl-12 mt-2"></div>
 
-					<!-- 下方區塊 單位資料-->
+					<!-- 下方區塊 帳務資訊-->
+
 					<div class="container-fluid pt-4 px-4">
 						<div class="custom-form-container bg-light rounded h-100 p-4">
 							<div class="row">
 								<div class="col">
 									<div class="mb-2">
 										<div class="form-group">
-											<label for="departmentName" class="form-label">單位名稱</label>
+											<label for="bankCode" class="form-label">銀行代碼</label>
 											<div class="d-flex">
-												<input type="text" class="form-control" id="departmentName"
-													name="selTitle"
-													value="<%=(sellerVO == null) ? "" : sellerVO.getSelTitle()%>"
+												<input type="text" class="form-control" id="bankCode"
+													name="selBankCode"
+													value="<%=(sellerVO == null) ? "" : sellerVO.getSelBankCode()%>"
 													size="45" />
 											</div>
 										</div>
@@ -267,11 +204,11 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 								</div>
 								<div class="col">
 									<div class="mb-3">
-										<label for="departmenBoss" class="form-label">單位負責人</label>
+										<label for="bankAccount" class="form-label">銀行帳號</label>
 										<div class="d-flex">
-											<input type="text" class="form-control" id="departmenBoss"
-												name="selPrincipal"
-												value="<%=(sellerVO == null) ? "" : sellerVO.getSelPrincipal()%>"
+											<input type="text" class="form-control" id="bankAccount"
+												name="selBankNumber"
+												value="<%=(sellerVO == null) ? "" : sellerVO.getSelBankNumber()%>"
 												size="45" />
 										</div>
 									</div>
@@ -281,11 +218,11 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 								<div class="col">
 									<div class="mb-2">
 										<div class="form-group">
-											<label for="guiNumber" class="form-label">統一編號</label>
+											<label for="accountNAme" class="form-label">戶名</label>
 											<div class="d-flex">
-												<input type="text" class="form-control" id="guiNumber"
-													name="selUniformNumbers"
-													value="<%=(sellerVO == null) ? "" : sellerVO.getSelUniformNumbers()%>"
+												<input type="text" class="form-control" id="accountNAme"
+													name="selBankName"
+													value="<%=(sellerVO == null) ? "" : sellerVO.getSelBankName()%>"
 													size="45" />
 											</div>
 										</div>
@@ -293,32 +230,92 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 								</div>
 								<div class="col">
 									<div class="mb-3">
-										<label for="registeredAddress" class="form-label">單位立案地址</label>
+										<label for="remark" class="form-label">備註</label>
 										<div class="d-flex">
-											<input type="text" class="form-control"
-												id="registeredAddress" name="selRegisteredAddress"
-												value="<%=(sellerVO == null) ? "" : sellerVO.getSelRegisteredAddress()%>"
+											<input type="text" class="form-control" id="remark"
+												name="selRemark"
+												value="<%=(sellerVO == null) ? "" : sellerVO.getSelRemark()%>"
 												size="45" />
-
-
 										</div>
 									</div>
-					
-	</div>
-		<div class="text-center" style="margin-top: 20px; margin-right: 350px">
-			<input type="hidden" name="action" value="insert"> <input
-				type="submit" value="送出新增">
-	</table>
-		</div>
+								</div>
+							</div>
+						</div>
 
-	</form>
-	<!-- 文本置中並設定上邊距 -->
-	<!--                             <button type="button" class="btn btn-outline-secondary m-2">修改</button> -->
-	<!--                             <button type="button" class="btn btn-outline-secondary m-2">儲存</button> -->
-	<!-- 									<input type="hidden" name="action" value="insert">  -->
-	<!-- 									<input type="submit" value="送出"> -->
+						<!-- 分隔線 -->
+						<div class="col-sm-12 col-xl-12 mt-2"></div>
+
+						<!-- 下方區塊 單位資料-->
+						<div class="container-fluid pt-4 px-4">
+							<div class="custom-form-container bg-light rounded h-100 p-4">
+								<div class="row">
+									<div class="col">
+										<div class="mb-2">
+											<div class="form-group">
+												<label for="departmentName" class="form-label">單位名稱</label>
+												<div class="d-flex">
+													<input type="text" class="form-control" id="departmentName"
+														name="selTitle"
+														value="<%=(sellerVO == null) ? "" : sellerVO.getSelTitle()%>"
+														size="45" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col">
+										<div class="mb-3">
+											<label for="departmenBoss" class="form-label">單位負責人</label>
+											<div class="d-flex">
+												<input type="text" class="form-control" id="departmenBoss"
+													name="selPrincipal"
+													value="<%=(sellerVO == null) ? "" : sellerVO.getSelPrincipal()%>"
+													size="45" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<div class="mb-2">
+											<div class="form-group">
+												<label for="guiNumber" class="form-label">統一編號</label>
+												<div class="d-flex">
+													<input type="text" class="form-control" id="guiNumber"
+														name="selUniformNumbers"
+														value="<%=(sellerVO == null) ? "" : sellerVO.getSelUniformNumbers()%>"
+														size="45" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col">
+										<div class="mb-3">
+											<label for="registeredAddress" class="form-label">單位立案地址</label>
+											<div class="d-flex">
+												<input type="text" class="form-control"
+													id="registeredAddress" name="selRegisteredAddress"
+													value="<%=(sellerVO == null) ? "" : sellerVO.getSelRegisteredAddress()%>"
+													size="45" />
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<!-- 圖片上傳 -->
+									<div class="mb-3">
+										<label for="formFile1" class="form-label">廠商頭像</label> <input
+											class="form-control" type="file" name="selProfilePicture">
+									</div>
+								
+								<div class="text-center" style="margin-top: 30px;">
+									<input type="hidden" name="action" value="insert"> <input
+										type="submit" value="送出">
+								</div>
+						</table>
+					</FORM>
 
 	<!-- Form End -->
+
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

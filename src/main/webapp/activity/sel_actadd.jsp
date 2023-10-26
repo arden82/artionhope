@@ -138,20 +138,20 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 
 				<div class="navbar-nav w-100">
 					<div class="nav-item">
-						<a href="sel_index.jsp" class="nav-item nav-link"><i
+						<a href="./sel_index.jsp" class="nav-item nav-link"><i
 							class="fa-solid fa-users me-2"> </i></i>活動總覽</a> 
-							
-							<a href="sel_actadd.jsp" class="nav-item nav-link"><i
+							<a
+							href="./sel_actadd.jsp" class="nav-item nav-link"><i
 							class="fa-solid fa-heart-circle-plus me-2"> </i></i>新增活動</a> 
-							
-							<a href="sel_order.jsp" class="nav-item nav-link"><i
+							<a
+							href="../seller/sel_order.jsp" class="nav-item nav-link"><i
 							class="fa-solid fa-magnifying-glass me-2"> </i></i>訂單總覽</a> 
-							
-							<a href="sel_notification.jsp" class="nav-item nav-link"> <i
-							class="fa-solid fa-envelope me-2"> </i>通知訊息</a> 
-						
-						<a href="sel_profile.jsp" class="nav-item nav-link"> 
-						<i class="fa-solid fa-address-card me-2"> </i>廠商基本資料
+							<a
+							href="sel_notification.jsp" class="nav-item nav-link"> <i
+							class="fa-solid fa-envelope me-2"> </i>通知訊息
+						</a> 
+							<a href="../seller/sel_profile.jsp" class="nav-item nav-link">
+							<i class="fa-solid fa-address-card me-2"> </i>廠商基本資料
 						</a>
 					</div>
 				</div>
@@ -161,15 +161,9 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 			<div class="d-flex mt-auto"
 				style="margin-left: 40px; align-items: center; margin-bottom: 40px;">
 				<div class="position-relative">
-					<label for="fileInput"> <img id="userImageSide"
-						class="rounded-circle" src="images/user.jpg" alt=""
-						style="width: 50px; height: 50px; cursor: pointer;">
-						<div id="uploadText"
-							style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 15px; background-color: rgba(0, 0, 0, 0.5); color: white; text-align: center; line-height: 40px; cursor: pointer;">
-							更換</div>
-					</label> <input type="file" id="fileInput" accept="image/*"
-						style="display: none;"
-						onchange="handleImageUpload(this, 'userImageSide')">
+					<img
+						src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
+						width=50px height=50px />
 				</div>
 				<div
 					style="margin-left: 10px; display: flex; flex-direction: column; align-items: center;">
@@ -238,20 +232,25 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 					</div>
 
 					<!-- 右上角头像 -->
-					<div class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle"
-							data-bs-toggle="dropdown"> <img id="userImageNav"
-							class="rounded-circle me-lg-2" src="images/user.jpg" alt=""
-							style="width: 40px; height: 40px;"> <span id="userNameNav"
-							class="d-none d-lg-inline-flex">寬宏藝術</span>
-						</a>
-						<div
-							class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-							<a href="sel_profile.html" class="dropdown-item">My Profile</a> <a
-								href="#" class="dropdown-item">Settings</a> <a
-								href="sel_signin.html" class="dropdown-item">Log Out</a>
+				<div class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle"
+								data-bs-toggle="dropdown"> <img
+								src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
+								width=50px height=50px /> <span id="userNameNav"
+								class="d-none d-lg-inline-flex">寬宏藝術</span>
+							</a>
+							<div
+								class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+								<a href="../seller/sel_profile.jsp" class="dropdown-item">My
+									Profile</a>
+								<form
+									action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
+									method="post">
+									<button type="submit" class="dropdown-item">Log Out</button>
+								</form>
+
+							</div>
 						</div>
-					</div>
 			</nav>
 			<!-- Navbar End -->
 
@@ -414,33 +413,6 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 										</div>
 									</div>
 
-
-									<!-- 		<div class="row"> -->
-									<!--                                 <div class="col"> -->
-									<!--                                     <div class="mb-2"> -->
-									<!--                                         <div class="form-group"> -->
-									<!--                                             <label for="actcity" class="form-label">活動縣市</label> -->
-									<!--                                             <div class="d-flex"> -->
-									<!--                                                 <select name="county" id="county_box" class="form-control"> -->
-									<!--                                                     <option value="">選擇縣市</option> -->
-									<!--                                                 </select> -->
-									<!--                                             </div> -->
-									<!--                                         </div> -->
-									<!--                                     </div> -->
-									<!--                                 </div> -->
-
-									<!--                                 <div class="col"> -->
-									<!--                                     <div class="mb-2"> -->
-									<!--                                         <div class="form-group"></div> -->
-									<!--                                         <label for="actarea" class="form-label">活動區域</label> -->
-									<!--                                         <div class="d-flex"> -->
-									<!--                                             <select name="district" id="district_box" class="form-control"> -->
-									<!--                                                 <option value="">選擇鄉鎮市區</option> -->
-									<!--                                             </select> -->
-									<!--                                         </div> -->
-									<!--                                     </div> -->
-									<!--                                 </div> -->
-									<!--                             </div> -->
 									<div class="mb-3">
 										<label for="actaddress" class="form-label">活動地址</label> <input
 											type="text" class="form-control" name="actAddress"

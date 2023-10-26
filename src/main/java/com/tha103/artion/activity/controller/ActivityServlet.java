@@ -187,39 +187,6 @@ public class ActivityServlet extends HttpServlet {
 				byteArrayOutputStream.write(buf, 0, len);
 			}
 
-			Part part1 = req.getPart("actPicture1");
-			InputStream in1 = part1.getInputStream();
-
-			ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream();
-
-			byte[] buf1 = new byte[4 * 1024]; // 4K buffer
-			int len1;
-			while ((len1 = in1.read(buf1)) != -1) {
-				byteArrayOutputStream1.write(buf1, 0, len1);
-			}
-
-			Part part2 = req.getPart("actPicture2");
-			InputStream in2 = part2.getInputStream();
-
-			ByteArrayOutputStream byteArrayOutputStream2 = new ByteArrayOutputStream();
-
-			byte[] buf2 = new byte[4 * 1024]; // 4K buffer
-			int len2;
-			while ((len2 = in2.read(buf2)) != -1) {
-				byteArrayOutputStream2.write(buf2, 0, len2);
-			}
-
-			Part part3 = req.getPart("actPicture3");
-			InputStream in3 = part3.getInputStream();
-
-			ByteArrayOutputStream byteArrayOutputStream3 = new ByteArrayOutputStream();
-
-			byte[] buf3 = new byte[4 * 1024]; // 4K buffer
-			int len3;
-			while ((len3 = in3.read(buf3)) != -1) {
-				byteArrayOutputStream3.write(buf3, 0, len3);
-			}
-			
 			ActivityVO activityVO = new ActivityVO();
 
 			activityVO.setActName(act_name);
@@ -241,17 +208,17 @@ public class ActivityServlet extends HttpServlet {
 			activityVO.setActContent(act_content);
 			byte[] act_coverPicture = byteArrayOutputStream.toByteArray();
 			activityVO.setActCoverPicture(act_coverPicture);
-			byte[] act_picture1 = byteArrayOutputStream.toByteArray();
-			activityVO.setActPicture1(act_picture1);
-			byte[] act_picture2 = byteArrayOutputStream.toByteArray();
-			activityVO.setActPicture2(act_picture2);
-			byte[] act_picture3 = byteArrayOutputStream.toByteArray();
-			activityVO.setActPicture3(act_picture3);
+//			byte[] act_picture1 = byteArrayOutputStream.toByteArray();
+//			activityVO.setActPicture1(act_picture1);
+//			byte[] act_picture2 = byteArrayOutputStream.toByteArray();
+//			activityVO.setActPicture2(act_picture2);
+//			byte[] act_picture3 = byteArrayOutputStream.toByteArray();
+//			activityVO.setActPicture3(act_picture3);
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("activityVO", activityVO); // 含有輸入格式錯誤的empVO物件,也存入req
-				RequestDispatcher failureView = req.getRequestDispatcher("/seller/sel_actadd.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/activity/sel_actadd.jsp");
 				failureView.forward(req, res);
 				System.out.println("1");
 				return;
@@ -259,13 +226,14 @@ public class ActivityServlet extends HttpServlet {
 
 			/*************************** 2.開始新增資料 ***************************************/
 			ActivityService activitySvc = new ActivityService();
-			activityVO = activitySvc.addActivity(act_name, act_ticketPrice, act_ticketStartTime, act_ticketEndTime,
-					act_type, act_startDate, act_endDate, act_startTime, act_endTime, act_city, act_zone, act_address,
-					act_organization, act_email, act_phone, act_ticketTotal, act_content,
-					sel_id, act_coverPicture, act_picture1, act_picture2, act_picture3);
+			activityVO = activitySvc.addActivity( act_name,  act_ticketPrice,  act_ticketStartTime,
+					 act_ticketEndTime, act_type, act_startDate, act_endDate, act_startTime,
+					 act_endTime, act_city, act_zone, act_address, act_organization,
+					 act_email, act_phone, act_ticketTotal, act_content, 
+				    sel_id, act_coverPicture);
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			String url = "/seller/sel_index.jsp";
+			String url = "/activity/sel_index.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 			successView.forward(req, res);
 			return;
@@ -287,7 +255,7 @@ public class ActivityServlet extends HttpServlet {
 				ActivitySvc.delete(actId);
 				
 				/***************************3.�R������,�ǳ����(Send the Success view)***********/								
-				String url = "/seller/sel_index.jsp";
+				String url = "/activity/sel_index.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// �R�����\��,���^�e�X�R�����ӷ�����
 				successView.forward(req, res);
 				
@@ -295,7 +263,7 @@ public class ActivityServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法刪除:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/seller/sel_index.jsp");
+						.getRequestDispatcher("/activity/sel_index.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -371,7 +339,7 @@ public class ActivityServlet extends HttpServlet {
 //
 //			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("activityVO", activityVO); // 資料庫取出的empVO物件,存入req
-			String url = "/seller/sel_actrevise.jsp";
+			String url = "/activity/sel_actrevise.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 			successView.forward(req, res);
 		}
@@ -495,25 +463,20 @@ public class ActivityServlet extends HttpServlet {
 			if (newSelProfilePicture != null && newSelProfilePicture.getSize() > 0) {
 			    // 处理上传的新图片
 			    InputStream is = newSelProfilePicture.getInputStream();
-			    // 以下是您的图片处理逻辑，将新图片数据存储到 profilePhotoByte 中
-			    ByteArrayOutputStream byteArros = new ByteArrayOutputStream();
-			    byte[] buf = new byte[4 * 1024];
-			    int len;
-			    while ((len = is.read(buf)) != -1) {
-			        byteArros.write(buf, 0, len);
+			    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+			    byte[] buffer = new byte[4096];
+			    int bytesRead;
+			    while ((bytesRead = is.read(buffer)) != -1) {
+			        byteArrayOutputStream.write(buffer, 0, bytesRead);
 			    }
-			    profilePhotoByte = byteArros.toByteArray();
-			    byteArros.close();
+			    profilePhotoByte = byteArrayOutputStream.toByteArray();
+			    byteArrayOutputStream.close();
 			} else {
 			    // 如果没有上传新图片，则使用原有图片
-			    ActivityVO activityVO = new ActivityVO();
 			    ActivityService activitySvc = new ActivityService();
-			    activityVO = activitySvc.getOneActivity(act_id);
+			    ActivityVO activityVO = activitySvc.getOneActivity(act_id);
 			    profilePhotoByte = activityVO.getActCoverPicture();
 			}
-
-			// 将 profilePhotoByte 存储到 activityVO 或执行其他相关操作
-
 			
 			ActivityVO activityVO = new ActivityVO();
 
@@ -549,7 +512,7 @@ public class ActivityServlet extends HttpServlet {
 			// Send the use back to the form, if here were errors
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("activityVO", activityVO); // 含有輸入格式錯誤的empVO物件,也存入req
-				RequestDispatcher failureView = req.getRequestDispatcher("/seller/sel_index.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/activity/sel_index.jsp");
 				failureView.forward(req, res);
 				return; // 程式中斷
 			}
@@ -562,7 +525,7 @@ public class ActivityServlet extends HttpServlet {
 					act_email, act_phone, act_ticketTotal, act_content, profilePhotoByte);
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("activityVO", activityVO); // 使用更新后的卖家信息
-			String url = "/seller/sel_index.jsp";
+			String url = "/activity/sel_index.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}

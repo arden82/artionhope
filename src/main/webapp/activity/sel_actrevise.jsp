@@ -131,23 +131,27 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 		<!-- Sidebar Start -->
 		<div class="sidebar pe-4 pb-3 d-flex flex-column">
 			<nav class="navbar bg-light navbar-light">
-				<a href="sel_index.html" class="navbar-brand mx-4 mb-3 artionimg">
+				<a href="sel_index.jsp" class="navbar-brand mx-4 mb-3 artionimg">
 					<!-- <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Artion</h3> -->
 					<img src="images/artion-logo.png">
 				</a>
 
 				<div class="navbar-nav w-100">
 					<div class="nav-item">
-						<a href="sel_index.jsp" class="nav-item nav-link"><i
-							class="fa-solid fa-users me-2"> </i></i>活動總覽</a> <a href="sel_actadd.jsp"
-							class="nav-item nav-link"><i
-							class="fa-solid fa-heart-circle-plus me-2"> </i></i>新增活動</a> <a
-							href="sel_order.jsp" class="nav-item nav-link"><i
-							class="fa-solid fa-magnifying-glass me-2"> </i></i>訂單總覽</a> <a
+						<a href="./sel_index.jsp" class="nav-item nav-link"><i
+							class="fa-solid fa-users me-2"> </i></i>活動總覽</a> 
+							<a
+							href="./sel_actadd.jsp" class="nav-item nav-link"><i
+							class="fa-solid fa-heart-circle-plus me-2"> </i></i>新增活動</a> 
+							<a
+							href="../seller/sel_order.jsp" class="nav-item nav-link"><i
+							class="fa-solid fa-magnifying-glass me-2"> </i></i>訂單總覽</a> 
+							<a
 							href="sel_notification.jsp" class="nav-item nav-link"> <i
 							class="fa-solid fa-envelope me-2"> </i>通知訊息
-						</a> <a href="sel_profile.jsp" class="nav-item nav-link"> <i
-							class="fa-solid fa-address-card me-2"> </i>廠商基本資料
+						</a> 
+							<a href="../seller/sel_profile.jsp" class="nav-item nav-link">
+							<i class="fa-solid fa-address-card me-2"> </i>廠商基本資料
 						</a>
 					</div>
 				</div>
@@ -157,15 +161,9 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 			<div class="d-flex mt-auto"
 				style="margin-left: 40px; align-items: center; margin-bottom: 40px;">
 				<div class="position-relative">
-					<label for="fileInput"> <img id="userImageSide"
-						class="rounded-circle" src="images/user.jpg" alt=""
-						style="width: 50px; height: 50px; cursor: pointer;">
-						<div id="uploadText"
-							style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 15px; background-color: rgba(0, 0, 0, 0.5); color: white; text-align: center; line-height: 40px; cursor: pointer;">
-							更換</div>
-					</label> <input type="file" id="fileInput" accept="image/*"
-						style="display: none;"
-						onchange="handleImageUpload(this, 'userImageSide')">
+					<img
+						src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
+						width=50px height=50px />
 				</div>
 				<div
 					style="margin-left: 10px; display: flex; flex-direction: column; align-items: center;">
@@ -235,19 +233,24 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 
 					<!-- 右上角头像 -->
 					<div class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle"
-							data-bs-toggle="dropdown"> <img id="userImageNav"
-							class="rounded-circle me-lg-2" src="images/user.jpg" alt=""
-							style="width: 40px; height: 40px;"> <span id="userNameNav"
-							class="d-none d-lg-inline-flex">寬宏藝術</span>
-						</a>
-						<div
-							class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-							<a href="sel_profile.html" class="dropdown-item">My Profile</a> <a
-								href="#" class="dropdown-item">Settings</a> <a
-								href="sel_signin.html" class="dropdown-item">Log Out</a>
+							<a href="#" class="nav-link dropdown-toggle"
+								data-bs-toggle="dropdown"> <img
+								src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
+								width=50px height=50px /> <span id="userNameNav"
+								class="d-none d-lg-inline-flex">寬宏藝術</span>
+							</a>
+							<div
+								class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+								<a href="../seller/sel_profile.jsp" class="dropdown-item">My
+									Profile</a>
+								<form
+									action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
+									method="post">
+									<button type="submit" class="dropdown-item">Log Out</button>
+								</form>
+
+							</div>
 						</div>
-					</div>
 			</nav>
 			<!-- Navbar End -->
 
@@ -270,12 +273,13 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 					<div class="row g-4">
 						<div class="col-sm-12 col-xl-6">
 							<div class="bg-light rounded h-100 p-4">
-								<h6 class="mb-4" style="font-size: 24px; color: #009CFF">新增活動</h6>
+								<h6 class="mb-4" style="font-size: 24px; color: #009CFF">修改活動</h6>
 								<div class="mb-3">
 									<label for="actname" class="form-label">活動名稱</label> <input
 										type="text" class="form-control" name="actName"
 										value="<%=activityVO.getActName()%>">
 								</div>
+
 								<div class="row">
 									<div class="col">
 										<div class="mb-2">
@@ -285,38 +289,43 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 													<input type="number" class="form-control" name="actId"
 														value="<%=activityVO.getActId()%>">
 												</div>
-												<div class="mb-3">
-													<div class="form-group">
-														<label for="actprice" class="form-label">票券定價</label>
+											</div>
+
+											<div class="row">
+												<div class="col">
+													<div class="mb-2">
+														<div class="form-group">
+															<label for="actprice" class="form-label">票券定價</label>
+															<div class="d-flex">
+																<input type="number" class="form-control"
+																	name="actTicketPrice"
+																	value="<%=(activityVO == null) ? "" : activityVO.getActTicketPrice()%>">
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col">
+													<div class="mb-3">
+														<label for="ticketnumbers" class="form-label">票卷總數</label>
 														<div class="d-flex">
 															<input type="number" class="form-control"
-																name="actTicketPrice"
-																value="<%=activityVO.getActTicketPrice()%>">
+																name="actTicketTotal"
+																value="<%=(activityVO == null) ? "" : activityVO.getActTicketTotal()%>">
 														</div>
-
 													</div>
 												</div>
-											</div>
-											<div class="col">
-												<div class="mb-ˋ">
-													<label for="ticketnumbers" class="form-label">票卷總數</label>
-													<div class="d-flex">
-														<input type="number" class="form-control"
-															name="actTicketTotal"
-															value="<%=activityVO.getActTicketTotal()%>">
+												<div class="col">
+													<div class="mb-4">
+														<label for="acttype" class="form-label">活動類型</label> <select
+															name="actType" class="acttype form-select">
+															<option value="1"
+																<c:if test="${activityVO.actType == 1}">selected</c:if>>市集</option>
+															<option value="2"
+																<c:if test="${activityVO.actType == 2}">selected</c:if>>展覽</option>
+															<option value="3"
+																<c:if test="${activityVO.actType == 3}">selected</c:if>>表演</option>
+														</select>
 													</div>
-												</div>
-											</div>
-
-											<div class="col">
-												<div class="mb-3">
-													<label for="acttype" class="form-label">活動類型</label> <select
-														name="actType" class="acttype form-select">
-														<option value="0">全部</option>
-														<option value="1">市集</option>
-														<option value="2">展覽</option>
-														<option value="3">表演</option>
-													</select>
 												</div>
 											</div>
 
@@ -358,6 +367,7 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 														</div>
 													</div>
 												</div>
+
 												<div class="col">
 													<div class="mb-2">
 														<div class="form-group"></div>
@@ -438,32 +448,42 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 												<label for="acrphonenumber" class="form-label">連絡電話</label>
 												<input type="tel" class="form-control" name="actPhone"
 													value="<%=activityVO.getActPhone()%>">
-											</div>
 
+											</div>
 										</div>
 									</div>
 								</div>
+							</div>
+						</div>
+						<!-- 第二個區塊（與第一個區塊結構相同） -->
+						<div class="col-sm-12 col-xl-6">
+							<div class="bg-light rounded h-100 p-4">
+								<div class="col">
+									<div class="mb-3">
+										<label for="actcontent" class="form-label">活動內容</label> <input
+											type="text" class="form-control" name="actContent"
+											style="width: 400px; height: 300px; vertical-align: top; padding: 0"
+											value="<%=activityVO.getActContent()%>">
 
-								<!-- 第二個區塊（與第一個區塊結構相同） -->
-								<div class="col-sm-12 col-xl-6">
-									<div class="bg-light rounded h-100 p-4">
-										<div class="col">
-											<div class="mb-3">
-												<label for="actcontent" class="form-label">活動內容</label> <input
-													type="text" class="form-control" name="actContent"
-													style="width: 400px; height: 300px; vertical-align: top; padding: 0"
-													value="<%=activityVO.getActContent()%>">
-											</div>
-
+									</div>
+									<div class="mb-3">
+										<label for="formFile1" class="form-label">活動封面</label> <input
+											class="form-control" type="file" name="actCoverPicture">
+									</div>
+									<div>
+										<td><img
+											src="<%=request.getContextPath()%>/activity/ActivityServlet2.do?actId=${activityVO.actId}"
+											width=200px height=200px /></td>
 										</div>
-										<!-- 添加更多文件上传输入框和预览图按照相同的结构 -->
+										
+										<br> <input type="hidden" name="action" value="update">
+										<input type="hidden" name="actId"
+											value="<%=activityVO.getActId()%>"> <input
+											type="submit" value="送出修改">
+			</FORM>
 
-									
-										<input type="hidden" name="action" value="update"> 
-										<input type="hidden" name="actId" value="<%=activityVO.getActId()%>">
-										<input type="submit" value="送出修改">
-			</form>
 		</div>
+	</div>
 	</div>
 	</div>
 

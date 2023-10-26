@@ -17,8 +17,8 @@
 	import com.tha103.artion.seller.service.*;
 	import javax.sql.DataSource;
 	
-	@WebServlet("/seller/LoginHandler.do")
-	public class LoginHandler extends HttpServlet {
+	@WebServlet("/seller/LoginHandler2.do")
+	public class LoginHandler2 extends HttpServlet {
 		private SellerDAO sellerDAO;
 	
 		@Override

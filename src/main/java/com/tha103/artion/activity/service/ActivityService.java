@@ -11,7 +11,6 @@ import com.tha103.artion.activity.model.ActivityVO;
 import com.tha103.artion.administrator.model.AdministratorVO;
 import com.tha103.artion.seller.model.SellerVO;
 
-
 public class ActivityService {
 
 	private ActivityDAO_interface dao;
@@ -23,9 +22,11 @@ public class ActivityService {
 	public ActivityVO addActivity(String act_name, Integer act_ticketPrice, Date act_ticketStartTime,
 			Date act_ticketEndTime, Integer act_type, Date act_startDate, Date act_endDate, Time act_startTime,
 			Time act_endTime, String act_city, String act_zone, String act_address, String act_organization,
-			String act_email, String act_phone, Integer act_ticketTotal, String act_content, 
-		    Integer sel_id, byte[] act_coverPicture, byte[] act_picture1, byte[] act_picture2,
-		    byte[] act_picture3) {
+			String act_email, String act_phone, Integer act_ticketTotal, String act_content, Integer sel_id,
+			byte[] act_coverPicture) {
+
+//		    byte[] act_picture1, byte[] act_picture2,
+//		    byte[] act_picture3
 
 		ActivityVO activityVO = new ActivityVO();
 
@@ -47,9 +48,6 @@ public class ActivityService {
 		activityVO.setActTicketTotal(act_ticketTotal);
 		activityVO.setActContent(act_content);
 		activityVO.setActCoverPicture(act_coverPicture);
-		activityVO.setActPicture1(act_picture1);
-		activityVO.setActPicture2(act_picture2);
-		activityVO.setActPicture3(act_picture3);
 
 		activityVO.setActLikeTimes(0);
 		activityVO.setActViews(0);
@@ -64,6 +62,7 @@ public class ActivityService {
 
 		activityVO.setActLongitude(new BigDecimal("00.00000"));
 		activityVO.setActLatitude(new BigDecimal("00.00000"));
+	
 		activityVO.setActTicketTotalSell(0);
 
 		AdministratorVO administrator = new AdministratorVO();
@@ -78,14 +77,16 @@ public class ActivityService {
 		return activityVO;
 	}
 
-	public ActivityVO updateActivity(Integer act_id, String act_name , Integer act_ticketPrice,
-			Date act_ticketStartTime, Date act_ticketEndTime, Integer act_type, Date act_startDate,
-			Date act_endDate, Time act_startTime, Time act_endTime, String act_city, String act_zone,
-			String act_address, String act_organization, String act_email, String act_phone, Integer act_ticketTotal,
-			String act_content, byte[] act_coverPicture) {
+	public ActivityVO updateActivity(Integer act_id, String act_name, Integer act_ticketPrice, Date act_ticketStartTime,
+			Date act_ticketEndTime, Integer act_type, Date act_startDate, Date act_endDate, Time act_startTime,
+			Time act_endTime, String act_city, String act_zone, String act_address, String act_organization,
+			String act_email, String act_phone, Integer act_ticketTotal, String act_content, byte[] act_coverPicture) {
 
-		ActivityVO activityVO = new ActivityVO();
+		ActivityVO activityVO = dao.findByPK(act_id); // 獲取現有的賣家資料
 
+		if (activityVO != null) {
+
+		}
 		activityVO.setActId(act_id);
 		activityVO.setActName(act_name);
 		activityVO.setActTicketPrice(act_ticketPrice);
@@ -108,8 +109,31 @@ public class ActivityService {
 //		activityVO.setActPicture1(act_picture1);
 //		activityVO.setActPicture2(act_picture2);
 //		activityVO.setActPicture3(act_picture3);
-		activityVO.setActApproalStatus(1);
-		
+
+		Integer existingActLikeTimes = activityVO.getActLikeTimes();
+		activityVO.setActLikeTimes(existingActLikeTimes);
+
+		Integer existingActViews = activityVO.getActViews();
+		activityVO.setActViews(existingActViews);
+
+		Integer existingActApproalStatus = activityVO.getActApproalStatus();
+		activityVO.setActApproalStatus(existingActApproalStatus);
+
+		BigDecimal existingActLongitude = activityVO.getActLongitude();
+		activityVO.setActLongitude(existingActLongitude);
+
+		BigDecimal existingActLatitude = activityVO.getActLatitude();
+		activityVO.setActLatitude(existingActLatitude);
+
+		Integer existingActTicketTotalSell = activityVO.getActTicketTotalSell();
+		activityVO.setActTicketTotalSell(existingActTicketTotalSell);
+
+		String actResultContent = activityVO.getActResultContent();
+		activityVO.setActResultContent(actResultContent);
+
+//		activityVO.setActApproalStatus(sel_id);
+//		activityVO.setActApproalStatus(adm_id);
+
 		dao.update(activityVO);
 
 		return activityVO;
@@ -120,10 +144,10 @@ public class ActivityService {
 		return dao.getAll();
 	}
 
-	public List<ActivityVO> getActivitiesBySellerId(Integer selId) {
-	    // 修改dao方法，使其返回List<ActivityVO>，並根據selId取得多個活動
-	    List<ActivityVO> activityList = dao.getActivitiesBySellerId(selId);
-	    return activityList;
+	public List<ActivityVO> getActivitiesBySellerId(Integer sel_id) {
+		// 修改dao方法，使其返回List<ActivityVO>，並根據selId取得多個活動
+		List<ActivityVO> activityList = dao.getActivitiesBySellerId(sel_id);
+		return activityList;
 	}
 
 	// 皓瑄
@@ -143,4 +167,5 @@ public class ActivityService {
 	public void delete(Integer actId) {
 		dao.delete(actId);
 	}
+	
 }
