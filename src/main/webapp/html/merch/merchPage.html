@@ -154,7 +154,7 @@
         <div class="container-fluid">
             <!--除了navbar 以外的東西放裡面 -->
             <!-- 標題start -->
-            <div class="product_page_top" style="border:1px green solid;">
+            <div class="product_page_top" style="border:0px green solid;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <label for="validationTextarea" class="form-label"
                         style="font-size: 25px; margin: 0px 240px;">周邊商品</label>
@@ -180,46 +180,46 @@
             <!-- 商品種類與商品列表 start -->
             <span style="display: flex;">
                 <!-- 商品種類與價格區間篩選start -->
-                <span style="border: 2px gray solid; width: 200px; height: 300px; padding: 20px 0px 0px 20px;">
+                <span style="border: 0px gray solid; width: 200px; height: 300px; padding: 20px 0px 0px 20px;">
                     <!-- 商品種類start -->
-                    <p style="border:1px blue solid;font-weight: bold;margin-bottom: 5px; font-size: 20px;">商品種類</p>
-                    <label style="border:1px red solid; margin-left: 20px;">
+                    <p style="border:0px blue solid;font-weight: bold;margin-bottom: 5px; font-size: 20px;">商品種類</p>
+                    <label style="border:0px red solid; margin-left: 20px;">
                         <input type="checkbox" id="allProducts" onclick="toggleAllCategories()"> 所有商品
                     </label>
                     <br>
-                    <label style="border:1px red solid; margin-left: 40px;">
+                    <label style="border:0px red solid; margin-left: 40px;">
                         <input type="checkbox" class="category" value="服飾"> 服飾
                     </label>
                     <br>
-                    <label style="border:1px red solid; margin-left: 40px;">
+                    <label style="border:0px red solid; margin-left: 40px;">
                         <input type="checkbox" class="category" value="配件"> 配件
                     </label>
                     <br>
-                    <label style="border:1px red solid; margin-left: 40px;">
+                    <label style="border:0px red solid; margin-left: 40px;">
                         <input type="checkbox" class="category" value="其他"> 其他
                     </label>
                     <br>
                     <!-- 價格區間start -->
-                    <p style="border:1px blue solid; margin-bottom: 5px; font-weight: bold;  font-size: 20px;">價格區間</p>
-                    <label style="border:1px blue solid; margin-bottom: 5px; margin-left: 20px;">
+                    <p style="border:0px blue solid; margin-bottom: 5px; font-weight: bold;  font-size: 20px;">價格區間</p>
+                    <label style="border:0px blue solid; margin-bottom: 5px; margin-left: 20px;">
                         <input type="radio" name="priceRange" value="全部" checked> 全部
                     </label>
                     <br>
-                    <label style="border:1px blue solid; margin-bottom: 5px;margin-left: 20px;">
+                    <label style="border:0px blue solid; margin-bottom: 5px;margin-left: 20px;">
                         <input type="radio" name="priceRange" value="500元以下"> 500元以下
                     </label>
                     <br>
-                    <label style="border:1px blue solid; margin-bottom: 5px;margin-left: 20px;">
+                    <label style="border:0px blue solid; margin-bottom: 5px;margin-left: 20px;">
                         <input type="radio" name="priceRange" value="500元~1000元"> 500元~1000元
                     </label>
                     <br>
-                    <label style="border:1px blue solid; margin-bottom: 5px;margin-left: 20px;">
+                    <label style="border:0px blue solid; margin-bottom: 5px;margin-left: 20px;">
                         <input type="radio" name="priceRange" value="1000元以上"> 1000元以上
                     </label>
                 </span>
                 <!-- 商品種類與價格區間篩選end -->
                 <!-- 商品列表右側區塊start -->
-                <div class="products_page_right" style="border:1px gray solid;">
+                <div class="products_page_right" style="border:0px gray solid;">
                     <!-- 商品列表start -->
                     <!-- <span class="merchBox">
                         <a href="" class="merchBox_child">
@@ -229,7 +229,7 @@
                             <p class="merchPrice">商品金額</p>
                         </a>
                     </span> -->
-                    <div id="merchContainer"></div>
+                    <div id="merchContainer">bbb</div>
                     <!-- 商品列表end -->
                 </div>
                 <!-- 商品列表右側區塊end -->
@@ -288,33 +288,35 @@
         //     });
         //     $('#merchContainer').append($span);
         // }
-     // ===================== 載入網頁時取得所有活動 =====================
+     // ===================== 載入網頁時取得所有商品 =====================
         $(document).ready(function () {
         	if (window.location.href.includes("http://localhost:8081/artion/html/merch/merchPage.html")) {
 
                 $.ajax({
                     type: "POST",
-                    url: "/artion/getAllMerch",
+                    url: "http://localhost:8081/artion/getAllMerch",
                     dataType: "JSON",
                     success: function (data) {
                     	console.log("發送請求成功");
-                        var cardRow = $("#cardRow");
-                        cardRow.empty();
+                        var merchContainer = $("#merchContainer");
+                        merchContainer.empty();
                         $.each(data, function (index, merch) {
                         	var merches = `
-                        	    <a href="" class="merchBox_child">
-                        	        <img src="http://localhost:8081/artion/merPicServlet?merchId=${merch.mertchId}" class="card-img-top merchStyle" alt="...">
+                        	    <div href="" class="merchBox_child" data-merchId="${merch.merchId}">
+                        	        <img src="http://localhost:8081/artion/merPicServlet?merchId=${merch.merchId}" class="card-img-top merchStyle" alt="...">
                         	        <p class="merchName">${merch.merchName}</p>
                         	        <p class="merchPrice">${merch.merchPrice}</p>
-                        	    </a>
+                        	    </div>
                         	`;
                             $("#merchContainer").append(merches);
                         });
 
                         // 點擊事件監聽器
                         $(".merchBox_child").click(function () {
+                            console.log("有點到商品");
                             var merchId = $(this).data("merchId");
-                            window.location.href = `SingleMerch.html?merchId=${merchId}`;
+                            console.log(`跳转到 singleMerch.html?merchId=${merchId}`);
+//                             window.location.href = `http://localhost:8081/artion/html/merch/singleMerch.html?merchId=${metch.merchId}`;
                         });
                     },
                     error: function () {

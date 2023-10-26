@@ -53,12 +53,13 @@ public class GetAllServlet extends HttpServlet {
 			merchMap.put("merchPrice", merch.getMerchPrice());
 			merchMap.put("merchSort", merch.getMerchSort());
 //			merchMap.put("merchStart", merch.getMerchStartTime());
-//			merchMap.put("merchIntro", merch.getMerchIntroduction());
+			merchMap.put("merchIntro", merch.getMerchIntroduction());
 			merchMap.put("merchSelAmount", merch.getMerchSellAmount());
 //			merchMap.put("merchStatus", merch.getMerchStatus());
 //			merchMap.put("merchOrdDets", merch.getMetOrdDets());
 			
 			merchMapList.add(merchMap);
+			System.out.println(merchMap);
 		}
 		
 		

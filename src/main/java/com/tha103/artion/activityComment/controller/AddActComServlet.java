@@ -3,6 +3,7 @@ package com.tha103.artion.activityComment.controller;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,9 @@ import com.tha103.artion.activityComment.service.ActivityCommentService;
 import com.tha103.artion.member.model.MemberVO;
 
 @WebServlet("/addActComServlet")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, 
+					maxFileSize = 5 * 1024 * 1024, 
+					maxRequestSize = 5 * 5 * 1024 * 1024)
 public class AddActComServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
