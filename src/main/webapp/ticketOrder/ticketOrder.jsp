@@ -45,8 +45,8 @@ pageContext.setAttribute("activity",activity);
 	rel="stylesheet">
 <link href="css/tiny-slider.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
-<link rel="stylesheet" href="./css/member.css">
-<link rel="stylesheet" href="./css/cart.css">
+<link rel="stylesheet" href="css/member.css">
+<link rel="stylesheet" href="css/cart.css">
 
 <title>Furni Free Bootstrap 5 Template for Furniture and
 	Interior Design Websites by Untree.co</title>
@@ -445,8 +445,9 @@ pageContext.setAttribute("activity",activity);
 			<input type="hidden" name="action" value="insert">
 
 			<!-- 更多数据字段 -->
-
+			
 			<button type="submit" class="btn_checkorder">去買單</button>
+			</form>
 		</form>
 
 	</div>

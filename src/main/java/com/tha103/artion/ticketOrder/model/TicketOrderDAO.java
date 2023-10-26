@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import com.tha103.artion.member.model.MemberVO;
+import com.tha103.artion.myPromoCode.model.MyPromoCodeVO;
+import com.tha103.artion.seller.model.SellerVO;
 import com.tha103.artion.util.HibernateUtil;
 
 public class TicketOrderDAO implements TicketOrderDAO_interface {
@@ -89,28 +92,28 @@ public class TicketOrderDAO implements TicketOrderDAO_interface {
 	public static void main(String[] args) throws Exception {
 		TicketOrderDAO dao = new TicketOrderDAO();
 
-//		SellerVO sellerVO = new SellerVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
-//		sellerVO.setSelId(2001);
-//
-//		MyPromoCodeVO mypromocodeVO = new MyPromoCodeVO();
-//		mypromocodeVO.setMyProCodeId(1);
-//
-//		MemberVO membervo = new MemberVO();
-//		membervo.setMemId(7001);
-//		// 新增
-//		TicketOrderVO ticketorderVO = new TicketOrderVO();
-//		ticketorderVO.setMember(membervo);
-//		ticketorderVO.setTicketOrdStatus(2);
-//		ticketorderVO.setTicketOrdTotalPrice(500.0);
-//		ticketorderVO.setTicketOrdProCodeAmount(100.0);
-//		ticketorderVO.setTicketOrdActuallyAmount(400.0);
-//		ticketorderVO.setTicketOrdPayStatus(1);
-//		ticketorderVO.setMypromocode(mypromocodeVO);
-//		ticketorderVO.setTicketOrdAddress("新北市淡水區");
-//		ticketorderVO.setSeller(sellerVO);
-//		ticketorderVO.setTicketOrdCode("vvv9999");
-//
-//		dao.insert(ticketorderVO);
+		SellerVO sellerVO = new SellerVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
+		sellerVO.setSelId(2001);
+
+		MyPromoCodeVO mypromocodeVO = new MyPromoCodeVO();
+		mypromocodeVO.setMyProCodeId(1);
+
+		MemberVO membervo = new MemberVO();
+		membervo.setMemId(7001);
+		// 新增
+		TicketOrderVO ticketorderVO = new TicketOrderVO();
+		ticketorderVO.setMember(null);
+		ticketorderVO.setTicketOrdStatus(2);
+		ticketorderVO.setTicketOrdTotalPrice(1100.0);
+		ticketorderVO.setTicketOrdProCodeAmount(1100.0);
+		ticketorderVO.setTicketOrdActuallyAmount(4100.0);
+		ticketorderVO.setTicketOrdPayStatus(1);
+		ticketorderVO.setMypromocode(mypromocodeVO);
+		ticketorderVO.setTicketOrdAddress("新北市金石區");
+		ticketorderVO.setSeller(sellerVO);
+		ticketorderVO.setTicketOrdCode("vvv888");
+
+		dao.insert(ticketorderVO);
 
 //		// 修改
 //		SellerVO sellerVO = new SellerVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
@@ -175,21 +178,21 @@ public class TicketOrderDAO implements TicketOrderDAO_interface {
 //		MemberVO membervo = new MemberVO();
 //		membervo.setMemId(7001);
 
-		List<TicketOrderVO> list = dao.getAll();
-		for (TicketOrderVO ticketorderVO2 : list) {
-			System.out.print(ticketorderVO2.getTicketOrdId() + ",");
-			System.out.print(ticketorderVO2.getMember() + ",");
-			System.out.print(ticketorderVO2.getTicketOrdStatus() + ",");
-			System.out.print(ticketorderVO2.getTicketOrdTotalPrice() + ",");
-			System.out.print(ticketorderVO2.getTicketOrdProCodeAmount() + ",");
-			System.out.print(ticketorderVO2.getTicketOrdActuallyAmount() + ",");
-			System.out.print(ticketorderVO2.getTicketOrdPayStatus() + ",");
-			System.out.print(ticketorderVO2.getMypromocode() + ",");
-			System.out.print(ticketorderVO2.getTicketOrdAddress() + ",");
-			System.out.print(ticketorderVO2.getSeller() + ",");
-			System.out.print(ticketorderVO2.getTicketOrdCode() + ",");
-
-			System.out.println();
-		}
+//		List<TicketOrderVO> list = dao.getAll();
+//		for (TicketOrderVO ticketorderVO2 : list) {
+//			System.out.print(ticketorderVO2.getTicketOrdId() + ",");
+//			System.out.print(ticketorderVO2.getMember() + ",");
+//			System.out.print(ticketorderVO2.getTicketOrdStatus() + ",");
+//			System.out.print(ticketorderVO2.getTicketOrdTotalPrice() + ",");
+//			System.out.print(ticketorderVO2.getTicketOrdProCodeAmount() + ",");
+//			System.out.print(ticketorderVO2.getTicketOrdActuallyAmount() + ",");
+//			System.out.print(ticketorderVO2.getTicketOrdPayStatus() + ",");
+//			System.out.print(ticketorderVO2.getMypromocode() + ",");
+//			System.out.print(ticketorderVO2.getTicketOrdAddress() + ",");
+//			System.out.print(ticketorderVO2.getSeller() + ",");
+//			System.out.print(ticketorderVO2.getTicketOrdCode() + ",");
+//
+//			System.out.println();
+//		}
 	}
 }

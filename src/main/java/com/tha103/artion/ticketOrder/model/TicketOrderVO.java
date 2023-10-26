@@ -28,7 +28,7 @@ public class TicketOrderVO {
 	@Expose
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ticketOrd_id", updatable = false)
+	@Column(name = "ticketOrd_id", insertable = false, updatable = false)
 	private Integer ticketOrdId;
 
 	@Expose
@@ -84,14 +84,14 @@ public class TicketOrderVO {
 	@OneToMany(mappedBy = "ticketorder", cascade = CascadeType.ALL)
 	private Set<TicketOrderDetailVO> ticOrdDets;
 
-//-------------------------------------------------------------
 	public TicketOrderVO() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public TicketOrderVO(Integer ticketOrdId, Timestamp ticketOrdTime, MemberVO member, Integer ticketOrdStatus,
 			Double ticketOrdTotalPrice, Double ticketOrdProCodeAmount, Double ticketOrdActuallyAmount,
-			Integer ticketOrdPayStatus, MyPromoCodeVO myProCodeId, String ticketOrdAddress, SellerVO sel,
+			Integer ticketOrdPayStatus, MyPromoCodeVO mypromocode, String ticketOrdAddress, SellerVO seller,
 			String ticketOrdCode, Set<TicketOrderDetailVO> ticOrdDets) {
 		super();
 		this.ticketOrdId = ticketOrdId;
@@ -220,6 +220,7 @@ public class TicketOrderVO {
 				+ ", ticketOrdProCodeAmount=" + ticketOrdProCodeAmount + ", ticketOrdActuallyAmount="
 				+ ticketOrdActuallyAmount + ", ticketOrdPayStatus=" + ticketOrdPayStatus + ", mypromocode="
 				+ mypromocode + ", ticketOrdAddress=" + ticketOrdAddress + ", seller=" + seller + ", ticketOrdCode="
-				+ ticketOrdCode + ", ticOrdDets=" + ticOrdDets + "]";
+				+ ticketOrdCode + "]";
 	}
+
 }
