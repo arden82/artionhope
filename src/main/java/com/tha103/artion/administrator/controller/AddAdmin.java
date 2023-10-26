@@ -23,7 +23,7 @@ import com.tha103.artion.administrator.model.AdministratorVO;
 import com.tha103.artion.administrator.service.AdministratorService;
 import com.tha103.artion.administrator.service.AdministratorService_Interface;
 
-@WebServlet("/AddAdmin")
+@WebServlet("/addAdmin")
 @MultipartConfig
 public class AddAdmin extends HttpServlet{
 	

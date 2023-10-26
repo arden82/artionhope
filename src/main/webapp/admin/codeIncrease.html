@@ -175,47 +175,43 @@
               <form>
                 <div class="row">
                   <div class="col-md-4 mb-3">
-                    <label for="exampleInputEmail1" class="form-label">優惠碼名稱</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                    <label for="promoCodeName" class="form-label">優惠碼名稱</label>
+                    <input type="text" class="form-control" id="promoCodeName" aria-describedby="emailHelp" />
                   </div>
                   <div class="col-md-4 mb-3">
-                    <label for="exampleInputPassword1" class="form-label">優惠碼代碼</label>
-                    <input type="number" class="form-control" id="exampleInputPassword1" />
+                    <label for="promoCodeCode" class="form-label">優惠碼代碼</label>
+                    <input type="text" class="form-control" id="promoCodeCode" />
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-md-6 mb-3">
-                    <label for="exampleInputPassword1" class="form-label">折扣種類</label>
-                    <select class="form-select" id="floatingSelect1" aria-label="Floating label select example">
-                      <option selected>請選擇性別</option>
-                      <option value="1">男</option>
-                      <option value="2">女</option>
+                    <label for="proCodeType" class="form-label">折扣種類</label>
+                    <select class="form-select" id="proCodeType" aria-label="Floating label select example">
+                      <option selected>請選擇折扣</option>
+                      <option value="1">%數</option>
+                      <option value="2">折抵現金</option>
                     </select>
                   </div>
                   <div class="col-md-6 mb-3">
-                    <label for="exampleInputPassword1" class="form-label">折扣百分比/金額</label>
-                    <select class="form-select" id="floatingSelect2" aria-label="Floating label select example">
-                      <option selected>請選擇性別</option>
-                      <option value="1">男</option>
-                      <option value="2">女</option>
-                    </select>
+                    <label for="proCodeValue" class="form-label">折扣百分比/金額</label>
+                    <input type="number" class="form-control" id="proCodeValue" />
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-6 mb-3">
-                    <label for="datepicker" class="form-label">起始日期</label>
-                    <input type="date" class="form-control" id="datepicker" />
+                    <label for="proCodeStartDate" class="form-label">起始日期</label>
+                    <input type="date" class="form-control" id="proCodeStartDate" />
                   </div>
                   <div class="col-md-6 mb-3">
-                    <label for="datepicker" class="form-label">截止日期</label>
-                    <input type="date" class="form-control" id="datepicker" />
+                    <label for="proCodeEndDate" class="form-label">截止日期</label>
+                    <input type="date" class="form-control" id="proCodeEndDate" />
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-6 mb-3">
-                    <label for="exampleInputPassword1" class="form-label">適用活動類型</label>
-                    <select class="form-select" id="floatingSelect1" aria-label="Floating label select example">
+                    <label for="proCodeActType" class="form-label">適用活動類型</label>
+                    <select class="form-select" id="proCodeActType" aria-label="Floating label select example">
                       <option selected>全部</option>
                       <option value="1">市集</option>
                       <option value="2">展覽</option>
@@ -223,8 +219,8 @@
                     </select>
                   </div>
                   <div class="col-md-6 mb-3">
-                    <label for="exampleInputPassword1" class="form-label">會員等級</label>
-                    <select class="form-select" id="floatingSelect2" aria-label="Floating label select example">
+                    <label for="memLevLevel" class="form-label">會員等級</label>
+                    <select class="form-select" id="memLevLevel" aria-label="Floating label select example">
                       <option selected>請選擇等級</option>
                       <option value="1">一般</option>
                       <option value="2">高級</option>
@@ -234,30 +230,29 @@
                 </div>
                 <div class="row">
                   <div class="col-md-6 mb-3">
-                    <label for="exampleInputPassword1" class="form-label">數量</label>
-                    <input type="number" class="form-control" id="exampleInputPassword1" />
+                    <label for="proCodeTotal" class="form-label">數量</label>
+                    <input type="number" class="form-control" id="proCodeTotal" />
                   </div>
                   <div class="col-md-6 mb-3">
-                    <legend class="col-form-label col-sm-2 pt-0">狀態</legend>
                     <div class="row">
-                      <div class="col-md-3 mb-3">
-                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked />
-                        <label class="form-check-label" for="gridRadios1"> 上架?</label>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2" />
-                        <label class="form-check-label" for="gridRadios2">下架?</label>
+                      <div class="col-md-6 mb-3">
+                        <label for="proCodeStatus" class="form-label">狀態</label>
+                        <select class="form-select" id="proCodeStatus" aria-label="Floating label select example">
+                          <option selected>請選擇狀態</option>
+                          <option value="1">下架</option>
+                          <option value="2">上架</option>
+                        </select>
                       </div>
                     </div>
                   </div>
                 </div>
-                <label for="exampleInputPassword1" class="form-label">使用說明</label>
+                <label for="proCodeDescribe" class="form-label">使用說明</label>
                 <div class="form-floating">
-                  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 200px"></textarea>
+                  <textarea class="form-control" placeholder="Leave a comment here" id="proCodeDescribe" style="height: 200px"></textarea>
                   <label for="floatingTextarea">Comments</label>
                 </div>
-                <button type="button" class="btn btn-secondary m-2">取消</button>
-                <button type="submit" class="btn btn-primary">送出</button>
+                <button type="button" class="btn btn-secondary m-2" id="cancel">取消</button>
+                <button type="submit" class="btn btn-primary" id="commit">送出</button>
               </form>
             </div>
           </div>
@@ -316,6 +311,48 @@
 
         adminPhoto1.attr("src", alternateImageUrl);
         adminPhoto2.attr("src", alternateImageUrl);
+
+        $("#commit").on("click", function () {
+          // 创建一个对象来保存表单数据
+          var promoCodeData = {
+            promoCodeId: $("#promoCodeId").text(),
+            promoCodeName: $("#promoCodeName").val(),
+            promoCodeCode: $("#promoCodeCode").val(),
+            proCodeType: $("#proCodeType").val(),
+            proCodeValue: $("#proCodeValue").val(),
+            proCodeStartDate: $("#proCodeStartDate").val(),
+            proCodeEndDate: $("#proCodeEndDate").val(),
+            proCodeActType: $("#proCodeActType").val(),
+            proCodeTotal: $("#proCodeTotal").val(),
+            proCodeStatus: $("#proCodeStatus").val(),
+            proCodeDescribe: $("#proCodeDescribe").val(),
+            memLevLevel: $("#memLevLevel").val(),
+            admId: admId,
+          };
+
+          // 发送数据到后端
+          $.ajax({
+            url: "http://localhost:8081/artion/addPromoCode", // 替换为用于更新数据的后端URL
+            type: "POST", // 根据您的需要选择请求类型
+            data: promoCodeData, // 发送的数据
+            success: function () {
+              // 在成功时执行的操作
+              alert("優惠碼已成功更新！");
+              // 可以添加其他成功后的操作，例如重定向到其他页面
+              window.location.href = "codeSetting.html?admId=" + admId;
+            },
+            error: function (error) {
+              // 在请求失败时执行的操作
+              console.error(error);
+              // 可以添加其他处理请求失败后的操作，例如显示错误消息
+            },
+          });
+        });
+
+        //取消按鈕
+        $("#cancel").on("click", function () {
+          location.href = "codeSetting.html?admId=" + admId;
+        });
       });
     </script>
   </body>

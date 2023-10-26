@@ -20,6 +20,7 @@ public class PromoCodeDAO implements PromoCodeDAO_Interface{
 			session.getTransaction().commit();
 			
 			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();

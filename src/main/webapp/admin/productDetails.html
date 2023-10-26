@@ -61,7 +61,15 @@
             </div>
           </div>
           <div class="navbar-nav w-100">
-            <a href="index.html" class="nav-item nav-link"><i class="fa-solid fa-address-card"></i>會員總覽</a> <a href="memberOrderManage.html" class="nav-item nav-link"><i class="fa-solid fa-table-list"></i> 會員訂單管理</a> <a href="firm.html" class="nav-item nav-link"><i class="fa-solid fa-building-user"></i> 廠商總覽</a> <a href="activityManage.html" class="nav-item nav-link"><i class="fa-solid fa-calendar-check"></i> 廠商活動管理</a> <a href="complaint.html" class="nav-item nav-link"><i class="fa-solid fa-triangle-exclamation"></i> 客訴處理</a> <a href="customerService.html" class="nav-item nav-link"><i class="fa-solid fa-comments"></i> 即時客服</a> <a href="product.html" class="nav-item nav-link"><i class="fa-solid fa-box"></i> 周邊商品</a> <a href="codeSetting.html" class="nav-item nav-link"><i class="fa-solid fa-barcode"></i> 優惠碼設定</a> <a href="manager.html" class="nav-item nav-link active"><i class="fa-solid fa-user-tie"></i> 管理者管理</a>
+            <a href="index.html" class="nav-item nav-link"><i class="fa-solid fa-address-card"></i>會員總覽</a>
+            <a href="memberOrderManage.html" class="nav-item nav-link"><i class="fa-solid fa-table-list"></i> 會員訂單管理</a>
+            <a href="firm.html" class="nav-item nav-link"><i class="fa-solid fa-building-user"></i> 廠商總覽</a>
+            <a href="activityManage.html" class="nav-item nav-link"><i class="fa-solid fa-calendar-check"></i> 廠商活動管理</a>
+            <a href="complaint.html" class="nav-item nav-link"><i class="fa-solid fa-triangle-exclamation"></i> 客訴處理</a>
+            <a href="customerService.html" class="nav-item nav-link"><i class="fa-solid fa-comments"></i> 即時客服</a>
+            <a href="product.html" class="nav-item nav-link active"><i class="fa-solid fa-box"></i> 周邊商品</a>
+            <a href="codeSetting.html" class="nav-item nav-link"><i class="fa-solid fa-barcode"></i> 優惠碼設定</a>
+            <a href="manager.html" class="nav-item nav-link"><i class="fa-solid fa-user-tie"></i> 管理者管理</a>
             <a href="notification.html" class="nav-item nav-link"><i class="fa-solid fa-envelope"></i> 通知信</a>
           </div>
         </nav>
@@ -73,11 +81,11 @@
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
           <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-            <h2 class="text-primary mb-0">
-              <i class="fa fa-hashtag"></i>
-            </h2>
+            <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
           </a>
-          <a href="#" class="sidebar-toggler flex-shrink-0"> <i class="fa fa-bars"></i> </a>
+          <a href="#" class="sidebar-toggler flex-shrink-0">
+            <i class="fa fa-bars"></i>
+          </a>
           <form class="d-none d-md-flex ms-4">
             <input class="form-control border-0" type="search" placeholder="Search" />
           </form>
@@ -146,8 +154,15 @@
               </div>
             </div>
             <div class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto2" /> <span class="d-none d-lg-inline-flex">John Doe</span> </a>
-              <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0"><a href="#" class="dropdown-item">My Profile</a> <a href="#" class="dropdown-item">Settings</a> <a href="#" class="dropdown-item">Log Out</a></div>
+              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto2" />
+                <span class="d-none d-lg-inline-flex">John Doe</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                <a href="#" class="dropdown-item">My Profile</a>
+                <a href="#" class="dropdown-item">Settings</a>
+                <a href="#" class="dropdown-item">Log Out</a>
+              </div>
             </div>
           </div>
         </nav>
@@ -155,42 +170,29 @@
 
         <div class="col-12">
           <div class="bg-light rounded h-100 p-4">
-            <h6 class="mb-4">管理者管理</h6>
             <div class="row">
-              <div class="input-group col-md-6 mb-3">
-                <input class="form-control border" type="search" placeholder="Search" />
-                <button class="btn btn-primary" type="submit">Search</button>
+              <h6 class="col-md-3 mb-3" style="font-size: 24px"><a href="">商品管理</a></h6>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <div class="input-group">
+                  <input class="form-control border" type="search" placeholder="Search" />
+                  <button type="submit" class="btn btn-primary">搜尋</button>
+                  <button type="button" class="btn btn-secondary">重設</button>
+                </div>
               </div>
 
-              <div class="col-md-6 mb-3">
-                <a href="managerIncrease.html">
-                  <button type="button" class="btn btn-primary m-2">新增</button>
-                </a>
+              <div class="col-md-2 mb-3 d-flex align-items-center">
+                <select class="form-select" id="floatingSelect2" aria-label="Floating label select example">
+                  <option selected>類別</option>
+                  <option value="1">男</option>
+                  <option value="2">女</option>
+                </select>
               </div>
             </div>
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">管理者編號</th>
-                    <th scope="col">頭貼</th>
-                    <th scope="col">名稱</th>
-                    <th scope="col">身分</th>
-                    <th scope="col">狀態</th>
-                    <th scope="col">信箱</th>
-                    <th scope="col">密碼</th>
-                    <th scope="col">生日</th>
-                    <th scope="col">手機號碼</th>
-                    <th scope="col">新增管理者時間</th>
-                    <th scope="col">更改時間</th>
-                    <th scope="col">權限</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody id="table-body"></tbody>
-              </table>
-            </div>
+
+            <div class="bg-light rounded h-100 p-4" id="merchContent"></div>
           </div>
         </div>
 
@@ -230,135 +232,58 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
-    <!-- ==================================================================== -->
-
     <script>
-      // 定義一個函數來獲取管理員數據並填充表格
-      function getAdminData() {
-        $.ajax({
-          url: "http://localhost:8081/artion/showAllAdmins",
-          type: "POST",
-          dataType: "json",
-          success: function (data) {
-            var tableBody = $("#table-body");
-            tableBody.empty();
+      function getMerchData() {
+        var urlParams = new URLSearchParams(window.location.search);
+        merchId = urlParams.get("merchId");
 
-            if (data.length > 0) {
-              $.each(data, function (index, admin) {
-                var newRowHTML = `
-                              <tr>
-                                  <th scope="row" id="admId">${admin.admId}</th>
-                                  <td><img src='http://localhost:8081/artion/adminphoto?admId=${admin.admId}' alt='頭貼' style='max-width: 100px'></td>
-                                  <td>${admin.admName}</td>
-                                  <td>${admin.admIdentity}</td>
-                                  <td>${admin.admStatus}</td>
-                                  <td>${admin.admMail}</td>
-                                  <td>${admin.admPassword}</td>
-                                  <td>${admin.admBirthday}</td>
-                                  <td>${admin.admMobile}</td>
-                                  <td>${admin.admAddTime}</td>
-                                  <td>${admin.admLastModifiedTime}</td>
-                                  <td>${admin.admRight}</td>
-                                  <td><button type="submit" id="commit" class="btn btn-primary m-2">修改</button></td>
-                                  <td><button id="delete" data-admin="${admin.admId}" class="btn btn-secondary m-2">刪除</button></td>
-                              </tr>
-                          `;
-                tableBody.append(newRowHTML);
-              });
-            } else {
-              tableBody.html("<tr><td colspan='13'>沒有管理員資料。</td></tr>");
-            }
-          },
-          error: function () {
-            // 處理錯誤
-            alert("請求失敗。");
-          },
-        });
-      }
-
-      //拿取id並交給修改畫面
-      function updateOneAdmin(admId) {
-        let updateItem = {
-          admId: admId,
-        };
-        console.log(admId);
-        $.ajax({
-          url: "http://localhost:8081/artion/showOneAdmin",
-          type: "POST",
-          data: updateItem,
-          dataType: "json",
-          success: function (data) {
-            alert("success");
-            console.log(data);
-            location.href = "managerDetails.html?admId=" + admId; // 在URL中包含admId
-          },
-        });
-      }
-
-      //刪除方法
-      function deleteAdmin(admId) {
-        if (confirm("確定要刪除此管理員嗎？")) {
-          let deleteItem = {
-            admId: admId,
-          };
-
+        console.log(merchId);
+        if (merchId) {
           $.ajax({
-            url: "http://localhost:8081/artion/deleteAdmin",
-            type: "POST",
-            data: deleteItem,
+            type: "GET",
+            url: "http://localhost:8081/artion/showOneMerch", // 指向您的Servlet URL
+            data: { merchId: merchId }, // 替换成您的商品ID
             dataType: "json",
             success: function (data) {
-              // 在成功刪除后执行的操作，例如重新加载管理员列表
-              getAdminData();
+              // data 包含从服务器返回的商品信息
+
+              // 在页面上显示商品信息
+              var merchContent = document.getElementById("merchContent");
+              var merchInfo = document.createElement("div");
+
+              merchInfo.innerHTML = `
+        <div class="merch-info">
+            <div class="product-title">${data.merchName}</div>
+            <div class="product-images">
+                <img src="http://localhost:8081/artion/MerchPhoto?merchId=${data.merchId}&merchPicture=1" alt="商品圖片1" />
+                <img src="http://localhost:8081/artion/MerchPhoto?merchId=${data.merchId}&merchPicture=2" alt="商品圖片2" />
+                <img src="http://localhost:8081/artion/MerchPhoto?merchId=${data.merchId}&merchPicture=3" alt="商品圖片3" />
+                <img src="http://localhost:8081/artion/MerchPhoto?merchId=${data.merchId}&merchPicture=4" alt="商品圖片4" />
+            </div>
+            <div class="product-info"><strong>周边商品編號:</strong> ${data.merchId}</div>
+            <div class="product-info"><strong>周边商品總數:</strong> ${data.merchTotal}</div>
+            <div class="product-info"><strong>周边商品單價:</strong> ${data.merchPrice}</div>
+            <div class="product-info"><strong>周边商品類別:</strong> ${data.merchSort}</div>
+            <div class="product-info"><strong>周边商品上架時間:</strong> ${data.merchStartTime}</div>
+            <div class="product-info"><strong>周边商品下架時間:</strong> ${data.merchEndTime}</div>
+            <div class="product-info"><strong>周边商品描述:</strong> ${data.merchIntroduction}</div>
+            <div class="product-info"><strong>銷售數量:</strong> ${data.merchSellAmount}</div>
+            <div class="product-info"><strong>上下架狀態:</strong> ${data.merchStatus}</div>
+        </div>
+    `;
+
+              merchContent.appendChild(merchInfo);
             },
-            error: function () {
-              // 處理錯誤
-              alert("刪除管理員失敗。");
+            error: function (error) {
+              // 处理Ajax错误
             },
           });
         }
       }
 
-      //畫面開始直接渲染
       $(document).ready(function () {
-        const admId = localStorage.getItem("admId");
-
-        console.log(admId);
-
-        const adminPhoto1 = $("#adminPhoto1");
-        const adminPhoto2 = $("#adminPhoto2");
-
-        console.log(adminPhoto1);
-
-        // const initialImageUrl = "img/user.jpg";
-        const alternateImageUrl = "http://localhost:8081/artion/adminphoto?admId=" + admId;
-
-        // let isInitialImage = true;
-
-        adminPhoto1.attr("src", alternateImageUrl);
-        adminPhoto2.attr("src", alternateImageUrl);
-        getAdminData();
-
-        //點擊修改時拿id並交給updateOneAdmin方法
-        $("#table-body").on("click", "#commit", function (e) {
-          e.preventDefault();
-          console.log("click update");
-          let admId = $(this).closest("tr").find("#admId").text();
-          console.log(admId);
-          updateOneAdmin(admId);
-        });
-
-        $("#table-body").on("click", "#delete", function (e) {
-          e.preventDefault();
-
-          console.log($(this));
-          let admId = $(this).data("admin");
-          console.log(admId);
-          deleteAdmin(admId);
-        });
+        getMerchData();
       });
     </script>
-
-    <!-- ==================================================================== -->
   </body>
 </html>

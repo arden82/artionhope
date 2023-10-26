@@ -239,7 +239,7 @@
         var admId = urlParams.get("admId");
 
         $.ajax({
-          url: "http://localhost:8081/artion/ShowOneAdmin", // 后端URL，用于根据管理员ID获取数据
+          url: "http://localhost:8081/artion/showOneAdmin", // 后端URL，用于根据管理员ID获取数据
           type: "POST",
           dataType: "json",
           data: { admId: admId }, // 发送管理员ID到后端
@@ -284,7 +284,7 @@
         };
         console.log(admId);
         $.ajax({
-          url: "http://localhost:8081/artion/ShowOneAdmin",
+          url: "http://localhost:8081/artion/showOneAdmin",
           type: "POST",
           data: updateItem,
           dataType: "json",

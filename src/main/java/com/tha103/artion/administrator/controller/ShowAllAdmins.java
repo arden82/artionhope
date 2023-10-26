@@ -19,7 +19,7 @@ import com.google.gson.Gson;
 import com.tha103.artion.administrator.model.AdministratorVO;
 import com.tha103.artion.administrator.service.AdministratorService;
 
-@WebServlet("/ShowAllAdmins")
+@WebServlet("/showAllAdmins")
 public class ShowAllAdmins extends HttpServlet {
 
 	@Override
