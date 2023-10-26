@@ -202,3 +202,20 @@
     overflow: hidden;
     margin-right: 10px;
 }
+
+/*上傳圖片四個方框樣式*/
+.square-container {
+  width: 100px; 
+  height: 100px; 
+  cursor: pointer;
+  border: 2px solid #ccc;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.square-image {
+  max-width: 80px; 
+  max-height: 80px; 
+  margin: 0 auto; 
+}

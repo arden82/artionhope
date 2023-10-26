@@ -149,36 +149,36 @@
             <div class="container">
                 <!-- 大正方形圖片 -->
                 <div class="big-square">
-                    <img src="./image/雙口袋短褲-海軍藍.jpg" alt="">
+                    <img src="" alt="" id="merPic1">
                 </div>
 
                 <!-- 右側小正方形圖片容器 -->
                 <div class="small-square-container">
                     <div class="small-square">
-                        <img src="./image/雙口袋短褲-海軍藍.jpg" alt="">
+                        <img src="" alt="" id="merPic1">
                     </div>
                     <div class="small-square">
-                        <img src="./image/雙口袋短褲-海軍藍2.jpg" alt="">
+                        <img src="" alt="" id="merPic2">
                     </div>
                     <div class="small-square">
-                        <img src="./image/雙口袋短褲-海軍藍3.jpg" alt="">
+                        <img src="" alt="" id="merPic3">
                     </div>
                     <div class="small-square">
-                        <img src="./image/雙口袋短褲-海軍藍4.jpg" alt="">
+                        <img src="" alt="" id="merPic4">
                     </div>
                 </div>
             </div>
 
             <!-- 商品簡介區域 -->
             <div class="product-description">
-                <h2>商品名稱</h2>
-                <p>商品說明</p>
-                <p>這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~</p>
+                <h2 id="merchName">商品名稱</h2>
+                <p id="merchSort">商品種類</p>
+                <p id="merchInfo">這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~</p>
 
                 <!-- 商品價格和數量選擇 -->
                 <div class="product-info">
-                    <span>商品價格:</span>
-                    <span>200元</span>
+                    <span >商品價格:</span>
+                    <span id="merchPrice">200元</span>
                     <br>
                     <span>剩餘件數: </span>
                     <span id="remainingQuantity">100 </span>
@@ -222,45 +222,93 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 <script>
-    //周邊商品圖片切換功能
-    $(document).ready(function () {
-        var smallSquares = $('.small-square');
-
-        smallSquares.click(function () {
-            var clickedImg = $(this).find('img');
-            var bigSquare = $('.big-square');
-            bigSquare.html(clickedImg.clone());
-        });
-    });
-
-    //判斷周邊商品加入購物車或立即購買是否超過庫存量
-    $(document).ready(function() {
-        const remainingQuantity = $("#remainingQuantity");
-        const quantityInput = $("#quantity");
-        const addToCartButton = $("#addToCart");
-        const buyNowButton = $("#buyNow");
-        const errorMessage = $("#errorMessage");
-        addToCartButton.click(function() {
-            const selectedQuantity = parseInt(quantityInput.val(), 10);
-            const availableQuantity = parseInt(remainingQuantity.text(), 10);
-
-            if (selectedQuantity > availableQuantity) {
-                errorMessage.text("超過庫存量");
-            } else {
-                errorMessage.text("");
+//畫面載入時，取得該商品ID的資料(未完成)
+$(document).ready(function () {
+    var urlParams = new URLSearchParams(window.location.search);
+    var merchId = urlParams.get("merchId");
+    console.log("取得merchId=" + merchId);
+    if (merchId) {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8081/artion/getAllMerch", // 用于获取商品详细信息的Servlet URL
+            data: { merchId: merchId }, // 发送商品ID作为数据
+            dataType: "JSON",
+            success: function (data) {
+                var merchData = data.find(function(merch){
+                    return merch.merchId == merchId;
+                })
+                if(merchData){
+                    $("#merchName").text(data.merchName);
+                    $("#merchSort").text(data.merchSort);
+                    $("#merchInto").text(data.merchIntroduction);
+                    $("#merchPrice").text(data.merchPrice);
+                    $("#remainingQuantity").text(data.merchTotal - data.merchSellAmount);
+                    
+                    var img1 = "http://localhost:8081/artion/merPicServlet?merchId=" + merchId + "&picNumber=" + 1;
+                        $("#merPic1").attr("src", img1);
+                        console.log(img1);
+                    var img2 = "http://localhost:8081/artion/merPicServlet?merchId=" + merchId + "&picNumber=" + 2;
+                        $("#merPic2").attr("src", img2);
+                    var img2 = "http://localhost:8081/artion/merPicServlet?merchId=" + merchId + "&picNumber=" + 3;
+                        $("#merPic3").attr("src", img3);
+                    var img3 = "http://localhost:8081/artion/merPicServlet?merchId=" + merchId + "&picNumber=" + 4;
+                        $("#merPic4").attr("src", img4);
+                }
+                console.log("成功取得merchId和資料");
+                
+            },
+            error: function () {
+                alert("無法取得商品資料");
             }
         });
-        buyNowButton.click(function() {
-            const selectedQuantity = parseInt(quantityInput.val(), 10);
-            const availableQuantity = parseInt(remainingQuantity.text(), 10);
+    } else {
+    	$(".product-description").empty();
+        $("#merchName").text("未找到商品");
+        
+        
+    }
+});
 
-            if (selectedQuantity > availableQuantity) {
-                errorMessage.text("超過庫存量");
-            } else {
-                errorMessage.text("");
-            }
-        });
+
+//周邊商品圖片切換功能
+$(document).ready(function () {
+    var smallSquares = $('.small-square');
+
+    smallSquares.click(function () {
+        var clickedImg = $(this).find('img');
+        var bigSquare = $('.big-square');
+        bigSquare.html(clickedImg.clone());
     });
+});
+
+//判斷周邊商品加入購物車或立即購買是否超過庫存量
+$(document).ready(function() {
+    const remainingQuantity = $("#remainingQuantity");
+    const quantityInput = $("#quantity");
+    const addToCartButton = $("#addToCart");
+    const buyNowButton = $("#buyNow");
+    const errorMessage = $("#errorMessage");
+    addToCartButton.click(function() {
+        const selectedQuantity = parseInt(quantityInput.val(), 10);
+        const availableQuantity = parseInt(remainingQuantity.text(), 10);
+
+        if (selectedQuantity > availableQuantity) {
+            errorMessage.text("超過庫存量");
+        } else {
+            errorMessage.text("");
+        }
+    });
+    buyNowButton.click(function() {
+        const selectedQuantity = parseInt(quantityInput.val(), 10);
+        const availableQuantity = parseInt(remainingQuantity.text(), 10);
+
+        if (selectedQuantity > availableQuantity) {
+            errorMessage.text("超過庫存量");
+        } else {
+            errorMessage.text("");
+        }
+    });
+});
 </script>
 
 </html>
