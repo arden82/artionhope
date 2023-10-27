@@ -12,7 +12,8 @@
     <link href="../../css/activity/singleActivity.css" rel="stylesheet" />
     <link href="../../css/activity/singleActivityCover.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/activity/member.css">
+    <link rel="stylesheet" href="../../css/member/member.css">
+    <link rel="icon" href="../../images/artionLogo.png" type="image/png">
 
 </head>
 
@@ -289,16 +290,16 @@
                                                             <div class="col">
                                                                 <input name="actComCovPicture" id="actComCovPicture" type="file" accept="image/*">
                                                             </div>
-                                                        <div class="col">
-                                                            <input name="actComPicture1" id="actComPicture1" type="file" accept="image/*">
-                                                        </div>
-                                                        <div class="col">
-                                                            <input name="actComPicture2" id="actComPicture2" type="file" accept="image/*">
-                                                        </div>
-                                                        <div class="col">
-                                                            <input name="actComPicture3" id="actComPicture3" type="file" accept="image/*">
-                                                        </div>
-                                                    <button type="button" class="btn btn-outline-secondary" style="margin-left: 10px; width: 100px;" id="clearFiles">清除檔案</button>
+                                                        	<div class="col">
+                                                            	<input name="actComPicture1" id="actComPicture1" type="file" accept="image/*">
+                                                        	</div>
+                                                        	<div class="col">
+                                                            	<input name="actComPicture2" id="actComPicture2" type="file" accept="image/*">
+                                                        	</div>
+                                                        	<div class="col">
+                                                            	<input name="actComPicture3" id="actComPicture3" type="file" accept="image/*">
+                                                        	</div>
+                                                    		<button type="button" class="btn btn-outline-secondary" style="margin-left: 10px; width: 100px;" id="clearFiles">清除檔案</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -368,15 +369,58 @@
     
 <script>
 //================== 取得localstorage + 活動收藏 ==================
+function getActIdFromURL() {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('actId');
+}
+
+$(document).ready(function () {
+    $("#collection1_icon").click(function () {
+        var memId = localStorage.getItem('memId');
+        if (memId) {
+            var actId = getActIdFromURL();
+            var status = 1; 
+            
+            var data = {
+                memId: memId,
+                actId: actId,
+                status: status
+            };
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8081/artion/addToCollectionServlet", // 请将 URL 替换为实际的 URL
+                data: data,
+                success: function (response) {
+                    alert("成功添加至您的收藏！");
+                },
+                error: function () {
+                    alert("添加失敗");
+                }
+            });
+        } else {
+            
+            var userWantsToLogin = confirm("您需要登入後才能收藏活動，是否要登入?");
+            if (userWantsToLogin) {    
+                window.location.href = 'http://localhost:8081/artion/html/member/memberLogin.html'; // 请将 URL 替换为实际的 URL
+            }
+            
+        }
+    });
+});
+
+
+
+//================== 取得localstorage + 加入購物車(完成) ==================
 // 測試存一個memId到localstorage
 localStorage.clear();
-// localStorage.setItem('memId', '7001');
+//  localStorage.setItem('memId', '7001');
 
 //判斷有無localstorage資料並且發送actid給後端進行redis儲存
 function getActIdFromURL() {
     var urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('actId');
 }
+
 $(document).ready(function () {
     $("#addtocart").click(function () {
         var memId = localStorage.getItem('memId');
@@ -388,20 +432,23 @@ $(document).ready(function () {
                 url: "http://localhost:8081/artion/addToCartServlet",
                 data: { actId: actId },
                 success: function (response) {
-                    alert("成功送到 Servlet！");
+                    alert("成功发送到 Servlet！");
                 },
                 error: function () {
                     alert("發送失敗");
                 }
             });
         } else {
-            window.location.href = 'http://localhost:8081/artion/html/member/memberLogin.html';
+            var userWantsToLogin = confirm("您需要登入後才能將此商品加入購物車，是否要登入？");
+            if (userWantsToLogin) {
+                window.location.href = 'http://localhost:8081/artion/html/member/memberLogin.html';
+            }
         }
     });
 });
 
 
-//================== 新增活動留言功能 ==================
+//================== 新增活動留言功能(完成) ==================
 let button = document.getElementById("commentForm");
 let actId = document.getElementById("actId");
 button.addEventListener('click', function(e) { 
@@ -412,7 +459,17 @@ button.addEventListener('click', function(e) {
 	actId.value = id;
 });
 
-    //================== 獲取活動頁資料並渲染在畫面上 ==================
+//================== 清除上傳檔案(完成) ==================
+$(document).ready(function () {
+    $("#clearFiles").click(function () {
+        $("#actComCovPicture").val('');
+        $("#actComPicture1").val('');
+        $("#actComPicture2").val('');
+        $("#actComPicture3").val('');
+    });
+});
+
+    //================== 獲取活動頁資料並渲染在畫面上(完成) ==================
     $(document).ready(function () {
         var urlParams = new URLSearchParams(window.location.search);
         var actId = urlParams.get("actId");
@@ -458,7 +515,7 @@ button.addEventListener('click', function(e) {
     });
 
 
-    //================== 載入頁面時取得活動留言 ================== 
+    //================== 載入頁面時取得活動留言(完成) ================== 
     $(document).ready(function () {
         var urlParams = new URLSearchParams(window.location.search);
         var actIdFromURL = urlParams.get("actId");
@@ -520,7 +577,7 @@ button.addEventListener('click', function(e) {
         });
     });
     
-  //================== 載入頁面時取得該活動廠商資訊 ================== 
+  //================== 載入頁面時取得該活動廠商資訊(未完成) ================== 
     $(document).ready(function () {
     var urlParams = new URLSearchParams(window.location.search);
     var actIdFromURL = urlParams.get("actId");
@@ -531,7 +588,7 @@ button.addEventListener('click', function(e) {
         dataType: "json",
         success: function (sellerData) {
             if (sellerData) {
-                // 渲染卖家信息到页面
+                
                 $("#selName").text(sellerData.selName);
                 $("#selInfo").text(sellerData.selInfo);
             } else {
@@ -572,38 +629,7 @@ button.addEventListener('click', function(e) {
 //     });
 // });
 
-
-
-
-    // ================== 載入頁面時取得廠商資訊 ================== 
-//     document.addEventListener("DOMContentLoaded", function () {
-//     // 在这里放置你的代码
-//     var urlParams = new URLSearchParams(window.location.search);
-//     var actIdFromURL = urlParams.get("actId");
-
-//     $.ajax({
-//         type: "GET",
-//         url: "http://localhost:8081/artion/getAllAct",
-//         dataType: "json",
-//         success: function (data) {
-//             if (data) {
-//                 $.each(data, function (index, act) {
-//                     if (actIdFromURL == act.actId) {
-//                         $("#selName").text(act.selName);
-//                         $("#selInfo").text(act.selInfo);
-//                     }
-//                 });
-//             } else {
-//                 alert("无法获取数据111");
-//             }
-//         },
-//         error: function () {
-//             alert("无法获取数据222");
-//         }
-//     });
-// });
-
-    // ================== 留言按讚功能 ==================
+    // ================== 留言按讚功能(未完成) ==================
     $(document).ready(function () {
         var likeCounter = 0;
 
@@ -622,7 +648,7 @@ button.addEventListener('click', function(e) {
         });
     });
 
-    // ================== 按讚icon功能 ==================
+    // ================== 按讚icon功能樣式 (未完成) ==================
     actLike1_icon.addEventListener('click', function () {
         if (!isactLike1_iconActive) {
 
@@ -641,7 +667,7 @@ button.addEventListener('click', function(e) {
         iconCount.textContent = count;
     });
 
-    // ==================收藏icon功能==================
+    // ================== 收藏icon樣式轉換(完成) ==================
     const collection1_icon = document.getElementById('collection1_icon');
     const collection2_icon = document.getElementById('collection2_icon');
     let iscollection1_iconActive = false;
@@ -659,7 +685,7 @@ button.addEventListener('click', function(e) {
         iscollection1_iconActive = false;
     });
 
-    // ==================留言輸入框自動調整大小==================
+    // ================== 留言輸入框自動調整大小(完成) ==================
     $(function () {
         $("#actComContent").on("input propertychange", function (e) {
             var target = e.target;
@@ -687,7 +713,7 @@ button.addEventListener('click', function(e) {
     });
 
 
-    //  ==================留言板上傳圖片==================
+    //  ================== 留言板上傳圖片(用不到) ==================
     // const fileInput = document.getElementById('fileInput');
     // const maxImageCount = 4; // 最多允許上傳圖片數量
 
@@ -720,21 +746,8 @@ button.addEventListener('click', function(e) {
         // }
     // });
 
-    // ==================點擊清除檔案按鈕==================
-    const clearButton = document.querySelector('.imageUpload_delete button');
-    clearButton.addEventListener('click', function () {
-        fileInput.value = '';
-        imagePreviews.innerHTML = '';
-    });
-
-    // $(document).ready(function () {
-    //         $("#clearFiles").click(function () {
-    //             console.log("aaa");
-    //             var fileInput = $("#files");
-    //             fileInput.val("");
-            // });
-            // })
-
+    
+    
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~ 元素 ~~~~~~~~~~~~~~~~~~~~~~~~~~
     const textarea = document.getElementById('validationTextarea');
