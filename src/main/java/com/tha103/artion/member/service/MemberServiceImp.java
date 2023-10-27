@@ -10,6 +10,7 @@ import com.tha103.artion.util.HibernateUtil;
 
 public class MemberServiceImp implements MemberService {
 	MemberDAO dao;
+
 	public MemberServiceImp() {
 		dao = new MemberDAOlmp(HibernateUtil.getSessionFactory());
 	}
@@ -21,7 +22,7 @@ public class MemberServiceImp implements MemberService {
 
 	@Override
 	public int insert(MemberVO member) {
-			return dao.insert(member);
+		return dao.insert(member);
 	}
 
 	@Override
@@ -31,23 +32,27 @@ public class MemberServiceImp implements MemberService {
 
 	@Override
 	public MemberVO login(String account, String password) {
-		 MemberVO member=dao.login(account, password); 
-		 MemberVO msg=new MemberVO();
-		if(member!=null) {
+		MemberVO member = dao.login(account, password);
+		MemberVO msg = new MemberVO();
+		if (member != null) {
 			String check = member.getMemPassword();
-			if(!(check.equals(password))) {
-				 msg.setMemPassword("密碼錯誤");
-				return   msg;//有註冊過的帳號但密碼錯誤
-			}			
+			if (!(check.equals(password))) {
+				msg.setMemPassword("密碼錯誤");
+				return msg;// 有註冊過的帳號但密碼錯誤
+			}
 			return member;
 		}
 		return null;
-		
+
 	}
 
 	@Override
+	public MemberVO getMember(String account) {
+		return dao.getMember(account);
+	}
+	@Override
 	public MemberVO getMember(Integer mem_id) {
-			return  dao.getMember(mem_id);
+		return dao.getMember(mem_id);
 	}
 
 }
