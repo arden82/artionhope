@@ -1,5 +1,6 @@
 package com.tha103.artion.websocket;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,20 +16,27 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.google.gson.Gson;
 
-@ServerEndpoint("/ChatEndpoint/{username}")
+@ServerEndpoint("/ChatEndpoint/{username}/{role}")
 public class ChatEndpoint {
 	private static Session adminSession;
 	private static Map<String, Session> sessionMap = new ConcurrentHashMap<>();
 	private static Gson gson = new Gson();
 	
 	@OnOpen
-	public void onOpen(@PathParam("username") String username, Session userSession) {
-		if (Objects.equals(username, "Admin")) {
+	public void onOpen(
+		@PathParam("username") String username,
+		@PathParam("role") String role,
+		Session userSession
+	) {
+		var chatMessage = new ChatMessage();
+		if (Objects.equals(role, "Admin")) {
 			adminSession = userSession;
+			chatMessage.setType(Type.LIST);
+			chatMessage.setContent(gson.toJson(sessionMap.keySet()));
+			sendJson(adminSession, chatMessage);
 		} else {
 			sessionMap.put(username, userSession);
 			if (adminSession != null && adminSession.isOpen()) {
-				var chatMessage = new ChatMessage();
 				chatMessage.setType(Type.ONLINE);
 				chatMessage.setSender(username);
 				sendJson(adminSession, chatMessage);
@@ -61,9 +69,9 @@ public class ChatEndpoint {
 		removeSession(userSession);
 	}
 	
-	private void sendJson(Session session, Object obj) {
+	private void sendJson(Session session, Serializable serial) {
 		if (session != null && session.isOpen()) {
-			session.getAsyncRemote().sendText(gson.toJson(obj));
+			session.getAsyncRemote().sendText(gson.toJson(serial));
 		}
 	}
 	
