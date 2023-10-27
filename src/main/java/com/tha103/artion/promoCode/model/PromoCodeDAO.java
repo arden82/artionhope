@@ -3,46 +3,44 @@ package com.tha103.artion.promoCode.model;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
+import com.tha103.artion.administrator.model.AdministratorVO;
+import com.tha103.artion.memberLevel.model.MemberLevelVO;
+import com.tha103.artion.merch.model.MerchVO;
 import com.tha103.artion.util.HibernateUtil;
 
-public class PromoCodeDAO implements PromoCodeDAO_Interface{
+public class PromoCodeDAO implements PromoCodeDAO_Interface {
+	private SessionFactory factory;
 
-	@Override
-	public int insert(PromoCodeVO promoCode) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		int promoCodeId = 0;
+	public PromoCodeDAO(SessionFactory factory) {
+		this.factory = factory;
+	}
 
-		try {
-			session.beginTransaction();
-
-			promoCodeId = (int) session.save(promoCode);
-			session.getTransaction().commit();
-			
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		}
-		return promoCodeId;
+	private Session getSession() {
+		return factory.getCurrentSession();
 	}
 
 	@Override
-	public int update(PromoCodeVO promoCode) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+	public int add(PromoCodeVO promoCode, int memLevel, int admId) {
 
-		try {
-			session.beginTransaction();
-			session.update(promoCode);
-			session.getTransaction().commit();
-			
-			return 1;
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		}
-		return -1;
+		MemberLevelVO levelVO = getSession().get(MemberLevelVO.class, memLevel);
+		AdministratorVO administratorVO = getSession().get(AdministratorVO.class, admId);
+		promoCode.setMemLevLevel(levelVO);
+		promoCode.setAdministrator(administratorVO);
+		return (Integer) getSession().save(promoCode);
+
+	}
+
+	@Override
+	public int update(PromoCodeVO promoCode, int memLevel, int admId) {
+
+		MemberLevelVO levelVO = getSession().get(MemberLevelVO.class, memLevel);
+		AdministratorVO administratorVO = getSession().get(AdministratorVO.class, admId);
+		promoCode.setMemLevLevel(levelVO);
+		promoCode.setAdministrator(administratorVO);
+		return (Integer) getSession().save(promoCode);
+
 	}
 
 	@Override
@@ -51,9 +49,9 @@ public class PromoCodeDAO implements PromoCodeDAO_Interface{
 
 		try {
 			session.beginTransaction();
-			PromoCodeVO promoCode = session.get(PromoCodeVO.class, proCodeId);
-			if (promoCode != null) {
-				session.delete(promoCode);
+			MerchVO merch = session.get(MerchVO.class, proCodeId);
+			if (merch != null) {
+				session.delete(merch);
 			}
 			session.getTransaction().commit();
 			return 1;
@@ -82,12 +80,12 @@ public class PromoCodeDAO implements PromoCodeDAO_Interface{
 
 	@Override
 	public List<PromoCodeVO> getAll() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
+		List<PromoCodeVO> list = null;
+		Session session = null;
 		try {
+			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			List<PromoCodeVO> list = session.createQuery("from PromoCodeVO", PromoCodeVO.class).list();
+			list = session.createQuery("from PromoCodeVO", PromoCodeVO.class).list();
 			session.getTransaction().commit();
 			return list;
 		} catch (Exception e) {
@@ -97,8 +95,4 @@ public class PromoCodeDAO implements PromoCodeDAO_Interface{
 		return null;
 	}
 
-
-	
-	
-	
 }

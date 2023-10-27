@@ -2,6 +2,7 @@ package com.tha103.artion.ticketOrderDetail.model;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.tha103.artion.activity.model.ActivityVO;
@@ -140,7 +141,7 @@ public class TicketOrderDetailDAO implements TicketOrderDetailDAO_interface {
 		System.out.print(ticketorderdetailVO.getTicOrdDetPrice() + ",");
 		System.out.print(ticketorderdetailVO.getActivity() + ",");
 		System.out.println("---------------------");
-//
+	}
 //		// 查詢多筆 QQ**
 //		TicketOrderVO ticketorderVO = new TicketOrderVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
 //		ticketorderVO.setTicketOrdId(134789);
@@ -148,16 +149,17 @@ public class TicketOrderDetailDAO implements TicketOrderDetailDAO_interface {
 //		ActivityVO activityVO = new ActivityVO();
 //		activityVO.setActId(10001);
 
-		List<TicketOrderDetailVO> list = dao.getAll();
-		for (TicketOrderDetailVO ticketorderdetailVO1 : list) {
-			System.out.print(ticketorderdetailVO1.getTicOrdDetId() + ",");
-			System.out.print(ticketorderdetailVO1.getTicketorder() + ",");
-			System.out.print(ticketorderdetailVO1.getTicOrdDetQuantity() + ",");
-			System.out.print(ticketorderdetailVO1.getTicOrdDetPrice() + ",");
-			System.out.print(ticketorderdetailVO1.getActivity() + ",");
-
-			System.out.println();
-		}
+//	List<TicketOrderDetailVO> list = dao.getAll()for(
+//	TicketOrderDetailVO ticketorderdetailVO1:list)
+//	{
+//		System.out.print(ticketorderdetailVO1.getTicOrdDetId() + ",");
+//		System.out.print(ticketorderdetailVO1.getTicketorder() + ",");
+//		System.out.print(ticketorderdetailVO1.getTicOrdDetQuantity() + ",");
+//		System.out.print(ticketorderdetailVO1.getTicOrdDetPrice() + ",");
+//		System.out.print(ticketorderdetailVO1.getActivity() + ",");
+//
+//		System.out.println();
+//	}
 
 //		List<TicketOrderDetailVO> list = dao.getAll();
 //
@@ -174,5 +176,27 @@ public class TicketOrderDetailDAO implements TicketOrderDetailDAO_interface {
 //		} else {
 //			System.out.println("Failed to retrieve TicketOrderDetail List.");
 //		}
+
+	@Override
+	public TicketOrderDetailVO getOneTicketOrderByActId(Integer actId) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			String hql = "FROM TicketOrderDetailVO AS t WHERE t.activity.actId = :actId";
+			Query<TicketOrderDetailVO> query = session.createQuery(hql, TicketOrderDetailVO.class);
+			query.setParameter("actId", actId);
+
+			// 使用uniqueResult()方法來獲取唯一的結果
+			TicketOrderDetailVO result = query.uniqueResult();
+			session.getTransaction().commit();
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} finally {
+			session.close();
+		}
+		return null;
 	}
+
 }

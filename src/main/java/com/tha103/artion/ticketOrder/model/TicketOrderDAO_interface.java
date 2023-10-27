@@ -13,9 +13,14 @@ public interface TicketOrderDAO_interface {
 
 	List<TicketOrderVO> getAll();
 
+	List<TicketOrderVO> getTicketOrderBySellerId(Integer selId);
+
 //	List<TicketOrderVO> getByCompositeQuery(Map<String, String> map);
 //
 //	List<TicketOrderVO> getAll(int currentPage);
 //
 //	long getTotal();
+
+	TicketOrderVO getTicketOrderDetailsByTicketOrdId(Integer ticketOrdId);
+
 }

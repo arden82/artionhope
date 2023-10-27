@@ -112,20 +112,20 @@ public class TicketOrderDetailServlet extends HttpServlet {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			Integer ticOrdDetId = Integer.valueOf(req.getParameter("ticOrdDetId"));
 
-			TicketOrderVO ticketorder = TicketOrderVO.valueOf(req.getParameter("ticketorder"));
+			Integer ticketorderId = Integer.valueOf(req.getParameter("ticketorderId").trim());
 
 			Integer ticOrdDetQuantity = Integer.valueOf(req.getParameter("ticOrdDetQuantity").trim());
 
 			Double ticOrdDetPrice = Double.valueOf(req.getParameter("ticOrdDetPrice").trim());
 
-			ActivityVO activity = Integer.valueOf(req.getParameter("activity").trim());
+			Integer activityId = Integer.valueOf(req.getParameter("activityId").trim());
 
 			TicketOrderDetailVO ticketorderdetailVO = new TicketOrderDetailVO();
 			ticketorderdetailVO.setTicOrdDetId(ticOrdDetId);
-			ticketorderdetailVO.setTicketorder(ticketorder);
+//			ticketorderdetailVO.setTicketorder(ticketorder);
 			ticketorderdetailVO.setTicOrdDetQuantity(ticOrdDetQuantity);
 			ticketorderdetailVO.setTicOrdDetPrice(ticOrdDetPrice);
-			ticketorderdetailVO.setActivity(activity);
+//			ticketorderdetailVO.setActivity(activity);
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
@@ -138,8 +138,8 @@ public class TicketOrderDetailServlet extends HttpServlet {
 
 			/*************************** 2.開始修改資料 *****************************************/
 			TicketOrderDetailService ticketorderSvc = new TicketOrderDetailService();
-			ticketorderdetailVO = ticketorderSvc.updateTicketorderdetail(ticOrdDetId, ticketorder, ticOrdDetQuantity,
-					ticOrdDetPrice, activity);
+			ticketorderdetailVO = ticketorderSvc.updateTicketorderdetail(ticOrdDetId, ticketorderId, ticOrdDetQuantity,
+					ticOrdDetPrice, activityId);
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("ticketorderdetailVO", ticketorderdetailVO); // 資料庫update成功後,正確的的empVO物件,存入req

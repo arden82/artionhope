@@ -20,12 +20,13 @@ import com.tha103.artion.promoCode.service.PromoCodeService;
 import com.tha103.artion.promoCode.service.PromoCodeService_Interface;
 
 @WebServlet("/addPromoCode")
-public class AddPromoCode extends HttpServlet{
-	
+public class AddPromoCode extends HttpServlet {
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
@@ -36,13 +37,13 @@ public class AddPromoCode extends HttpServlet{
 		// Store this set in the request scope, in case we need to
 		// send the ErrorPage view.
 		session.setAttribute("errorMsgs", errorMsgs);
-		
+
 		// =============接受請求參數===============================
-		
+
 		String promoCodeName = req.getParameter("promoCodeName");
-		
+
 		String promoCodeCode = req.getParameter("promoCodeCode");
-		
+
 		String strProCodeType = req.getParameter("proCodeType");
 		Integer proCodeType = null;
 		try {
@@ -51,9 +52,9 @@ public class AddPromoCode extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		String proCodeValue = req.getParameter("proCodeValue");
-		
+
 		String strProCodeStartDate = req.getParameter("proCodeStartDate");
 		java.sql.Date proCodeStartDate = null;
 		try {
@@ -62,7 +63,7 @@ public class AddPromoCode extends HttpServlet{
 			proCodeStartDate = new java.sql.Date(System.currentTimeMillis());
 			errorMsgs.add("請輸入有效日期!");
 		}
-		
+
 		String strProCodeEndDate = req.getParameter("proCodeEndDate");
 		java.sql.Date proCodeEndDate = null;
 		try {
@@ -71,8 +72,9 @@ public class AddPromoCode extends HttpServlet{
 			proCodeEndDate = new java.sql.Date(System.currentTimeMillis());
 			errorMsgs.add("請輸入有效日期!");
 		}
-		
+
 		String strPoCodeActType = req.getParameter("proCodeActType");
+//		System.out.println(strPoCodeActType);
 		Integer proCodeActType = null;
 		try {
 			proCodeActType = Integer.valueOf(strPoCodeActType);
@@ -80,7 +82,7 @@ public class AddPromoCode extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		String strProCodeTotal = req.getParameter("proCodeTotal");
 		Integer proCodeTotal = null;
 		try {
@@ -89,7 +91,7 @@ public class AddPromoCode extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		String strProCodeStatus = req.getParameter("proCodeStatus");
 		Integer proCodeStatus = null;
 		try {
@@ -98,9 +100,9 @@ public class AddPromoCode extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		String proCodeDescribe = req.getParameter("proCodeDescribe");
-		
+
 		String strMemLevLevel = req.getParameter("memLevLevel");
 		Integer memLevLevel = null;
 		try {
@@ -109,13 +111,13 @@ public class AddPromoCode extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		String strAdmId = req.getParameter("admId");
-		
+
 		// ============開始新增==============================
 		try {
 			Integer admId = Integer.valueOf(strAdmId);
-			
+
 			PromoCodeService_Interface promoCodeSvc = new PromoCodeService();
 			PromoCodeVO promoCodeVO = new PromoCodeVO();
 
@@ -129,13 +131,13 @@ public class AddPromoCode extends HttpServlet{
 			promoCodeVO.setProCodeTotal(proCodeTotal);
 			promoCodeVO.setProCodeStatus(proCodeStatus);
 			promoCodeVO.setProCodeDescribe(proCodeDescribe);
-			promoCodeVO.getMemLevLevel().setMemLevLevel(memLevLevel);
-			promoCodeVO.getAdministrator().setAdmId(admId);
+//			promoCodeVO.getMemLevLevel().setMemLevLevel(memLevLevel);
+//			promoCodeVO.getAdministrator().setAdmId(admId);
 
 			// 調用新增方法
 
-			int addResult = promoCodeSvc.addPromoCode(promoCodeVO);
-			
+			int addResult = promoCodeSvc.addPromoCode(promoCodeVO, memLevLevel, admId);
+
 			System.out.println(addResult);
 
 			if (addResult > 0) {
