@@ -47,7 +47,7 @@ public class CartAddServlet {
 	}
 
 	private void saveActId(String actId, ActivityVO actVO) {
-		String cartId = "user_cart"; // 購物車的鍵名，您可以根據需要更改
+		String cartId = "7001"; // 購物車的鍵名，您可以根據需要更改
 		Jedis jedis = pool.getResource();
 
 		try {
