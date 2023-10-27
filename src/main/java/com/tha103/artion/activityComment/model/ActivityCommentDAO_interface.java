@@ -11,6 +11,5 @@ public interface ActivityCommentDAO_interface {
 //	int update(ActivityCommentVO actCom);
 	
 	ActivityCommentVO findByPK(Integer actComId);
-	
-	
+
 }
