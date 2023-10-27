@@ -14,4 +14,6 @@ public interface TicketOrderDetailDAO_interface {
 
 	List<TicketOrderDetailVO> getAll();
 
+	TicketOrderDetailVO getOneTicketOrderByActId(Integer actId);
+
 }

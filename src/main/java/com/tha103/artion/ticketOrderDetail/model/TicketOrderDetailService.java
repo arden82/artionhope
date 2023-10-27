@@ -27,15 +27,15 @@ public class TicketOrderDetailService {
 		return ticketorderetailVO;
 	}
 
-	public TicketOrderDetailVO updateTicketorderdetail(Integer Integer, TicketOrderVO ticketorder,
-			Integer ticOrdDetQuantity, Double ticOrdDetPrice, ActivityVO activity) {
+	public TicketOrderDetailVO updateTicketorderdetail(Integer Integer, Integer ticketorder, Integer ticOrdDetQuantity,
+			Double ticOrdDetPrice, Integer activity) {
 
 		TicketOrderDetailVO ticketorderetailVO = new TicketOrderDetailVO();
 
-		ticketorderetailVO.setTicketorder(ticketorder);
+//		ticketorderetailVO.setTicketorder(ticketorder);
 		ticketorderetailVO.setTicOrdDetQuantity(ticOrdDetQuantity);
 		ticketorderetailVO.setTicOrdDetPrice(ticOrdDetPrice);
-		ticketorderetailVO.setActivity(activity);
+//		ticketorderetailVO.setActivity(activity);
 
 		dao.insert(ticketorderetailVO);
 
@@ -52,6 +52,16 @@ public class TicketOrderDetailService {
 
 	public List<TicketOrderDetailVO> getAll() {
 		return dao.getAll();
+	}
+
+	public TicketOrderDetailVO getOneTicketOrderByActId(Integer act_id) {
+		// 修改dao方法，使其返回单一的TicketOrderVO，根据selId获取一个订单
+		TicketOrderDetailVO ticketOrderDetailVO = dao.getOneTicketOrderByActId(act_id);
+		if (ticketOrderDetailVO != null) {
+			return ticketOrderDetailVO; // 返回第一个订单
+		} else {
+			return null; // 或者可以根据业务需求返回默认值或抛出异常
+		}
 	}
 
 }

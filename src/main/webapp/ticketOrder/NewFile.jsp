@@ -357,8 +357,7 @@
 		                    </tr>
 		                  </tbody>
 		                </table>
-
-						<div class="row mb-5"> 
+	<div class="row mb-5"> 
 							<div class="col-md-12">
 							
 									<div class="input-group-append">
@@ -366,9 +365,18 @@
 
 										<button class="btn_usediscount" type="button" id="button-addon2">使用折扣碼</button>
 									</div>
+									
+									<div class="input-group-append">
+										<input type="text" class="form-control" id="coupon" placeholder="請輸入收件地址">
+										
+										<button class="btn_usediscount" type="button" id="button-addon2">同會員地址</button>
+									</div>
+								
 								</div>
 							  </div>
 							</div>
+														
+							
 							<button class="btn_checkorder" onclick="window.location='thankyou.html'">下訂單</button>
 						</div>		        		               
 						</div>

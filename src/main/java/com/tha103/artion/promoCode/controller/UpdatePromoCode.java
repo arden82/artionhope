@@ -15,21 +15,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
-import com.tha103.artion.memberLevel.model.MemberLevelVO;
 import com.tha103.artion.promoCode.model.PromoCodeVO;
 import com.tha103.artion.promoCode.service.PromoCodeService;
 import com.tha103.artion.promoCode.service.PromoCodeService_Interface;
 
 @WebServlet("/updatePromoCode")
-public class UpdatePromoCode extends HttpServlet{
-	
+public class UpdatePromoCode extends HttpServlet {
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
+
 		req.setCharacterEncoding("UTF-8");
 		res.setHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter out = res.getWriter();
@@ -38,17 +38,17 @@ public class UpdatePromoCode extends HttpServlet{
 		// Store this set in the request scope, in case we need to
 		// send the ErrorPage view.
 		session.setAttribute("errorMsgs", errorMsgs);
-		
+
 		// =============接受請求參數===============================
-		
+
 		String strPromoCodeId = req.getParameter("promoCodeId");
-		
+
 		System.out.println(strPromoCodeId);
-		
+
 		String promoCodeName = req.getParameter("promoCodeName");
-		
+
 		String promoCodeCode = req.getParameter("promoCodeCode");
-		
+
 		String strProCodeType = req.getParameter("proCodeType");
 		Integer proCodeType = null;
 		try {
@@ -57,9 +57,9 @@ public class UpdatePromoCode extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		String proCodeValue = req.getParameter("proCodeValue");
-		
+
 		String strProCodeStartDate = req.getParameter("proCodeStartDate");
 		java.sql.Date proCodeStartDate = null;
 		try {
@@ -68,7 +68,7 @@ public class UpdatePromoCode extends HttpServlet{
 			proCodeStartDate = new java.sql.Date(System.currentTimeMillis());
 			errorMsgs.add("請輸入有效日期!");
 		}
-		
+
 		String strProCodeEndDate = req.getParameter("proCodeEndDate");
 		java.sql.Date proCodeEndDate = null;
 		try {
@@ -77,7 +77,7 @@ public class UpdatePromoCode extends HttpServlet{
 			proCodeEndDate = new java.sql.Date(System.currentTimeMillis());
 			errorMsgs.add("請輸入有效日期!");
 		}
-		
+
 		String strPoCodeActType = req.getParameter("proCodeActType");
 		Integer proCodeActType = null;
 		try {
@@ -86,7 +86,7 @@ public class UpdatePromoCode extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		String strProCodeTotal = req.getParameter("proCodeTotal");
 		Integer proCodeTotal = null;
 		try {
@@ -95,7 +95,7 @@ public class UpdatePromoCode extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		String strProCodeStatus = req.getParameter("proCodeStatus");
 		Integer proCodeStatus = null;
 		try {
@@ -104,9 +104,9 @@ public class UpdatePromoCode extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		String proCodeDescribe = req.getParameter("proCodeDescribe");
-		
+
 		String strMemLevLevel = req.getParameter("memLevLevel");
 		Integer memLevLevel = null;
 		try {
@@ -115,12 +115,12 @@ public class UpdatePromoCode extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		String StrAdmId = req.getParameter("strAdmId");
-		
+
+		String StrAdmId = req.getParameter("admId");
+
 		// ============開始修改==============================
 		try {
-			
+
 			Integer promoCodeId = Integer.valueOf(strPromoCodeId);
 			Integer admId = Integer.valueOf(StrAdmId);
 
@@ -139,15 +139,14 @@ public class UpdatePromoCode extends HttpServlet{
 			promoCodeVO.setProCodeDescribe(proCodeDescribe);
 			promoCodeVO.getMemLevLevel().setMemLevLevel(memLevLevel);
 			promoCodeVO.getAdministrator().setAdmId(admId);
-			
-			
-			//不修改
+
+			// 不修改
 			promoCodeVO.setProCodeId(promoCodeSvc.getByPromoCodeId(promoCodeId).getProCodeId());
 
 			// 調用更新方法
 
-			int addResult = promoCodeSvc.updatePromoCode(promoCodeVO);
-			
+			int addResult = promoCodeSvc.updatePromoCode(promoCodeVO, memLevLevel, admId);
+
 			System.out.println(addResult);
 
 			if (addResult > 0) {
@@ -173,8 +172,7 @@ public class UpdatePromoCode extends HttpServlet{
 			response.put("message", "无效的 ID 参数.");
 			out.write(new Gson().toJson(response));
 		}
-		
-		
+
 	}
 
 }

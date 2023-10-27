@@ -2,6 +2,7 @@ package com.tha103.artion.ticketOrder.model;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.tha103.artion.member.model.MemberVO;
@@ -114,7 +115,7 @@ public class TicketOrderDAO implements TicketOrderDAO_interface {
 		ticketorderVO.setTicketOrdCode("vvv888");
 
 		dao.insert(ticketorderVO);
-
+	}
 //		// 修改
 //		SellerVO sellerVO = new SellerVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
 //		sellerVO.setSelId(2001);
@@ -194,5 +195,43 @@ public class TicketOrderDAO implements TicketOrderDAO_interface {
 //
 //			System.out.println();
 //		}
+
+	@Override
+	public List<TicketOrderVO> getTicketOrderBySellerId(Integer selId) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			String hql = "FROM TicketOrderVO AS a WHERE a.seller.selId = :selId";
+			Query<TicketOrderVO> query = session.createQuery(hql, TicketOrderVO.class);
+			query.setParameter("selId", selId);
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
+	}
+
+	@Override
+	public TicketOrderVO getTicketOrderDetailsByTicketOrdId(Integer ticketOrdId) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			String hql = "FROM TicketOrderVO AS t LEFT JOIN FETCH t.ticOrdDets WHERE t.ticketOrdId = :ticketOrdId";
+			Query<TicketOrderVO> query = session.createQuery(hql, TicketOrderVO.class);
+			query.setParameter("ticketOrdId", ticketOrdId);
+
+			// 使用uniqueResult()方法來獲取唯一的結果
+			TicketOrderVO result = query.uniqueResult();
+
+			session.getTransaction().commit();
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} finally {
+			session.close();
+		}
+		return null;
 	}
 }

@@ -2,22 +2,19 @@ package com.tha103.artion.merch.service;
 
 import java.util.List;
 
-import org.hibernate.Session;
-
 import com.tha103.artion.merch.model.MerchDAO;
 import com.tha103.artion.merch.model.MerchVO;
-import com.tha103.artion.util.HibernateUtil;
 
-public class MerchService implements MerchService_Interface{
+public class MerchService implements MerchService_Interface {
 
 	private MerchDAO dao;
-	
+
 	public MerchService() {
-		
+
 		dao = new MerchDAO();
-		
+
 	}
-	
+
 	@Override
 	public int addMerch(MerchVO merch) {
 		return dao.insert(merch);
@@ -44,7 +41,4 @@ public class MerchService implements MerchService_Interface{
 		return list;
 	}
 
-	
-	
-	
 }

@@ -16,27 +16,27 @@ public class TicketOrderService {
 	public TicketOrderVO insertTicketorder(Integer memberNo, Integer ticketOrdStatus, Double ticketOrdTotalPrice,
 			Double ticketOrdProCodeAmount, Double ticketOrdActuallyAmount, Integer ticketOrdPayStatus,
 			Integer mypromocodeNo, String ticketOrdAddress, Integer sellerNo, String ticketOrdCode) {
-//
-//		SellerVO sellerVO = new SellerVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
-//		sellerVO.setSelId(2001);
-//
-//		MyPromoCodeVO mypromocodeVO = new MyPromoCodeVO();
-//		mypromocodeVO.setMyProCodeId(1);
-//
-//		MemberVO membervo = new MemberVO();
-//		membervo.setMemId(7001);
-//
+
+		SellerVO sellerVO = new SellerVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
+		sellerVO.setSelId(2001);
+
+		MyPromoCodeVO mypromocodeVO = new MyPromoCodeVO();
+		mypromocodeVO.setMyProCodeId(1);
+
+		MemberVO membervo = new MemberVO();
+		membervo.setMemId(7001);
+
 		TicketOrderVO ticketOrderVO = new TicketOrderVO();
 
-		ticketOrderVO.setMemberNo(memberNo);
+		ticketOrderVO.setMember(membervo);
 		ticketOrderVO.setTicketOrdStatus(ticketOrdStatus);
 		ticketOrderVO.setTicketOrdTotalPrice(ticketOrdTotalPrice);
 		ticketOrderVO.setTicketOrdProCodeAmount(ticketOrdProCodeAmount);
 		ticketOrderVO.setTicketOrdActuallyAmount(ticketOrdActuallyAmount);
 		ticketOrderVO.setTicketOrdPayStatus(ticketOrdPayStatus);
-		ticketOrderVO.setMypromocodeNo(mypromocodeNo);
+		ticketOrderVO.setMypromocode(mypromocodeVO);
 		ticketOrderVO.setTicketOrdAddress(ticketOrdAddress);
-		ticketOrderVO.setSellerNo(sellerNo);
+		ticketOrderVO.setSeller(sellerVO);
 		ticketOrderVO.setTicketOrdCode(ticketOrdCode);
 		dao.insert(ticketOrderVO);
 
@@ -76,6 +76,22 @@ public class TicketOrderService {
 
 	public List<TicketOrderVO> getAll() {
 		return dao.getAll();
+	}
+
+	public List<TicketOrderVO> getTicketOrderBySellerId(Integer sel_id) {
+		// 修改dao方法，使其返回List<ActivityVO>，並根據selId取得多個活動
+		List<TicketOrderVO> ticketOrderList = dao.getTicketOrderBySellerId(sel_id);
+		return ticketOrderList;
+	}
+
+	public TicketOrderVO getTicketOrderDetailsByTicketOrdId(Integer ticketOrdId) {
+		// 修改dao方法，使其返回单一的TicketOrderVO，根据selId获取一个订单
+		TicketOrderVO ticketOrder = dao.getTicketOrderDetailsByTicketOrdId(ticketOrdId);
+		if (ticketOrder != null) {
+			return ticketOrder;
+		} else {
+			return null; // 或者可以根据业务需求返回默认值或抛出异常
+		}
 	}
 
 }

@@ -1,4 +1,5 @@
 
+<%@page import="com.tha103.artion.ticketCart.model.CartDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.tha103.artion.activity.service.ActivityService"%>
 <%@page import="com.tha103.artion.activity.model.ActivityVO"%>
@@ -8,23 +9,30 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><%@ page import="com.tha103.artion.ticketOrder.model.*"%>
 <%@ page import="com.tha103.artion.ticketOrder.controller.*"%>
 <%@ page import="com.tha103.artion.activity.*"%>
+<%@ page import="com.tha103.artion.ticketCart.service.TicketCartImp"%>
+<%@ page import="com.google.gson.Gson;"%>
 
 
-<%--
-//見com.emp.controller.EmpServlet.java第238行存入req的empVO物件 (此為輸入格式有錯誤時的empVO物件)
-ActivityVO activityVO = (ActivityVO) request.getAttribute("ActivityVO");
---%>
 
 <%
-    ActivityService activitySvc = new ActivityService();
-    List<ActivityVO> list = activitySvc.getAll();
-    pageContext.setAttribute("list",list);
-%>
+String memId = "ticketCartDetail";
+String actId = "1001";
+String actname = "1001";
+String actTicPrice = "1001";
 
-<%-- ActivityDAO activityVO = new ActivityDAO();
-ActivityVO activity=activityVO.findByPK(10001);
-pageContext.setAttribute("activity",activity);
---%>
+List<String> historyData = TicketCartImp.getCart(memId);
+System.out.println(historyData);
+
+// 	Gson gson = new Gson();
+// 	String historyMsg = gson.toJson(historyData);
+
+// 	CartDTO DD= new CartDTO(actId,actname,actTicPrice,memId);
+//     String A = gson.toJson(DD);
+// 	System.out.println(A);
+// 	System.out.println(historyMsg);
+	
+
+%>
 
 <!doctype html>
 <html lang="en">
@@ -382,7 +390,7 @@ pageContext.setAttribute("activity",activity);
 										</div>
 										<input type="text"
 											class="form-control text-center quantity-amount"
-											name="quantity" size="3" value="1" placeholder=""
+											id="quantity" size="3" value="0" placeholder=""
 											aria-label="Example text with button addon"
 											aria-describedby="button-addon1">
 										<div class="input-group-append">
@@ -391,7 +399,7 @@ pageContext.setAttribute("activity",activity);
 									</div>
 								</td>
 
-								<td class="total_price">1000</td>
+								<td class="total_price" id="total_price"></td>
 
 								<td><a href="#" class="btn btn-black btn-sm">X</a></td>
 							</tr>
@@ -404,11 +412,13 @@ pageContext.setAttribute("activity",activity);
 
 		<div class="horizontal-line"></div>
 
+		<div>
 		<br>
 		<!-- <button class="btn_reshop " style="">再去逛逛</button>                    -->
 		<button class="btn_checkorder"
 			onclick="window.location='checkout.html'">再去逛逛</button>
 		<br> <br>
+		</div>
 
 		<div class="container">
 			<div class="text-end">
@@ -438,7 +448,7 @@ pageContext.setAttribute("activity",activity);
 		<button class="btn_discount">使用折扣碼</button>
 
 
-		<form action="ticketOrder.do" method="POST">
+		<form action="TicketOrderServlet" method="POST">
 			<!-- 这里添加需要传递到Servlet的数据 -->
 
 			<input type="hidden" name="ticketOrderId" value="${ticketOrderVO.ticketOrderId}"> 
@@ -446,7 +456,7 @@ pageContext.setAttribute("activity",activity);
 
 			<!-- 更多数据字段 -->
 			
-			<button type="submit" class="btn_checkorder">去買單</button>
+			<button type="button" class="btn_checkorder" id="goToCart">去買單</button>
 			</form>
 		</form>
 
@@ -463,6 +473,43 @@ pageContext.setAttribute("activity",activity);
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script src="js/tiny-slider.js"></script>
 	<script src="js/custom.js"></script>
+
+	<script>
+		
+		$("#goToCart").on("click", function () {
+    const rowDataArray = [];
+
+    // 获取对表格的引用
+	const table = document.querySelector("table");
+	const tbodies = table.getElementsByTagName("tbody");
+    // 获取所有的表格行，并将它们转换为数组
+    // const rows = Array.from(table.getElementsByClassName('product-row'));
+	console.log(tbodies);
+    // 使用 forEach 迭代每一行的数据
+   for (let i = 0; i < tbodies.length; i++) {
+		console.log(tbodies[i]);
+        const tbody = tbodies[i];
+        const actName = tbody.querySelector('.product-name #actName').textContent;
+        const quantity = tbody.querySelector('.quantity-amount').value;
+        const total_price = tbody.querySelector('.total_price').textContent;
+
+		const rowData = {
+            actName,
+            quantity,
+            total_price
+            // 在这里可以添加其他需要的属性
+        };
+
+        rowDataArray.push(rowData);
+    
+	}
+	console.log(rowDataArray);
+   
+});
+
+		
+		
+	</script>
 </body>
 
 </html>
