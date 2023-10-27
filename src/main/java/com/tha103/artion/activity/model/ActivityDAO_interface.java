@@ -13,4 +13,5 @@ public interface ActivityDAO_interface {
       public List<ActivityVO> getActType(String type);//皓瑄
       List<ActivityVO> getActivitiesBySellerId(Integer selId);
       public void delete(Integer actId);
+	public String getActNameByActId(Integer actId);
 }

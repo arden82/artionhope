@@ -35,8 +35,14 @@ public class ActivityService {
 		activityVO.setActTicketStartTime(act_ticketStartTime);
 		activityVO.setActTicketEndTime(act_ticketEndTime);
 		activityVO.setActType(act_type);
-		activityVO.setActStartDate(act_startDate);
-		activityVO.setActEndDate(act_endDate);
+	    Date currentDate = new Date(System.currentTimeMillis());
+
+	    // 如果当前日期等于活动的开始日期，将状态更改为已开始
+	    if (currentDate.equals(act_startDate)) {
+	        activityVO.setActStatus(2); // 已开始
+	    } else {
+	        activityVO.setActStatus(1); // 未开始
+	    }		activityVO.setActEndDate(act_endDate);
 		activityVO.setActStartTime(act_startTime);
 		activityVO.setActEndTime(act_endTime);
 		activityVO.setActCity(act_city);
@@ -168,4 +174,12 @@ public class ActivityService {
 		dao.delete(actId);
 	}
 	
+	public String getActNameByActId(Integer actId) {
+	    // 根据actId从数据库或数据源中获取对应的actName
+	    // 这里假设你有一个方法或数据访问对象来执行此操作
+	    String actName = dao.getActNameByActId(actId);
+	    return actName;
+	}
+
+
 }

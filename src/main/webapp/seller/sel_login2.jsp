@@ -96,35 +96,25 @@
 								</a>
 							</div>
 							<div class="text-center" style="font-size: 26px;">
-								<h3>嗨！歡迎來到Artion後台管理系統</h3>
+								<h3>您已成功登出Artion後台管理系統</h3>
 							</div>
-							<div class="form-floating mb-3">
-								<input type="text" name="selAccount" class="form-control"
-									id="floatingInput"> <label for="floatingInput">帳號
-									Account</label>
-							</div>
-							<div class="form-floating mb-4">
-								<input type="password" name="selPassword" class="form-control"
-									id="floatingPassword"> <label for="floatingPassword">密碼
-									Password</label>
-							</div>
+							<!-- 							<div class="form-floating mb-3"> -->
+							<!-- 								<input type="text" name="selAccount" class="form-control" -->
+							<!-- 									id="floatingInput"> <label for="floatingInput">帳號 -->
+							<!-- 									Account</label> -->
+							<!-- 							</div> -->
+							<!-- 							<div class="form-floating mb-4"> -->
+							<!-- 								<input type="password" name="selPassword" class="form-control" -->
+							<!-- 									id="floatingPassword"> <label for="floatingPassword">密碼 -->
+							<!-- 									Password</label> -->
+							<!-- 							</div> -->
 
-							<a href="sel_forget_password.html">忘記密碼</a>
 
-							<form action="<%=request.getContextPath()%>/seller/LoginHandler.do" method="post">
-								<!-- 这是你的登录按钮 -->
-								<button type="submit" class="btn btn-primary py-3 w-100 mb-4">登入</button>
-								<!-- 隐藏的字段，可以包含需要传递到Servlet的信息，如操作名称 -->
-								<input type="hidden" name="action" value="login">
-							</form>
 
-							<p class="text-center mb-0">
-								立即申請線上註冊 <a href="sel_signup.jsp">註冊</a>
-							</p>
+							<a href="sel_login.jsp" class="btn btn-secondary py-3 w-100">返回登入頁面</a>
+
 						</div>
-					</div>
-				</div>
-	</form>
+				</form>
 
 	<!-- Sign In End -->
 

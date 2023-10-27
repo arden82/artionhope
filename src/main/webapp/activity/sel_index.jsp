@@ -32,6 +32,9 @@ pageContext.setAttribute("list", list);
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
+<meta http-equiv="Cache-Control" content="no-store" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 
 <!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
@@ -143,18 +146,14 @@ pageContext.setAttribute("list", list);
 				<div class="navbar-nav w-100">
 					<div class="nav-item">
 						<a href="./sel_index.jsp" class="nav-item nav-link"><i
-							class="fa-solid fa-users me-2"> </i></i>活動總覽</a> 
-							<a
+							class="fa-solid fa-users me-2"> </i></i>活動總覽</a> <a
 							href="./sel_actadd.jsp" class="nav-item nav-link"><i
-							class="fa-solid fa-heart-circle-plus me-2"> </i></i>新增活動</a> 
-							<a
+							class="fa-solid fa-heart-circle-plus me-2"> </i></i>新增活動</a> <a
 							href="../seller/sel_order.jsp" class="nav-item nav-link"><i
-							class="fa-solid fa-magnifying-glass me-2"> </i></i>訂單總覽</a> 
-							<a
+							class="fa-solid fa-magnifying-glass me-2"> </i></i>訂單總覽</a> <a
 							href="sel_notification.jsp" class="nav-item nav-link"> <i
 							class="fa-solid fa-envelope me-2"> </i>通知訊息
-						</a> 
-							<a href="../seller/sel_profile.jsp" class="nav-item nav-link">
+						</a> <a href="../seller/sel_profile.jsp" class="nav-item nav-link">
 							<i class="fa-solid fa-address-card me-2"> </i>廠商基本資料
 						</a>
 					</div>
@@ -167,7 +166,7 @@ pageContext.setAttribute("list", list);
 				<div class="position-relative">
 					<img
 						src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
-						width=50px height=50px />
+						width=50px height=50px style="border-radius: 50%;" />
 				</div>
 				<div
 					style="margin-left: 10px; display: flex; flex-direction: column; align-items: center;">
@@ -192,71 +191,27 @@ pageContext.setAttribute("list", list);
 				</a>
 
 				<div class="navbar-nav align-items-center ms-auto">
+					<!-- 右上角头像 -->
+					<!-- 右上角头像 -->
 					<div class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle"
-							data-bs-toggle="dropdown"> <i class="fa fa-envelope me-lg-2"></i>
-							<span class="d-none d-lg-inline-flex"></span>
-						</a>
-						<div
-							class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-							<a href="#" class="dropdown-item">
-								<div class="d-flex align-items-center">
-									<img class="rounded-circle" src="images/user.jpg" alt=""
-										style="width: 40px; height: 40px;">
-									<div class="ms-2">
-										<h6 class="fw-normal mb-0">Jhon send you a message</h6>
-										<small>15 minutes ago</small>
-									</div>
-								</div>
-							</a>
-							<hr class="dropdown-divider">
-							<a href="#" class="dropdown-item">
-								<div class="d-flex align-items-center">
-									<img class="rounded-circle" src="images/user.jpg" alt=""
-										style="width: 40px; height: 40px;">
-									<div class="ms-2">
-										<h6 class="fw-normal mb-0">Jhon send you a message</h6>
-										<small>15 minutes ago</small>
-									</div>
-								</div>
-							</a>
-							<hr class="dropdown-divider">
-							<a href="#" class="dropdown-item">
-								<div class="d-flex align-items-center">
-									<img class="rounded-circle" src="images/user.jpg" alt=""
-										style="width: 40px; height: 40px;">
-									<div class="ms-2">
-										<h6 class="fw-normal mb-0">Jhon send you a message</h6>
-										<small>15 minutes ago</small>
-									</div>
-								</div>
-							</a>
-							<hr class="dropdown-divider">
-							<a href="#" class="dropdown-item text-center">See all message</a>
-						</div>
+					<a href="#" class="nav-link dropdown-toggle"
+						data-bs-toggle="dropdown"> <img
+						src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
+						width=50px height=50px style="border-radius: 50%;" />
+					</a>
+					<div
+						class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+						<a href="../seller/sel_profile.jsp" class="dropdown-item">My
+							Profile</a>
+						<form
+							action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
+							method="post">
+							<button type="submit" class="dropdown-item">Log Out</button>
+						</form>
+
 					</div>
-
-						<!-- 右上角头像 -->
-						<div class="nav-item dropdown">
-							<a href="#" class="nav-link dropdown-toggle"
-								data-bs-toggle="dropdown"> <img
-								src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
-								width=50px height=50px /> <span id="userNameNav"
-								class="d-none d-lg-inline-flex">寬宏藝術</span>
-							</a>
-							<div
-								class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-								<a href="../seller/sel_profile.jsp" class="dropdown-item">My
-									Profile</a>
-								<form
-									action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
-									method="post">
-									<button type="submit" class="dropdown-item">Log Out</button>
-								</form>
-
-							</div>
-						</div>
-			</nav>
+				</div>
+		</nav>
 			<!-- Navbar End -->
 
 			<!-- Table Start -->
@@ -391,91 +346,51 @@ pageContext.setAttribute("list", list);
 			</div>
 
 			<script>
-		document.addEventListener('DOMContentLoaded', function () {
-    // 獲取篩選元素和表格的引用
-    const filterSelect = document.getElementById('filterSelect');
-    const table = document.querySelector('table');
+				document
+						.addEventListener(
+								'DOMContentLoaded',
+								function() {
+									// 獲取篩選元素和表格的引用
+									const filterSelect = document
+											.getElementById('filterSelect');
+									const table = document
+											.querySelector('table');
 
-    // 定義一個函數來根據篩選條件更新表格
-    function updateTable() {
-        // 從篩選器中獲取選擇的值
-        const selectedType = filterSelect.value;
+									// 定義一個函數來根據篩選條件更新表格
+									function updateTable() {
+										// 從篩選器中獲取選擇的值
+										const selectedType = filterSelect.value;
 
-        // 循環遍歷表格中的行，根據篩選條件顯示/隱藏它們
-        const rows = table.querySelectorAll('tr');
-        for (let i = 1; i < rows.length; i++) { // 從 1 開始以跳過表頭行
-            const row = rows[i];
-            const typeCell = row.querySelector('td:nth-child(3)'); // 根據需要調整列索引
+										// 循環遍歷表格中的行，根據篩選條件顯示/隱藏它們
+										const rows = table
+												.querySelectorAll('tr');
+										for (let i = 1; i < rows.length; i++) { // 從 1 開始以跳過表頭行
+											const row = rows[i];
+											const typeCell = row
+													.querySelector('td:nth-child(3)'); // 根據需要調整列索引
 
-            const type = typeCell.textContent.trim();
+											const type = typeCell.textContent
+													.trim();
 
-            const typeFilterMatch = selectedType === '0' || type === filterSelect.options[selectedType].text;
+											const typeFilterMatch = selectedType === '0'
+													|| type === filterSelect.options[selectedType].text;
 
-            if (typeFilterMatch) {
-                row.style.display = ''; // 顯示行
-            } else {
-                row.style.display = 'none'; // 隱藏行
-            }
-        }
-    }
+											if (typeFilterMatch) {
+												row.style.display = ''; // 顯示行
+											} else {
+												row.style.display = 'none'; // 隱藏行
+											}
+										}
+									}
 
-    // 添加事件監聽器以監聽篩選元素的更改
-    filterSelect.addEventListener('change', updateTable);
+									// 添加事件監聽器以監聽篩選元素的更改
+									filterSelect.addEventListener('change',
+											updateTable);
 
-    // 調用 updateTable 函數以根據初始篩選值初始化表格
-    updateTable();
-});
-</script>
-			<script>
-                //即時客服
-
-                const customerSupportIcon = document.getElementById('customer-support-icon');
-                let isIconUp = false;
-
-                customerSupportIcon.addEventListener('click', () => {
-                    if (isIconUp) {
-                        customerSupportIcon.style.transform = 'translateY(0)';
-                    } else {
-                        customerSupportIcon.style.transform = 'translateY(-100px)'; // Adjust the distance as needed
-                    }
-                    isIconUp = !isIconUp;
-                });
-            </script>
-
-			<script>
-                // 更換profile pic會同步
-                function handleImageUpload(input, imageId) {
-                    var userImage = document.getElementById(imageId);
-                    var uploadText = userImage.nextElementSibling; // 使用图像元素的下一个兄弟元素（即文本元素）
-
-                    if (input.files && input.files[0]) {
-                        var reader = new FileReader();
-
-                        reader.onload = function (e) {
-                            userImage.src = e.target.result;
-                            uploadText.style.display = 'none'; // 设置为 'none' 以隐藏文本
-
-                            // 添加以下代码来更新右上角的头像
-                            var userImageNav = document.getElementById('userImageNav');
-                            if (userImageNav) {
-                                userImageNav.src = e.target.result;
-                            }
-                        };
-
-                        reader.readAsDataURL(input.files[0]);
-                    }
-                }
-                // 在页面加载后，为头像上传元素添加事件监听
-                document.addEventListener('DOMContentLoaded', function () {
-                    var fileInput = document.getElementById('fileInput'); // 侧边栏头像上传元素
-                    var userImageNav = document.getElementById('userImageNav'); // 右上角的头像元素
-
-                    fileInput.addEventListener('change', function () {
-                        handleImageUpload(this, 'userImageNav');
-                    });
-                });
-            </script>
-
+									// 調用 updateTable 函數以根據初始篩選值初始化表格
+									updateTable();
+								});
+			</script>
 			<!-- JavaScript Libraries -->
 
 			<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

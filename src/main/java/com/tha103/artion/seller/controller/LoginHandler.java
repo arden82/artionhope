@@ -32,18 +32,23 @@
 			req.setCharacterEncoding("utf-8");
 			res.setContentType("text/html; charset=utf-8");
 	
-			String account = req.getParameter("selAccount");
-			System.out.println(account);
-			String password = req.getParameter("selPassword");
-			System.out.println(password);
-			
-			if (allowUser(account, password)) {
-				successfulLogin(req, res, account);
-			} else {
-				failedLogin(req, res);
-			}
+			 String action = req.getParameter("action"); // 获取操作名称
+
+		        if ("login".equals(action)) {
+		            String account = req.getParameter("selAccount");
+		            System.out.println(account);
+		            String password = req.getParameter("selPassword");
+		            System.out.println(password);
+
+		            if (allowUser(account, password)) {
+		                successfulLogin(req, res, account);
+		            } else {
+		                failedLogin(req, res);
+		            }
+		        } else if ("其他操作".equals(action)) {
+		            // 处理其他操作
+		        }
 		}
-		
 		protected boolean allowUser(String account, String password) {
 		    SellerVO sellerVO = sellerDAO.getSellerByAccount(account); // 根据帳號从数据库中获取賣家信息
 	
@@ -62,6 +67,7 @@
 		    // 将 sellerVO 对象存储在 session 属性中
 		    HttpSession session = req.getSession();
 		    session.setAttribute("sel_id", sellerVO.getSelId());
+		    session.setAttribute("selAccount", sellerVO.getSelAccount());
 		    session.setAttribute("sellerVO", sellerVO);
 	
 		    String contextPath = req.getContextPath();
