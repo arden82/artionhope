@@ -33,8 +33,8 @@ notify background: #c1717131;
 }
 
 .account {
-    width: 40px;
-    height: 40px;
+    width: 47px;
+    height: 47px;
     border-radius: 50%;
     overflow: hidden;
     margin: 0 10px;
@@ -50,7 +50,7 @@ notify background: #c1717131;
     text-align: center;
     font-size: 14px;
     padding: 2px;
-    max-width: 80px;
+    max-width: 120px;
     overflow: hidden;
 }
 
@@ -70,16 +70,25 @@ notify background: #c1717131;
     font-size: 12px;
     color: #b87333;
     font-weight: bold;
+    width: 70%;
     /* color:#c0c0c0; 銀色*/
     /* color:#ffd700; 金色 */
-
 }
 
 .member_grade .progress {
     height: 2px;
 }
 
-
+.logout_wrap{
+	position: relative;
+    height: 70%;
+}
+.log_out{
+	position: absolute;
+    bottom: 0;
+    transform: translateX(-50%);
+    left: 50%;
+}
 .none {
     overflow: hidden;
     white-space: nowrap;

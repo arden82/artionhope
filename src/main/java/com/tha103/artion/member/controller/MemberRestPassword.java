@@ -59,7 +59,7 @@ public class MemberRestPassword extends HttpServlet {
 				StringBuffer requrl = req.getRequestURL();
 				int startIndex = requrl.indexOf("/artion");
 				String url = requrl.substring(0,startIndex);
-				emailUtil.sendRestMail(userEmail, resetToken, url);
+				new Thread(() -> emailUtil.sendRestMail(userEmail, resetToken, url)).start();
 			System.out.println(req.getContextPath() + "/html/member/memberLogin.html");
 				res.sendRedirect(req.getContextPath() + "/html/member/memberLogin.html");
 

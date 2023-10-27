@@ -21,7 +21,7 @@ public class MemberRedius {
 				jedis.hset("email", email, resetToken);
 				jedis.hset("email_expiration", email, String.valueOf(System.currentTimeMillis() + 1800 * 1000));
 				jedis.close();
-//				JedisUtil.shutdownJedisPool();
+//		
 
 			} else {
 				System.out.println("email" + email);
@@ -44,7 +44,6 @@ public class MemberRedius {
 				delRedis(email);
 			}
 			jedis.close();
-//			JedisUtil.shutdownJedisPool();
 			return msg;
 
 	}
@@ -56,6 +55,6 @@ public class MemberRedius {
 			jedis.hdel("email", email);
 			jedis.hdel("email_expiration", email);
 			jedis.close();
-//			JedisUtil.shutdownJedisPool();
+
 	}
 }
