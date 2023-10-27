@@ -57,11 +57,11 @@ public class GetSelServlet {
 //			SellerMap.put("selPrin", seller.getSelPrincipal());
 //			SellerMap.put("selUniNum", seller.getSelUniformNumbers());
 //			SellerMap.put("selResgister", seller.getSelRegisteredAddress());
-			SellerMap.put("selPic", seller.getSelProfilePicture());
+			SellerMap.put("selPhoto", seller.getSelProfilePicture());
 //			SellerMap.put("selResTime", seller.getSelRegisterdTime());
 //			SellerMap.put("selLastTime", seller.getSelLastModifiedTime());
 //			SellerMap.put("selStatus", seller.getSelStatus());
-//			SellerMap.put("actId", seller.getActivitys().getActId());
+//			SellerMap.put("actId", seller.getActivitys().getClass());
 			
 //			
 			SellerMapList.add(SellerMap);

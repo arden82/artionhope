@@ -17,6 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/jquery.simplePagination.min.js"
         integrity="sha512-9Dh726RTZVE1k5R1RNEzk1ex4AoRjxNMFKtZdcWaG2KUgjEmFYN3n17YLUrbHm47CRQB1mvVBHDFXrcnx/deDA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <link rel="icon" href="../../images/artionLogo.png" type="image/png">
 </head>
 
 <body>
@@ -229,7 +230,7 @@
                             <p class="merchPrice">商品金額</p>
                         </a>
                     </span> -->
-                    <div id="merchContainer">bbb</div>
+                    <div id="merchContainer">商品載入中</div>
                     <!-- 商品列表end -->
                 </div>
                 <!-- 商品列表右側區塊end -->
@@ -302,10 +303,10 @@
                         merchContainer.empty();
                         $.each(data, function (index, merch) {
                         	var merches = `
-                        	    <div href="" class="merchBox_child" data-merchId="${merch.merchId}">
-                        	        <img src="http://localhost:8081/artion/merPicServlet?merchId=${merch.merchId}" class="card-img-top merchStyle" alt="...">
+                        	    <div href="" class="merchBox_child" data-merchid="${merch.merchId}" style="margin-right:10px;">
+                        	        <img src="http://localhost:8081/artion/merPicServlet?merchId=${merch.merchId}" class="card-img-top merchStyle" alt="..." >
                         	        <p class="merchName">${merch.merchName}</p>
-                        	        <p class="merchPrice">${merch.merchPrice}</p>
+                        	        <p class="merchPrice">${merch.merchPrice}元</p>
                         	    </div>
                         	`;
                             $("#merchContainer").append(merches);
@@ -314,10 +315,13 @@
                         // 點擊事件監聽器
                         $(".merchBox_child").click(function () {
                             console.log("有點到商品");
-                            var merchId = $(this).data("merchId");
+                            console.log($(this)); // 输出点击的元素
+                            var merchId = $(this).data("merchid");
                             console.log(`跳转到 singleMerch.html?merchId=${merchId}`);
-//                             window.location.href = `http://localhost:8081/artion/html/merch/singleMerch.html?merchId=${metch.merchId}`;
+                            window.location.href = `singleMerch.html?merchId=${merchId}`;
                         });
+
+
                     },
                     error: function () {
                         alert("無法取得數據");

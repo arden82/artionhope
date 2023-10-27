@@ -27,12 +27,11 @@ public class ActComPicServlet extends HttpServlet {
 
 	    try {
 	        String str = req.getParameter("actComId");
-	        String picNumber = req.getParameter("picNumber"); // 获取 picNumber 参数
+	        String picNumber = req.getParameter("picNumber");
 	        Integer actComId = Integer.valueOf(str);
 	        ActivityCommentService actComSvc = new ActivityCommentService();
 	        ActivityCommentVO activityCommentVO = actComSvc.getOneActCom(actComId);
 
-	        // 根据 picNumber 的不同值来确定返回哪张图片
 	        if ("cover".equals(picNumber)) {
 	            byteInputStream = new ByteArrayInputStream(activityCommentVO.getActComCoverPicture());
 	        } else if ("1".equals(picNumber)) {

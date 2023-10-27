@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.tha103.artion.activity.model.ActivityVO;
-import com.tha103.artion.activity.redis.JedisPoolUtil;
 import com.tha103.artion.activity.service.ActivityService;
+import com.tha103.artion.ticketOrder.util.JedisPoolUtil;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;// 請將此替換為您自己的 Redis 相關設置
@@ -24,15 +24,15 @@ public class AddToCartServlet extends HttpServlet {
         String actId = req.getParameter("actId");
 
         try {
-            // 將actId轉換為整數
+            
             Integer actToInt = Integer.parseInt(actId);
 
-            // 使用您的ActivityService來獲取該筆資料
+            
             ActivityService actSvc = new ActivityService();
             ActivityVO actVO = actSvc.getOneActivity(actToInt);
             System.out.println(actVO);
             if (actVO != null) {
-                // 在此處執行您需要的操作，例如將該筆資料存儲到 Redis
+                
                 saveActId(actId, actVO);
                 // 或將其返回給客戶端
                 // 現在 actVO 包含所需的資料，您可以根據需要處理它

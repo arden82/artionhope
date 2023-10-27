@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.tha103.artion.activity.model.ActivityVO;
-import com.tha103.artion.activity.service.ActivityService;
+import com.tha103.artion.merch.model.MerchVO;
+import com.tha103.artion.merch.service.MerchService;
 
 @WebServlet("/merPicServlet")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
@@ -24,18 +24,18 @@ public class GetMerPicServlet extends HttpServlet{
 	@Override
 	 protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 	  
-	  String str = req.getParameter("actId");
+	  String str = req.getParameter("merchId");
 	  if (str == null || str.trim().isEmpty()) {
 	      
 	  } else {
 	      try {
-	          Integer actId = Integer.valueOf(str);
+	          Integer merchId = Integer.valueOf(str);
 	          
-	          ActivityService actSvc = new ActivityService();
-	          ActivityVO actVO = actSvc.getOneActivity(actId);
+	          MerchService merchSvc = new MerchService();
+	          MerchVO merchVO = merchSvc.getMerchByMerchId(merchId);
 
 	    res.setContentType("image/gif");
-	    InputStream in = new ByteArrayInputStream(actVO.getActCoverPicture());
+	    InputStream in = new ByteArrayInputStream(merchVO.getMerchPicture1());
 	    ServletOutputStream out = res.getOutputStream();
 	    byte[] buf = new byte[4 * 1024]; // 4K buffer
 	    int len;
@@ -53,6 +53,6 @@ public class GetMerPicServlet extends HttpServlet{
 	  
 	  doGet(req, res);
 	 }
-}
 
-	
+
+}

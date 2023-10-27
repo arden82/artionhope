@@ -42,20 +42,20 @@ public class GetOneActServlet extends HttpServlet {
                     out.print(json);
                     out.flush();
                 } else {
-                    // 若未找到資料，回傳 404 Not Found
+                    
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 }
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                // 若 actId 參數無效，回傳 400 Bad Request
+                
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             } catch (Exception e) {
                 e.printStackTrace();
-                // 其他錯誤情況，回傳 500 Internal Server Error
+                
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
         } else {
-            // 若未提供 actId 參數，回傳 400 Bad Request
+            
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
