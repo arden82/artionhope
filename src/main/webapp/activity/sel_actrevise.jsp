@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.tha103.artion.activity.model.*"%>
 
@@ -13,7 +13,7 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 <html lang="en">
 
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <title></title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
@@ -139,18 +139,18 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 				<div class="navbar-nav w-100">
 					<div class="nav-item">
 						<a href="./sel_index.jsp" class="nav-item nav-link"><i
-							class="fa-solid fa-users me-2"> </i></i>活動總覽</a> 
-							<a
+							class="fa-solid fa-users me-2"> </i></i>活動總覽</a> <a
 							href="./sel_actadd.jsp" class="nav-item nav-link"><i
-							class="fa-solid fa-heart-circle-plus me-2"> </i></i>新增活動</a> 
-							<a
+							class="fa-solid fa-heart-circle-plus me-2"> </i></i>新增活動</a> <a
 							href="../seller/sel_order.jsp" class="nav-item nav-link"><i
 							class="fa-solid fa-magnifying-glass me-2"> </i></i>訂單總覽</a> 
-							<a
-							href="sel_notification.jsp" class="nav-item nav-link"> <i
-							class="fa-solid fa-envelope me-2"> </i>通知訊息
-						</a> 
-							<a href="../seller/sel_profile.jsp" class="nav-item nav-link">
+							
+<!-- 							<a -->
+<!-- 							href="sel_notification.jsp" class="nav-item nav-link"> <i -->
+<!-- 							class="fa-solid fa-envelope me-2"> </i>通知訊息 -->
+<!-- 						</a>  -->
+						
+						<a href="../seller/sel_profile.jsp" class="nav-item nav-link">
 							<i class="fa-solid fa-address-card me-2"> </i>廠商基本資料
 						</a>
 					</div>
@@ -163,14 +163,16 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 				<div class="position-relative">
 					<img
 						src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
-						width=50px height=50px />
+						width=50px height=50px style="border-radius: 50%;" />
 				</div>
 				<div
 					style="margin-left: 10px; display: flex; flex-direction: column; align-items: center;">
-					<h6 id="userNameSide" class="mb-0">寬宏藝術</h6>
+					<label for="userNameSide"></label>
+					<h6 id="userNameSide" style="margin-top: 10px;">${sellerVO.selName}</h6>
 				</div>
 			</div>
 		</div>
+	</div>
 		<!-- Sidebar End -->
 
 		<!-- Content Start -->
@@ -187,71 +189,27 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 				</a>
 
 				<div class="navbar-nav align-items-center ms-auto">
-					<div class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle"
-							data-bs-toggle="dropdown"> <i class="fa fa-envelope me-lg-2"></i>
-							<span class="d-none d-lg-inline-flex"></span>
-						</a>
-						<div
-							class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-							<a href="#" class="dropdown-item">
-								<div class="d-flex align-items-center">
-									<img class="rounded-circle" src="images/user.jpg" alt=""
-										style="width: 40px; height: 40px;">
-									<div class="ms-2">
-										<h6 class="fw-normal mb-0">Jhon send you a message</h6>
-										<small>15 minutes ago</small>
-									</div>
-								</div>
-							</a>
-							<hr class="dropdown-divider">
-							<a href="#" class="dropdown-item">
-								<div class="d-flex align-items-center">
-									<img class="rounded-circle" src="images/user.jpg" alt=""
-										style="width: 40px; height: 40px;">
-									<div class="ms-2">
-										<h6 class="fw-normal mb-0">Jhon send you a message</h6>
-										<small>15 minutes ago</small>
-									</div>
-								</div>
-							</a>
-							<hr class="dropdown-divider">
-							<a href="#" class="dropdown-item">
-								<div class="d-flex align-items-center">
-									<img class="rounded-circle" src="images/user.jpg" alt=""
-										style="width: 40px; height: 40px;">
-									<div class="ms-2">
-										<h6 class="fw-normal mb-0">Jhon send you a message</h6>
-										<small>15 minutes ago</small>
-									</div>
-								</div>
-							</a>
-							<hr class="dropdown-divider">
-							<a href="#" class="dropdown-item text-center">See all message</a>
-						</div>
-					</div>
 
 					<!-- 右上角头像 -->
-					<div class="nav-item dropdown">
-							<a href="#" class="nav-link dropdown-toggle"
-								data-bs-toggle="dropdown"> <img
-								src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
-								width=50px height=50px /> <span id="userNameNav"
-								class="d-none d-lg-inline-flex">寬宏藝術</span>
-							</a>
-							<div
-								class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-								<a href="../seller/sel_profile.jsp" class="dropdown-item">My
-									Profile</a>
-								<form
-									action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
-									method="post">
-									<button type="submit" class="dropdown-item">Log Out</button>
-								</form>
+						<div class="nav-item dropdown">
+					<a href="#" class="nav-link dropdown-toggle"
+						data-bs-toggle="dropdown"> <img
+						src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
+						width=50px height=50px style="border-radius: 50%;" />
+					</a>
+					<div
+						class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+						<a href="../seller/sel_profile.jsp" class="dropdown-item">My
+							Profile</a>
+						<form
+							action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
+							method="post">
+							<button type="submit" class="dropdown-item">Log Out</button>
+						</form>
 
-							</div>
-						</div>
-			</nav>
+					</div>
+				</div>
+		</nav>
 			<!-- Navbar End -->
 
 			<%-- 錯誤表列 --%>
@@ -319,9 +277,9 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 														<label for="acttype" class="form-label">活動類型</label> <select
 															name="actType" class="acttype form-select">
 															<option value="1"
-																<c:if test="${activityVO.actType == 1}">selected</c:if>>市集</option>
+																<c:if test="${activityVO.actType == 1}">selected</c:if>>展覽</option>
 															<option value="2"
-																<c:if test="${activityVO.actType == 2}">selected</c:if>>展覽</option>
+																<c:if test="${activityVO.actType == 2}">selected</c:if>>市集</option>
 															<option value="3"
 																<c:if test="${activityVO.actType == 3}">selected</c:if>>表演</option>
 														</select>

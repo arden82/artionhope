@@ -19,8 +19,12 @@ public class LogOutHandler extends HttpServlet {
 		session.setAttribute("logoutMessage", "帳號已登出"); // 设置自定义的登出消息
 
 		session.invalidate();
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+		response.setDateHeader("Expires", 0); // Proxies.
+
 		System.out.println("帳號已登出消息已设置");
-		response.sendRedirect(request.getContextPath() + "/seller/sel_login.jsp");
+		response.sendRedirect(request.getContextPath() + "/seller/sel_login2.jsp");
 
     }
 }

@@ -234,6 +234,23 @@ public class ActivityDAO implements ActivityDAO_interface {
 			session.close();
 		}
 	}
+
+	@Override
+	public String getActNameByActId(Integer actId) {
+	    Session session = HibernateUtil.getSessionFactory().openSession();
+	    try {
+	        session.beginTransaction();
+	        ActivityVO activity = session.get(ActivityVO.class, actId);
+	        session.getTransaction().commit();
+	        if (activity != null) {
+	            return activity.getActName(); // 从ActivityVO对象中获取actName
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        session.getTransaction().rollback();
+	    }
+	    return null;
+	}
 }
 //	public static void main(String[] args) {
 //		String address = "台北市中正區黎明里北平西路3號"; // 你要转换的地址
