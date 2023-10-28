@@ -287,24 +287,21 @@
 
 <script>
 
+  //==========呼叫資料庫的方法===============
+  function getMerchesData() {
+    $.ajax({
+      url: "http://localhost:8081/artion/showAllMerches",
+      type: "POST",
+      dataType: "json",
+      success: function (data) {
+        var divBody = $("#putInHere");
+        divBody.empty();
 
 
-
-  $(document).ready(function () {
-    function getMerchesData() {
-      $.ajax({
-        url: "http://localhost:8081/artion/showAllMerches",
-        type: "POST",
-        dataType: "json",
-        success: function (data) {
-          var divBody = $("#putInHere");
-          divBody.empty();
-
-
-          if (data.length > 0) {
-            $.each(data, function (index, merch) {
-              var uniqueId = merch.merchId; // 使用商品ID來創建唯一的ID
-              var newRowHTML = `
+        if (data.length > 0) {
+          $.each(data, function (index, merch) {
+            var uniqueId = merch.merchId; // 使用商品ID來創建唯一的ID
+            var newRowHTML = `
             <hr class="my-4" />
 
 <div class="row mb-4 d-flex justify-content-between align-items-center">
@@ -338,85 +335,109 @@
   </div>
 </div>
                         `;
-              divBody.append(newRowHTML);
+            divBody.append(newRowHTML);
+
+            // 初始化页面时更新一次总价
+
+          });
+
+          // 监听数量输入框的变化
+          $('.dynamic-input').on('input', function () {
+            updateTotalQuantity();
 
 
-            });
-            $('.Cart').on('click', '[data-merch]', function () {
-              // 在這裡處理您的事件，您可以訪問被點擊的元素的值
-              var inputValue = $(this).val();
-              var value = $(this).data('merch');
-              console.log('Clicked input value for merch ' + value + ': ' + inputValue);
 
-              // 獲取價格的內容
-              var merchPrice = $(`.merch_${value}`).text();
-              // console.log('Price for merch ' + value + ': ' + merchPrice);
-              console.log(merchPrice);
-
-              var merchPrice = parseFloat(merchPrice.replace('$', ''));
-
-              // // 確保匹配成功並提取數字
-              if (!isNaN(merchPrice)) {
-                console.log('Price for merch ' + value + ': ' + merchPrice);
-              } else {
-                console.log("未找到有效的價格。");
-              }
-
-              var priceTotal = inputValue * merchPrice;
-
-              console.log("相乘後:" + priceTotal);
-
-              //找span標籤
-              var h6Element = $(`.h6price_${value}`);
-              console.log(h6Element);
-              var dataSpan = h6Element.find('span[data_span]');
-              console.log(dataSpan);
-              dataSpan.text(priceTotal);
-              // var totalPriceSpan = $('.h6price .priceTotal');
-              // var spanElement = $(`.${uniqueId}`);
-
-              // console.log(spanElement);
+          });
 
 
-              // console.log(totalPriceSpan);
+        } else {
+          divBody.html("<tr><td colspan='11'>没有商品数据。</td></tr>");
+        }
+      },
+      error: function () {
+        alert("请求失败。");
+      },
+    });
+  };
 
-              // elementClass.text(priceTotal);
-
-              // var totalSpan = $('.h5price .priceTotal');
-
-              // totalSpan.text(priceTotal);
-
-              // var Cart = $(".Cart");
+  //==========呼叫資料庫的方法===============
 
 
-              // var itemSpan = $('h6#dataItem span.itemSpan');
-              // console.log(itemSpan);
 
-              // var itemSpan2 = $('h5#dataItem span.itemSpan');
+  //==========更新商品列的點擊事件===============
 
-              // itemSpan.text(inputValue);
+  $('.Cart').on('click', '[data-merch]', function () {
+    // 在這裡處理您的事件，您可以訪問被點擊的元素的值
+    var inputValue = $(this).val();
+    var value = $(this).data('merch');
+    // console.log('Clicked input value for merch ' + value + ': ' + inputValue);
 
-              // itemSpan2.text(inputValue);
+    // 獲取價格的內容
+    var merchPrice = $(`.merch_${value}`).text();
+    // console.log('Price for merch ' + value + ': ' + merchPrice);
+    // console.log(merchPrice);
 
-            });
+    var merchPrice = parseFloat(merchPrice.replace('$', ''));
 
-          } else {
-            divBody.html("<tr><td colspan='11'>没有商品数据。</td></tr>");
-          }
-        },
-        error: function () {
-          alert("请求失败。");
-        },
-      });
-    };
+    // // 確保匹配成功並提取數字
+    // if (!isNaN(merchPrice)) {
+    //   console.log('Price for merch ' + value + ': ' + merchPrice);
+    // } else {
+    //   console.log("未找到有效的價格。");
+    // }
+
+    var priceTotal = inputValue * merchPrice;
+
+    // console.log("相乘後:" + priceTotal);
+
+    //找span標籤
+    var h6Element = $(`.h6price_${value}`);
+    // console.log(h6Element);
+    var dataSpan = h6Element.find('span[data_span]');
+    // console.log(dataSpan);
+    dataSpan.text(priceTotal);
+
+    // 输出获取的值
+    // console.log("获取到的<span>元素的文本内容为：" + dataSpan.text());
+
+  });
+  //==========更新商品列的點擊事件===============
+
+  //==========更新數量的方法===============
+
+  // 初始化总数量为0
+  var totalQuantity = 0;
+
+  // 更新总数量的显示函数
+  function updateTotalQuantity() {
+    var quantityElements = $('.dynamic-input');
+    totalQuantity = 0;
+
+    // 遍历所有数量输入框，将数量相加
+    quantityElements.each(function () {
+      var inputValue = $(this).val();
+      totalQuantity += parseInt(inputValue);
+    });
+
+    // 更新显示总数量的元素
+    $('h6#dataItem span.itemSpan').text(totalQuantity);
+    $('h5#dataItem span.itemSpan').text(totalQuantity);
+  };
+
+  //==========更新數量的方法===============
+
+
+
+  //==========一進入畫面就更新===============
+  $(document).ready(function () {
+
     getMerchesData();
 
 
 
+
   });
-
-
-
+  //==========一進入畫面就更新===============
 
 </script>
 
