@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<body>
+	<button id="cartBtn">購物車按鈕</button>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>選擇</th>
+				<th>活動名稱</th>
+				<th>票卷價格</th>
+				<th>數量</th>
+				<th>小計</th>
+			</tr>
+		</thead>
+		<tbody id="cart-items">
+			<tr class="cart-item">
+				<td><input type="checkbox" name="select" class="item-checkbox"
+					onchange="calculateTotal()"></td>
+				<td class="actName"></td>
+				<td class="actTicPrice">元</td>
+				<td>
+					<button onclick="changeQuantity(this, -1)">-</button> <input
+					type="number" name="quantity" value="1" size="1"
+					class="item-quantity" oninput="calculateSubtotal(this)" min="1">
+					<button onclick="changeQuantity(this, 1)">+</button>
+				</td>
+				<td class="item-subtotal">元</td>
+			</tr>
+
+			<!-- 活動票劵1 -->
+			<!-- 			<tr id="${merch.merchId}"> -->
+			<!-- 				<td><input type="checkbox" name="select" class="item-checkbox" -->
+			<!-- 					onchange="calculateTotal()"></td> -->
+			<!-- 				<td>活動1${merch.actName}</td> -->
+			<!-- 				<td>100${merch.ticketPrice}元</td> -->
+			<!-- 				<td> -->
+			<!-- 					<button onclick="changeQuantity(this, -1)">-</button> <input -->
+			<!-- 					type="number" name="quantity" value="1" size="1" -->
+			<!-- 					class="item-quantity" oninput="calculateSubtotal(this)" min="1"> -->
+			<!-- 					<button onclick="changeQuantity(this, 1)">+</button> -->
+			<!-- 				</td> -->
+			<!-- 				<td class="item-subtotal">100${merch.ticketPrice}元</td> -->
+			<!-- 			</tr> -->
+			<!-- 活動票劵2 -->
+			<!-- 			<tr id="${merch.merchId}"> -->
+			<!-- 				<td><input type="checkbox" name="select" class="item-checkbox" -->
+			<!-- 					onchange="calculateTotal()"></td> -->
+			<!-- 				<td>活動2${merch.actName}</td> -->
+			<!-- 				<td>200${merch.ticketPrice}元</td> -->
+			<!-- 				<td> -->
+			<!-- 					<button onclick="changeQuantity(this, -1)">-</button> <input -->
+			<!-- 					type="number" name="quantity" value="1" size="1" -->
+			<!-- 					class="item-quantity" oninput="calculateSubtotal(this)" min="1"> -->
+			<!-- 					<button onclick="changeQuantity(this, 1)">+</button> -->
+			<!-- 				</td> -->
+			<!-- 				<td class="item-subtotal">200${merch.ticketPrice}元</td> -->
+			<!-- 			</tr> -->
+		</tbody>
+	</table>
+	<div>
+		<p>
+			總金額: <span id="total-amount">0元</span>
+		</p>
+	</div>
+	<button onclick="checkout()">去結帳</button>
+
+
+
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+// =============================== 點擊購物按鈕取得redis資料並顯示在頁面上 ===============================
+	$(document).ready(function () {
+    $("#cartBtn").click(function () {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8081/artion/cartServlet",
+            dataType: "json",
+            success: function (data) {
+                console.log("請求成功");
+                console.log(data);
+                console.log(data.actName);
+//                 $each(data, function(index, item){
+//                 	console.log(data.actName);
+//                 }
+                
+                $("#cartItems").empty();
+
+                $.each(data, function (index, item) {
+                    var row = $("<tr>");
+                    row.append('<td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>');
+                    
+                
+                    row.append('<td id="actName">' + item.actName + '</td>');
+                    row.append('<td id="actTicPrice">' + item.actTicPrice + '元</td>');
+                    row.append('<td><button onclick="changeQuantity(this, -1)">-</button><input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1"><button onclick="changeQuantity(this, 1)">+</button></td>');
+                    row.append('<td class="item-subtotal" id="subTotal">' + item.actTicPrice + '元</td>');
+                    $("#cartItems").append(row);
+//                     console.log(row);
+                });
+            },
+            error: function () {
+                console.error("Ajax請求失敗");
+            }
+        });
+    });
+});
+
+
+
+	
+	
+// 	=============================== 購物車操作 ===============================
+    function changeQuantity(button, change) {
+    const input = button.parentNode.querySelector('input[name="quantity"]');
+    const quantity = parseInt(input.value);
+    if (quantity + change >= 1) {
+        input.value = quantity + change;
+        calculateSubtotal(input);
+    }
+}
+function calculateSubtotal(input) {
+    const row = input.closest('tr');
+    const priceCell = row.querySelector('td:nth-child(3)');
+    const subtotalCell = row.querySelector('td.item-subtotal');
+    const price = parseInt(priceCell.textContent);
+    const quantity = parseInt(input.value);
+    const subtotal = price * quantity;
+    subtotalCell.textContent = subtotal + '元';
+    calculateTotal();
+}
+function calculateTotal() {
+    const checkboxes = document.querySelectorAll('.item-checkbox');
+    let totalAmount = 0;
+    for (const checkbox of checkboxes) {
+        if (checkbox.checked) {
+            const row = checkbox.closest('tr');
+            const subtotalCell = row.querySelector('.item-subtotal');
+            const subtotal = parseInt(subtotalCell.textContent);
+            totalAmount += subtotal;
+        }
+    }
+    document.getElementById('total-amount').textContent = totalAmount + '元';
+}
+
+
+// =============================== 設定假資料 ===============================
+// const merchandises = [
+//  {
+//      merchId: 1,
+//      merchName: "1",
+//      merchPrice: 100,
+//  },
+//  {
+//      merchId: 2,
+//      merchName: "票卷2",
+//      merchPrice: 200,
+//  },
+// ];
+
+// =============================== 取得表格tbody ===============================
+// const tbody = document.getElementById("cart-items");
+
+// =============================== for迴圈跑出商品 ===============================
+// merchandises.forEach((merch) => {
+//  const row = document.createElement("tr");
+//  row.id = merch.merchId;
+//  row.innerHTML = `
+//      <td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>
+//      <td>${merch.actName}</td>
+//      <td>${merch.ticketPrice}元</td>
+//      <td>
+//          <button onclick="changeQuantity(this, -1)">-</button>
+//          <input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1">
+//          <button onclick="changeQuantity(this, 1)">+</button>
+//      </td>
+//      <td class="item-subtotal">${merch.ticketPrice}元</td>
+//  `;
+//  tbody.appendChild(row);
+// });
+    </script>
+
+
+</body>
+</html>

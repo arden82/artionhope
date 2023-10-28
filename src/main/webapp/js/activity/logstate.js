@@ -5,6 +5,7 @@
  
     if(state){
         loginstate.innerHTML=` 
+       
         <nav class="navbar_mob navbar  navbar-expand-lg navbar-light bg-light  sticky-top navbar_mob_state ">
             <div class="container-fluid  relative d-flex justify-content-end">
                 <a class="navbar-brand mx-auto fixed_center logo" href="../activity/ActivityPage.html">Artion</a>
@@ -27,7 +28,7 @@
                     </form>
                     <ul class="navbar-nav col-12 me-2   ">
                         <li class="nav-item dropdown d-flex"><a class="nav-link d-flex align-items-center hover"
-                                href="./member_profile.html">
+                                href="../member/memberProfile.html">
                                 <div class="account mem_profilePhoto">
                                     <!-- <img src="./image/6446d860dbbfe540e9e2cbab5f98f1e3-6-560x313.png" alt="用戶頭像"> -->
                                 </div>
@@ -64,7 +65,7 @@
                         4.299-.659.667-.659c.368 0 .666.295.666.66v3.177l4.733 1.335V6.136l-1.12-.52c-.019.11-.043.218-.073.323A6.134 6.134 0 0 1 16.4 8.05l-2.477 3.093a.67.67 0 0 1-1.073-.037l-2.315-3.353c-.382-.534-.65-1.01-.801-1.436a3.744 3.744 0 0 1-.192-.822Zm3.83-3.171c-.726.035-1.472.327-1.827.742c-.427.5-.637.968-.679 1.442c-.05.571-.016.974.126 1.373c.105.295.314.669.637 1.12l1.811 2.622l1.91-2.385a4.812 4.812 0 0 0 .841-1.657c.24-.84-.122-2.074-.8-2.604c-.695-.545-1.22-.692-2.018-.653Zm.138.697c1.104 0 2 .885 2 1.977a1.988 1.988 0 0 1-2 1.977c-1.104 0-2-.885-2-1.977s.896-1.977 2-1.977Zm0 1.318a.663.663 0 0 0-.667.659c0 .364.299.659.667.659a.663.663 0 0 0 .666-.66a.663.663 0 0 0-.666-.658Z" />
                                 </svg> 地圖
                             </a></li>
-                        <li class="nav-item "><a class="nav-link triangle hover member_svg" href="#" id="navbarDropdown"
+                        <li class="nav-item "><a class="nav-link triangle hover member_svg store" href="../merch/merchPage.html" id="navbarDropdown"
                                 role="button" aria-expanded="false"> <svg xmlns="http://www.w3.org/2000/svg" width="30"
                                     height="30" class="bi bi-shop" viewBox="0 0 16 16">
                                     <path
@@ -80,8 +81,7 @@
                                 </svg> 我的帳戶
                             </a>
                             <ul class="dropdown-menu text_align_center" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item hover" href="./member_profile.html">個人檔案</a></li>
-                                <li><a class="dropdown-item hover" href="./member_checkOutPassword.html">更改密碼</a></li>
+                                <li><a class="dropdown-item hover" href="../member/memberProfile.html">個人檔案</a></li>
                             </ul>
                         </li>
                         <li class="nav-item "><a class="nav-link triangle hover member_svg"
@@ -130,7 +130,7 @@
                 </div>
             </div>
         </nav>
-  
+      
         <nav class="navbar navbar-expand-lg border navbar-light bg-light  sticky-top navbar_sm_state p-0">
             <div class="container-fluid logo_color">
                 <a class="navbar-brand mx-5 logo" href="../activity/ActivityPage.html">Artion</a>
@@ -185,6 +185,15 @@
                     4.299-.659.667-.659c.368 0 .666.295.666.66v3.177l4.733 1.335V6.136l-1.12-.52c-.019.11-.043.218-.073.323A6.134 6.134 0 0 1 16.4 8.05l-2.477 3.093a.67.67 0 0 1-1.073-.037l-2.315-3.353c-.382-.534-.65-1.01-.801-1.436a3.744 3.744 0 0 1-.192-.822Zm3.83-3.171c-.726.035-1.472.327-1.827.742c-.427.5-.637.968-.679 1.442c-.05.571-.016.974.126 1.373c.105.295.314.669.637 1.12l1.811 2.622l1.91-2.385a4.812 4.812 0 0 0 .841-1.657c.24-.84-.122-2.074-.8-2.604c-.695-.545-1.22-.692-2.018-.653Zm.138.697c1.104 0 2 .885 2 1.977a1.988 1.988 0 0 1-2 1.977c-1.104 0-2-.885-2-1.977s.896-1.977 2-1.977Zm0 1.318a.663.663 0 0 0-.667.659c0 .364.299.659.667.659a.663.663 0 0 0 .666-.66a.663.663 0 0 0-.666-.658Z" />
                         </svg>
                     </div>
+                    <div class="store p-2 member_svg display_none_7">
+						<a class="member_svg " href="../merch/merchPage.html">
+						<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="bi bi-shop"
+							viewBox="0 0 16 16">
+							<path
+								d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z" />
+						</svg>
+					</a>
+					</div>
                     <div class=" d-flex-sm display_none_7">
                         <ul class="navbar-nav col-1-sm me-2  mb-lg-0 col-12 ">
                             <li class="nav-item dropdown  "><a
@@ -238,15 +247,12 @@
             </div>
         </nav>
 
+
 `;
     }else{
-       loginstate.innerHTML=`		<!-- navbar top (sign_up)start -->
-		<!--  navbar_mob_state 開始-->
-		<nav class="navbar_mob navbar navbar-expand-lg navbar-light bg-light  sticky-top navbar_mob_state ">
+       loginstate.innerHTML=`				<nav class="navbar_mob navbar navbar-expand-lg navbar-light bg-light  sticky-top navbar_mob_state ">
 			<div class="container-fluid  relative d-flex justify-content-end">
 				<a class="navbar-brand  mx-auto fixed_center logo" href="../activity/ActivityPage.html">Artion</a>
-
-
 				<div class="shoppingCart member_svg p-2">
 					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="bi bi-cart3"
 						viewBox="0 0 16 16">
@@ -265,7 +271,7 @@
 						<input class="form-control me-2" type="search" placeholder="" aria-label="Search">
 						<button class="colortest btn_old  w-50 me-2" type="submit">搜尋</button>
 					</form>
-					<a class="nav-link display_none_6 " href="./memberLogin.html">
+					<a class="nav-link display_none_6 " href="../member/memberLogin.html">
 						<button type="button" class="colortest btn_old  ">登入/註冊</button>
 					</a>
 					<ul class="navbar-nav col-12 me-2   ">
@@ -288,7 +294,7 @@
                         4.299-.659.667-.659c.368 0 .666.295.666.66v3.177l4.733 1.335V6.136l-1.12-.52c-.019.11-.043.218-.073.323A6.134 6.134 0 0 1 16.4 8.05l-2.477 3.093a.67.67 0 0 1-1.073-.037l-2.315-3.353c-.382-.534-.65-1.01-.801-1.436a3.744 3.744 0 0 1-.192-.822Zm3.83-3.171c-.726.035-1.472.327-1.827.742c-.427.5-.637.968-.679 1.442c-.05.571-.016.974.126 1.373c.105.295.314.669.637 1.12l1.811 2.622l1.91-2.385a4.812 4.812 0 0 0 .841-1.657c.24-.84-.122-2.074-.8-2.604c-.695-.545-1.22-.692-2.018-.653Zm.138.697c1.104 0 2 .885 2 1.977a1.988 1.988 0 0 1-2 1.977c-1.104 0-2-.885-2-1.977s.896-1.977 2-1.977Zm0 1.318a.663.663 0 0 0-.667.659c0 .364.299.659.667.659a.663.663 0 0 0 .666-.66a.663.663 0 0 0-.666-.658Z" />
 								</svg>&nbsp;地圖
 							</a></li>
-						<li class="nav-item "><a class="nav-link triangle hover member_svg" href="#" id="navbarDropdown"
+						<li class="nav-item "><a class="nav-link triangle hover member_svg store" href="../merch/merchPage.html" id="navbarDropdown"
 								role="button" aria-expanded="false"> <svg xmlns="http://www.w3.org/2000/svg" width="30"
 									height="30" class="bi bi-shop" viewBox="0 0 16 16">
 									<path
@@ -296,12 +302,14 @@
 								</svg>&nbsp;商品
 							</a></li>
 
+
 					</ul>
 
 				</div>
 			</div>
 		</nav>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light  sticky-top navbar_sm_state p-0">
+
+		<nav class="navbar navbar-expand-lg navbar-light bg-light  sticky-top navbar_sm_state p-0 ">
 			<div class="container-fluid ">
 				<a class="navbar-brand mx-5 logo " href="../activity/ActivityPage.html">Artion</a>
 
@@ -312,8 +320,8 @@
 							d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
 					</svg>
 				</div>
-				<a class="nav-link display_none_6  mx-3" href="./memberLogin.html">
-					<button type="button" class="colortest btn_old ">登入/註冊</button>
+				<a class="nav-link display_none_6  mx-3" href="../member/memberLogin.html">
+					<button type="button" class="colortest btn_old  ">登入/註冊</button>
 				</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 					data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -353,20 +361,25 @@
                             4.299-.659.667-.659c.368 0 .666.295.666.66v3.177l4.733 1.335V6.136l-1.12-.52c-.019.11-.043.218-.073.323A6.134 6.134 0 0 1 16.4 8.05l-2.477 3.093a.67.67 0 0 1-1.073-.037l-2.315-3.353c-.382-.534-.65-1.01-.801-1.436a3.744 3.744 0 0 1-.192-.822Zm3.83-3.171c-.726.035-1.472.327-1.827.742c-.427.5-.637.968-.679 1.442c-.05.571-.016.974.126 1.373c.105.295.314.669.637 1.12l1.811 2.622l1.91-2.385a4.812 4.812 0 0 0 .841-1.657c.24-.84-.122-2.074-.8-2.604c-.695-.545-1.22-.692-2.018-.653Zm.138.697c1.104 0 2 .885 2 1.977a1.988 1.988 0 0 1-2 1.977c-1.104 0-2-.885-2-1.977s.896-1.977 2-1.977Zm0 1.318a.663.663 0 0 0-.667.659c0 .364.299.659.667.659a.663.663 0 0 0 .666-.66a.663.663 0 0 0-.666-.658Z" />
 						</svg>
 					</div>
+
 					<div class="store p-2 member_svg display_none_7">
+						<a class="member_svg " href="../merch/merchPage.html">
 						<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="bi bi-shop"
 							viewBox="0 0 16 16">
 							<path
 								d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z" />
 						</svg>
+					</a>
 					</div>
-
-					<a class="nav-link display_none_7" href="./memberLogin.html">
-						<button type="button" class="colortest btn_old  mx-4 ">登入/註冊</button>
+					<a class="nav-link display_none_7" href="../member/memberLogin.html">
+						<button type="button" class="colortest btn_old mx-4 ">登入/註冊</button>
 					</a>
 				</div>
 			</div>
 		</nav>
+
+
+
 
 	`;
     }

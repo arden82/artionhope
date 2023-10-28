@@ -146,25 +146,26 @@
         <!-- navbar top (sign_up)end -->
         <div class="container-fluid">
             <!--除了navbar 以外的東西放裡面 -->
+            <div id="MerchInfo"></div>
             <div class="container">
                 <!-- 大正方形圖片 -->
                 <div class="big-square">
-                    <img src="" alt="" id="merPic1">
+                    <img src="" alt="" class="merPic1">
                 </div>
 
                 <!-- 右側小正方形圖片容器 -->
                 <div class="small-square-container">
                     <div class="small-square">
-                        <img src="" alt="" id="merPic1">
+                        <img src="" alt="" class="merPic1">
                     </div>
                     <div class="small-square">
-                        <img src="" alt="" id="merPic2">
+                        <img src="" alt="" class="merPic2">
                     </div>
                     <div class="small-square">
-                        <img src="" alt="" id="merPic3">
+                        <img src="" alt="" class="merPic3">
                     </div>
                     <div class="small-square">
-                        <img src="" alt="" id="merPic4">
+                        <img src="" alt="" class="merPic4">
                     </div>
                 </div>
             </div>
@@ -172,7 +173,7 @@
             <!-- 商品簡介區域 -->
             <div class="product-description">
                 <h2 id="merchName">商品名稱</h2>
-                <p id="merchSort">商品種類</p>
+                <span id="merchSort">商品種類</span>
                 <p id="merchInfo">這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~這裡放商品說明~~</p>
 
                 <!-- 商品價格和數量選擇 -->
@@ -197,8 +198,6 @@
                         <span id="errorMessage" style="color: red; margin-left: 10px;"></span>
                     </div>
                 </div>
-
-
             </div>
 
         </div>
@@ -238,36 +237,48 @@ $(document).ready(function () {
                     return merch.merchId == merchId;
                 })
                 if(merchData){
-                    $("#merchName").text(data.merchName);
-                    $("#merchSort").text(data.merchSort);
-                    $("#merchInto").text(data.merchIntroduction);
-                    $("#merchPrice").text(data.merchPrice);
-                    $("#remainingQuantity").text(data.merchTotal - data.merchSellAmount);
+                    $("#merchName").text(merchData.merchName);
+                    var merchSortText = '';
+                    if (merchData.merchSort === 1) {
+                        merchSortText = "服飾";
+                    } else if (merchData.merchSort === 2) {
+                        merchSortText = "配件";
+                    } else if (merchData.merchSort === 3) {
+                        merchSortText = "其他";
+                    }
+                    $("#merchSort").text(merchSortText);
+                    $("#merchInfo").text(merchData.merchIntro);
+                    $("#merchPrice").text(merchData.merchPrice);
+
+                    // 使用parseInt()函数将字符串转换为整数
+                    var merchTotal = parseInt(merchData.merchTotal);
+                    var merchSellAmount = parseInt(merchData.merchSelAmount);
+                    var remainingQuantity = merchTotal - merchSellAmount;
+                    $("#remainingQuantity").text(remainingQuantity);
                     
                     var img1 = "http://localhost:8081/artion/merPicServlet?merchId=" + merchId + "&picNumber=" + 1;
-                        $("#merPic1").attr("src", img1);
-                        console.log(img1);
+                    $(".merPic1").attr("src", img1);
                     var img2 = "http://localhost:8081/artion/merPicServlet?merchId=" + merchId + "&picNumber=" + 2;
-                        $("#merPic2").attr("src", img2);
-                    var img2 = "http://localhost:8081/artion/merPicServlet?merchId=" + merchId + "&picNumber=" + 3;
-                        $("#merPic3").attr("src", img3);
-                    var img3 = "http://localhost:8081/artion/merPicServlet?merchId=" + merchId + "&picNumber=" + 4;
-                        $("#merPic4").attr("src", img4);
+                    $(".merPic2").attr("src", img2);
+                    var img3 = "http://localhost:8081/artion/merPicServlet?merchId=" + merchId + "&picNumber=" + 3;
+                    $(".merPic3").attr("src", img3);
+                    var img4 = "http://localhost:8081/artion/merPicServlet?merchId=" + merchId + "&picNumber=" + 4;
+                    $(".merPic4").attr("src", img4);
                 }
                 console.log("成功取得merchId和資料");
-                
             },
             error: function () {
                 alert("無法取得商品資料");
             }
         });
     } else {
-    	$(".product-description").empty();
+        $(".product-description").empty();
         $("#merchName").text("未找到商品");
-        
-        
     }
 });
+
+
+
 
 
 //周邊商品圖片切換功能

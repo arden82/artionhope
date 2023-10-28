@@ -55,7 +55,7 @@ public class AddToCartServlet extends HttpServlet {
             String jsonAct = "{\"actId\": " + actId + ", \"actName\": \"" + actVO.getActName() + "\", \"actTicPrice\": " + actVO.getActTicketPrice() + "}";
 
             // 使用 Redis 的 SET 命令將活動信息存儲到購物車
-            jedis.sadd(cartId, jsonAct);
+            jedis.hset(cartId,"action", jsonAct);
             System.out.println("成功將活動添加到購物車");
         } finally {
             jedis.close();
