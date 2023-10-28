@@ -194,24 +194,27 @@ pageContext.setAttribute("list", list);
 					<!-- 右上角头像 -->
 					<!-- 右上角头像 -->
 					<div class="nav-item dropdown">
-					<a href="#" class="nav-link dropdown-toggle"
-						data-bs-toggle="dropdown"> <img
-						src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
-						width=50px height=50px style="border-radius: 50%;" />
-					</a>
-					<div
-						class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-						<a href="../seller/sel_profile.jsp" class="dropdown-item">My
-							Profile</a>
-						<form
-							action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
-							method="post">
-							<button type="submit" class="dropdown-item">Log Out</button>
-						</form>
+						<a href="#" class="nav-link dropdown-toggle"
+							data-bs-toggle="dropdown"> <img
+							src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
+							width=50px height=50px style="border-radius: 50%;" />
+						</a>
+						<div
+							class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+							<a href="../seller/sel_profile.jsp" class="dropdown-item">My
+								Profile</a>
+							<form
+								action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
+								method="post">
+								<button type="submit" class="dropdown-item">Log Out</button>
+								<!-- 在這裡添加您的其他表單元素，如果需要的話 -->
+								<input type="hidden" name="action" value="logout">
+							</form>
 
+
+						</div>
 					</div>
-				</div>
-		</nav>
+			</nav>
 			<!-- Navbar End -->
 
 			<!-- Table Start -->
