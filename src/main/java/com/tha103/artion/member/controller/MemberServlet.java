@@ -60,7 +60,7 @@ public class MemberServlet extends HttpServlet {
 			Part profilePhoto = req.getPart("mem_profilePhoto"); // 沒有選圖片也不會null而是空物件
 			System.out.println(profilePhoto);
 			byte[] profilePhotoByte = null;
-			// 使用ajax不選圖使用profilePhoto.getSize()也部會小於0
+			// 使用ajax不選圖使用profilePhoto.getSize()也不會小於0
 			if (profilePhoto.getSubmittedFileName() != null) {
 //				System.out.println("profilePhoto1," + profilePhoto);
 				InputStream is = profilePhoto.getInputStream();
@@ -130,6 +130,11 @@ public class MemberServlet extends HttpServlet {
 			res.getWriter().write(memIdjson);
 			return;
 		case "update":
+			memId=(Integer)session.getAttribute("memId");
+			if (memId == null) {
+				res.sendRedirect(req.getContextPath() + "/html/member/memberLogin.html");
+				return;
+			}
 			String passwordType = req.getParameter("passwordType");
 			if (passwordType != null && "remake".equals(passwordType)) {
 				account = req.getParameter("mem_account");
@@ -276,6 +281,12 @@ public class MemberServlet extends HttpServlet {
 			}
 			break;
 		case "profile":
+			session = req.getSession();
+			memId=(Integer)session.getAttribute("memId");
+			if (memId == null) {
+				res.sendRedirect(req.getContextPath() + "/html/member/memberLogin.html");
+				return;
+			}
 			account = req.getParameter("mem_account");
 			memSvc = new MemberServiceImp();
 			memberVO = memSvc.getMember(account);

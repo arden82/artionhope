@@ -341,15 +341,15 @@
 				formData.append("action", "insert");
 
 				let path = window.location.pathname;
-				path = path.substring(0, path.indexOf('/', 1));
+				path = path.substring(0, path.indexOf("/", 1));
 				fetch(`${window.location, path}/member/member.do`, {
 					method: "POST",
 					body: formData
 				}).then(res => {
 					console.log(res);
 					if (res.ok) {
-						const contentType = res.headers.get('content-type');
-						if (contentType && contentType.includes('application/json')) {
+						const contentType = res.headers.get("content-type");
+						if (contentType && contentType.includes("application/json")) {
 							return res.json();
 						}
 					}
