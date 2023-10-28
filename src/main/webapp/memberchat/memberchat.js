@@ -3,7 +3,7 @@
  */
  const messagesUl = document.querySelector('#messagesUl');
 
-    const account = sessionStorage.getItem('account');
+    const account = localStorage.getItem('memId');
 
     const webSocket = new WebSocket(getUri());
 
