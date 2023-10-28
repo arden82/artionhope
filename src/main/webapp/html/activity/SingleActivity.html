@@ -44,59 +44,12 @@
 <!-- ========================================== 類型 ========================================== -->
 								<a class="badge bg-secondary text-decoration-none link-light"
 									href="#" id="actType"></a><br>
-<!-- ========================================== 活動名稱 ========================================== -->
-								<div class="header_container">
-									<h1 class="fw-bolder mb-1 activity_name" id=actName></h1>
+<!-- ========================================== 活動名稱與收藏 ========================================== -->
+								<div class="header_container" style:"display: flex;">
+									<span class="fw-bolder mb-1 activity_name" style="font-size: 40px;" id=actName></span>
+									<button type="button" class="btn btn-outline-success">收藏</button>
 								</div>
-<!-- ========================================== 收藏、按讚 ========================================== -->
-                                    <div id="iconCollect">
-                                        <!-- collection1_icon -->
-                                        
-                                        <button id="collection1_icon" class="icon_style">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="1.5em"
-                                                viewBox="0 0 512 512">
-                                                <path
-                                                    d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8v-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5v3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20c0 0-.1-.1-.1-.1c0 0 0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5v3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2v-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z" />
-                                            </svg>
-                                        </button>
-                                        <span class="CollectIcon1_hover">收藏活動</span>
-                                        <!-- collection2_icon -->
-                                        <button id="collection2_icon" class="icon_style"
-                                            style="display: none;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="1.5em"
-                                                viewBox="0 0 512 512">
-                                                <path
-                                                    d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
-                                            </svg>
-                                        </button>
-                                        <span class="CollectIcon2_hover">取消收藏</span>
-                                    </div>
-    
-                                    <div id="iconContainer">
-                                        <!-- thumb-up1_icon -->
-                                        <button id="actLike1_icon" class="icon_style actLike1_Icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="1.5em"
-                                                viewBox="0 0 512 512">
-<!--                                                 <style>svg {fill: #e36868}</style> -->
-                                                <path
-                                                    d="M323.8 34.8c-38.2-10.9-78.1 11.2-89 49.4l-5.7 20c-3.7 13-10.4 25-19.5 35l-51.3 56.4c-8.9 9.8-8.2 25 1.6 33.9s25 8.2 33.9-1.6l51.3-56.4c14.1-15.5 24.4-34 30.1-54.1l5.7-20c3.6-12.7 16.9-20.1 29.7-16.5s20.1 16.9 16.5 29.7l-5.7 20c-5.7 19.9-14.7 38.7-26.6 55.5c-5.2 7.3-5.8 16.9-1.7 24.9s12.3 13 21.3 13L448 224c8.8 0 16 7.2 16 16c0 6.8-4.3 12.7-10.4 15c-7.4 2.8-13 9-14.9 16.7s.1 15.8 5.3 21.7c2.5 2.8 4 6.5 4 10.6c0 7.8-5.6 14.3-13 15.7c-8.2 1.6-15.1 7.3-18 15.1s-1.6 16.7 3.6 23.3c2.1 2.7 3.4 6.1 3.4 9.9c0 6.7-4.2 12.6-10.2 14.9c-11.5 4.5-17.7 16.9-14.4 28.8c.4 1.3 .6 2.8 .6 4.3c0 8.8-7.2 16-16 16H286.5c-12.6 0-25-3.7-35.5-10.7l-61.7-41.1c-11-7.4-25.9-4.4-33.3 6.7s-4.4 25.9 6.7 33.3l61.7 41.1c18.4 12.3 40 18.8 62.1 18.8H384c34.7 0 62.9-27.6 64-62c14.6-11.7 24-29.7 24-50c0-4.5-.5-8.8-1.3-13c15.4-11.7 25.3-30.2 25.3-51c0-6.5-1-12.8-2.8-18.7C504.8 273.7 512 257.7 512 240c0-35.3-28.6-64-64-64l-92.3 0c4.7-10.4 8.7-21.2 11.8-32.2l5.7-20c10.9-38.2-11.2-78.1-49.4-89zM32 192c-17.7 0-32 14.3-32 32V448c0 17.7 14.3 32 32 32H96c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32H32z" />
-                                            </svg>
-                                        </button>
-                                        <span class="actLikeIcon1_hover">活動按讚</span>
-                                        <button id="actLike2_icon" class="icon_style actLike2_Icon"
-                                            style="display: none;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="1.5em"
-                                                viewBox="0 0 512 512">
-                                                <path
-                                                    d="M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2H464c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48H294.5c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3V320 272 247.1c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192H96c17.7 0 32 14.3 32 32V448c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32V224c0-17.7 14.3-32 32-32z" />
-                                            </svg>
-                                        </button>
-                                        <span class="actLikeIcon2_hover">收回按讚</span>
-                                        <!-- actLike-up2_icon -->
-                                        <span id="iconCount" style="color: #e36868"></span>
-                                    </div>
-
-
+<!-- ========================================== 活動介紹與購物車 ========================================== -->
 								<!-- Post meta content-->
 								<!-- <div class="card bg-light"></div> -->
 								<div class="text-muted fst-italic mb-2" id=actTime></div>
@@ -222,23 +175,25 @@
 					</div>
 					<!-- 廠商介紹start-->
 					<div class="col-lg-4 ">
-						<div class="card mb-4 sel_introduce">
-							<img src="" alt="" style="width: 120px;" id="selPhoto">
-							<div class="card-header card_header_fontstyle" id="selName">
-								<!-- 名稱 -->
-							</div>
-							<div class="card-body">
-								<p class="content-text" id="selInfo">
-									<!-- 廠商介紹 -->
-								</p>
-							</div>
-						</div>
+<!-- 						<div class="card mb-4 sel_introduce"> -->
+<!-- 							<img src="" alt="" style="width: 120px;" id="selPhoto"> -->
+<!-- 							<div class="card-header card_header_fontstyle" id="selName"> -->
+<!-- 								名稱 -->
+<!-- 							</div> -->
+<!-- 							<div class="card-body"> -->
+<!-- 								<p class="content-text" id="selInfo"> -->
+<!-- 									廠商介紹 -->
+<!-- 								</p> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
 						<!-- 廠商介紹end-->
 						<!-- 活動地圖start -->
 						<div class="card mb-4 act_map">
 							<div class="card-header card_header_fontstyle">活動地圖</div>
 							<div class="card-body">
-								<div>google map api</div>
+								<div id="actMap">
+									<!-- 活動google apie api -->
+								</div>
 							</div>
 						</div>
 						<!-- 活動地圖end -->
@@ -246,12 +201,8 @@
 				</div>
 			</div>
 <!-- ======================================================================================== -->
-
-
 		</div>
-
 	</div>
-
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
         crossorigin="anonymous"></script>
@@ -260,8 +211,69 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="../../js/activity/logstate.js"></script>
         
-        <script>
-      //================== 取得localstorage + 活動收藏 ==================
+<script>
+//================== 獲取活動頁資料並渲染在畫面上(測試) ==================
+$(document).ready(function () {
+    var urlParams = new URLSearchParams(window.location.search);
+    var actId = urlParams.get("actId");
+    var actTypeMap = {
+        1: '展覽',
+        2: '市集',
+        3: '表演'
+    };
+    if (actId) {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8081/artion/getAllAct",
+            dataType: "JSON",
+            success: function (data) {
+                var actData = data.find(function (act) {
+                    return act.actId == actId;
+                });
+
+                if (actData) {
+                    var actTypeText = actTypeMap[actData.actType] || '未知類型';
+
+                    $("#actType").text(actTypeText);
+                    $("#actName").text(actData.actName);
+                    $("#iconCount").text(actData.ActLikeTimes);
+                    $("#actTime").text(actData.actStartDate + " ~ " + actData.actEndDate + " , " + actData.ActStartTime + " ~ " + actData.ActEndTime);
+                    $("#actAdd").text(actData.ActAdd);
+                    $("#actTicPrice").text(actData.actTicPrice);
+                    $("#actContent").text(actData.ActContent);
+                    var imgSrc = "http://localhost:8081/artion/actPicServlet?actId=" + actId;
+	                $("#actCovPic").attr("src", imgSrc);
+                    // 构建Google Maps URL
+                    var mapUrl = "https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=" + encodeURIComponent(actData.ActAdd) + "&zoom=10";
+
+                    // 创建并插入iframe
+                    var iframe = $('<iframe>').attr({
+                        width: 200,
+                        height: 200,
+                        style: 'border: 0',
+                        loading: 'lazy',
+                        allowfullscreen: true,
+                        referrerpolicy: 'no-referrer-when-downgrade',
+                        src: mapUrl
+                    });
+
+                    $("#actMap").append(iframe);
+                } else {
+                    $("#actData").html("找不到該活動的數據");
+                }
+            },
+            error: function () {
+                alert("無法活動獲取數據");
+            }
+        });
+    } else {
+        $("#actData").html("未提供活動ID");
+    }
+});
+
+
+
+//================== 取得localstorage + 活動收藏 ==================
         function getActIdFromURL() {
             var urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('actId');
@@ -281,13 +293,13 @@
                     };
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost:8081/artion/addToCollectionServlet", // 请将 URL 替换为实际的 URL
+                        url: "http://localhost:8081/artion/addToCollectionServlet", 
                         data: data,
                         success: function (response) {
-                            alert("成功添加至您的收藏！");
+                            alert("成功加入收藏！");
                         },
                         error: function () {
-                            alert("添加失敗");
+                            alert("加入失敗");
                         }
                     });
                 } else {
@@ -303,42 +315,41 @@
 
 
 
-        //================== 取得localstorage + 加入購物車(完成) ==================
+//================== 取得localstorage + 加入購物車(完成) ==================
         // 測試存一個memId到localstorage
         localStorage.clear();
         localStorage.setItem('memId', '7001');
 
         //判斷有無localstorage資料並且發送actid給後端進行redis儲存
-        function getActIdFromURL() {
-            var urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('actId');
-        }
+       $(document).ready(function () {
+    $("#addtocart").click(function () {
+        var urlParams = new URLSearchParams(window.location.search);
+        var actId = urlParams.get("actId");
+        var memId = localStorage.getItem("memId");
 
-        $(document).ready(function () {
-            $("#addtocart").click(function () {
-                var memId = localStorage.getItem('memId');
-                if (memId) {
-                    var actId = getActIdFromURL();
-                    console.log(actId);
-                    $.ajax({
-                        type: "POST",
-                        url: "http://localhost:8081/artion/addToCartServlet",
-                        data: { actId: actId },
-                        success: function (response) {
-                            alert("成功发送到 Servlet！");
-                        },
-                        error: function () {
-                            alert("發送失敗");
-                        }
-                    });
-                } else {
-                    var userWantsToLogin = confirm("您需要登入後才能將此商品加入購物車，是否要登入？");
-                    if (userWantsToLogin) {
-                        window.location.href = 'http://localhost:8081/artion/html/member/memberLogin.html';
-                    }
-                }
-            });
+        var dataToSend = {
+            actId: actId,
+            memId: memId
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8081/artion/addToCartServlet",
+            data: JSON.stringify(dataToSend),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                console.log("成功加入購物車");
+            },
+            error: function () {
+                console.error("加入購物車失敗");
+            }
         });
+    });
+});
+
+
+
 
         //================== 立即購票(未完成) ==================
         $(document).ready(function () {
@@ -471,49 +482,49 @@
         });
 
             //================== 獲取活動頁資料並渲染在畫面上(完成) ==================
-            $(document).ready(function () {
-                var urlParams = new URLSearchParams(window.location.search);
-                var actId = urlParams.get("actId");
-                var actTypeMap = {
-                    1: '展覽',
-                    2: '市集',
-                    3: '表演'
-                };
-                if (actId) {
-                    $.ajax({
-                        type: "POST",
-                        url: "http://localhost:8081/artion/getAllAct",
-                        dataType: "JSON",
-                        success: function (data) {
-                            var actData = data.find(function (act) {
-                                return act.actId == actId;
-                            });
+//             $(document).ready(function () {
+//                 var urlParams = new URLSearchParams(window.location.search);
+//                 var actId = urlParams.get("actId");
+//                 var actTypeMap = {
+//                     1: '展覽',
+//                     2: '市集',
+//                     3: '表演'
+//                 };
+//                 if (actId) {
+//                     $.ajax({
+//                         type: "POST",
+//                         url: "http://localhost:8081/artion/getAllAct",
+//                         dataType: "JSON",
+//                         success: function (data) {
+//                             var actData = data.find(function (act) {
+//                                 return act.actId == actId;
+//                             });
 
-                            if (actData) {
-                                var actTypeText = actTypeMap[actData.actType] || '未知類型';
+//                             if (actData) {
+//                                 var actTypeText = actTypeMap[actData.actType] || '未知類型';
 
-                                $("#actType").text(actTypeText);
-                                $("#actName").text(actData.actName);
-                                $("#iconCount").text(actData.ActLikeTimes);
-                                $("#actTime").text(actData.actStartDate + " ~ " + actData.actEndDate + " , " + actData.ActStartTime + " ~ " + actData.ActEndTime);
-                                $("#actAdd").text(actData.ActAdd);
-                                $("#actTicPrice").text(actData.actTicPrice);
-                                $("#actContent").text(actData.ActContent);
-                                // 利用actId取得該筆資的圖片
-                                var imgSrc = "http://localhost:8081/artion/actPicServlet?actId=" + actId;
-                                $("#actCovPic").attr("src", imgSrc);
-                            } else {
-                                $("#actData").html("找不到該活動的數據");
-                            }
-                        },
-                        error: function () {
-                            alert("無法活動獲取數據");
-                        }
-                    });
-                } else {
-                    $("#actData").html("未提供活動ID");
-                }
-            });
+//                                 $("#actType").text(actTypeText);
+//                                 $("#actName").text(actData.actName);
+//                                 $("#iconCount").text(actData.ActLikeTimes);
+//                                 $("#actTime").text(actData.actStartDate + " ~ " + actData.actEndDate + " , " + actData.ActStartTime + " ~ " + actData.ActEndTime);
+//                                 $("#actAdd").text(actData.ActAdd);
+//                                 $("#actTicPrice").text(actData.actTicPrice);
+//                                 $("#actContent").text(actData.ActContent);
+//                                 // 利用actId取得該筆資的圖片
+//                                 var imgSrc = "http://localhost:8081/artion/actPicServlet?actId=" + actId;
+//                                 $("#actCovPic").attr("src", imgSrc);
+//                             } else {
+//                                 $("#actData").html("找不到該活動的數據");
+//                             }
+//                         },
+//                         error: function () {
+//                             alert("無法活動獲取數據");
+//                         }
+//                     });
+//                 } else {
+//                     $("#actData").html("未提供活動ID");
+//                 }
+//             });
 
 
             //================== 載入頁面時取得活動留言(完成) ================== 
@@ -645,43 +656,6 @@
                 });
             });
 
-            // ================== 按讚icon功能樣式 (未完成) ==================
-            actLike1_icon.addEventListener('click', function () {
-                if (!isactLike1_iconActive) {
-
-                    actLike1_icon.style.display = 'none';
-                    actLike2_icon.style.display = 'inline-block';
-                    isactLike1_iconActive = true;
-                    count++;
-                    iconCount.textContent = count;
-                }
-            });
-            actLike2_icon.addEventListener('click', function () {
-                actLike2_icon.style.display = 'none';
-                actLike1_icon.style.display = 'inline-block';
-                isactLike1_iconActive = false;
-                count--;
-                iconCount.textContent = count;
-            });
-
-            // ================== 收藏icon樣式轉換(完成) ==================
-            const collection1_icon = document.getElementById('collection1_icon');
-            const collection2_icon = document.getElementById('collection2_icon');
-            let iscollection1_iconActive = false;
-
-            collection1_icon.addEventListener('click', function () {
-                if (!iscollection1_iconActive) {
-                    collection1_icon.style.display = 'none';
-                    collection2_icon.style.display = 'inline-block';
-                    iscollection1_iconActive = true;
-                }
-            });
-            collection2_icon.addEventListener('click', function () {
-                collection2_icon.style.display = 'none';
-                collection1_icon.style.display = 'inline-block';
-                iscollection1_iconActive = false;
-            });
-
             // ================== 留言輸入框自動調整大小(完成) ==================
             $(function () {
                 $("#actComContent").on("input propertychange", function (e) {
@@ -708,28 +682,6 @@
                     $("#actComContent").css('height', storedHeight);
                 }
             });
-
-                // ==================清空之前預覽==================
-                // const imagePreviews = document.getElementById('imagePreviews');
-                // imagePreviews.innerHTML = '';
-
-                // for (let i = 0; i < files.length; i++) {
-                //     const file = files[i];
-                //     if (file.type.match('image.*')) {
-                //         const reader = new FileReader();
-                //         reader.onload = function (e) {
-                //             const img = document.createElement('img');
-                //             img.src = e.target.result;
-                //             img.className = 'imagePreview';
-                //             imagePreviews.appendChild(img);
-                //         };
-                //         reader.readAsDataURL(file);
-                //     } else {
-                //         alert('請選擇檔案');
-                //     }
-                // }
-            // });
-
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~ 元素 ~~~~~~~~~~~~~~~~~~~~~~~~~~
             const textarea = document.getElementById('validationTextarea');
             const submitButton = document.querySelector('.submit_button');

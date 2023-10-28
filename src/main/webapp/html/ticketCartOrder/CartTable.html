@@ -6,7 +6,7 @@
 <title>Document</title>
 </head>
 <body>
-	<button id="cartBtn">購物車按鈕</button>
+	<button id="cartBtn">取得Redis購物車明細</button>
 	<table border="1">
 		<thead>
 			<tr>
@@ -31,6 +31,14 @@
 				</td>
 				<td class="item-subtotal">元</td>
 			</tr>
+		</tbody>
+	</table>
+	<div>
+		<p>
+			總金額: <span id="total-amount">0元</span>
+		</p>
+	</div>
+	<button onclick="checkout()">去結帳</button>
 
 			<!-- 活動票劵1 -->
 			<!-- 			<tr id="${merch.merchId}"> -->
@@ -60,14 +68,6 @@
 			<!-- 				</td> -->
 			<!-- 				<td class="item-subtotal">200${merch.ticketPrice}元</td> -->
 			<!-- 			</tr> -->
-		</tbody>
-	</table>
-	<div>
-		<p>
-			總金額: <span id="total-amount">0元</span>
-		</p>
-	</div>
-	<button onclick="checkout()">去結帳</button>
 
 
 
@@ -79,29 +79,26 @@
     $("#cartBtn").click(function () {
         $.ajax({
             type: "GET",
-            url: "http://localhost:8081/artion/cartServlet",
+            url: "http://localhost:8081/artion/getFromRedis",
             dataType: "json",
             success: function (data) {
                 console.log("請求成功");
                 console.log(data);
-                console.log(data.actName);
-//                 $each(data, function(index, item){
-//                 	console.log(data.actName);
-//                 }
-                
+
                 $("#cartItems").empty();
 
                 $.each(data, function (index, item) {
                     var row = $("<tr>");
                     row.append('<td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>');
-                    
-                
+
+                    // 创建一个隐藏的 input 标签来存储 actId，不显示在页面上
+                    row.append('<input type="hidden" name="actId" value="' + item.actId + '">');
+
                     row.append('<td id="actName">' + item.actName + '</td>');
                     row.append('<td id="actTicPrice">' + item.actTicPrice + '元</td>');
                     row.append('<td><button onclick="changeQuantity(this, -1)">-</button><input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1"><button onclick="changeQuantity(this, 1)">+</button></td>');
                     row.append('<td class="item-subtotal" id="subTotal">' + item.actTicPrice + '元</td>');
                     $("#cartItems").append(row);
-//                     console.log(row);
                 });
             },
             error: function () {
@@ -110,6 +107,7 @@
         });
     });
 });
+
 
 
 

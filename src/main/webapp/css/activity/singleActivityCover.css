@@ -18,50 +18,50 @@
 }
 
 /* 活動按讚和取消按讚hover */
-.actLikeIcon1_hover {
-    display: none;
-    color: #e36868;
-    font-size: 10px;
-    font-weight: bold;
-}
+/* .actLikeIcon1_hover { */
+/*     display: none; */
+/*     color: #e36868; */
+/*     font-size: 10px; */
+/*     font-weight: bold; */
+/* } */
 
-.icon_style:hover+.actLikeIcon1_hover {
-    display: inline;
-}
+/* .icon_style:hover+.actLikeIcon1_hover { */
+/*     display: inline; */
+/* } */
 
-.actLikeIcon2_hover {
-    display: none;
-    color: #e36868;
-    font-size: 10px;
-    font-weight: bold;
-}
+/* .actLikeIcon2_hover { */
+/*     display: none; */
+/*     color: #e36868; */
+/*     font-size: 10px; */
+/*     font-weight: bold; */
+/* } */
 
-.icon_style:hover+.actLikeIcon2_hover {
-    display: inline;
-}
+/* .icon_style:hover+.actLikeIcon2_hover { */
+/*     display: inline; */
+/* } */
 
 /* 收藏活動和取消收藏hover */
-.CollectIcon1_hover {
-    display: none;
-    color: #e36868;
-    font-size: 10px;
-    font-weight: bold;
-}
+/* .CollectIcon1_hover { */
+/*     display: none; */
+/*     color: #e36868; */
+/*     font-size: 10px; */
+/*     font-weight: bold; */
+/* } */
 
-.icon_style:hover+.CollectIcon1_hover {
-    display: inline;
-}
+/* .icon_style:hover+.CollectIcon1_hover { */
+/*     display: inline; */
+/* } */
 
-.CollectIcon2_hover {
-    display: none;
-    color: #e36868;
-    font-size: 10px;
-    font-weight: bold;
-}
+/* .CollectIcon2_hover { */
+/*     display: none; */
+/*     color: #e36868; */
+/*     font-size: 10px; */
+/*     font-weight: bold; */
+/* } */
 
-.icon_style:hover+.CollectIcon2_hover {
-    display: inline;
-}
+/* .icon_style:hover+.CollectIcon2_hover { */
+/*     display: inline; */
+/* } */
 
 /* ========== 送出按鈕樣式 ========== */
 .submit_button {

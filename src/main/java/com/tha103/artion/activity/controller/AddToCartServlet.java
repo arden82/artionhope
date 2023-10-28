@@ -1,5 +1,6 @@
 package com.tha103.artion.activity.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -8,59 +9,63 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.tha103.artion.activity.model.ActivityVO;
 import com.tha103.artion.activity.service.ActivityService;
-import com.tha103.artion.ticketOrder.util.JedisPoolUtil;
 
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;// 請將此替換為您自己的 Redis 相關設置
 
 @WebServlet("/addToCartServlet")
 public class AddToCartServlet extends HttpServlet {
-    private static JedisPool pool = JedisPoolUtil.getJedisPool(); // 請替換為您自己的 Redis 相關設置
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        // 獲取actId的值
-        String actId = req.getParameter("actId");
-
-        try {
-            
-            Integer actToInt = Integer.parseInt(actId);
-
-            
-            ActivityService actSvc = new ActivityService();
-            ActivityVO actVO = actSvc.getOneActivity(actToInt);
-            System.out.println(actVO);
-            if (actVO != null) {
-                
-                saveActId(actId, actVO);
-                // 或將其返回給客戶端
-                // 現在 actVO 包含所需的資料，您可以根據需要處理它
-            } else {
-                // 沒有找到匹配的資料，您可以處理異常情況
-                System.out.println("找不到匹配的活動記錄");
-            }
-        } catch (NumberFormatException e) {
-            // 如果無法將actId轉換為整數，請處理異常情況
-            System.out.println("actId 不是有效的整數");
+        // 取得請求參數
+        BufferedReader reader = request.getReader();
+        StringBuilder jsonInput = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            jsonInput.append(line);
         }
-    }
 
-    private void saveActId(String actId, ActivityVO actVO) {
-        String cartId = "user_cart"; // 購物車的鍵名，您可以根據需要更改
-        Jedis jedis = pool.getResource();
+        // 拆解json
+        JsonObject data = new JsonParser().parse(jsonInput.toString()).getAsJsonObject();
+        String actIdStr = data.get("actId").getAsString();
+        int actId = Integer.parseInt(actIdStr); // 字串轉換數字
+        String memId = data.get("memId").getAsString();
+
+        // 因前端傳actName是亂碼，因此用actId取得活動名稱和票價
+        ActivityService activityService = new ActivityService();
+        ActivityVO activityVO = activityService.getOneActivity(actId);
+        String actName = activityVO.getActName();
+        double actTicPrice = activityVO.getActTicketPrice();
+
+        // 存入 Redis Set
+        String redisHost = "localhost";
+        int redisPort = 6379;
+        Jedis jedis = new Jedis(redisHost, redisPort);
 
         try {
-            // 創建一個 JSON 字符串來表示活動信息
-            String jsonAct = "{\"actId\": " + actId + ", \"actName\": \"" + actVO.getActName() + "\", \"actTicPrice\": " + actVO.getActTicketPrice() + "}";
+            jedis.select(2); 
 
-            // 使用 Redis 的 SET 命令將活動信息存儲到購物車
-            jedis.hset(cartId,"action", jsonAct);
-            System.out.println("成功將活動添加到購物車");
+            // 創建購物車資料json
+            JsonObject cartItem = new JsonObject();
+            cartItem.addProperty("actName", actName); // 直接存储 actName 字符串
+            cartItem.addProperty("actTicPrice", actTicPrice);
+
+            // 將 memId 對應 Set，以 actId 作為 key，cartItem.toString() 設為 value
+            jedis.hset(memId, Integer.toString(actId), cartItem.toString());
         } finally {
             jedis.close();
         }
+
+        // 成功
+        response.getWriter().print("{\"message\":\"Activity added to cart.\"}");
     }
 }
+
 
 
