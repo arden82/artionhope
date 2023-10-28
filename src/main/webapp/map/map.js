@@ -58,74 +58,75 @@ const actTypeMap = {
     '3': '表演'
 };
 
-const cities = {"基隆市":{"lat":25.12682, "lng":121.73787},
-                        "台北市":{"lat":25.03746, "lng":121.564558},
-                        "新北市":{"lat":25.01703, "lng":121.46281},
-                        "宜蘭縣":{"lat":24.71253, "lng":121.75617},
-                        "桃園市":{"lat":24.99724, "lng":121.30410},
-                        "新竹市":{"lat":24.81340, "lng":120.96783},
-                        "新竹縣":{"lat":24.84574, "lng":121.01627},
-                        "苗栗縣":{"lat":24.56941, "lng":120.81255},
-                        "臺中市":{"lat":24.12848, "lng":120.63690},
-                        "彰化縣":{"lat":24.05806, "lng":120.49739},
-                        "南投縣":{"lat":23.91712, "lng":120.67326},
-                        "嘉義市":{"lat":23.47925, "lng":120.45547},
-                        "嘉義縣":{"lat":23.45022, "lng":120.26279},
-                        "雲林縣":{"lat":23.70793, "lng":120.43313},
-                        "臺南市":{"lat":23.00556, "lng":120.24107},
-                        "高雄市":{"lat":22.65416, "lng":120.49920},
-                        "屏東縣":{"lat":22.67502, "lng":120.49392},
-                        "臺東縣":{"lat":22.80530, "lng":121.06613},
-                        "花蓮縣":{"lat":23.99861, "lng":121.56880},
-                        "金門縣":{"lat":24.43991, "lng":118.37197},
-                        "連江縣":{"lat":26.16409, "lng":119.94968},
-                        "澎湖縣":{"lat":23.57268, "lng":119.57196},
-                        "選擇縣市":{lat: 23.765817745586514, lng: 120.96836965792725},
+const cities = {
+    "基隆市": { "lat": 25.12682, "lng": 121.73787 },
+    "台北市": { "lat": 25.03746, "lng": 121.564558 },
+    "新北市": { "lat": 25.01703, "lng": 121.46281 },
+    "宜蘭縣": { "lat": 24.71253, "lng": 121.75617 },
+    "桃園市": { "lat": 24.99724, "lng": 121.30410 },
+    "新竹市": { "lat": 24.81340, "lng": 120.96783 },
+    "新竹縣": { "lat": 24.84574, "lng": 121.01627 },
+    "苗栗縣": { "lat": 24.56941, "lng": 120.81255 },
+    "臺中市": { "lat": 24.12848, "lng": 120.63690 },
+    "彰化縣": { "lat": 24.05806, "lng": 120.49739 },
+    "南投縣": { "lat": 23.91712, "lng": 120.67326 },
+    "嘉義市": { "lat": 23.47925, "lng": 120.45547 },
+    "嘉義縣": { "lat": 23.45022, "lng": 120.26279 },
+    "雲林縣": { "lat": 23.70793, "lng": 120.43313 },
+    "臺南市": { "lat": 23.00556, "lng": 120.24107 },
+    "高雄市": { "lat": 22.65416, "lng": 120.49920 },
+    "屏東縣": { "lat": 22.67502, "lng": 120.49392 },
+    "臺東縣": { "lat": 22.80530, "lng": 121.06613 },
+    "花蓮縣": { "lat": 23.99861, "lng": 121.56880 },
+    "金門縣": { "lat": 24.43991, "lng": 118.37197 },
+    "連江縣": { "lat": 26.16409, "lng": 119.94968 },
+    "澎湖縣": { "lat": 23.57268, "lng": 119.57196 },
+    "選擇縣市": { lat: 23.765817745586514, lng: 120.96836965792725 },
 };
 
 const areas = {
-	"中正區":{"lat":25.032361,"lng":121.518267},
-    "大同區":{"lat":25.06320,"lng":121.51154},
-    "中山區":{"lat":25.07925,"lng":121.54223},
-                       "松山區":{"lat":25.05469,"lng":121.56470},
-                       "大安區":{"lat":25.02529,"lng":121.54470},
-                       "萬華區":{"lat":25.02661,"lng":121.49651},
-                       "信義區":{"lat":25.04115,"lng":121.571370},
-                       "士林區":{"lat":25.09637,"lng":121.52495},
-                       "北投區":{"lat":25.11644,"lng":121.51505},
-                       "內湖區":{"lat":25.06873,"lng":121.59123},
-                       "南港區":{"lat":25.03108,"lng":121.61152},
-                       "文山區":{"lat":24.98831,"lng":121.55982},
+    "中正區": { "lat": 25.032361, "lng": 121.518267 },
+    "大同區": { "lat": 25.06320, "lng": 121.51154 },
+    "中山區": { "lat": 25.07925, "lng": 121.54223 },
+    "松山區": { "lat": 25.05469, "lng": 121.56470 },
+    "大安區": { "lat": 25.02529, "lng": 121.54470 },
+    "萬華區": { "lat": 25.02661, "lng": 121.49651 },
+    "信義區": { "lat": 25.04115, "lng": 121.571370 },
+    "士林區": { "lat": 25.09637, "lng": 121.52495 },
+    "北投區": { "lat": 25.11644, "lng": 121.51505 },
+    "內湖區": { "lat": 25.06873, "lng": 121.59123 },
+    "南港區": { "lat": 25.03108, "lng": 121.61152 },
+    "文山區": { "lat": 24.98831, "lng": 121.55982 },
 
-                       "板橋區":{"lat":25.01153,"lng":121.46311}, 
-                       "三重區":{"lat":25.06149,"lng":121.48745}, 
-                       "中和區":{"lat":24.99674,"lng":121.48286}, 
-                       "永和區":{"lat":25.01151,"lng":121.51479}, 
-                       "新莊區":{"lat":25.02606,"lng":121.41848}, 
-                       "新店區":{"lat":24.97848,"lng":121.54255}, 
-                       "土城區":{"lat":24.96914,"lng":121.43680}, 
-                       "蘆洲區":{"lat":25.08766,"lng":121.47045}, 
-                       "樹林區":{"lat":24.98172,"lng":121.42073}, 
-                       "汐止區":{"lat":25.06215,"lng":121.63970},
-                       "鶯歌區":{"lat":24.96249,"lng":121.34011}, 
-                       "三峽區":{"lat":24.93646,"lng":121.36848}, 
-                       "淡水區":{"lat":25.17230,"lng":121.44356}, 
-                       "瑞芳區":{"lat":25.10435,"lng":121.82203}, 
-                       "五股區":{"lat":25.08642,"lng":121.44092}, 
-                       "泰山區":{"lat":25.05786,"lng":121.43365}, 
-                       "林口區":{"lat":25.08051,"lng":121.38867}, 
-                       "深坑區":{"lat":25.00242,"lng":121.61571}, 
-                       "石碇區":{"lat":25.01024,"lng":121.64275}, 
-                       "坪林區":{"lat":24.93641,"lng":121.71390}, 
-                       "三芝區":{"lat":25.26036,"lng":121.50187}, 
-                       "石門區":{"lat":25.29128,"lng":121.56440}, 
-                       "八里區":{"lat":25.14686,"lng":121.40182}, 
-                       "平溪區":{"lat":25.02629,"lng":121.73423}, 
-                       "雙溪區":{"lat":24.99780,"lng":121.82012}, 
-                       "貢寮區":{"lat":25.01664,"lng":121.94269}, 
-                       "金山區":{"lat":25.22369,"lng":121.63636}, 
-                       "萬里區":{"lat":25.16901,"lng":121.63568}, 
-                       "烏來區":{"lat":24.86764,"lng":121.55044}
+    "板橋區": { "lat": 25.01153, "lng": 121.46311 },
+    "三重區": { "lat": 25.06149, "lng": 121.48745 },
+    "中和區": { "lat": 24.99674, "lng": 121.48286 },
+    "永和區": { "lat": 25.01151, "lng": 121.51479 },
+    "新莊區": { "lat": 25.02606, "lng": 121.41848 },
+    "新店區": { "lat": 24.97848, "lng": 121.54255 },
+    "土城區": { "lat": 24.96914, "lng": 121.43680 },
+    "蘆洲區": { "lat": 25.08766, "lng": 121.47045 },
+    "樹林區": { "lat": 24.98172, "lng": 121.42073 },
+    "汐止區": { "lat": 25.06215, "lng": 121.63970 },
+    "鶯歌區": { "lat": 24.96249, "lng": 121.34011 },
+    "三峽區": { "lat": 24.93646, "lng": 121.36848 },
+    "淡水區": { "lat": 25.17230, "lng": 121.44356 },
+    "瑞芳區": { "lat": 25.10435, "lng": 121.82203 },
+    "五股區": { "lat": 25.08642, "lng": 121.44092 },
+    "泰山區": { "lat": 25.05786, "lng": 121.43365 },
+    "林口區": { "lat": 25.08051, "lng": 121.38867 },
+    "深坑區": { "lat": 25.00242, "lng": 121.61571 },
+    "石碇區": { "lat": 25.01024, "lng": 121.64275 },
+    "坪林區": { "lat": 24.93641, "lng": 121.71390 },
+    "三芝區": { "lat": 25.26036, "lng": 121.50187 },
+    "石門區": { "lat": 25.29128, "lng": 121.56440 },
+    "八里區": { "lat": 25.14686, "lng": 121.40182 },
+    "平溪區": { "lat": 25.02629, "lng": 121.73423 },
+    "雙溪區": { "lat": 24.99780, "lng": 121.82012 },
+    "貢寮區": { "lat": 25.01664, "lng": 121.94269 },
+    "金山區": { "lat": 25.22369, "lng": 121.63636 },
+    "萬里區": { "lat": 25.16901, "lng": 121.63568 },
+    "烏來區": { "lat": 24.86764, "lng": 121.55044 }
 };
 
 
@@ -186,13 +187,13 @@ function addMarker(activity) {
 
     function getInfoWindow({ actCoverPicture, actName, actStartDate, actEndDate, actAddress, actId, actType, actViews, actLikeTimes }) {
         const htmlTemplate = `
-            <div class="card col-3 clickable-card" data-actid="10001" style=" padding:0px; margin: 10px 5px; width:250px;">
+            <div class="card col-3 clickable-card" style="padding:0px; margin: 10px 5px; width:250px;" onclick="location = '../html/activity/SingleActivity.html?actId=${actId}'">
                 <img src="${bytesToUrl(actCoverPicture)}" class="card-img top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">${actName}</h5>
                     <h5 style="font-size: 12px;">${actStartDate}~${actEndDate}</h5>
                     <h5 style="font-size: 12px;">${actAddress}</h5>
-                    <button type="button" class="btn btn-secondary btn-sm" onclick="location = '../SingleActivity.html?actId=${actId}'">${actTypeMap[actType]}</button>
+                    <button type="button" class="btn btn-secondary btn-sm">${actTypeMap[actType]}</button>
                     <span style="font-size: 12px;">觀看次數:${actViews}</span>
                     <span style="font-size: 12px;">按讚次數:${actLikeTimes}</span>
                 </div>
@@ -209,6 +210,7 @@ function bytesToUrl(actCoverPicture) {
     const blob = new Blob([int8Array]);
     return URL.createObjectURL(blob);
 }
+
 const citySelect = document.querySelector('#citySelect');
 const areaSelect = document.querySelector('#areaSelect');
 const activitySelect = document.querySelector('#activitySelect');
@@ -225,7 +227,7 @@ citySelect.addEventListener('change', e => {
         marker.setVisible(condition1 && condition3 && condition4);
     });
     setAreaSelect(city);
-    
+
     movMap(cities[city], city === '選擇縣市' ? 7.5 : 10);
 });
 
@@ -248,12 +250,12 @@ areaSelect.addEventListener('change', e => {
         const condition4 = !text ? true : marker.actName.includes(text) || marker.actAddress.includes(text)
         marker.setVisible(condition1 && condition2 && condition3 && condition4);
     });
-    
+
     if (zone === '選擇區域') {
-		movMap(cities[city], city === '選擇縣市' ? 7.5 : 10);	
-	} else {
-		movMap(areas[zone], 12.5);	
-	}
+        movMap(cities[city], city === '選擇縣市' ? 7.5 : 10);
+    } else {
+        movMap(areas[zone], 12.5);
+    }
 });
 
 activitySelect.addEventListener('change', e => {
@@ -285,8 +287,8 @@ searchInput.addEventListener('input', e => {
 });
 
 function movMap(latLng, zoom) {
-	if (map) {
-		map.setCenter(latLng);
-		map.setZoom(zoom);
-	}
+    if (map) {
+        map.setCenter(latLng);
+        map.setZoom(zoom);
+    }
 }
