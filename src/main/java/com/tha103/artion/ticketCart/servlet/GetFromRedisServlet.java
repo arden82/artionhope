@@ -1,7 +1,6 @@
 package com.tha103.artion.ticketCart.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -10,49 +9,73 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.mapping.List;
-
-import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.tha103.artion.activity.model.ActivityVO;
+import com.tha103.artion.activity.service.ActivityService;
 
 import redis.clients.jedis.Jedis;
 
 @WebServlet("/getFromRedis")
 public class GetFromRedisServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+
+        // 从URL中获取memId
+        String memId = request.getParameter("memId");
 
         // 连接到 Redis 数据库
         Jedis jedis = new Jedis("localhost", 6379);
 
-        // 选择 db02 数据库
-        jedis.select(2);
+        // 选择 db03 数据库
+        jedis.select(3);
 
-        // 获取所有的购物车记录
-        Set<String> cartItems = jedis.keys("*"); // 获取所有的 key，每个 key 对应一个购物车记录
-        System.out.println(cartItems);
-        List<CartItem> cartData = new ArrayList<>();
-
-        // 遍历购物车记录
-        for (String cartItemKey : cartItems) {
-            // 获取购物车记录的 JSON 数据
-            String cartItemData = jedis.get(cartItemKey);
-
-            // 解析 JSON 数据为 Java 对象
-            Gson gson = new Gson();
-            CartItem cartItem = gson.fromJson(cartItemData, CartItem.class);
-
-            cartData.add(cartItem);
-        }
-
-        // 将购物车数据转换为 JSON 格式
-        Gson gson = new Gson();
-        String jsonData = gson.toJson(cartData);
-
-        response.getWriter().write(jsonData);
+        // 使用SMEMBERS命令获取购物车集合中的所有JSON字符串
+        Set<String> cartItems = jedis.smembers(memId);
 
         // 关闭 Redis 连接
-        jedis.close();
+//        jedis.close();
+
+        // 用于存储购物车内容的 JSON 数组
+        JsonArray jsonData = new JsonArray();
+
+        // 连接到 MySQL 数据库并检索活动信息
+        ActivityService activityService = new ActivityService();
+
+        for (String cartItem : cartItems) {
+            // 解析JSON字符串以获取活动ID
+            JsonObject cartItemJson = new JsonParser().parse(cartItem).getAsJsonObject();
+            String actId = cartItemJson.get("活動編號").getAsString();
+            
+            // 使用活动ID查询数据库以获取活动名称和价格
+            ActivityVO activityVO = activityService.getOneActivity(Integer.parseInt(actId));
+            
+            if (activityVO != null) {
+                // 创建一个 JSON 对象以存储活动信息
+                JsonObject cartItemData = new JsonObject();
+                cartItemData.addProperty("actId", actId);
+                cartItemData.addProperty("actName", activityVO.getActName());
+                cartItemData.addProperty("actTicPrice", activityVO.getActTicketPrice());
+
+                jsonData.add(cartItemData);
+            }
+        }
+
+        // 将购物车数据转换为 JSON 格式并发送给前端
+        response.getWriter().write(jsonData.toString());
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

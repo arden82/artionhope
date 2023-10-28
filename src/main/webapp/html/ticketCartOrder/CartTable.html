@@ -77,9 +77,13 @@
 // =============================== 點擊購物按鈕取得redis資料並顯示在頁面上 ===============================
 	$(document).ready(function () {
     $("#cartBtn").click(function () {
+        // 从LocalStorage中获取memId
+        var memId = localStorage.getItem("memId");
+
+        // 发送memId到服务器
         $.ajax({
             type: "GET",
-            url: "http://localhost:8081/artion/getFromRedis",
+            url: "http://localhost:8081/artion/getFromRedis?memId=" + memId,
             dataType: "json",
             success: function (data) {
                 console.log("請求成功");
