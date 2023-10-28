@@ -137,8 +137,6 @@ public class UpdatePromoCode extends HttpServlet {
 			promoCodeVO.setProCodeTotal(proCodeTotal);
 			promoCodeVO.setProCodeStatus(proCodeStatus);
 			promoCodeVO.setProCodeDescribe(proCodeDescribe);
-			promoCodeVO.getMemLevLevel().setMemLevLevel(memLevLevel);
-			promoCodeVO.getAdministrator().setAdmId(admId);
 
 			// 不修改
 			promoCodeVO.setProCodeId(promoCodeSvc.getByPromoCodeId(promoCodeId).getProCodeId());
@@ -167,6 +165,7 @@ public class UpdatePromoCode extends HttpServlet {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			Map<String, Object> response = new HashMap<>();
 			response.put("status", "error");
 			response.put("message", "无效的 ID 参数.");

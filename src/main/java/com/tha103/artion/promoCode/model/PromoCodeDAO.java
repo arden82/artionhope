@@ -34,12 +34,13 @@ public class PromoCodeDAO implements PromoCodeDAO_Interface {
 
 	@Override
 	public int update(PromoCodeVO promoCode, int memLevel, int admId) {
-
-		MemberLevelVO levelVO = getSession().get(MemberLevelVO.class, memLevel);
-		AdministratorVO administratorVO = getSession().get(AdministratorVO.class, admId);
+		var session = getSession();
+		MemberLevelVO levelVO = session.get(MemberLevelVO.class, memLevel);
+		AdministratorVO administratorVO = session.get(AdministratorVO.class, admId);
 		promoCode.setMemLevLevel(levelVO);
 		promoCode.setAdministrator(administratorVO);
-		return (Integer) getSession().save(promoCode);
+		session.merge(promoCode);
+		return 1;
 
 	}
 
@@ -64,18 +65,7 @@ public class PromoCodeDAO implements PromoCodeDAO_Interface {
 
 	@Override
 	public PromoCodeVO getById(Integer proCodeId) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		try {
-			session.beginTransaction();
-			PromoCodeVO promoCode = session.get(PromoCodeVO.class, proCodeId);
-			promoCode.getMyProCodes().size();
-			session.getTransaction().commit();
-			return promoCode;
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		}
-		return null;
+		return getSession().get(PromoCodeVO.class, proCodeId);
 	}
 
 	@Override

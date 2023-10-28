@@ -253,7 +253,7 @@
                   <label for="floatingTextarea">Comments</label>
                 </div>
                 <button type="button" class="btn btn-secondary m-2" id="cancel">取消</button>
-                <button type="submit" class="btn btn-primary" id="commit">送出</button>
+                <button type="button" class="btn btn-primary" id="commit">送出</button>
               </form>
             </div>
           </div>
@@ -295,6 +295,39 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
+    const queryParams = new URLSearchParams(location.search);
+    const promoCodeId = queryParams.get('promoCodeId');
+    $('#promoCodeId').text(promoCodeId);
+
+    $.ajax({
+        url: `../showOnePromoCode?promoCodeId=${promoCodeId}`,
+        dataType: "json",
+        success: function (promo) {
+			$('#promoCodeName').val(promo.proCodeName);
+			$('#promoCodeCode').val(promo.proCodeCode);
+			$('#proCodeType').val(promo.proCodeType);
+			$('#proCodeValue').val(promo.proCodeValue);
+			$('#proCodeStartDate').val(promo.proCodeStartDate);
+			$('#proCodeEndDate').val(promo.proCodeEndDate);
+			$('#proCodeActType').val(promo.proCodeActType);
+			$('#memLevLevel').val(promo.proCodeStatus);
+			$('#proCodeTotal').val(promo.proCodeTotal);
+			$('#proCodeStatus').val(promo.proCodeStatus);
+			$('#proCodeDescribe').val(promo.proCodeDescribe);
+	
+	        
+			
+        
+        },
+        error: function () {
+
+        },
+      });
+    		
+    		
+    		
+    		
+    		
       //填充表單
       function getPromoCodeData() {
         // 获取查询参数中的商品ID
@@ -357,7 +390,7 @@
         adminPhoto1.attr("src", alternateImageUrl);
         adminPhoto2.attr("src", alternateImageUrl);
 
-        getPromoCodeData();
+//         getPromoCodeData();
 
         //更新優惠碼
         $("#commit").on("click", function () {

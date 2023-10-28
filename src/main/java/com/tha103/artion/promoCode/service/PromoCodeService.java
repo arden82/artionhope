@@ -35,8 +35,7 @@ public class PromoCodeService implements PromoCodeService_Interface {
 
 	@Override
 	public PromoCodeVO getByPromoCodeId(Integer proCodeId) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getById(proCodeId);
 	}
 
 	@Override
