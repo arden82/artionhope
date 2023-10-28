@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,8 +47,8 @@ public class GetAllServlet extends HttpServlet {
 			actMap.put("actId", act.getActId());
 			actMap.put("actName", act.getActName());
 			actMap.put("actTicPrice", act.getActTicketPrice());
-//			actMap.put("actTicStrTime", act.getActTicketStartTime());
-//			actMap.put("actTicEndTime", act.getActTicketEndTime());
+			actMap.put("actTicStrTime", act.getActTicketStartTime());
+			actMap.put("actTicEndTime", act.getActTicketEndTime());
 			actMap.put("actType", act.getActType());
 			actMap.put("actStartDate", act.getActStartDate());
 			actMap.put("actEndDate", act.getActEndDate());

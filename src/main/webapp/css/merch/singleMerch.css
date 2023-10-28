@@ -1,0 +1,100 @@
+@charset "BIG5";
+
+/* 外部容器 */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+/* 大正方形圖片 */
+.big-square {
+    width: 400px;
+    height: 400px;
+    border: 0px solid black;
+    margin-right: 20px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.big-square img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+}
+
+/* 右側小正方形圖片容器 */
+.small-square-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 小正方形圖片 */
+.small-square {
+    width: 80px;
+    height: 80px;
+    border: 0px solid black;
+    margin-bottom: 10px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer; 
+    
+}
+.small-square:hover {
+    border: 2px solid #c8cacd; 
+}
+
+.small-square img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+/* 商品簡介區域 */
+.product-description {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin: 10px 50px;
+}
+
+/* 按鈕樣式 */
+.pink-button {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* 相關商品區域 */
+.related-products {
+    margin-top: 20px;
+    margin-left: 100px;
+    margin-right: 100px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 單個相關商品 */
+.related-product {
+    width: 100px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+/* 商品圖片 */
+.product-image {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
