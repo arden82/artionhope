@@ -15,6 +15,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
@@ -37,19 +38,20 @@ public class SellerDAO implements SellerDAO_interface {
 			throw ex;
 		}
 	}
-	
+
 	@Override
 	public void update(SellerVO sellerVO) {
-		 try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-		        session.beginTransaction();
-		        session.merge(sellerVO);
-		        System.out.println("a");
-		        session.getTransaction().commit();
-		    } catch (RuntimeException ex) {
-		        System.out.println("b");
-		        throw ex;
-		    }
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			session.beginTransaction();
+			session.merge(sellerVO);
+			System.out.println("a");
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			System.out.println("b");
+			throw ex;
 		}
+	}
+
 	@Override
 	public SellerVO findByPrimaryKey(Integer selId) {
 		SellerVO sellerVO = null;
@@ -83,7 +85,7 @@ public class SellerDAO implements SellerDAO_interface {
 
 	public SellerVO getSellerByAccount(String selAccount) {
 		SellerVO sellerVO = null;
-	    Session session = null;
+		Session session = null;
 
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
@@ -103,19 +105,19 @@ public class SellerDAO implements SellerDAO_interface {
 			}
 
 			// session.getTransaction().commit();
-		 } catch (RuntimeException ex) {
-		        if (session != null && session.getTransaction() != null) {
-		            session.getTransaction().rollback();
-		        }
-		        throw ex;
-		    } finally {
-		        if (session != null) {
-		            session.close();
-		        }
-		    }
-
-		    return sellerVO;
+		} catch (RuntimeException ex) {
+			if (session != null && session.getTransaction() != null) {
+				session.getTransaction().rollback();
+			}
+			throw ex;
+		} finally {
+			if (session != null) {
+				session.close();
+			}
 		}
+
+		return sellerVO;
+	}
 
 	public static byte[] writePicture(String path) throws IOException {
 		FileInputStream fis = new FileInputStream(path);
@@ -125,21 +127,19 @@ public class SellerDAO implements SellerDAO_interface {
 	}
 
 	public boolean checkUser(String account, String password) {
-	    Session session = HibernateUtil.getSessionFactory().openSession();
-	    session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 
-	    // 使用 Hibernate Criteria API 执行查询
-	    Criteria criteria = session.createCriteria(SellerVO.class)
-	            .add(Restrictions.eq("selAccount", account))
-	            .add(Restrictions.eq("selPassword", password));
+		// 使用 Hibernate Criteria API 执行查询
+		Criteria criteria = session.createCriteria(SellerVO.class).add(Restrictions.eq("selAccount", account))
+				.add(Restrictions.eq("selPassword", password));
 
-	    SellerVO sellerVO = (SellerVO) criteria.uniqueResult();
+		SellerVO sellerVO = (SellerVO) criteria.uniqueResult();
 
-	    session.getTransaction().commit();
+		session.getTransaction().commit();
 
-	    return sellerVO != null;
+		return sellerVO != null;
 	}
-
 
 	@Override
 	public SellerVO getSingleSeller() {
@@ -171,20 +171,70 @@ public class SellerDAO implements SellerDAO_interface {
 
 		return sellerVO;
 	}
+
 	@Override
 	public SellerVO getSellerById(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public SellerVO getOneSeller(Integer sel_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public Timestamp getSetSelRegisterdTime(Integer sel_id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public boolean doesSellerAccountExist(String selAccount) {
+		SellerVO sellerVO = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			// 使用 HQL 查询来检查帐号是否存在
+			String hql = "SELECT COUNT(*) FROM SellerVO s WHERE s.selAccount = :selAccount";
+			Query<Long> query = session.createQuery(hql, Long.class);
+			query.setParameter("selAccount", selAccount);
+
+			Long count = query.uniqueResult();
+			return count != null && count > 0;
+
+		} catch (Exception e) {
+			e.printStackTrace(); // 处理异常
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+
+		return false; // 出现异常时返回false
+	}
+
+	public void updatePassword(String selAccount, String newPassword) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			SellerVO seller = getSellerByAccount(selAccount);
+			if (seller != null) {
+				seller.setSelPassword(newPassword);
+				System.out.println("設置新密碼");
+				session.update(seller);
+				session.getTransaction().commit();
+				System.out.println("設置新密碼成功");
+				// 如果找不到卖家，你可以抛出异常或采取其他适当的操作
+			}
+		} catch (HibernateException e) {
+			if (session.getTransaction() != null) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
 	}
 }
 //	@Override

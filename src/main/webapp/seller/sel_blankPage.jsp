@@ -55,25 +55,14 @@
 }
 </style>
 <body>
-
-	<div class="sendMailMsg">
-		<c:if test="${not empty sendMailMsg.logoutMessage}">
-			<p class="text-success">${sendMailMsg.logoutMessage}</p>
-		</c:if>
-	</div>
-
-	<div class="success-message">
-		<c:if test="${not empty sessionScope.logoutMessage}">
-			<p class="text-success">${sessionScope.logoutMessage}</p>
-		</c:if>
-	</div>
-
-	<div class="error-message">
-		<c:if test="${not empty requestScope.error}">
-			<p class="text-danger">${requestScope.error}</p>
-		</c:if>
-	</div>
-
+		<c:if test="${not empty sendMailMsg}">
+		<font style="color: red">請修正以下錯誤:</font>
+		<ul>
+			<c:forEach var="message" items="${sendMailMsg}">
+				<li style="color: red">${message}</li>
+			</c:forEach>
+		</ul>
+	</c:if>
 
 	<form action="<%=request.getContextPath()%>/seller/LoginHandler.do"
 		method="post">
@@ -100,32 +89,9 @@
 									<h3 class="text-primary"></h3>
 								</a>
 							</div>
-							<div class="text-center" style="font-size: 26px;">
-								<h3>嗨！歡迎來到Artion後台管理系統</h3>
-							</div>
-							<div class="form-floating mb-3">
-								<input type="text" name="selAccount" class="form-control"
-									id="floatingInput"> <label for="floatingInput">帳號
-									Account</label>
-							</div>
-							<div class="form-floating mb-4">
-								<input type="password" name="selPassword" class="form-control"
-									id="floatingPassword"> <label for="floatingPassword">密碼
-									Password</label>
-							</div>
-
-							<a href="./sel_forgotPassword.jsp">忘記密碼</a>
-
-							<form action="<%=request.getContextPath()%>/seller/LoginHandler.do" method="post">
-								<!-- 这是你的登录按钮 -->
-								<button type="submit" class="btn btn-primary py-3 w-100 mb-4">登入</button>
-								<!-- 隐藏的字段，可以包含需要传递到Servlet的信息，如操作名称 -->
-								<input type="hidden" name="action" value="login">
-							</form>
-
-							<p class="text-center mb-0">
-								立即申請線上註冊 <a href="sel_signup.jsp">註冊</a>
-							</p>
+							<div class="text-center" style="font-size: 15px;">
+								<h3>您的申请已提交成功，請查看您的Email信箱</h3>
+					
 						</div>
 					</div>
 				</div>

@@ -13,7 +13,9 @@ public class LogOutHandler extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
-    	
+		
+		String action = request.getParameter("action");
+		if ("logout".equals(action)) {
 		// 清除使用者的登入資訊（session 或 cookie）
 		HttpSession session = request.getSession();
 		session.setAttribute("logoutMessage", "帳號已登出"); // 设置自定义的登出消息
@@ -22,10 +24,10 @@ public class LogOutHandler extends HttpServlet {
 		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 		response.setDateHeader("Expires", 0); // Proxies.
-
+		
 		System.out.println("帳號已登出消息已设置");
-		response.sendRedirect(request.getContextPath() + "/seller/sel_login2.jsp");
-
+		response.sendRedirect(request.getContextPath() + "/seller/sel_logOut.jsp");
+		}
     }
 }
 
