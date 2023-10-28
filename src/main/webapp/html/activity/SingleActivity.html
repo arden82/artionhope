@@ -315,38 +315,85 @@ $(document).ready(function () {
 
 
 
-//================== 取得localstorage + 加入購物車(完成) ==================
+//================== 取得localstorage + 加入購物車(完成 memId/actId/json版本) ==================
         // 測試存一個memId到localstorage
-        localStorage.clear();
-        localStorage.setItem('memId', '7001');
+//         localStorage.clear();
+//         localStorage.setItem('memId', '7001');
 
         //判斷有無localstorage資料並且發送actid給後端進行redis儲存
-       $(document).ready(function () {
-    $("#addtocart").click(function () {
-        var urlParams = new URLSearchParams(window.location.search);
-        var actId = urlParams.get("actId");
-        var memId = localStorage.getItem("memId");
+//        $(document).ready(function () {
+//     $("#addtocart").click(function () {
+//         var urlParams = new URLSearchParams(window.location.search);
+//         var actId = urlParams.get("actId");
+//         var memId = localStorage.getItem("memId");
 
-        var dataToSend = {
+//         var dataToSend = {
+//             actId: actId,
+//             memId: memId
+//         };
+
+//         $.ajax({
+//             type: "POST",
+//             url: "http://localhost:8081/artion/addToCartServlet",
+//             data: JSON.stringify(dataToSend),
+//             contentType: "application/json",
+//             dataType: "json",
+//             success: function (response) {
+//                 console.log("成功加入購物車");
+//             },
+//             error: function () {
+//                 console.error("加入購物車失敗");
+//             }
+//         });
+//     });
+// });
+
+        
+//================== 取得localstorage + 加入購物車(測試 memId/actId版本) ==================
+$("#addtocart").click(function () {
+    // 获取actId和memId
+    var actId = getUrlParameter("actId"); // 从URL中获取actId
+    var memId = localStorage.getItem("memId"); // 从LocalStorage中获取memId
+
+    // 检查是否成功获取actId和memId
+    if (actId && memId) {
+        // 创建要发送的数据对象
+        var data = {
             actId: actId,
             memId: memId
         };
 
+        // 发送actId和memId到服务器
         $.ajax({
-            type: "POST",
-            url: "http://localhost:8081/artion/addToCartServlet",
-            data: JSON.stringify(dataToSend),
-            contentType: "application/json",
+            type: "POST", // 使用POST请求
+            url: "http://localhost:8081/artion/AddToCart2", // 你的Servlet的URL，根据你的设置可能需要修改
+            data: data, // 发送的数据对象
             dataType: "json",
             success: function (response) {
-                console.log("成功加入購物車");
+                // 处理成功响应
+                console.log(response.message);
             },
             error: function () {
-                console.error("加入購物車失敗");
+                // 处理错误响应
+                console.error("添加到购物车时出错！");
             }
         });
-    });
+    } else {
+        console.error("无法获取actId或memId。");
+    }
+
+
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+        var results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
 });
+
+
+
+
 
 
 
