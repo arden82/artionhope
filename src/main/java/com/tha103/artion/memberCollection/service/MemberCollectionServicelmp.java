@@ -22,7 +22,11 @@ public class MemberCollectionServicelmp implements MemberCollectionService {
 	public int update(MemberCollectionVO entity) {
 		return dao.update(entity);
 	}
-
+	
+	@Override
+	public MemberCollectionVO getCollection(Integer memId,Integer actId) {
+		return dao.getCollection(memId,actId);
+	}
 	@Override
 	public List<MemberCollectionVO> memberCollectionList(Integer memId) {
 	

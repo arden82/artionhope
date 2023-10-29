@@ -101,7 +101,7 @@
 					<ul class="navbar-nav col-1-sm me-2  mb-lg-0 ">
 						<li class="nav-item dropdown   "><a class="nav-link dropdown-toggle" href="#"
 								id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								活動類型 </a>
+								formD活動類型 </a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<li><a class="dropdown-item hover allAct" href="../activity/ActivityPage.html">全部</a></li>
                                 <li><a class="dropdown-item hover exhiAct " href="../activity/ActivityPage.html">展覽</a></li>
@@ -286,14 +286,14 @@
 			formData.append("mem_account", mem_account.value);
 			formData.append("action", "examine");
 			let path = window.location.pathname;
-			path = path.substring(0, path.indexOf('/', 1));
+			path = path.substring(0, path.indexOf("/", 1));
 			fetch(`${window.location, path}/member/member.do`, {
 				method: "POST",
 				body: formData
 			}).then(res => {
 				if (res.ok) {
-					const contentType = res.headers.get('content-type');
-					if (contentType && contentType.includes('application/json')) {
+					const contentType = res.headers.get("content-type");
+					if (contentType && contentType.includes("application/json")) {
 						return res.json();
 					}
 				}
