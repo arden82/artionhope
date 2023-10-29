@@ -22,7 +22,7 @@ public class MemberCollectionDAOlmp implements MemberCollectionDAO {
 	public int insert(MemberCollectionVO entity, Integer memId, Integer actId) {
 		MemberCollectionVO check = null;
 		check = getSession()
-				.createQuery("form MemberCollectionVO where mem_id=:memId and act_id=:actId", MemberCollectionVO.class)
+				.createQuery("from MemberCollectionVO where mem_id=:memId and act_id=:actId", MemberCollectionVO.class)
 				.setParameter("memId", memId).setParameter("actId", actId).uniqueResult();
 		if (check != null) {
 			return -1; // 重複收藏
@@ -42,6 +42,15 @@ public class MemberCollectionDAOlmp implements MemberCollectionDAO {
 		} catch (Exception e) {
 			return -1;
 		}
+	}
+
+	@Override
+	public MemberCollectionVO getCollection(Integer memId,Integer actId) {
+		MemberCollectionVO 	memberCollection=getSession()
+				.createQuery("from MemberCollectionVO where mem_id=:memId and act_id=:actId", MemberCollectionVO.class)
+				.setParameter("memId", memId).setParameter("actId", actId).uniqueResult();
+		return 	memberCollection;
+		
 	}
 
 	@Override
