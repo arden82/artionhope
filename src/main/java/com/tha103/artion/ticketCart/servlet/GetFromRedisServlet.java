@@ -1,6 +1,10 @@
 package com.tha103.artion.ticketCart.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -14,6 +18,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.tha103.artion.activity.model.ActivityVO;
 import com.tha103.artion.activity.service.ActivityService;
+import com.tha103.artion.administrator.model.AdministratorVO;
+import com.tha103.artion.administrator.service.AdministratorService;
+import com.tha103.artion.ticketOrder.model.TicketOrderService;
+import com.tha103.artion.ticketOrderDetail.model.TicketOrderDetailService;
 
 import redis.clients.jedis.Jedis;
 
@@ -58,10 +66,21 @@ public class GetFromRedisServlet extends HttpServlet {
                 cartItemData.addProperty("actId", actId);
                 cartItemData.addProperty("actName", activityVO.getActName());
                 cartItemData.addProperty("actTicPrice", activityVO.getActTicketPrice());
-
+                
                 jsonData.add(cartItemData);
             }
         }
+        
+//        TicketOrderDetailService ticOrdDetailService = new TicketOrderDetailService();
+//		List<AdministratorVO> adminList = ticOrdDetailService.getAll();
+//        List<Map<String, Object>> adminMapList = new ArrayList<>();
+//		for (AdministratorVO admin : adminList) {
+//			Map<String, Object> adminMap = new HashMap<>();
+//			adminMap.put("admId", admin.getAdmId());
+//			adminMap.put("admName", admin.getAdmName());
+//			adminMapList.add(adminMap);
+//		}
+        
 
         // 将购物车数据转换为 JSON 格式并发送给前端
         response.getWriter().write(jsonData.toString());

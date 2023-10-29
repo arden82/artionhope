@@ -21,8 +21,8 @@
 			<tr class="cart-item">
 				<td><input type="checkbox" name="select" class="item-checkbox"
 					onchange="calculateTotal()"></td>
-				<td class="actName"></td>
-				<td class="actTicPrice">元</td>
+				<td id="actName"></td>
+				<td id="actTicPrice"></td>
 				<td>
 					<button onclick="changeQuantity(this, -1)">-</button> <input
 					type="number" name="quantity" value="1" size="1"
@@ -38,6 +38,7 @@
 			總金額: <span id="total-amount">0元</span>
 		</p>
 	</div>
+	<div id="test"></div>
 	<button onclick="checkout()">去結帳</button>
 
 			<!-- 活動票劵1 -->
@@ -74,8 +75,8 @@
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
-// =============================== 點擊購物按鈕取得redis資料並顯示在頁面上 ===============================
-	$(document).ready(function () {
+//=============================== 已取得並未完成渲染畫面 ===============================
+$(document).ready(function () {
     $("#cartBtn").click(function () {
         // 从LocalStorage中获取memId
         var memId = localStorage.getItem("memId");
@@ -88,22 +89,39 @@
             success: function (data) {
                 console.log("請求成功");
                 console.log(data);
+                console.log(data[0].actName);
+                console.log(data[0].actTicPrice);
 
                 $("#cartItems").empty();
+                
+				//取得單一筆資料放進表格(寫死)
+                $("#actName").append(data[0].actName);
+                var actTicPriceString = data[0].actTicPrice;
+                var actTicPriceInt = parseInt(actTicPriceString, 10);
+                $("#actTicPrice").append(actTicPriceInt);
+                
+                
+                for(i = 0; i <= data.length; i++){
+                	
+                }
+                // 获取第一个 JSON 对象
+                var firstItem = data[0];
+                if (firstItem) {
+                    // 获取actName和actTicPrice的值
+                    var actName = firstItem.actName;
+                    var actTicPrice = firstItem.actTicPrice;
 
-                $.each(data, function (index, item) {
-                    var row = $("<tr>");
-                    row.append('<td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>');
+                    // 创建表格行并插入数据
+//                     var row = $("<tr>");
+//                     row.append('<td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>');
+//                     row.append('<td class="actName">' + actName + '</td>');
+//                     row.append('<td class="actTicPrice">' + actTicPrice + '元</td>');
+//                     row.append('<td><button onclick="changeQuantity(this, -1)">-</button><input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1"><button onclick="changeQuantity(this, 1)">+</button></td>');
+//                     row.append('<td class="item-subtotal">' + actTicPrice + '元</td>');
 
-                    // 创建一个隐藏的 input 标签来存储 actId，不显示在页面上
-                    row.append('<input type="hidden" name="actId" value="' + item.actId + '">');
-
-                    row.append('<td id="actName">' + item.actName + '</td>');
-                    row.append('<td id="actTicPrice">' + item.actTicPrice + '元</td>');
-                    row.append('<td><button onclick="changeQuantity(this, -1)">-</button><input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1"><button onclick="changeQuantity(this, 1)">+</button></td>');
-                    row.append('<td class="item-subtotal" id="subTotal">' + item.actTicPrice + '元</td>');
-                    $("#cartItems").append(row);
-                });
+//                     // 将行插入到表格
+//                     $("#cartItems").append(row);
+                }
             },
             error: function () {
                 console.error("Ajax請求失敗");
@@ -111,6 +129,50 @@
         });
     });
 });
+
+
+
+
+	
+	
+	
+// =============================== 點擊購物按鈕取得redis資料並顯示在頁面上(完成一半) ===============================
+// 	$(document).ready(function () {
+//     $("#cartBtn").click(function () {
+//         // 从LocalStorage中获取memId
+//         var memId = localStorage.getItem("memId");
+
+//         // 发送memId到服务器
+//         $.ajax({
+//             type: "GET",
+//             url: "http://localhost:8081/artion/getFromRedis?memId=" + memId,
+//             dataType: "json",
+//             success: function (data) {
+//                 console.log("請求成功");
+//                 console.log(data);
+
+//                 $("#cartItems").empty();
+
+//                 $.each(data, function (index, item) {
+//                     var row = $("<tr>");
+//                     row.append('<td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>');
+
+//                     // 创建一个隐藏的 input 标签来存储 actId，不显示在页面上
+//                     row.append('<input type="hidden" name="actId" value="' + item.actId + '">');
+
+//                     row.append('<td id="actName">' + item.actName + '</td>');
+//                     row.append('<td id="actTicPrice">' + item.actTicPrice + '元</td>');
+//                     row.append('<td><button onclick="changeQuantity(this, -1)">-</button><input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1"><button onclick="changeQuantity(this, 1)">+</button></td>');
+//                     row.append('<td class="item-subtotal" id="subTotal">' + item.actTicPrice + '元</td>');
+//                     $("#cartItems").append(row);
+//                 });
+//             },
+//             error: function () {
+//                 console.error("Ajax請求失敗");
+//             }
+//         });
+//     });
+// });
 
 
 
