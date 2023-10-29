@@ -149,7 +149,8 @@ public class ActivityService {
 	public List<ActivityVO> getAll() {
 		return dao.getAll();
 	}
-
+	
+	
 	public List<ActivityVO> getActivitiesBySellerId(Integer sel_id) {
 		// 修改dao方法，使其返回List<ActivityVO>，並根據selId取得多個活動
 		List<ActivityVO> activityList = dao.getActivitiesBySellerId(sel_id);
@@ -169,10 +170,12 @@ public class ActivityService {
 			return null;
 		}
 	}
-
+	
+	
 	public void delete(Integer actId) {
 		dao.delete(actId);
 	}
+	
 	
 	public String getActNameByActId(Integer actId) {
 	    // 根据actId从数据库或数据源中获取对应的actName

@@ -6,7 +6,7 @@
 <title>Document</title>
 </head>
 <body>
-	<button id="cartBtn">購物車按鈕</button>
+	<button id="cartBtn">取得Redis購物車明細</button>
 	<table border="1">
 		<thead>
 			<tr>
@@ -18,19 +18,28 @@
 			</tr>
 		</thead>
 		<tbody id="cart-items">
-			<tr class="cart-item">
-				<td><input type="checkbox" name="select" class="item-checkbox"
-					onchange="calculateTotal()"></td>
-				<td class="actName"></td>
-				<td class="actTicPrice">元</td>
-				<td>
-					<button onclick="changeQuantity(this, -1)">-</button> <input
-					type="number" name="quantity" value="1" size="1"
-					class="item-quantity" oninput="calculateSubtotal(this)" min="1">
-					<button onclick="changeQuantity(this, 1)">+</button>
-				</td>
-				<td class="item-subtotal">元</td>
-			</tr>
+<!-- 			<tr class="cart-item"> -->
+<!-- 				<td><input type="checkbox" name="select" class="item-checkbox" -->
+<!-- 					onchange="calculateTotal()"></td> -->
+<!-- 				<td id="actName"></td> -->
+<!-- 				<td id="actTicPrice"></td> -->
+<!-- 				<td> -->
+<!-- 					<button onclick="changeQuantity(this, -1)">-</button> <input -->
+<!-- 					type="number" name="quantity" value="1" size="1" -->
+<!-- 					class="item-quantity" oninput="calculateSubtotal(this)" min="1"> -->
+<!-- 					<button onclick="changeQuantity(this, 1)">+</button> -->
+<!-- 				</td> -->
+<!-- 				<td class="item-subtotal">元</td> -->
+<!-- 			</tr> -->
+		</tbody>
+	</table>
+	<div>
+		<p>
+			總金額: <span id="total-amount">0元</span>
+		</p>
+	</div>
+	<div id="test"></div>
+	<button onclick="checkout()">去結帳</button>
 
 			<!-- 活動票劵1 -->
 			<!-- 			<tr id="${merch.merchId}"> -->
@@ -60,49 +69,43 @@
 			<!-- 				</td> -->
 			<!-- 				<td class="item-subtotal">200${merch.ticketPrice}元</td> -->
 			<!-- 			</tr> -->
-		</tbody>
-	</table>
-	<div>
-		<p>
-			總金額: <span id="total-amount">0元</span>
-		</p>
-	</div>
-	<button onclick="checkout()">去結帳</button>
 
 
 
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
-// =============================== 點擊購物按鈕取得redis資料並顯示在頁面上 ===============================
-	$(document).ready(function () {
+//=============================== 取得redis資料並成功渲染畫面在畫面(測試) ===============================
+$(document).ready(function () {
     $("#cartBtn").click(function () {
+    	
+        var memId = localStorage.getItem("memId");
+
         $.ajax({
             type: "GET",
-            url: "http://localhost:8081/artion/cartServlet",
+            url: "http://localhost:8081/artion/getFromRedis?memId=" + memId,
             dataType: "json",
             success: function (data) {
                 console.log("請求成功");
                 console.log(data);
-                console.log(data.actName);
-//                 $each(data, function(index, item){
-//                 	console.log(data.actName);
-//                 }
-                
-                $("#cartItems").empty();
+                console.log(data[0].actName);
+                console.log(data[0].actTicPrice);
 
-                $.each(data, function (index, item) {
-                    var row = $("<tr>");
-                    row.append('<td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>');
-                    
+                $("#cartItems").empty();
                 
-                    row.append('<td id="actName">' + item.actName + '</td>');
-                    row.append('<td id="actTicPrice">' + item.actTicPrice + '元</td>');
-                    row.append('<td><button onclick="changeQuantity(this, -1)">-</button><input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1"><button onclick="changeQuantity(this, 1)">+</button></td>');
-                    row.append('<td class="item-subtotal" id="subTotal">' + item.actTicPrice + '元</td>');
-                    $("#cartItems").append(row);
-//                     console.log(row);
-                });
+				//取得明細並渲染在網頁上
+                var actTicPriceString = data[0].actTicPrice;
+                var actTicPriceInt = parseInt(actTicPriceString, 10);
+                for (var i = 0; i < data.length; i++) {
+    				var row = $("<tr>");
+    				row.append('<td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>');
+    				row.append('<td id="actName' + i + '">' + data[i].actName + '</td>');
+    				row.append('<td id="actTicPrice' + i + '">' + data[i].actTicPrice + '元</td>');
+    				row.append('<input type="hidden" name="selId" value="' + data[i].selId + '">');
+    				row.append('<td><button onclick="changeQuantity(this, -1)">-</button><input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1"><button onclick="changeQuantity(this, 1)">+</button></td>');
+    				row.append('<td class="item-subtotal">' + data[i].actTicPrice + '元</td>');
+    				$("#cart-items").append(row);
+					}
             },
             error: function () {
                 console.error("Ajax請求失敗");
@@ -110,6 +113,46 @@
         });
     });
 });
+	
+	
+// =============================== 取得redis資料並成功渲染畫面在畫面(完成) ===============================
+// $(document).ready(function () {
+//     $("#cartBtn").click(function () {
+    	
+//         var memId = localStorage.getItem("memId");
+
+//         $.ajax({
+//             type: "GET",
+//             url: "http://localhost:8081/artion/getFromRedis?memId=" + memId,
+//             dataType: "json",
+//             success: function (data) {
+//                 console.log("請求成功");
+//                 console.log(data);
+//                 console.log(data[0].actName);
+//                 console.log(data[0].actTicPrice);
+
+//                 $("#cartItems").empty();
+                
+// 				//取得明細並渲染在網頁上
+//                 var actTicPriceString = data[0].actTicPrice;
+//                 var actTicPriceInt = parseInt(actTicPriceString, 10);
+//                 for (var i = 0; i < data.length; i++) {
+//     				var row = $("<tr>");
+//     				row.append('<td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>');
+//     				row.append('<td id="actName' + i + '">' + data[i].actName + '</td>');
+//     				row.append('<td id="actTicPrice' + i + '">' + data[i].actTicPrice + '元</td>');
+//     				row.append('<td><button onclick="changeQuantity(this, -1)">-</button><input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1"><button onclick="changeQuantity(this, 1)">+</button></td>');
+//     				row.append('<td class="item-subtotal">' + data[i].actTicPrice + '元</td>');
+//     				$("#cart-items").append(row);
+// 					}
+//             },
+//             error: function () {
+//                 console.error("Ajax請求失敗");
+//             }
+//         });
+//     });
+// });
+
 
 
 
