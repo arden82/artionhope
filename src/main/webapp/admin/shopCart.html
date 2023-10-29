@@ -287,6 +287,8 @@
 
 <script>
 
+
+
   //==========呼叫資料庫的方法===============
   function getMerchesData() {
     $.ajax({
@@ -328,7 +330,7 @@
                       </button>
                     </div>
   <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1 ">
-    <h6 class="mb-0 h6price_${merch.merchId}">$<span data_span="${merch.merchId}"></span></h6>
+    <h6 class="mb-0 h6price_${merch.merchId}">$<span id="wow" data_span="${merch.merchId}"></span></h6>
   </div>
   <div class="col-md-1 col-lg-1 col-xl-1 text-end">
     <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
@@ -341,18 +343,19 @@
 
           });
 
-          // 监听数量输入框的变化
-          $('.dynamic-input').on('input', function () {
-            updateTotalQuantity();
 
-
-
-          });
 
 
         } else {
           divBody.html("<tr><td colspan='11'>没有商品数据。</td></tr>");
         }
+
+        // 监听数量输入框的变化
+        $('.dynamic-input').on('input', function () {
+          updateTotalQuantity();
+
+
+        });
       },
       error: function () {
         alert("请求失败。");
@@ -368,7 +371,7 @@
 
   $('.Cart').on('click', '[data-merch]', function () {
     // 在這裡處理您的事件，您可以訪問被點擊的元素的值
-    var inputValue = $(this).val();
+    var inputValue = parseFloat($(this).val());
     var value = $(this).data('merch');
     // console.log('Clicked input value for merch ' + value + ': ' + inputValue);
 
@@ -386,6 +389,10 @@
     //   console.log("未找到有效的價格。");
     // }
 
+    // console.log(inputValue);
+
+    // console.log(merchPrice);
+
     var priceTotal = inputValue * merchPrice;
 
     // console.log("相乘後:" + priceTotal);
@@ -400,6 +407,29 @@
     // 输出获取的值
     // console.log("获取到的<span>元素的文本内容为：" + dataSpan.text());
 
+    var total = 0;
+
+    $(dataSpan).each(function () {
+      var priceText = $(this).text().replace('$', ''); // 获取小计价格
+      var price = parseFloat(priceText); // 转换为浮点数
+
+      if (!isNaN(price)) {
+        total += price; // 将小计价格相加
+      }
+    });
+
+    localStorage.setItem("QAQ", total); // 存储总价
+
+    var QAQ = parseFloat(localStorage.getItem("QAQ")); // 提取并解析总价
+
+    $('.priceTotal').text(QAQ.toFixed(2)); // 更新总价格显示
+
+
+    // 更新总价格的<span>元素，带上货币符号
+
+
+
+
   });
   //==========更新商品列的點擊事件===============
 
@@ -411,6 +441,7 @@
   // 更新总数量的显示函数
   function updateTotalQuantity() {
     var quantityElements = $('.dynamic-input');
+    // console.log(quantityElements);
     totalQuantity = 0;
 
     // 遍历所有数量输入框，将数量相加
@@ -426,13 +457,14 @@
 
   //==========更新數量的方法===============
 
+  // 更新總價格的函數
+
 
 
   //==========一進入畫面就更新===============
   $(document).ready(function () {
 
     getMerchesData();
-
 
 
 
