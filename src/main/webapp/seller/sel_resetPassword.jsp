@@ -4,11 +4,12 @@
 
 <%
 String email = request.getParameter("email");
-String verificationCode = request.getParameter("verificationCode");
-if (email != null && verificationCode != null) {
+String generatedCode = request.getParameter("generatedCode");
+if (email != null && generatedCode != null) {
 	request.setAttribute("email", email);
-	request.setAttribute("verificationCode", verificationCode);
+	request.setAttribute("generatedCode", generatedCode);
 	System.out.println(email);
+	System.out.println(generatedCode);
 }
 %>
 
@@ -75,10 +76,10 @@ if (email != null && verificationCode != null) {
 		</ul>
 	</c:if>
 
-	<c:if test="${not empty succesfulMsg}">
-		<font style="color: red">請修正以下錯誤:</font>
+	<c:if test="${not empty successfulMsg}">
+		<font style="color: red">你已成功修改密碼!</font>
 		<ul>
-			<c:forEach var="message" items="${succesfulMsg}">
+			<c:forEach var="message" items="${successfulMsg}">
 				<li style="color: red">${message}</li>
 			</c:forEach>
 		</ul>
@@ -129,25 +130,29 @@ if (email != null && verificationCode != null) {
 								method="post">
 								<div class="form-floating mb-3">
 									<input type="text" name="verificationCode" class="form-control"
-										id="floatingInput"> <label for="floatingInput"
-										style="font-size: 18px;">驗證碼</label>
-								</div>
-								<!-- 这是你的登录按钮 -->
-								<div class="form-floating mb-3">
-									<input type="text" name="selPassword" class="form-control"
-										id="floatingInput"> <label for="floatingInput"
-										style="font-size: 18px;">請輸入密碼</label>
-								</div>
-								<div class="form-floating mb-3">
-									<input type="text" name="selPassword2" class="form-control"
-										id="floatingInput"> <label for="floatingInput"
-										style="font-size: 18px;">請再輸入一次密碼</label>
+										id="verificationCode"> <label for="floatingInput"
+										style="font-size: 14px;">驗證碼</label>
+
+
 								</div>
 
-								<button type="submit" class="btn btn-primary py-3 w-100 mb-4">送出</button>
-								<!-- 隐藏的字段，可以包含需要传递到Servlet的信息，如操作名称 -->
-								<input type="hidden" name="action">
-							</form>
+								<div class="form-floating mb-3">
+									<input type="text" name="selPassword" class="form-control"
+										id="selPassword"><label for="floatingInput" 
+										style="font-size: 14px;">請輸入密碼</label>
+
+								</div>
+
+								<div class="form-floating mb-3">
+									<input type="text" name="selPassword2" class="form-control"
+										id="selPassword2"><label for="floatingInput" 
+										style="font-size: 14px;">請再輸入一次密碼</label>
+
+								</div>
+
+								<input type="hidden" name="action" value="resetPassword">
+								<input type="submit" value="送出">
+							</Form>
 
 						</div>
 					</div>
@@ -155,27 +160,27 @@ if (email != null && verificationCode != null) {
 				<!-- Sign In End -->
 
 
-				<!-- JavaScript Libraries -->
-				<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-				<script
-					src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-				<script
-					src="<%=request.getContextPath()%>/seller/lib/chart/chart.min.js"></script>
-				<script
-					src="<%=request.getContextPath()%>/seller/lib/easing/easing.min.js"></script>
-				<script
-					src="<%=request.getContextPath()%>/seller/lib/waypoints/waypoints.min.js"></script>
-				<script
-					src="<%=request.getContextPath()%>/seller/lib/owlcarousel/owl.carousel.min.js"></script>
-				<script
-					src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/moment.min.js"></script>
-				<script
-					src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/moment-timezone.min.js"></script>
-				<script
-					src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+			<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/chart/chart.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/easing/easing.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/waypoints/waypoints.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/owlcarousel/owl.carousel.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/moment.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-				<!-- Template Javascript -->
-				<script src="js/main.js"></script>
+	<!-- Template Javascript -->
+	<script src="js/main.js"></script>
 </body>
 
 </html>

@@ -167,8 +167,7 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 				</div>
 				<div
 					style="margin-left: 10px; display: flex; flex-direction: column; align-items: center;">
-					<label for="userNameSide"></label>
-					<h6 id="userNameSide" style="margin-top: 10px;">${sellerVO.selName}</h6>
+					<h6 id="userNameSide" class="mb-0">${sellerVO.selName}</h6>
 				</div>
 			</div>
 		</div>
@@ -202,11 +201,12 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 						class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
 						<a href="../seller/sel_profile.jsp" class="dropdown-item">My
 							Profile</a>
-						<form
-							action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
-							method="post">
-							<button type="submit" class="dropdown-item">Log Out</button>
-						</form>
+								<form
+								action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
+								method="post">
+								<button type="submit" class="dropdown-item">Log Out</button>
+								<input type="hidden" name="action" value="logout">
+							</form>
 
 					</div>
 				</div>

@@ -151,10 +151,8 @@ pageContext.setAttribute("list", list);
 							class="fa-solid fa-heart-circle-plus me-2"> </i></i>新增活動</a> <a
 							href="../seller/sel_order.jsp" class="nav-item nav-link"><i
 							class="fa-solid fa-magnifying-glass me-2"> </i></i>訂單總覽</a> <a
-							href="sel_notification.jsp" class="nav-item nav-link"> <i
-							class="fa-solid fa-envelope me-2"> </i>通知訊息
-						</a> <a href="../seller/sel_profile.jsp" class="nav-item nav-link">
-							<i class="fa-solid fa-address-card me-2"> </i>廠商基本資料
+							href="../seller/sel_profile.jsp" class="nav-item nav-link"> <i
+							class="fa-solid fa-address-card me-2"> </i>廠商基本資料
 						</a>
 					</div>
 				</div>
@@ -170,7 +168,7 @@ pageContext.setAttribute("list", list);
 				</div>
 				<div
 					style="margin-left: 10px; display: flex; flex-direction: column; align-items: center;">
-					<h6 id="userNameSide" class="mb-0">寬宏藝術</h6>
+					<h6 id="userNameSide" class="mb-0">${sellerVO.selName}</h6>
 				</div>
 			</div>
 		</div>
@@ -207,7 +205,6 @@ pageContext.setAttribute("list", list);
 								action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
 								method="post">
 								<button type="submit" class="dropdown-item">Log Out</button>
-								<!-- 在這裡添加您的其他表單元素，如果需要的話 -->
 								<input type="hidden" name="action" value="logout">
 							</form>
 
@@ -234,7 +231,7 @@ pageContext.setAttribute("list", list);
 								</div>
 
 								<div class="col-md-6 d-md-flex justify-content-md-end">
-									<button class="btn btn-success me-2">匯出</button>
+
 									<select id="filterSelect" class="form-select me-2 small-select">
 										<option value="0">全部</option>
 										<option value="1">表演</option>
@@ -266,10 +263,10 @@ pageContext.setAttribute("list", list);
 										<td>${activityVO.actName}</td>
 										<td><c:choose>
 												<c:when test="${activityVO.actType == 1}">
-                   								市集
+                   								展覽
                 								</c:when>
 												<c:when test="${activityVO.actType == 2}">
-                    							展覽
+                    							市集
                 								</c:when>
 												<c:when test="${activityVO.actType == 3}">
                     							表演
@@ -327,7 +324,7 @@ pageContext.setAttribute("list", list);
 					</div>
 				</div>
 				<!-- Table End -->
-				<!-- 			
+						
 				<!-- Footer Start -->
 				<div class="container-fluid pt-4 px-4">
 					<div class="bg-light rounded-top p-4">
@@ -342,11 +339,6 @@ pageContext.setAttribute("list", list);
 				<!-- Footer End -->
 			</div>
 			<!-- Content End -->
-
-			<!-- Instant Customer Support Icon -->
-			<div id="customer-support-icon" class="icon">
-				<i class="fa-brands fa-rocketchat fa-2x"></i>
-			</div>
 
 			<script>
 				document

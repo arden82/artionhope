@@ -27,7 +27,7 @@
 		        message.setFrom(new InternetAddress("artionhope@gmail.com")); // 寄件者
 		        message.addRecipient(Message.RecipientType.TO, new InternetAddress(selAccount)); // 收件者
 		        message.setSubject("Artion 忘記密碼信-系統信件-請勿回覆"); // 信件主旨
-		        String alink = url + "/seller/selResetPassword?email=" + selAccount + "&verificationCode=" + generatedCode + "&source=email";
+		        String alink = url + "/seller/selResetPassword?email=" + selAccount + "&generatedCode=" + generatedCode;
 		        message.setText("Artion廠商您好: 請點選下方連結輸入驗證碼，並重新設置您的廠商密碼。驗證碼：" + generatedCode + "\n" + alink);
 		        Transport.send(message); // 发送email
 		    } catch (MessagingException e) {

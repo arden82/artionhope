@@ -68,6 +68,15 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 			</c:forEach>
 		</ul>
 	</c:if>
+<c:if test="${not empty successfulMsg}">
+		<font style="color: red">你已成功修改密碼!</font>
+		<ul>
+			<c:forEach var="message" items="${successfulMsg}">
+				<li style="color: red">${message}</li>
+			</c:forEach>
+		</ul>
+	</c:if>
+
 
 	<FORM METHOD="post"
 		ACTION="<%=request.getContextPath()%>/seller/SellerServlet.do"
@@ -309,7 +318,7 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 								
 								<div class="text-center" style="margin-top: 30px;">
 									<input type="hidden" name="action" value="insert"> <input
-										type="submit" value="送出">
+										type="submit" value="送出" style="margin-bottom: 20px;">
 								</div>
 						</table>
 					</FORM>
