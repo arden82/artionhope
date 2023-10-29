@@ -1,12 +1,12 @@
 package com.tha103.artion.activity.model;
 
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.*;
-import java.sql.Connection;
 import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
-import com.tha103.artion.util.AddressToLatLng;
+
 import com.tha103.artion.util.HibernateUtil;
 
 public class ActivityDAO implements ActivityDAO_interface {
@@ -72,6 +72,7 @@ public class ActivityDAO implements ActivityDAO_interface {
 		}
 		return null;
 	}
+	
 
 	public List<ActivityVO> getAll() {
 		List<ActivityVO> list = null;

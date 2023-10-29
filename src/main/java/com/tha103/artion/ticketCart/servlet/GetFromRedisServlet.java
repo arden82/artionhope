@@ -56,9 +56,11 @@ public class GetFromRedisServlet extends HttpServlet {
             // 解析JSON字符串以获取活动ID
             JsonObject cartItemJson = new JsonParser().parse(cartItem).getAsJsonObject();
             String actId = cartItemJson.get("活動編號").getAsString();
+            String selIdStr = cartItemJson.get("廠商編號").getAsString();
             
             // 使用活动ID查询数据库以获取活动名称和价格
             ActivityVO activityVO = activityService.getOneActivity(Integer.parseInt(actId));
+            int selId = Integer.parseInt(selIdStr);
             
             if (activityVO != null) {
                 // 创建一个 JSON 对象以存储活动信息
@@ -66,23 +68,13 @@ public class GetFromRedisServlet extends HttpServlet {
                 cartItemData.addProperty("actId", actId);
                 cartItemData.addProperty("actName", activityVO.getActName());
                 cartItemData.addProperty("actTicPrice", activityVO.getActTicketPrice());
+                cartItemData.addProperty("selId", selId);
                 
                 jsonData.add(cartItemData);
             }
         }
         
-//        TicketOrderDetailService ticOrdDetailService = new TicketOrderDetailService();
-//		List<AdministratorVO> adminList = ticOrdDetailService.getAll();
-//        List<Map<String, Object>> adminMapList = new ArrayList<>();
-//		for (AdministratorVO admin : adminList) {
-//			Map<String, Object> adminMap = new HashMap<>();
-//			adminMap.put("admId", admin.getAdmId());
-//			adminMap.put("admName", admin.getAdmName());
-//			adminMapList.add(adminMap);
-//		}
-        
-
-        // 将购物车数据转换为 JSON 格式并发送给前端
+        // 將購物車資料轉成 JSON 送回前端
         response.getWriter().write(jsonData.toString());
     }
 }

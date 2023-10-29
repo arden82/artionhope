@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.JsonObject;
+import com.tha103.artion.activity.model.ActivityDAO_interface;
+import com.tha103.artion.activity.model.ActivityVO;
+import com.tha103.artion.activity.service.ActivityService;
 
 import redis.clients.jedis.Jedis;
 
@@ -30,9 +33,16 @@ public class AddToCartServlet2 extends HttpServlet {
         // 选择 db03 数据库
         jedis.select(3);
 
+        int actIdInt = Integer.parseInt(actId);
+        ActivityService activityService = new ActivityService();
+        ActivityVO activityVO = activityService.getOneActivity(actIdInt);
+        int selId = activityVO.getSeller().getSelId();
+        
+        
         // 创建 JSON 对象
         JsonObject cartItem = new JsonObject();
         cartItem.addProperty("活動編號", actId);
+        cartItem.addProperty("廠商編號", selId);
 
         // 将 JSON 对象转换为字符串
         String jsonItem = cartItem.toString();
