@@ -101,6 +101,7 @@ $(document).ready(function () {
     				row.append('<td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>');
     				row.append('<td id="actName' + i + '">' + data[i].actName + '</td>');
     				row.append('<td id="actTicPrice' + i + '">' + data[i].actTicPrice + '元</td>');
+    				row.append('<input type="hidden" name="selId" value="' + data[i].selId + '">');
     				row.append('<td><button onclick="changeQuantity(this, -1)">-</button><input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1"><button onclick="changeQuantity(this, 1)">+</button></td>');
     				row.append('<td class="item-subtotal">' + data[i].actTicPrice + '元</td>');
     				$("#cart-items").append(row);
