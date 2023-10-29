@@ -104,22 +104,27 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 		<!-- Spinner End -->
 
 		<!-- Sidebar Start -->
-		<div class="sidebar pe-4 pb-3 d-flex flex-column">
+	<div class="sidebar pe-4 pb-3 d-flex flex-column">
 			<nav class="navbar bg-light navbar-light">
-				<a href="../activity/sel_index.jsp"
-					class="navbar-brand mx-4 mb-3 artionimg"> <img
-					src="./images/artion-logo.png">
+				<a href="../activity/sel_index.jsp" class="navbar-brand mx-4 mb-3 artionimg">
+					<img src="./images/artion-logo.png">
 				</a>
 
 				<div class="navbar-nav w-100">
 					<div class="nav-item">
 						<a href="../activity/sel_index.jsp" class="nav-item nav-link">
-							<i class="fa-solid fa-users me-2"></i> </i>活動總覽
-						</a> <a href="../activity/sel_actadd.jsp" class="nav-item nav-link">
-							<i class="fa-solid fa-heart-circle-plus me-2"></i> </i>新增活動
-						</a> <a href="sel_actadd.jsp" class="nav-item nav-link"><i
-							class="fa-solid fa-magnifying-glass me-2"></i> </i>訂單總覽</a> <a
-							href="./sel_profile.jsp" class="nav-item nav-link"> <i
+						<i class="fa-solid fa-users me-2"></i>
+						</i>活動總覽</a> 
+						
+						<a href="../activity/sel_actadd.jsp" class="nav-item nav-link">
+						<i class="fa-solid fa-heart-circle-plus me-2"></i>
+						</i>新增活動</a> 
+						
+						<a href="./sel_order.jsp" class="nav-item nav-link"><i
+							class="fa-solid fa-magnifying-glass me-2"></i>
+							</i>訂單總覽</a> 
+							
+						<a href="./sel_profile.jsp" class="nav-item nav-link"> <i
 							class="fa-solid fa-address-card me-2"></i>廠商基本資料
 						</a>
 					</div>
@@ -135,8 +140,7 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 				</div>
 				<div
 					style="margin-left: 10px; display: flex; flex-direction: column; align-items: center;">
-					<label for="userNameSide"></label>
-					<h6 id="userNameSide" style="margin-top: 10px;">${sellerVO.selName}</h6>
+					<h6 id="userNameSide" class="mb-0">${sellerVO.selName}</h6>
 				</div>
 			</div>
 		</div>
@@ -169,11 +173,12 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 						class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
 						<a href="../seller/sel_profile.jsp" class="dropdown-item">My
 							Profile</a>
-						<form
-							action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
-							method="post">
-							<button type="submit" class="dropdown-item">Log Out</button>
-						</form>
+							<form
+								action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
+								method="post">
+								<button type="submit" class="dropdown-item">Log Out</button>
+								<input type="hidden" name="action" value="logout">
+							</form>
 
 					</div>
 				</div>
@@ -386,10 +391,11 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 
 								</div>
 							</div>
-
+						
 							<div class="mb-3">
 								<label for="formFile1" class="form-label">廠商頭像</label> <input
 									class="form-control" type="file" name="newSelProfilePicture">
+										<br>
 								<img
 									src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
 									width=100px height=100px" />

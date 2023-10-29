@@ -6,6 +6,7 @@
 <%@ page import="java.util.*"%>
 <%@page import="com.tha103.artion.seller.service.*"%>
 <%@page import="com.tha103.artion.ticketOrder.model.*"%>
+
 <%
 Integer selId = (Integer) session.getAttribute("sel_id");
 if (selId == null) {
@@ -142,7 +143,7 @@ pageContext.setAttribute("list", list);
 						<i class="fa-solid fa-heart-circle-plus me-2"></i>
 						</i>新增活動</a> 
 						
-						<a href="sel_actadd.jsp" class="nav-item nav-link"><i
+						<a href="./sel_order.jsp" class="nav-item nav-link"><i
 							class="fa-solid fa-magnifying-glass me-2"></i>
 							</i>訂單總覽</a> 
 							
@@ -162,50 +163,50 @@ pageContext.setAttribute("list", list);
 				</div>
 				<div
 					style="margin-left: 10px; display: flex; flex-direction: column; align-items: center;">
-					<label for="userNameSide"></label>
-					<h6 id="userNameSide" style="margin-top: 10px;">${sellerVO.selName}</h6>
+					<h6 id="userNameSide" class="mb-0">${sellerVO.selName}</h6>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Sidebar End -->
 
-<!-- Content Start -->
-		<div class="content">
-			<!-- Navbar Start -->
-			<nav
-				class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-				<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-					<h2 class="text-primary mb-0">
-						<i class="fa fa-hashtag"></i>
-					</h2>
-				</a> <a href="#" class="sidebar-toggler flex-shrink-0"> <i
-					class="fa fa-bars"></i>
-				</a>
+	<!-- Content Start -->
+	<div class="content">
+		<!-- Navbar Start -->
+		<nav
+			class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+			<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+				<h2 class="text-primary mb-0">
+					<i class="fa fa-hashtag"></i>
+				</h2>
+			</a> <a href="#" class="sidebar-toggler flex-shrink-0"> <i
+				class="fa fa-bars"></i>
+			</a>
 
-				<div class="navbar-nav align-items-center ms-auto">
-						<!-- 右上角头像 -->
-						<div class="nav-item dropdown">
-							<a href="#" class="nav-link dropdown-toggle"
-								data-bs-toggle="dropdown"> <img
-								src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
-								width=50px height=50px style="border-radius: 50%;"/> <span id="userNameNav"
-								class="d-none d-lg-inline-flex"></span>
-							</a>
-							<div
-								class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-								<a href="../seller/sel_profile.jsp" class="dropdown-item">My
-									Profile</a>
-								<form
-									action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
-									method="post">
-									<button type="submit" class="dropdown-item">Log Out</button>
-								</form>
+			<div class="navbar-nav align-items-center ms-auto">
+				<!-- 右上角头像 -->
+				<div class="nav-item dropdown">
+					<a href="#" class="nav-link dropdown-toggle"
+						data-bs-toggle="dropdown"> <img
+						src="<%=request.getContextPath()%>/seller/SellerServlet2.do?selId=${sellerVO.selId}"
+						width=50px height=50px style="border-radius: 50%;" /> <span
+						id="userNameNav" class="d-none d-lg-inline-flex"></span>
+					</a>
+					<div
+						class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+						<a href="../seller/sel_profile.jsp" class="dropdown-item">My
+							Profile</a>
+						<form
+								action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
+								method="post">
+								<button type="submit" class="dropdown-item">Log Out</button>
+								<input type="hidden" name="action" value="logout">
+							</form>
 
-							</div>
-						</div>
-			</nav>
-			<!-- Navbar End -->
+					</div>
+				</div>
+		</nav>
+		<!-- Navbar End -->
 
 		<!-- Table Start -->
 		<div class="container-fluid pt-4 px-4">
@@ -215,44 +216,44 @@ pageContext.setAttribute("list", list);
 						<h6 class="mb-4" style="font-size: 24px">
 							<a href="">訂單總覽</a>
 						</h6>
-						<form
-							class="d-md-flex justify-content-between align-items-center mb-3">
-							<div class="col-md-6 d-md-flex justify-content-md-end">
-								<!-- Existing content -->
+						<!-- 						<form -->
+						<!-- 							class="d-md-flex justify-content-between align-items-center mb-3"> -->
+						<!-- 							<div class="col-md-6 d-md-flex justify-content-md-end"> -->
+						<!-- 								Existing content -->
 
-							</div>
-							<div class="col-md-6 d-md-flex justify-content-md-end">
-								<!-- Move the select elements here -->
-								<select id="orderstatus" class="form-select me-2 small-select"
-									style="font-size: 14px">
-									<option value="0">訂單狀態</option>
-									<option value="1">未完成</option>
-									<option value="2">已完成</option>
-									<option value="3">已取消</option>
-								</select> 
-								
-								<select id="paymentstatus"
-									class="form-select me-2 small-select" style="font-size: 14px">
-									<option value="0">付款狀態</option>
-									<option value="1">未付款</option>
-									<option value="2">已付款</option>
-									<option value="3">已取消</option>
-								</select>
-								
-								 <select id="ordertime" class="form-select me-2 small-select"
-									style="font-size: 14px">
-									<option value="0">訂單時間</option>
-									<option value="1">最新到最舊</option>
-									<option value="2">最舊到最新</option>
-								</select>
-							</div>
-						</form>
+						<!-- 							</div> -->
+						<!-- 							<div class="col-md-6 d-md-flex justify-content-md-end"> -->
+						<!-- 								Move the select elements here -->
+						<!-- 								<select id="orderstatus" class="form-select me-2 small-select" -->
+						<!-- 									style="font-size: 14px"> -->
+						<!-- 									<option value="0">訂單狀態</option> -->
+						<!-- 									<option value="1">未完成</option> -->
+						<!-- 									<option value="2">已完成</option> -->
+						<!-- 									<option value="3">已取消</option> -->
+						<!-- 								</select>  -->
+
+						<!-- 								<select id="paymentstatus" -->
+						<!-- 									class="form-select me-2 small-select" style="font-size: 14px"> -->
+						<!-- 									<option value="0">付款狀態</option> -->
+						<!-- 									<option value="1">未付款</option> -->
+						<!-- 									<option value="2">已付款</option> -->
+						<!-- 									<option value="3">已取消</option> -->
+						<!-- 								</select> -->
+
+						<!-- 								 <select id="ordertime" class="form-select me-2 small-select" -->
+						<!-- 									style="font-size: 14px"> -->
+						<!-- 									<option value="0">訂單時間</option> -->
+						<!-- 									<option value="1">最新到最舊</option> -->
+						<!-- 									<option value="2">最舊到最新</option> -->
+						<!-- 								</select> -->
+						<!-- 							</div> -->
+						<!-- 						</form> -->
 
 
 						<table class="table"
 							style="font-size: 18px; text-align: center; vertical-align: middle;">
 							<thead>
-							<tr>
+								<tr>
 									<th scope="col">訂單編號</th>
 									<th scope="col">訂單成立時間</th>
 									<th scope="col">會員編號</th>
@@ -295,9 +296,9 @@ pageContext.setAttribute("list", list);
                     							已取消
                 								</c:when>
 										</c:choose></td>
-							<td>
-							<a href="sel_orderDetail.jsp?ticketOrdId=${ticketOrderVO.ticketOrdId}">查看詳情</a>
-							</td>
+									<td><a
+										href="sel_orderDetail.jsp?ticketOrdId=${ticketOrderVO.ticketOrdId}">查看詳情</a>
+									</td>
 								</tr>
 
 							</c:forEach>
@@ -307,6 +308,7 @@ pageContext.setAttribute("list", list);
 				</div>
 			</div>
 		</div>
+
 		<!-- Table End -->
 
 		<!-- Footer Start -->
@@ -314,87 +316,96 @@ pageContext.setAttribute("list", list);
 			<div class="bg-light rounded-top p-4">
 				<div class="row">
 					<div class="col-12 col-sm-6 text-center text-sm-start"
-						style="margin-bottom: 20px !important;">
+						style="margin-bottom: 30px !important;">
 						&copy; <a href="#">Artion</a>, All Right Reserved.
 					</div>
 				</div>
 			</div>
-
-			<!-- Footer End -->
-
-			<!-- Content End -->
-
-			<!-- Instant Customer Support Icon -->
-			<div id="customer-support-icon" class="icon">
-				<i class="fa-brands fa-rocketchat fa-2x"></i>
-			</div>
 		</div>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    // 获取筛选条件的 select 元素
-    var orderStatusSelect = document.getElementById('orderstatus');
-    var paymentStatusSelect = document.getElementById('paymentstatus');
-    var orderTimeSelect = document.getElementById('ordertime');
+		<!-- Footer End -->
+	</div>
+	<!-- Content End -->
 
-    // 获取数据行（假设有一个具有 class="data-row" 的元素包含数据）
-    var dataRows = document.querySelectorAll('.data-row');
+	<script>
+		document
+				.addEventListener(
+						'DOMContentLoaded',
+						function() {
+							// 获取筛选条件的 select 元素
+							var orderStatusSelect = document
+									.getElementById('orderstatus');
+							var paymentStatusSelect = document
+									.getElementById('paymentstatus');
+							var orderTimeSelect = document
+									.getElementById('ordertime');
 
-    // 监听筛选条件的变化事件
-    orderStatusSelect.addEventListener('change', filterData);
-    paymentStatusSelect.addEventListener('change', filterData);
-    orderTimeSelect.addEventListener('change', filterData);
+							// 获取数据行（假设有一个具有 class="data-row" 的元素包含数据）
+							var dataRows = document
+									.querySelectorAll('.data-row');
 
-    function filterData() {
-        var selectedOrderStatus = orderStatusSelect.value;
-        var selectedPaymentStatus = paymentStatusSelect.value;
-        var selectedOrderTime = orderTimeSelect.value;
+							// 监听筛选条件的变化事件
+							orderStatusSelect.addEventListener('change',
+									filterData);
+							paymentStatusSelect.addEventListener('change',
+									filterData);
+							orderTimeSelect.addEventListener('change',
+									filterData);
 
-        // 遍历数据行，根据筛选条件进行过滤
-        for (var i = 0; i < dataRows.length; i++) {
-            var dataRow = dataRows[i];
-            var dataOrderStatus = dataRow.getAttribute('data-orderstatus');
-            var dataPaymentStatus = dataRow.getAttribute('data-paymentstatus');
-            var dataOrderTime = dataRow.getAttribute('data-ordertime');
+							function filterData() {
+								var selectedOrderStatus = orderStatusSelect.value;
+								var selectedPaymentStatus = paymentStatusSelect.value;
+								var selectedOrderTime = orderTimeSelect.value;
 
-            // 检查筛选条件是否匹配
-            var matchesOrderStatus = (selectedOrderStatus == '0' || selectedOrderStatus == dataOrderStatus);
-            var matchesPaymentStatus = (selectedPaymentStatus == '0' || selectedPaymentStatus == dataPaymentStatus);
-            var matchesOrderTime = (selectedOrderTime == '0' || selectedOrderTime == dataOrderTime);
+								// 遍历数据行，根据筛选条件进行过滤
+								for (var i = 0; i < dataRows.length; i++) {
+									var dataRow = dataRows[i];
+									var dataOrderStatus = dataRow
+											.getAttribute('data-orderstatus');
+									var dataPaymentStatus = dataRow
+											.getAttribute('data-paymentstatus');
+									var dataOrderTime = dataRow
+											.getAttribute('data-ordertime');
 
-            if (matchesOrderStatus && matchesPaymentStatus && matchesOrderTime) {
-                // 符合筛选条件的数据行显示
-                dataRow.style.display = '';
-            } else {
-                // 不符合筛选条件的数据行隐藏
-                dataRow.style.display = 'none';
-            }
-        }
-    }
-});
+									// 检查筛选条件是否匹配
+									var matchesOrderStatus = (selectedOrderStatus == '0' || selectedOrderStatus == dataOrderStatus);
+									var matchesPaymentStatus = (selectedPaymentStatus == '0' || selectedPaymentStatus == dataPaymentStatus);
+									var matchesOrderTime = (selectedOrderTime == '0' || selectedOrderTime == dataOrderTime);
 
-</script>
+									if (matchesOrderStatus
+											&& matchesPaymentStatus
+											&& matchesOrderTime) {
+										// 符合筛选条件的数据行显示
+										dataRow.style.display = '';
+									} else {
+										// 不符合筛选条件的数据行隐藏
+										dataRow.style.display = 'none';
+									}
+								}
+							}
+						});
+	</script>
 
-		<!-- JavaScript Libraries -->
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-		<script
-			src="<%=request.getContextPath()%>/seller/lib/chart/chart.min.js"></script>
-		<script
-			src="<%=request.getContextPath()%>/seller/lib/easing/easing.min.js"></script>
-		<script
-			src="<%=request.getContextPath()%>/seller/lib/waypoints/waypoints.min.js"></script>
-		<script
-			src="<%=request.getContextPath()%>/seller/lib/owlcarousel/owl.carousel.min.js"></script>
-		<script
-			src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/moment.min.js"></script>
-		<script
-			src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/moment-timezone.min.js"></script>
-		<script
-			src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/chart/chart.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/easing/easing.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/waypoints/waypoints.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/owlcarousel/owl.carousel.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/moment.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-		<!-- Template Javascript -->
-		<script src="js/main.js"></script>
+	<!-- Template Javascript -->
+	<script src="js/main.js"></script>
 </body>
 
 </html>
