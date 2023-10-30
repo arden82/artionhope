@@ -5,7 +5,17 @@
 
 <%
 //見com.emp.controller.EmpServlet.java第238行存入req的empVO物件 (此為輸入格式有錯誤時的empVO物件)
+Integer selId = (Integer) session.getAttribute("sel_id");
+if (selId == null) {
+	return;
+}
 ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
+if (activityVO != null) {
+	String actName = activityVO.getActName();
+	// 在此处使用 actName
+} else {
+	// 处理 activityVO 为空的情况
+}
 %>
 
 
@@ -38,17 +48,21 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+<link
+	href="<%=request.getContextPath()%>/activity/lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
-<link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+<link
+	href="<%=request.getContextPath()%>/activity/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="<%=request.getContextPath()%>/activity/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="css/style.css" rel="stylesheet">
-
+<link href="<%=request.getContextPath()%>/activity/css/style.css"
+	rel="stylesheet">
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -201,11 +215,11 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 						<a href="../seller/sel_profile.jsp" class="dropdown-item">My
 							Profile</a>
 						<form
-								action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
-								method="post">
-								<button type="submit" class="dropdown-item">Log Out</button>
-								<input type="hidden" name="action" value="logout">
-							</form>
+							action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
+							method="post">
+							<button type="submit" class="dropdown-item">Log Out</button>
+							<input type="hidden" name="action" value="logout">
+						</form>
 
 					</div>
 				</div>
@@ -431,7 +445,7 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 								<div>
 									<img
 										src="<%=request.getContextPath()%>/activity/ActivityServlet2.do?actId=${activityVO.actId}"
-										width=200px height=200px />
+										 width="400px" height="200px" />
 								</div>
 
 								<br> <input type="hidden" name="action" value="update">
@@ -441,111 +455,45 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 		</FORM>
 	</div>
 
-
-	<!-- Form End -->
-
-	<!-- Footer Start -->
-	<div class="container-fluid pt-4 px-4">
-		<div class="bg-light rounded-top p-4">
-			<div class="row">
-				<div class="col-12 col-sm-6 text-center text-sm-start"
-					style="margin-bottom: 30px !important;">
-					&copy; <a href="#">Artion</a>, All Right Reserved.
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Footer End -->
-
-	<!-- Content End -->
-
-
-
-	<script> 
- 		document.getElementById("actStartTimeInput").addEventListener("input", function () {
-    		 // Add seconds ":00" to match the HH:mm:ss format
-     		var inputTime = this.value;
-    		 if (inputTime) {
-        		this.value = inputTime + ":00";
-     		}
- 		});
-		
-		document.getElementById("actEndTimeInput").addEventListener("input", function () {
- 	   		 // Add seconds ":00" to match the HH:mm:ss format
- 	    		var inputTime = this.value;
- 	   		 if (inputTime) {
- 	        		this.value = inputTime + ":00";
-	    		}
- 			});
-
-
-</script>
-
 	<script>
-                //即時客服
-                
-                const customerSupportIcon = document.getElementById('customer-support-icon');
-                let isIconUp = false;
-
-                customerSupportIcon.addEventListener('click', () => {
-                    if (isIconUp) {
-                        customerSupportIcon.style.transform = 'translateY(0)';
-                    } else {
-                        customerSupportIcon.style.transform = 'translateY(-100px)'; // Adjust the distance as needed
-                    }
-                    isIconUp = !isIconUp;
-                });
-            </script>
-
-	<script>
-			// 更換profile pic會同步
-			function handleImageUpload(input, imageId) {
-				var userImage = document.getElementById(imageId);
-				var uploadText = userImage.nextElementSibling; // 使用图像元素的下一个兄弟元素（即文本元素）
-
-				if (input.files && input.files[0]) {
-					var reader = new FileReader();
-
-					reader.onload = function(e) {
-						userImage.src = e.target.result;
-						uploadText.style.display = 'none'; // 设置为 'none' 以隐藏文本
-
-						// 添加以下代码来更新右上角的头像
-						var userImageNav = document
-								.getElementById('userImageNav');
-						if (userImageNav) {
-							userImageNav.src = e.target.result;
-						}
-					};
-
-					reader.readAsDataURL(input.files[0]);
-				}
-			}
-			// 在页面加载后，为头像上传元素添加事件监听
-			document.addEventListener('DOMContentLoaded', function() {
-				var fileInput = document.getElementById('fileInput'); // 侧边栏头像上传元素
-				var userImageNav = document.getElementById('userImageNav'); // 右上角的头像元素
-
-				fileInput.addEventListener('change', function() {
-					handleImageUpload(this, 'userImageNav');
+		document.getElementById("actStartTimeInput").addEventListener("input",
+				function() {
+					// Add seconds ":00" to match the HH:mm:ss format
+					var inputTime = this.value;
+					if (inputTime) {
+						this.value = inputTime + ":00";
+					}
 				});
-			});
-		</script>
 
-	<!-- JavaScript Libraries -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/chart/chart.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/waypoints/waypoints.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="lib/tempusdominus/js/moment.min.js"></script>
-	<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-	<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-</head>
-<!-- Template Javascript -->
-<script src="js/main.js"></script>
+		document.getElementById("actEndTimeInput").addEventListener("input",
+				function() {
+					// Add seconds ":00" to match the HH:mm:ss format
+					var inputTime = this.value;
+					if (inputTime) {
+						this.value = inputTime + ":00";
+					}
+				});
+	</script><!-- JavaScript Libraries -->
+				
+				<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+				<script
+					src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/easing/easing.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/waypoints/waypoints.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/owlcarousel/owl.carousel.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/tempusdominus/js/moment.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/tempusdominus/js/moment-timezone.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+				<!-- Template Javascript -->
+				<script src="<%=request.getContextPath()%>/activity/js/main.js"></script>
 </body>
 
 </html>

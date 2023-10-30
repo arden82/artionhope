@@ -7,6 +7,10 @@
 <%@ page import="com.tha103.artion.seller.service.*"%>
 
 <%
+Integer selId = (Integer) session.getAttribute("sel_id");
+if (selId == null) {
+	return;
+}
 SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 %>
 
@@ -39,16 +43,20 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+<link
+	href="<%=request.getContextPath()%>/seller/lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
-<link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+<link
+	href="<%=request.getContextPath()%>/seller/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/seller/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="css/style.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/seller/css/style.css"
+	rel="stylesheet">
 
 <!-- Font Awesome -->
 <link rel="stylesheet"
@@ -191,18 +199,18 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 							<div class="mb-3">
 
 								<div class="form-group">
-									<label for="sellEmail" class="form-label">E-mail</label> <input
-										type="email" class="form-control" id="sellEmail"
+									<label for="selAccount" class="form-label">E-mail</label> <input
+										type="email" class="form-control" id="selAccount"
 										name="selAccount" style="color: lightgrey" readonly
 										value="${sellerVO.selAccount}">
 								</div>
 								<div class="row">
 									<div class="col">
 										<div class="mb-4">
-											<label for="sellpassword" class="form-label">密碼</label>
+											<label for="selPassword" class="form-label">密碼</label>
 											<div class="d-flex">
 												<input type="password" class="form-control"
-													id="sellpassword" name="selPassword"
+													id="selPassword" name="selPassword" readonly
 													value="${sellerVO.selPassword}">
 											</div>
 											<div class="mb-3">
@@ -217,13 +225,13 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 
 								</div>
 								<div class="mb-3">
-									<label for="sellName" class="form-label">廠商名稱</label> <input
-										type="text" class="form-control" id="sellName" name="selName"
+									<label for="selName" class="form-label">廠商名稱</label> <input
+										type="text" class="form-control" id="selName" name="selName"
 										value="${sellerVO.selName}">
 								</div>
 								<div class="mb-3">
-									<label for="sellPhoneNumber" class="form-label">電話</label> <input
-										type="text" class="form-control" id="sellPhoneNumber"
+									<label for="selName" class="form-label">電話</label> <input
+										type="text" class="form-control" id="selName"
 										name="selPhone" value="${sellerVO.selPhone}">
 								</div>
 							</div>
@@ -235,24 +243,24 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 					<div class="col-sm-12 col-xl-6">
 						<div class="bg-light rounded h-100 p-4">
 							<div class="mb-3">
-								<label for="sellAddress" class="form-label"
+								<label for="selAddress" class="form-label"
 									style="margin-top: 55px;">廠商地址</label> <input type="text"
-									class="form-control" id="sellAddress" name="selAddress"
+									class="form-control" id="selAddress" name="selAddress"
 									value="${sellerVO.selAddress}">
 							</div>
 							<div class="mb-3">
-								<label for="sellAddress" class="form-label">官方網址</label> <input
-									type="text" class="form-control" id="sellAddress" name="selUrl"
+								<label for="selUrl" class="form-label">官方網址</label> <input
+									type="text" class="form-control" id="selUrl" name="selUrl"
 									value="${sellerVO.selUrl}">
 							</div>
 							<div class="mb-3">
-								<label for="sellAddress" class="form-label">Facebook</label> <input
-									type="text" class="form-control" id="sellAddress"
+								<label for="SelFacebook" class="form-label">Facebook</label> <input
+									type="text" class="form-control" id="SelFacebook"
 									name="SelFacebook" value="${sellerVO.selFacebook}">
 							</div>
 							<div class="mb-3">
-								<label for="sellAddress" class="form-label">單位連絡人</label> <input
-									type="text" class="form-control" id="sellAddress"
+								<label for="selContactPerson" class="form-label">單位連絡人</label> <input
+									type="text" class="form-control" id="selContactPerson"
 									name="selContactPerson" value="${sellerVO.selContactPerson}">
 							</div>
 						</div>
@@ -268,8 +276,8 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 						<div class="bg-light rounded h-100 p-4">
 							<div class="col">
 								<div class="mb-3">
-									<label for="sellIntroduction" class="form-label">廠商簡介</label> <input
-										class="form-control" id="sellIntroduction"
+									<label for="selIntroduction" class="form-label">廠商簡介</label> <input
+										class="form-control" id="selIntroduction"
 										name="selIntroduction" value="${sellerVO.selIntroduction}"
 										style="width: 100%; max-width: 910px; min-height: 200px; box-sizing: border-box;">
 								</div>
@@ -298,9 +306,9 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 							</div>
 							<div class="col">
 								<div class="mb-3">
-									<label for="bankAccount" class="form-label">銀行帳號</label>
+									<label for="selBankNumber" class="form-label">銀行帳號</label>
 									<div class="d-flex">
-										<input type="text" class="form-control" id="bankAccount"
+										<input type="text" class="form-control" id="selBankNumber"
 											name="selBankNumber" value="${sellerVO.selBankNumber}">
 									</div>
 								</div>
@@ -310,9 +318,9 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 							<div class="col">
 								<div class="mb-2">
 									<div class="form-group">
-										<label for="accountNAme" class="form-label">戶名</label>
+										<label for="selBankName" class="form-label">戶名</label>
 										<div class="d-flex">
-											<input type="text" class="form-control" id="accountNAme"
+											<input type="text" class="form-control" id="selBankName"
 												name="selBankName" value="${sellerVO.selBankName}">
 										</div>
 									</div>
@@ -320,9 +328,9 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 							</div>
 							<div class="col">
 								<div class="mb-3">
-									<label for="remark" class="form-label">備註</label>
+									<label for="selRemark" class="form-label">備註</label>
 									<div class="d-flex">
-										<input type="text" class="form-control" id="remark"
+										<input type="text" class="form-control" id="selRemark"
 											name="selRemark" value="${sellerVO.selRemark}">
 									</div>
 								</div>
@@ -338,9 +346,9 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 							<div class="col">
 								<div class="mb-2">
 									<div class="form-group">
-										<label for="departmentName" class="form-label">單位名稱</label>
+										<label for="selTitle" class="form-label">單位名稱</label>
 										<div class="d-flex">
-											<input type="text" class="form-control" id="departmentName"
+											<input type="text" class="form-control" id="selTitle"
 												name="selTitle" value="${sellerVO.selTitle}">
 										</div>
 									</div>
@@ -348,9 +356,9 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 							</div>
 							<div class="col">
 								<div class="mb-3">
-									<label for="departmenBoss" class="form-label">單位負責人</label>
+									<label for="selPrincipal" class="form-label">單位負責人</label>
 									<div class="d-flex">
-										<input type="text" class="form-control" id="departmenBoss"
+										<input type="text" class="form-control" id="selPrincipal"
 											name="selPrincipal" value="${sellerVO.selPrincipal}">
 									</div>
 								</div>
@@ -360,9 +368,9 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 							<div class="col">
 								<div class="mb-2">
 									<div class="form-group">
-										<label for="guiNumber" class="form-label">統一編號</label>
+										<label for="selUniformNumbers" class="form-label">統一編號</label>
 										<div class="d-flex">
-											<input type="text" class="form-control" id="guiNumber"
+											<input type="text" class="form-control" id="selUniformNumbers"
 												name="selUniformNumbers"
 												value="${sellerVO.selUniformNumbers}">
 										</div>
@@ -371,9 +379,9 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 							</div>
 							<div class="col">
 								<div class="mb-3">
-									<label for="registeredAddress" class="form-label">單位立案地址</label>
+									<label for="selRegisteredAddress" class="form-label">單位立案地址</label>
 									<div class="d-flex">
-										<input type="text" class="form-control" id="registeredAddress"
+										<input type="text" class="form-control" id="selRegisteredAddress"
 											name="selRegisteredAddress"
 											value="${sellerVO.selRegisteredAddress}">
 									</div>
@@ -383,13 +391,13 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 
 						<div class="text-center" style="margin-top: 30px;">
 							<!-- 文本置中並設定上邊距 -->
-							<td>
+		
 		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/seller/SellerServlet.do"style="margin-bottom: 0px;">
 		<input type="submit" class="btn btn-outline-secondary m-2" value="修改"> 
 		<input type="hidden" name="selId" value="${sellerVO.selId}"> 
 		<input type="hidden" name="action" value="getOne_For_Update">
 								</FORM>
-							</td>
+							
 						</div>
 					</div>
 				</div>
@@ -412,61 +420,26 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 		</div>
 		<!-- Content End -->
 
-		<!-- Instant Customer Support Icon -->
-		<div id="customer-support-icon" class="icon">
-			<i class="fa-brands fa-rocketchat fa-2x"></i>
-		</div>
-
-		<script>
-			// 更換profile pic會同步
-			function handleImageUpload(input, imageId) {
-				var userImage = document.getElementById(imageId);
-				var uploadText = userImage.nextElementSibling; // 使用图像元素的下一个兄弟元素（即文本元素）
-
-				if (input.files && input.files[0]) {
-					var reader = new FileReader();
-
-					reader.onload = function(e) {
-						userImage.src = e.target.result;
-						uploadText.style.display = 'none'; // 设置为 'none' 以隐藏文本
-
-						// 添加以下代码来更新右上角的头像
-						var userImageNav = document
-								.getElementById('userImageNav');
-						if (userImageNav) {
-							userImageNav.src = e.target.result;
-						}
-					};
-
-					reader.readAsDataURL(input.files[0]);
-				}
-			}
-			// 在页面加载后，为头像上传元素添加事件监听
-			document.addEventListener('DOMContentLoaded', function() {
-				var fileInput = document.getElementById('fileInput'); // 侧边栏头像上传元素
-				var userImageNav = document.getElementById('userImageNav'); // 右上角的头像元素
-
-				fileInput.addEventListener('change', function() {
-					handleImageUpload(this, 'userImageNav');
-				});
-			});
-		</script>
-
-
 		<!-- JavaScript Libraries -->
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-		<script src="lib/chart/chart.min.js"></script>
-		<script src="lib/easing/easing.min.js"></script>
-		<script src="lib/waypoints/waypoints.min.js"></script>
-		<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-		<script src="lib/tempusdominus/js/moment.min.js"></script>
-		<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-		<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
-		<!-- Template Javascript -->
-		<script src="js/main.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/easing/easing.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/waypoints/waypoints.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/owlcarousel/owl.carousel.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/moment.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+	<!-- Template Javascript -->
+	<script src="<%=request.getContextPath()%>/seller/js/main.js"></script>
 </body>
 
 </html>
