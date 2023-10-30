@@ -376,17 +376,24 @@
     }
 
     $(document).ready(function () {
+      let path = window.location.pathname;
+      path = path.substring(0, path.indexOf("/", 1));
       const admId = localStorage.getItem("admId");
 
       console.log(admId);
+
 
       const adminPhoto1 = $("#adminPhoto1");
       const adminPhoto2 = $("#adminPhoto2");
 
       console.log(adminPhoto1);
 
+
+
+
       // const initialImageUrl = "img/user.jpg";
-      const alternateImageUrl = "http://localhost:8081/artion/adminphoto?admId=" + admId;
+      // http://localhost:8081/artion/adminphoto?admId=1001
+      const alternateImageUrl = window.location.origin + path + "/adminphoto?admId=" + admId;
 
       // let isInitialImage = true;
 
