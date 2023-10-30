@@ -23,9 +23,6 @@ if (email != null && generatedCode != null) {
 <meta content="" name="keywords">
 <meta content="" name="description">
 
-<!-- Favicon -->
-<link href="images/favicon.ico" rel="icon">
-
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -138,20 +135,20 @@ if (email != null && generatedCode != null) {
 
 								<div class="form-floating mb-3">
 									<input type="text" name="selPassword" class="form-control"
-										id="selPassword"><label for="floatingInput" 
+										id="selPassword"><label for="floatingInput"
 										style="font-size: 14px;">請輸入密碼</label>
 
 								</div>
 
 								<div class="form-floating mb-3">
 									<input type="text" name="selPassword2" class="form-control"
-										id="selPassword2"><label for="floatingInput" 
+										id="selPassword2"><label for="floatingInput"
 										style="font-size: 14px;">請再輸入一次密碼</label>
 
 								</div>
-
+								<button type="submit" class="btn btn-primary py-3 w-100 mb-4"
+									style="font-size: 20px;">送出</button>
 								<input type="hidden" name="action" value="resetPassword">
-								<input type="submit" value="送出">
 							</Form>
 
 						</div>
@@ -160,12 +157,11 @@ if (email != null && generatedCode != null) {
 				<!-- Sign In End -->
 
 
-			<!-- JavaScript Libraries -->
+				<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/seller/lib/chart/chart.min.js"></script>
+
 	<script
 		src="<%=request.getContextPath()%>/seller/lib/easing/easing.min.js"></script>
 	<script
@@ -180,7 +176,7 @@ if (email != null && generatedCode != null) {
 		src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="js/main.js"></script>
+	<script src="<%=request.getContextPath()%>/seller/js/main.js"></script>
 </body>
 
 </html>

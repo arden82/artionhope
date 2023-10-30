@@ -15,6 +15,7 @@ if (selId == null) {
 TicketOrderService ticketOrderSvc = new TicketOrderService();
 List<TicketOrderVO> list = ticketOrderSvc.getTicketOrderBySellerId(selId);
 pageContext.setAttribute("list", list);
+
 %>
 
 <!DOCTYPE html>
@@ -46,17 +47,20 @@ pageContext.setAttribute("list", list);
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+<link
+	href="<%=request.getContextPath()%>/seller/lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
-<link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+<link
+	href="<%=request.getContextPath()%>/seller/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/seller/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="css/style.css" rel="stylesheet">
-
+<link href="<%=request.getContextPath()%>/seller/css/style.css"
+	rel="stylesheet">
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -326,71 +330,11 @@ pageContext.setAttribute("list", list);
 	</div>
 	<!-- Content End -->
 
-	<script>
-		document
-				.addEventListener(
-						'DOMContentLoaded',
-						function() {
-							// 获取筛选条件的 select 元素
-							var orderStatusSelect = document
-									.getElementById('orderstatus');
-							var paymentStatusSelect = document
-									.getElementById('paymentstatus');
-							var orderTimeSelect = document
-									.getElementById('ordertime');
-
-							// 获取数据行（假设有一个具有 class="data-row" 的元素包含数据）
-							var dataRows = document
-									.querySelectorAll('.data-row');
-
-							// 监听筛选条件的变化事件
-							orderStatusSelect.addEventListener('change',
-									filterData);
-							paymentStatusSelect.addEventListener('change',
-									filterData);
-							orderTimeSelect.addEventListener('change',
-									filterData);
-
-							function filterData() {
-								var selectedOrderStatus = orderStatusSelect.value;
-								var selectedPaymentStatus = paymentStatusSelect.value;
-								var selectedOrderTime = orderTimeSelect.value;
-
-								// 遍历数据行，根据筛选条件进行过滤
-								for (var i = 0; i < dataRows.length; i++) {
-									var dataRow = dataRows[i];
-									var dataOrderStatus = dataRow
-											.getAttribute('data-orderstatus');
-									var dataPaymentStatus = dataRow
-											.getAttribute('data-paymentstatus');
-									var dataOrderTime = dataRow
-											.getAttribute('data-ordertime');
-
-									// 检查筛选条件是否匹配
-									var matchesOrderStatus = (selectedOrderStatus == '0' || selectedOrderStatus == dataOrderStatus);
-									var matchesPaymentStatus = (selectedPaymentStatus == '0' || selectedPaymentStatus == dataPaymentStatus);
-									var matchesOrderTime = (selectedOrderTime == '0' || selectedOrderTime == dataOrderTime);
-
-									if (matchesOrderStatus
-											&& matchesPaymentStatus
-											&& matchesOrderTime) {
-										// 符合筛选条件的数据行显示
-										dataRow.style.display = '';
-									} else {
-										// 不符合筛选条件的数据行隐藏
-										dataRow.style.display = 'none';
-									}
-								}
-							}
-						});
-	</script>
-
-	<!-- JavaScript Libraries -->
+		<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/seller/lib/chart/chart.min.js"></script>
+
 	<script
 		src="<%=request.getContextPath()%>/seller/lib/easing/easing.min.js"></script>
 	<script
@@ -405,7 +349,7 @@ pageContext.setAttribute("list", list);
 		src="<%=request.getContextPath()%>/seller/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="js/main.js"></script>
+	<script src="<%=request.getContextPath()%>/seller/js/main.js"></script>
 </body>
 
 </html>

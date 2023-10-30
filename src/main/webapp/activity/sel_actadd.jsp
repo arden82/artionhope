@@ -5,7 +5,18 @@
 
 <%
 //見com.emp.controller.EmpServlet.java第238行存入req的empVO物件 (此為輸入格式有錯誤時的empVO物件)
+Integer selId = (Integer) session.getAttribute("sel_id");
+if (selId == null) {
+	return;
+}
+
 ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
+if (activityVO != null) {
+    String actName = activityVO.getActName();
+    // 在此处使用 actName
+} else {
+    // 处理 activityVO 为空的情况
+}
 %>
 
 
@@ -38,17 +49,20 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+<link
+	href="<%=request.getContextPath()%>/activity/lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
-<link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+<link
+	href="<%=request.getContextPath()%>/activity/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/activity/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="css/style.css" rel="stylesheet">
-
+<link href="<%=request.getContextPath()%>/activity/css/style.css"
+	rel="stylesheet">
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -414,66 +428,15 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
 										<label for="formFile1" class="form-label">活動封面</label> <input
 											class="form-control" type="file" name="actCoverPicture">
 									</div>
-										<!--第一個預覽圖-->
-
-<!-- 									<div class="mb-3"> -->
-<!-- 										<label for="formFile2" class="form-label">活動圖片1</label> <input -->
-<!-- 											class="form-control" type="file" name="actPicture1" -->
-<!-- 											onchange="previewFile(2)"> -->
-<!-- 									</div> -->
-<!-- 									<div id="imagePreview2"> -->
-<!-- 										预览图将显示在这里 -->
-<!-- 									</div> -->
-
-<!-- 									<div class="mb-3"> -->
-<!-- 										<label for="formFile3" class="form-label">活動圖片2</label> <input -->
-<!-- 											class="form-control" type="file" name="actPicture2" -->
-<!-- 											onchange="previewFile(3)"> -->
-<!-- 									</div> -->
-<!-- 									<div id="imagePreview3"> -->
-<!-- 										预览图将显示在这里 -->
-<!-- 									</div> -->
-
-<!-- 									<div class="mb-3"> -->
-<!-- 										<label for="formFile4" class="form-label">活動圖片3</label> <input -->
-<!-- 											class="form-control" type="file" name="actPicture3" -->
-<!-- 											onchange="previewFile(4)"> -->
-<!-- 									</div> -->
-<!-- 									<div id="imagePreview4"> -->
-										<!-- 预览图将显示在这里 -->
+									
 									</div>
-									<!-- 添加更多文件上传输入框和预览图按照相同的结构 -->
-
 									<input type="hidden" name="action" value="insert"
 										class="btn btn-outline-secondary m-2"> <input
 										type="submit" value="送出" class="btn btn-outline-secondary m-2">
 			</form>
 		</div>
-	</div>
-	</div>
-
-
-
-	<!-- Instant Customer Support Icon -->
-	<div id="customer-support-icon" class="icon">
-		<i class="fa-brands fa-rocketchat fa-2x"></i>
-	</div>
-
 	<!-- Form End -->
 
-	<!-- Footer Start -->
-	<div class="container-fluid pt-4 px-4">
-		<div class="bg-light rounded-top p-4">
-			<div class="row">
-				<div class="col-12 col-sm-6 text-center text-sm-start"
-					style="margin-bottom: 30px !important;">
-					&copy; <a href="#">Artion</a>, All Right Reserved.
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Footer End -->
-	</div>
 	<!-- Content End -->
 
 
@@ -494,24 +457,29 @@ ActivityVO activityVO = (ActivityVO) request.getAttribute("activityVO");
  	        		this.value = inputTime + ":00";
 	    		}
  			});
-
-
 </script>
 
 	<!-- JavaScript Libraries -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/chart/chart.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/waypoints/waypoints.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="lib/tempusdominus/js/moment.min.js"></script>
-	<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-	<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-</head>
-<!-- Template Javascript -->
-<script src="js/main.js"></script>
+				
+				<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+				<script
+					src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/easing/easing.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/waypoints/waypoints.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/owlcarousel/owl.carousel.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/tempusdominus/js/moment.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/tempusdominus/js/moment-timezone.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+				<!-- Template Javascript -->
+				<script src="<%=request.getContextPath()%>/activity/js/main.js"></script>
 </body>
 
 </html>

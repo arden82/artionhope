@@ -13,6 +13,7 @@ Integer selId = (Integer) session.getAttribute("sel_id");
 if (selId == null) {
 	return;
 }
+
 SellerService sellerSvc = new SellerService();
 SellerVO sellerVO = sellerSvc.getOneSeller(selId);
 pageContext.setAttribute("sellerVO", sellerVO);
@@ -36,10 +37,6 @@ pageContext.setAttribute("list", list);
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
 
-<!-- Favicon -->
-<link href="img/favicon.ico" rel="icon">
-
-
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,17 +53,20 @@ pageContext.setAttribute("list", list);
 	rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
+<link
+	href="<%=request.getContextPath()%>/activity/lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet">
-<link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+<link
+	href="<%=request.getContextPath()%>/activity/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/activity/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="css/style.css" rel="stylesheet">
-
+<link href="<%=request.getContextPath()%>/activity/css/style.css"
+	rel="stylesheet">
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -74,33 +74,25 @@ pageContext.setAttribute("list", list);
 <style>
 .input-group {
 	width: 200px;
-	/* 自定义选择框的宽度 */
 }
 
 .small-select {
 	width: 120px;
-	/* 调整宽度以适应布局 */
 }
 
 @media ( max-width : 768px) {
 	.small-select {
 		width: 100%;
-		/* 使筛选框占据整个宽度 */
 		margin-bottom: 10px;
-		/* 添加垂直间距 */
 	}
 }
 
-/* 添加一些基本的樣式以美化分頁 */
 .pagination {
 	display: flex;
 	list-style: none;
 	justify-content: center;
-	/* 將內容水平置中 */
 	align-items: center;
-	/* 垂直置中（如果有多行文本） */
 	padding: 0;
-	/* 清除默認的內邊距 */
 }
 
 .pagination li {
@@ -241,7 +233,7 @@ pageContext.setAttribute("list", list);
 								</div>
 							</form>
 							<table class="table"
-								style="font-size: 16px; text-align: center; vertical-align: middle;">
+								style="font-size: 14px; text-align: center; vertical-align: middle;">
 								<thead>
 									<tr>
 										<th>活動編號</th>
@@ -255,9 +247,7 @@ pageContext.setAttribute("list", list);
 										<th>刪除</th>
 									</tr>
 								</thead>
-								<%@ include file="page1.file"%>
-								<c:forEach var="activityVO" items="${list}"
-									begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+								<c:forEach var="activityVO" items="${list}">
 									<tr>
 										<td>${activityVO.actId}</td>
 										<td>${activityVO.actName}</td>
@@ -319,7 +309,6 @@ pageContext.setAttribute("list", list);
 									</tr>
 								</c:forEach>
 							</table>
-							<%@ include file="page2.file"%>
 						</div>
 					</div>
 				</div>
@@ -339,6 +328,7 @@ pageContext.setAttribute("list", list);
 				<!-- Footer End -->
 			</div>
 			<!-- Content End -->
+
 
 			<script>
 				document
@@ -385,22 +375,28 @@ pageContext.setAttribute("list", list);
 									// 調用 updateTable 函數以根據初始篩選值初始化表格
 									updateTable();
 								});
-			</script>
-			<!-- JavaScript Libraries -->
+				</script>
+				<!-- JavaScript Libraries -->
+				
+				<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+				<script
+					src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
-			<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-			<script
-				src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-			<script src="lib/chart/chart.min.js"></script>
-			<script src="lib/easing/easing.min.js"></script>
-			<script src="lib/waypoints/waypoints.min.js"></script>
-			<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-			<script src="lib/tempusdominus/js/moment.min.js"></script>
-			<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-			<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/easing/easing.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/waypoints/waypoints.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/owlcarousel/owl.carousel.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/tempusdominus/js/moment.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/tempusdominus/js/moment-timezone.min.js"></script>
+				<script
+					src="<%=request.getContextPath()%>/activity/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-			<!-- Template Javascript -->
-			<script src="js/main.js"></script>
+				<!-- Template Javascript -->
+				<script src="<%=request.getContextPath()%>/activity/js/main.js"></script>
 </body>
 
 </html>
