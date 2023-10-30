@@ -1,6 +1,12 @@
 package com.tha103.artion.ticketOrder.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,20 +14,104 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/TicketOrderServlet")
+import com.google.gson.Gson;
+import com.tha103.artion.seller.model.SellerVO;
+import com.tha103.artion.ticketOrder.model.TicketOrderData;
+import com.tha103.artion.ticketOrder.model.TicketOrderVO;
+import com.tha103.artion.ticketOrderDetail.model.TicketOrderDetailVO;
+
+@WebServlet("/ticketOrderServlet")
 public class TicketOrderServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            // 獲取json資料
+            BufferedReader reader = request.getReader();
+            StringBuilder jsonBuffer = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonBuffer.append(line);
+            }
 
-	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req, res);
-	}
+            // 使用 Gson 库解析 JSON 数据为 Java 对象
+            Gson gson = new Gson();
+            TicketOrderData ticketOrderData = gson.fromJson(jsonBuffer.toString(), TicketOrderData.class);
+//            System.out.println(ticketOrderData);
+//            TicketOrderData tikOrdData = new TicketOrderData();
+            System.out.println("會員ID="+ticketOrderData.getMemId());  //會員ID
+            System.out.println("廠商名稱="+ticketOrderData.getSelName());  //廠商名稱
+            System.out.println("活動名稱="+ticketOrderData.getActName());  //活動名稱
+            System.out.println("票價="+ticketOrderData.getActTicPrice());  //票價
+            System.out.println("數量="+ticketOrderData.getQuantity());  //數量
+            System.out.println("小計="+ticketOrderData.getSubtotal());  //小計
+            System.out.println("總金額="+ticketOrderData.getTotalAmount());  //總價
+            
+            
+            // step1: 建立訂單
+            TicketOrderVO ticketOrder = new TicketOrderVO();
+            
+//            ticketOrder.getMember().setMemId(ticketOrderData.getMemId()); //會員ID
+//            ticketOrder.setTicketOrdStatus(1); //SQL預設為1
+            ticketOrder.setTicketOrdTotalPrice(ticketOrderData.getTotalAmount()); // 總金額
+            //未做優惠金額
+            ticketOrder.setTicketOrdActuallyAmount(ticketOrderData.getTotalAmount()); // 實付金額
+//            ticketOrder.setTicketOrdPayStatus();  //SQL預設為1
+            //未插入優惠碼ID
+            //未做使用者地址
+//            ticketOrder.setSelId(ticketOrderData.getSelId()); // 设置厂商ID
+            ticketOrder.setTicketOrdCode(generateOrderCode()); // 亂碼代入
+            
+            
+//            String selName = ticketOrderData.getSelName();
+//            SellerVO sellerVO = new SellerVO();
+//            sellerVO.setSelName();
+           
+            
+            // step2: 建立訂單明細
+//            List<TicketOrderDetailVO> orderDetails = new ArrayList<>();
+//            for (TicketOrderDetailVO ticketOrderDetailData : ticketOrderData.getCartData()) {
+//                TicketOrderDetailVO ticketOrderDetail = new TicketOrderDetailVO();
+//                ticketOrderDetail.setActName(ticketOrderDetailData.getActName()); // 活動名稱
+//                ticketOrderDetail.setActTicPrice(ticketOrderDetailData.getActTicPrice()); // 活動票價
+//                ticketOrderDetail.setQuantity(ticketOrderDetailData.getQuantity()); // 購買數量
+//                ticketOrderDetail.setSubtotal(ticketOrderDetailData.getSubtotal()); // 小計
 
-	@Override
-	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+                // 步骤3: 明細關聯到訂單
+//                ticketOrderDetail.setTicketOrder(ticketOrder);
+//
+//                orderDetails.add(ticketOrderDetail);
+//            }
 
-		req.setCharacterEncoding("UTF-8");
-		String action = req.getParameter("action");
+            // 步骤4: 使用 Hibernate 保存订单对象
+            // 请确保配置了 Hibernate 的 SessionFactory
+            // session.save(ticketOrder);
 
+            // 步骤5: 使用 Hibernate 保存订单明细对象（这应该在订单之后进行）
+            // 请确保配置了 Hibernate 的 SessionFactory
+            // for (TicketOrderDetailVO orderDetail : orderDetails) {
+            //     session.save(orderDetail);
+            // }
+
+            
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().println("成功訂單建立！");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().println("訂單建立失敗");
+        }
+    }
+
+    private String generateOrderCode() {
+    	 SecureRandom random = new SecureRandom();
+    	 return new BigInteger(130, random).toString(32).substring(0, 15).toUpperCase();
+    }
+}
+
+
+		
+		
+		/*********************** 1.接收請求參數 *************************/
+		
 //		if ("insert".equals(action)) { // 來自checkout.jsp的請求
 //
 //			List<String> errorMsgs = new LinkedList<String>();
@@ -128,17 +218,17 @@ public class TicketOrderServlet extends HttpServlet {
 //			successView.forward(req, res);
 //		}
 
-		if ("goToCart".equals(action)) {
+//		if ("goToCart".equals(action)) {
+//
+//			String actName = request.getParameter("actName");
+//
+//			String quantity = request.getParameter("quantity");
+//
+//			String total_price = request.getParameter("total_price");
+//
+//			System.out.println(actName);
+//		}
 
-			String actName = req.getParameter("actName");
-
-			String quantity = req.getParameter("quantity");
-
-			String total_price = req.getParameter("total_price");
-
-			System.out.println(actName);
-		}
-
-	}
-
-}
+//	}
+//
+//}
