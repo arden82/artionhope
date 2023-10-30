@@ -259,6 +259,9 @@
     <!----------------------- JS --------------------------->
     
     <script>
+        let path = window.location.pathname;
+        path = path.substring(0, path.indexOf("/",1));
+
         // ===================== 商品篩選功能 =====================
         function toggleAllCategories() {
             var allProductsCheckbox = document.getElementById("allProducts");
@@ -291,11 +294,11 @@
         // }
      // ===================== 載入網頁時取得所有商品 =====================
         $(document).ready(function () {
-        	if (window.location.href.includes("http://localhost:8081/artion/html/merch/merchPage.html")) {
+        	if (window.location.href.includes(`${window.location, path}/html/merch/merchPage.html`)) {
 
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:8081/artion/getAllMerch",
+                    url: `${window.location, path}/getAllMerch`,
                     dataType: "JSON",
                     success: function (data) {
                     	console.log("發送請求成功");
@@ -304,7 +307,7 @@
                         $.each(data, function (index, merch) {
                         	var merches = `
                         	    <div href="" class="merchBox_child" data-merchid="${merch.merchId}" style="margin-right:10px;">
-                        	        <img src="http://localhost:8081/artion/merPicServlet?merchId=${merch.merchId}" class="card-img-top merchStyle" alt="..." >
+                        	        <img src=${window.location, path}/merPicServlet?merchId=${merch.merchId}&picNumber=1 class="card-img-top merchStyle" alt="..." >
                         	        <p class="merchName">${merch.merchName}</p>
                         	        <p class="merchPrice">${merch.merchPrice}元</p>
                         	    </div>
@@ -315,9 +318,9 @@
                         // 點擊事件監聽器
                         $(".merchBox_child").click(function () {
                             console.log("有點到商品");
-                            console.log($(this)); // 输出点击的元素
+                            console.log($(this)); 
                             var merchId = $(this).data("merchid");
-                            console.log(`跳转到 singleMerch.html?merchId=${merchId}`);
+                            console.log(` singleMerch.html?merchId=${merchId}`);
                             window.location.href = `singleMerch.html?merchId=${merchId}`;
                         });
 

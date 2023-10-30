@@ -45,7 +45,7 @@
 								<a class="badge bg-secondary text-decoration-none link-light"
 									href="#" id="actType"></a><br>
 <!-- ========================================== 活動名稱與收藏 ========================================== -->
-								<div class="header_container" style:"display: flex;">
+								<div class="header_container collectionbtr" style:"display: flex;">
 									<span class="fw-bolder mb-1 activity_name" style="font-size: 40px;" id=actName></span>
 									<button type="button" class="btn btn-outline-success">收藏</button>
 								</div>
@@ -108,9 +108,7 @@
 											</div>
 											<br>
 											<!--留言送出 -->
-											<form method="post"
-												ACTION="http://localhost:8081/artion/addActComServlet"
-												id="commentForm" enctype="multipart/form-data">
+                                            <form method="post" id="commentForm" enctype="multipart/form-data">
 												<div class="comment-group">
 													<input name="actComContent" id="actComContent" cols="30"
 														rows="10" placeholder="在此輸入您的留言" class="actComContent">
@@ -212,6 +210,15 @@
         <script src="../../js/activity/logstate.js"></script>
         
 <script>
+	let path = window.location.pathname;
+    path = path.substring(0, path.indexOf("/",1)); 
+
+    // 將動態路徑插入留言FORM表單
+    var currentPath = window.location.pathname;
+    var dynamicURL = currentPath + "/addActComServlet";
+    var commentForm = document.getElementById("commentForm");
+    commentForm.action = dynamicURL;
+
 //================== 獲取活動頁資料並渲染在畫面上(測試) ==================
 $(document).ready(function () {
     var urlParams = new URLSearchParams(window.location.search);
@@ -224,7 +231,7 @@ $(document).ready(function () {
     if (actId) {
         $.ajax({
             type: "POST",
-            url: "http://localhost:8081/artion/getAllAct",
+            url: `${window.location, path}/getAllAct`,
             dataType: "JSON",
             success: function (data) {
                 var actData = data.find(function (act) {
@@ -241,15 +248,15 @@ $(document).ready(function () {
                     $("#actAdd").text(actData.ActAdd);
                     $("#actTicPrice").text(actData.actTicPrice);
                     $("#actContent").text(actData.ActContent);
-                    var imgSrc = "http://localhost:8081/artion/actPicServlet?actId=" + actId;
+                    var imgSrc = `${window.location, path}/actPicServlet?actId=` + actId;
 	                $("#actCovPic").attr("src", imgSrc);
-                    // 构建Google Maps URL
-                    var mapUrl = "https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=" + encodeURIComponent(actData.ActAdd) + "&zoom=10";
+                    
+                    var mapUrl = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAPmpFuH_tHNmRJyTQC7Qa4r2Lk3iFuyIk&q=" + encodeURIComponent(actData.ActAdd) + "&zoom=15";
 
-                    // 创建并插入iframe
+                    
                     var iframe = $('<iframe>').attr({
-                        width: 200,
-                        height: 200,
+                        width: 325,
+                        height: 400,
                         style: 'border: 0',
                         loading: 'lazy',
                         allowfullscreen: true,
@@ -280,23 +287,24 @@ $(document).ready(function () {
         }
 
         $(document).ready(function () {
-            $("#collection1_icon").click(function () {
+            $(".collectionbtn").click(function () {
                 var memId = localStorage.getItem('memId');
                 if (memId) {
                     var actId = getActIdFromURL();
                     var status = 1; 
                     
                     var data = {
+                    	action:"insert",
                         memId: memId,
                         actId: actId,
-                        status: status
                     };
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost:8081/artion/addToCollectionServlet", 
+                        url: `${window.location, path}/CollectionServlet`, 
                         data: data,
                         success: function (response) {
                             alert("成功加入收藏！");
+                            $(".collectionbtn > button").removeClass("btn-outline-success").addClass("btn-success").text("已收藏");
                         },
                         error: function () {
                             alert("加入失敗");
@@ -306,7 +314,7 @@ $(document).ready(function () {
                     
                     var userWantsToLogin = confirm("您需要登入後才能收藏活動，是否要登入?");
                     if (userWantsToLogin) {    
-                        window.location.href = 'http://localhost:8081/artion/html/member/memberLogin.html'; // 请将 URL 替换为实际的 URL
+                        window.location.href = `${window.location, path}/html/member/memberLogin.html`; 
                     }
                     
                 }
@@ -351,35 +359,30 @@ $(document).ready(function () {
         
 //================== 取得localstorage + 加入購物車(測試 memId/actId版本) ==================
 $("#addtocart").click(function () {
-    // 获取actId和memId
-    var actId = getUrlParameter("actId"); // 从URL中获取actId
-    var memId = localStorage.getItem("memId"); // 从LocalStorage中获取memId
+    var actId = getUrlParameter("actId"); 
+    var memId = localStorage.getItem("memId"); 
 
-    // 检查是否成功获取actId和memId
     if (actId && memId) {
-        // 创建要发送的数据对象
         var data = {
             actId: actId,
             memId: memId
         };
-
-        // 发送actId和memId到服务器
+        
         $.ajax({
-            type: "POST", // 使用POST请求
-            url: "http://localhost:8081/artion/AddToCart2", // 你的Servlet的URL，根据你的设置可能需要修改
-            data: data, // 发送的数据对象
+            type: "POST", 
+            url: `${window.location, path}/AddToCart2`, 
+            data: data, 
             dataType: "json",
             success: function (response) {
-                // 处理成功响应
                 console.log(response.message);
+                alert("成功加入購物車");
             },
             error: function () {
-                // 处理错误响应
-                console.error("添加到购物车时出错！");
+                console.error("無法添加至購物車！");
             }
         });
     } else {
-        console.error("无法获取actId或memId。");
+        console.error("無法獲取memId,actId");
     }
 
 
@@ -391,20 +394,13 @@ $("#addtocart").click(function () {
     }
 });
 
-
-
-
-
-
-
-
         //================== 立即購票(未完成) ==================
         $(document).ready(function () {
             $("#buyTicket").click(function () {
                 if (!localStorage.getItem("memId")) {
                     var confirmLogin = confirm("請先登入以繼續購票。是否前往登入頁？");
                     if (confirmLogin) {
-                        window.location.href = "http://localhost:8081/artion/html/member/memberLogin.html";
+                        window.location.href = `${window.location, path}/html/member/memberLogin.html`;
                     }
                 } else {
                     
@@ -429,16 +425,16 @@ $("#addtocart").click(function () {
         	  e.preventDefault();
         	  const formData = new FormData(this);
 
-        	  fetch("http://localhost:8081/artion/addActComServlet", {
+        	  fetch(`${window.location, path}/addActComServlet`, {
         	    method: "POST",
         	    body: formData
         	  })
-        	    .then(response => { console.log(response);
+        	    .then(response => {console.log(response);
         	    return response;}
         	    )
 //         	    response.json())
         	    .then(data => {
-        console.log(data);
+                    console.log(data);
         	      // 成功載入頁面
         	      if (data.success) {
         	    	  document.getElementById("actComContent").value = "";
@@ -448,7 +444,7 @@ $("#addtocart").click(function () {
         	    	  document.getElementById("actComPicture3").value = "";
         	          window.location.reload();
         	      } else {
-        	        console.error("提交失败:", data.error);
+        	        console.error("提交失敗:", data.error);
         	      }
         	      window.history.go();
         	    })
@@ -581,7 +577,7 @@ $("#addtocart").click(function () {
 
                 $.ajax({
                     type: "GET",
-                    url: "http://localhost:8081/artion/getActComServlet",
+                    url: `${window.location, path}/getActComServlet`,
                     dataType: "json",
                     success: function (data) {
                         if (data) {
@@ -598,10 +594,10 @@ $("#addtocart").click(function () {
                                                     <span style="font-weight: bold">${actCom.memNickName}</span>
                                                     <br>
                                                     <div>${actCom.actComContent}</div>
-                                                    <img src="http://localhost:8081/artion/actComPicServlet?actComId=${actCom.actComId}&picNumber=cover" alt="" style="width:120px;">
-                                                    <img src="http://localhost:8081/artion/actComPicServlet?actComId=${actCom.actComId}&picNumber=1" alt="" style="width:120px;">
-                                                    <img src="http://localhost:8081/artion/actComPicServlet?actComId=${actCom.actComId}&picNumber=2" alt="" style="width:120px;">
-                                                    <img src="http://localhost:8081/artion/actComPicServlet?actComId=${actCom.actComId}&picNumber=3" alt="" style="width:120px;">
+                                                    <img src=${window.location, path}/actComPicServlet?actComId=${actCom.actComId}&picNumber=cover" alt="" style="width:120px;">
+                                                    <img src="${window.location, path}/actComPicServlet?actComId=${actCom.actComId}&picNumber=1" alt="" style="width:120px;">
+                                                    <img src="${window.location, path}/actComPicServlet?actComId=${actCom.actComId}&picNumber=2" alt="" style="width:120px;">
+                                                    <img src="${window.location, path}/actComPicServlet?actComId=${actCom.actComId}&picNumber=3" alt="" style="width:120px;">
                                                     <br>
                                                     <span style="border: 0px gray solid;font-style: italic;">${actCom.actComTime}</span>
                                                     <button style="border:0px solid purple;background-color:transparent ;" id="commentLike1">

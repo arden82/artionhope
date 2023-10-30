@@ -42,6 +42,9 @@
         <script src="../../js/activity/logstate.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    let path = window.location.pathname;
+    path = path.substring(0, path.indexOf("/",1));
+
 
     //分類點擊，更新字樣
     const activityLinks = document.querySelectorAll('.dropdown-item');
@@ -137,10 +140,10 @@
 
     // ===================== 載入網頁時取得所有活動(完成) =====================
     $(document).ready(function () {
-        if (window.location.href.endsWith("http://localhost:8081/artion/html/activity/ActivityPage.html")) {
+        if (window.location.href.endsWith(`${window.location, path}/html/activity/ActivityPage.html`)) {
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8081/artion/getAllAct",
+                url: `${window.location, path}/getAllAct`,
                 dataType: "JSON",
                 success: function (data) {
                     var cardRow = $("#cardRow");
@@ -156,7 +159,7 @@
                         }
                         var acts = `
                         <div class="card col-3 clickable-card" data-actid="${act.actId}" style=" padding:0px; margin: 10px 5px; width:250px;">
-                        <img src="http://localhost:8081/artion/servlet/com.tha103.artion.merch.controller.GetMerPicServlet?actId=${act.actId}" class="card-img top" alt="...">
+                        <img src=${window.location, path}/actPicServlet?actId=${act.actId} class="card-img top" alt="...">
                         <div class="card-body">
                         <h5 class="card-title">${act.actName}</h5>
                         <h5 style="font-size: 12px;">${act.actStartDate}~${act.actEndDate}</h5>
@@ -195,7 +198,7 @@
     function loadAllActivities() {
         $.ajax({
             type: "POST",
-            url: "http://localhost:8081/artion/getAllAct",
+            url: `${window.location, path}/getAllAct`,
             dataType: "JSON",
             success: function (data) {
                 var cardRow = $("#cardRow");
@@ -211,7 +214,7 @@
                     }
                     var acts = `
                 <div class="card col-3 clickable-card" data-actid="${act.actId}" style=" padding:0px; margin: 10px 5px; width:250px;">
-                <img src="http://localhost:8081/artion/actPicServlet?actId=${act.actId}" class="card-img top" alt="...">
+                <img src=${window.location, path}/actPicServlet?actId=${act.actId} class="card-img top" alt="...">
                 <div class="card-body">
                 <h5 class="card-title">${act.actName}</h5>
                 <h5 style="font-size: 12px;">${act.actStartDate}~${act.actEndDate}</h5>
@@ -243,7 +246,7 @@
         	e.preventDefault();
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8081/artion/getAllAct",
+                url: `${window.location, path}/getAllAct`,
                 dataType: "JSON",
                 success: function (data) {
                     var cardRow = $("#cardRow");
@@ -260,7 +263,7 @@
                             }
                             var acts = `
                     <div class="card col-3 clickable-card" data-actid="${act.actId}" style=" padding:0px; margin: 10px 5px; width:250px;">
-            <img src="http://localhost:8081/artion/actPicServlet?actId=${act.actId}" class="card-img top" alt="...">
+            <img src=${window.location, path}/actPicServlet?actId=${act.actId} class="card-img top" alt="...">
             <div class="card-body">
             <h5 class="card-title">${act.actName}</h5>
             <h5 style="font-size: 12px;">${act.actStartDate}~${act.actEndDate}</h5>
@@ -293,7 +296,7 @@
         	e.preventDefault();
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8081/artion/getAllAct",
+                url: `${window.location, path}/getAllAct`,
                 dataType: "JSON",
                 success: function (data) {
                     var cardRow = $("#cardRow");
@@ -310,7 +313,7 @@
                             }
                             var acts = `
                     <div class="card col-3 clickable-card" data-actid="${act.actId}" style=" padding:0px; margin: 10px 5px; width:250px;">
-            <img src="http://localhost:8081/artion/actPicServlet?actId=${act.actId}" class="card-img top" alt="...">
+            <img src=${window.location, path}/actPicServlet?actId=${act.actId} class="card-img top" alt="...">
             <div class="card-body">
             <h5 class="card-title">${act.actName}</h5>
             <h5 style="font-size: 12px;">${act.actStartDate}~${act.actEndDate}</h5>
@@ -343,7 +346,7 @@
         	e.preventDefault();
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8081/artion/getAllAct",
+                url: `${window.location, path}/getAllAct`,
                 dataType: "JSON",
                 success: function (data) {
                     var cardRow = $("#cardRow");
@@ -360,7 +363,7 @@
                             }
                             var acts = `
                     <div class="card col-3 clickable-card" data-actid="${act.actId}" style=" padding:0px; margin: 10px 5px; width:250px;">
-            <img src="http://localhost:8081/artion/actPicServlet?actId=${act.actId}" class="card-img top" alt="...">
+            <img src=${window.location, path}/actPicServlet?actId=${act.actId} class="card-img top" alt="...">
             <div class="card-body">
             <h5 class="card-title">${act.actName}</h5>
             <h5 style="font-size: 12px;">${act.actStartDate}~${act.actEndDate}</h5>

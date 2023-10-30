@@ -221,6 +221,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 <script>
+
+        let path = window.location.pathname;
+        path = path.substring(0, path.indexOf("/",1));
+
 //畫面載入時，取得該商品ID的資料(未完成)
 $(document).ready(function () {
     var urlParams = new URLSearchParams(window.location.search);
@@ -229,7 +233,7 @@ $(document).ready(function () {
     if (merchId) {
         $.ajax({
             type: "POST",
-            url: "http://localhost:8081/artion/getAllMerch", // 用于获取商品详细信息的Servlet URL
+            url: `${window.location, path}/getAllMerch`, // 用于获取商品详细信息的Servlet URL
             data: { merchId: merchId }, // 发送商品ID作为数据
             dataType: "JSON",
             success: function (data) {
@@ -256,13 +260,13 @@ $(document).ready(function () {
                     var remainingQuantity = merchTotal - merchSellAmount;
                     $("#remainingQuantity").text(remainingQuantity);
                     
-                    var img1 = "http://localhost:8081/artion/merPicServlet?merchId=" + merchId + "&picNumber=" + 1;
+                    var img1 = `${window.location, path}/merPicServlet?merchId=` + merchId + "&picNumber=" + 1;
                     $(".merPic1").attr("src", img1);
-                    var img2 = "http://localhost:8081/artion/merPicServlet?merchId=" + merchId + "&picNumber=" + 2;
+                    var img2 = `${window.location, path}/merPicServlet?merchId=` + merchId + "&picNumber=" + 2;
                     $(".merPic2").attr("src", img2);
-                    var img3 = "http://localhost:8081/artion/merPicServlet?merchId=" + merchId + "&picNumber=" + 3;
+                    var img3 = `${window.location, path}/merPicServlet?merchId=` + merchId + "&picNumber=" + 3;
                     $(".merPic3").attr("src", img3);
-                    var img4 = "http://localhost:8081/artion/merPicServlet?merchId=" + merchId + "&picNumber=" + 4;
+                    var img4 = `${window.location, path}/merPicServlet?merchId=` + merchId + "&picNumber=" + 4;
                     $(".merPic4").attr("src", img4);
                 }
                 console.log("成功取得merchId和資料");

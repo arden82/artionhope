@@ -1,233 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
+
 <body>
-	<button id="cartBtn">取得Redis購物車明細</button>
-	<table border="1">
-		<thead>
-			<tr>
-				<th>選擇</th>
-				<th>活動名稱</th>
-				<th>票卷價格</th>
-				<th>數量</th>
-				<th>小計</th>
-			</tr>
-		</thead>
-		<tbody id="cart-items">
-<!-- 			<tr class="cart-item"> -->
-<!-- 				<td><input type="checkbox" name="select" class="item-checkbox" -->
-<!-- 					onchange="calculateTotal()"></td> -->
-<!-- 				<td id="actName"></td> -->
-<!-- 				<td id="actTicPrice"></td> -->
-<!-- 				<td> -->
-<!-- 					<button onclick="changeQuantity(this, -1)">-</button> <input -->
-<!-- 					type="number" name="quantity" value="1" size="1" -->
-<!-- 					class="item-quantity" oninput="calculateSubtotal(this)" min="1"> -->
-<!-- 					<button onclick="changeQuantity(this, 1)">+</button> -->
-<!-- 				</td> -->
-<!-- 				<td class="item-subtotal">元</td> -->
-<!-- 			</tr> -->
-		</tbody>
-	</table>
-	<div>
-		<p>
-			總金額: <span id="total-amount">0元</span>
-		</p>
-	</div>
-	<div id="test"></div>
-	<button onclick="checkout()">去結帳</button>
+    <button id="cartBtn">取得Redis購物車明細</button>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>選擇</th>
+                <th>廠商名稱</th>
+                <th>活動名稱</th>
+                <th>票卷價格</th>
+                <th>數量</th>
+                <th>小計</th>
+            </tr>
+        </thead>
+        <tbody id="cart-items">
+            <!-- <tr class="cart-item">
+				<td><input type="checkbox" name="select" class="item-checkbox"
+					onchange="calculateTotal()"></td>
+				<td id="selName"></td>
+				<td id="actName"></td>
+				<td id="actTicPrice"></td>
+				<td>
+					<button onclick="changeQuantity(this, -1)">-</button> <input
+ 					type="number" name="quantity" value="1" size="1" 
+					class="item-quantity" oninput="calculateSubtotal(this)" min="1">
+					<button onclick="changeQuantity(this, 1)">+</button>
+				</td>
+				<td class="item-subtotal">元</td>
+			</tr> -->
+        </tbody>
+    </table>
+    <div>
+        <p>
+            總金額: <span id="total-amount">0元</span>
+        </p>
+    </div>
+    <div id="test"></div>
+    <button onclick="checkout()">下訂單</button>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        let path = window.location.pathname;
+        path = path.substring(0, path.indexOf("/", 1));
 
-			<!-- 活動票劵1 -->
-			<!-- 			<tr id="${merch.merchId}"> -->
-			<!-- 				<td><input type="checkbox" name="select" class="item-checkbox" -->
-			<!-- 					onchange="calculateTotal()"></td> -->
-			<!-- 				<td>活動1${merch.actName}</td> -->
-			<!-- 				<td>100${merch.ticketPrice}元</td> -->
-			<!-- 				<td> -->
-			<!-- 					<button onclick="changeQuantity(this, -1)">-</button> <input -->
-			<!-- 					type="number" name="quantity" value="1" size="1" -->
-			<!-- 					class="item-quantity" oninput="calculateSubtotal(this)" min="1"> -->
-			<!-- 					<button onclick="changeQuantity(this, 1)">+</button> -->
-			<!-- 				</td> -->
-			<!-- 				<td class="item-subtotal">100${merch.ticketPrice}元</td> -->
-			<!-- 			</tr> -->
-			<!-- 活動票劵2 -->
-			<!-- 			<tr id="${merch.merchId}"> -->
-			<!-- 				<td><input type="checkbox" name="select" class="item-checkbox" -->
-			<!-- 					onchange="calculateTotal()"></td> -->
-			<!-- 				<td>活動2${merch.actName}</td> -->
-			<!-- 				<td>200${merch.ticketPrice}元</td> -->
-			<!-- 				<td> -->
-			<!-- 					<button onclick="changeQuantity(this, -1)">-</button> <input -->
-			<!-- 					type="number" name="quantity" value="1" size="1" -->
-			<!-- 					class="item-quantity" oninput="calculateSubtotal(this)" min="1"> -->
-			<!-- 					<button onclick="changeQuantity(this, 1)">+</button> -->
-			<!-- 				</td> -->
-			<!-- 				<td class="item-subtotal">200${merch.ticketPrice}元</td> -->
-			<!-- 			</tr> -->
+        //=============================== 點擊去結帳，生成訂單並且將訂單和訂單明細送進資料庫(待完成) ===============================
+        function checkout() {
+            var selectedCartData = [];
 
+            // 取得每一筆明細
+            $("#cart-items tr").each(
+                function (index, row) {
+                    var selName = $(row).find("td#selName" + index).text();
+                    var actName = $(row).find("td#actName" + index).text();
+                    var actTicPrice = parseFloat($(row).find(
+                        "td#actTicPrice" + index).text().replace("元",
+                            ""));
+                    var quantity = parseInt($(row).find(
+                        "input.item-quantity").val());
+                    var subtotal = parseFloat($(row).find(
+                        "td.item-subtotal").text().replace("元", ""));
 
+                    // 存進一個data
+                    var itemData = {
+                        selName: selName,
+                        actName: actName,
+                        actTicPrice: actTicPrice,
+                        quantity: quantity,
+                        subtotal: subtotal
+                    };
 
+                    //成功取得有點選的明細
+                    if ($(row).find("input.item-checkbox").is(":checked")) {
+                        selectedCartData.push(itemData);
+//                     	console.log(itemData);
+//                     	console.log(selectedCartData);
+                    }
+                });
 
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script>
-//=============================== 取得redis資料並成功渲染畫面在畫面(測試) ===============================
-$(document).ready(function () {
-    $("#cartBtn").click(function () {
-    	
-        var memId = localStorage.getItem("memId");
+            // 取得總金額
+            var totalAmount = parseFloat($("#total-amount").text().replace("元",""));
 
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8081/artion/getFromRedis?memId=" + memId,
-            dataType: "json",
-            success: function (data) {
-                console.log("請求成功");
-                console.log(data);
-                console.log(data[0].actName);
-                console.log(data[0].actTicPrice);
+            // localStorage的memId
+            var memId = localStorage.getItem('memId');
 
-                $("#cartItems").empty();
-                
-				//取得明細並渲染在網頁上
-                var actTicPriceString = data[0].actTicPrice;
-                var actTicPriceInt = parseInt(actTicPriceString, 10);
-                for (var i = 0; i < data.length; i++) {
-    				var row = $("<tr>");
-    				row.append('<td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>');
-    				row.append('<td id="actName' + i + '">' + data[i].actName + '</td>');
-    				row.append('<td id="actTicPrice' + i + '">' + data[i].actTicPrice + '元</td>');
-    				row.append('<input type="hidden" name="selId" value="' + data[i].selId + '">');
-    				row.append('<td><button onclick="changeQuantity(this, -1)">-</button><input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1"><button onclick="changeQuantity(this, 1)">+</button></td>');
-    				row.append('<td class="item-subtotal">' + data[i].actTicPrice + '元</td>');
-    				$("#cart-items").append(row);
-					}
-            },
-            error: function () {
-                console.error("Ajax請求失敗");
-            }
-        });
-    });
-});
-	
-	
-// =============================== 取得redis資料並成功渲染畫面在畫面(完成) ===============================
-// $(document).ready(function () {
-//     $("#cartBtn").click(function () {
-    	
-//         var memId = localStorage.getItem("memId");
+            // 成功將明細與總金額包裝成一個JSON
+            var postData = {
+                cartData: selectedCartData,
+                totalAmount: totalAmount,
+                memId: memId
+            };
+            console.log(postData);
+           
 
-//         $.ajax({
-//             type: "GET",
-//             url: "http://localhost:8081/artion/getFromRedis?memId=" + memId,
-//             dataType: "json",
-//             success: function (data) {
-//                 console.log("請求成功");
-//                 console.log(data);
-//                 console.log(data[0].actName);
-//                 console.log(data[0].actTicPrice);
-
-//                 $("#cartItems").empty();
-                
-// 				//取得明細並渲染在網頁上
-//                 var actTicPriceString = data[0].actTicPrice;
-//                 var actTicPriceInt = parseInt(actTicPriceString, 10);
-//                 for (var i = 0; i < data.length; i++) {
-//     				var row = $("<tr>");
-//     				row.append('<td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>');
-//     				row.append('<td id="actName' + i + '">' + data[i].actName + '</td>');
-//     				row.append('<td id="actTicPrice' + i + '">' + data[i].actTicPrice + '元</td>');
-//     				row.append('<td><button onclick="changeQuantity(this, -1)">-</button><input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1"><button onclick="changeQuantity(this, 1)">+</button></td>');
-//     				row.append('<td class="item-subtotal">' + data[i].actTicPrice + '元</td>');
-//     				$("#cart-items").append(row);
-// 					}
-//             },
-//             error: function () {
-//                 console.error("Ajax請求失敗");
-//             }
-//         });
-//     });
-// });
-
-
-
-
-	
-	
-// 	=============================== 購物車操作 ===============================
-    function changeQuantity(button, change) {
-    const input = button.parentNode.querySelector('input[name="quantity"]');
-    const quantity = parseInt(input.value);
-    if (quantity + change >= 1) {
-        input.value = quantity + change;
-        calculateSubtotal(input);
-    }
-}
-function calculateSubtotal(input) {
-    const row = input.closest('tr');
-    const priceCell = row.querySelector('td:nth-child(3)');
-    const subtotalCell = row.querySelector('td.item-subtotal');
-    const price = parseInt(priceCell.textContent);
-    const quantity = parseInt(input.value);
-    const subtotal = price * quantity;
-    subtotalCell.textContent = subtotal + '元';
-    calculateTotal();
-}
-function calculateTotal() {
-    const checkboxes = document.querySelectorAll('.item-checkbox');
-    let totalAmount = 0;
-    for (const checkbox of checkboxes) {
-        if (checkbox.checked) {
-            const row = checkbox.closest('tr');
-            const subtotalCell = row.querySelector('.item-subtotal');
-            const subtotal = parseInt(subtotalCell.textContent);
-            totalAmount += subtotal;
+            $.ajax({
+                type: "POST",
+                url: `${window.location, path}/ticketOrderServlet`,
+                data: JSON.stringify(postData),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                  alert("JSON傳送成功");  
+                },
+                error: function () {
+                    alert("ajax傳送失敗");
+                }
+            });
         }
-    }
-    document.getElementById('total-amount').textContent = totalAmount + '元';
-}
 
+        //=============================== 取得redis資料並成功渲染畫面在畫面並廠商篩選功能(完成) ===============================
+        $(document).ready(
+            function () {$("#cartBtn").click(
+                function () {
+                    var memId = localStorage.getItem("memId");
+                        $.ajax({
+                                type: "GET",
+                                url: `${window.location, path}/getFromRedis?memId=`+ memId,
+                                dataType: "json",
+                                success: function (data) {
+                                            console.log("請求成功");
+//                                             console.log(data);
 
-// =============================== 設定假資料 ===============================
-// const merchandises = [
-//  {
-//      merchId: 1,
-//      merchName: "1",
-//      merchPrice: 100,
-//  },
-//  {
-//      merchId: 2,
-//      merchName: "票卷2",
-//      merchPrice: 200,
-//  },
-// ];
+                                            // 清空購物車
+                                            $("#cartItems").empty();
 
-// =============================== 取得表格tbody ===============================
-// const tbody = document.getElementById("cart-items");
+                                            // 取得資料渲染在頁面上
+                                            for (var i = 0; i < data.length; i++) {
+                                                var row = $("<tr>");
+                                                row.append('<td><input type="checkbox" name="select" class="item-checkbox" data-selname="' + data[i].selName + '"></td>');
+                                                row.append('<td id="selName' + i + '">'
+                                                        + data[i].selName
+                                                        + '</td>');
+                                                row.append('<td id="actName' + i + '">'
+                                                        + data[i].actName
+                                                        + '</td>');
+                                                row.append('<td id="actTicPrice' + i + '">'
+                                                        + data[i].actTicPrice
+                                                        + '元</td>');
+                                                row.append('<td><button onclick="changeQuantity(this, -1)">-</button><input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1"><button onclick="changeQuantity(this, 1)">+</button></td>');
+                                                row.append('<td class="item-subtotal">'
+                                                        + data[i].actTicPrice
+                                                        + '元</td>');
+                                                $("#cart-items").append(row);
+                                            }
 
-// =============================== for迴圈跑出商品 ===============================
-// merchandises.forEach((merch) => {
-//  const row = document.createElement("tr");
-//  row.id = merch.merchId;
-//  row.innerHTML = `
-//      <td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>
-//      <td>${merch.actName}</td>
-//      <td>${merch.ticketPrice}元</td>
-//      <td>
-//          <button onclick="changeQuantity(this, -1)">-</button>
-//          <input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1">
-//          <button onclick="changeQuantity(this, 1)">+</button>
-//      </td>
-//      <td class="item-subtotal">${merch.ticketPrice}元</td>
-//  `;
-//  tbody.appendChild(row);
-// });
+                                            // 複選框邏輯，只能選擇同一廠商功能
+                                            $(
+                                                ".item-checkbox")
+                                                .on(
+                                                    "change",
+                                                    function () {
+                                                        var selName = $(
+                                                            this)
+                                                            .data(
+                                                                "selname");
+                                                        if (this.checked) {
+                                                            var checkedCheckboxes = $(".item-checkbox:checked");
+
+                                                            // 檢查廠商名稱是否有不一樣，不一樣則出現alert
+                                                            checkedCheckboxes
+                                                                .each(function () {
+                                                                    if ($(
+                                                                        this)
+                                                                        .data(
+                                                                            "selname") !== selName) {
+                                                                        $(
+                                                                            this)
+                                                                            .prop(
+                                                                                "checked",
+                                                                                false);
+                                                                        alert("您只能同時選擇同一廠商的票卷去結帳");
+                                                                    }
+                                                                });
+                                                        }
+                                                    });
+                                        },
+                                        error: function () {
+                                            console
+                                                .error("Ajax請求失敗");
+                                        }
+                                    });
+                            });
+                });
+
+        // 	=============================== 購物車操作(完成) ===============================
+        function changeQuantity(button, change) {
+            const input = $(button).siblings('input[name="quantity"]');
+            let quantity = parseInt(input.val());
+            if (quantity + change >= 1) {
+                input.val(quantity + change);
+                calculateSubtotal(input);
+            }
+        }
+
+        function calculateSubtotal(input) {
+            const row = $(input).closest('tr');
+            const priceCell = row.find('td:nth-child(4)');
+            const subtotalCell = row.find('td.item-subtotal');
+            const priceText = priceCell.text();
+            const price = parseFloat(priceText);
+
+            if (!isNaN(price)) {
+                const quantity = parseInt(input.val());
+                const subtotal = price * quantity;
+                subtotalCell.text(subtotal.toFixed(0) + '元');
+                calculateTotal();
+            }
+        }
+
+        function calculateTotal() {
+            const checkboxes = $('.item-checkbox');
+            let totalAmount = 0;
+            checkboxes.each(function () {
+                if ($(this).is(':checked')) {
+                    const row = $(this).closest('tr');
+                    const subtotalCell = row.find('td.item-subtotal');
+                    const subtotalText = subtotalCell.text();
+                    const subtotal = parseFloat(subtotalText);
+                    if (!isNaN(subtotal)) {
+                        totalAmount += subtotal;
+                    }
+                }
+            });
+
+            $('#total-amount').text(totalAmount.toFixed(0) + '元');
+        }
+
+        $('.item-quantity').on('input', function () {
+            calculateSubtotal($(this));
+        });
+
+        $('.item-checkbox').on('change', function () {
+            calculateTotal();
+        });
+
+        //=============================== 取得redis資料並成功渲染畫面在畫面(備份完成) ===============================
+        //      $(document).ready(function () {
+        //          $("#cartBtn").click(function () {
+
+        //              var memId = localStorage.getItem("memId");
+
+        //              $.ajax({
+        //                  type: "GET",
+        //                  url: `${window.location, path}/getFromRedis?memId=` + memId,
+        //                  dataType: "json",
+        //                  success: function (data) {
+        //                      console.log("請求成功");
+        //                      console.log(data);
+        //                      console.log(data[0].actName);
+        //                      console.log(data[0].actTicPrice);
+
+        //                      $("#cartItems").empty();
+
+        //                      //取得明細並渲染在網頁上
+        //                      var actTicPriceString = data[0].actTicPrice;
+        //                      var actTicPriceInt = parseInt(actTicPriceString, 10);
+        //                      for (var i = 0; i < data.length; i++) {
+        //                          var row = $("<tr>");
+        //                          row.append('<td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>');
+        //                          row.append('<td id="selName' + i + '">' + data[i].selName + '</td>');
+        //                          row.append('<td id="actName' + i + '">' + data[i].actName + '</td>');
+        //                          row.append('<td id="actTicPrice' + i + '">' + data[i].actTicPrice + '元</td>');
+        //                          // row.append('<input type="hidden" name="selId" value="' + data[i].selId + '">');
+        //                          row.append('<td><button onclick="changeQuantity(this, -1)">-</button><input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1"><button onclick="changeQuantity(this, 1)">+</button></td>');
+        //                          row.append('<td class="item-subtotal">' + data[i].actTicPrice + '元</td>');
+        //                          $("#cart-items").append(row);
+        //                      }
+        //                  },
+        //                  error: function () {
+        //                      console.error("Ajax請求失敗");
+        //                  }
+        //              });
+        //          });
+        //      });
+
+        // =============================== 取得redis資料並成功渲染畫面在畫面(完成commit) ===============================
+        // // $(document).ready(function () {
+        // //     $("#cartBtn").click(function () {
+
+        // //         var memId = localStorage.getItem("memId");
+
+        // //         $.ajax({
+        // //             type: "GET",
+        // //             url: `${window.location, path}/getFromRedis?memId=` + memId,
+        // //             dataType: "json",
+        // //             success: function (data) {
+        // //                 console.log("請求成功");
+        // //                 console.log(data);
+        // //                 console.log(data[0].actName);
+        // //                 console.log(data[0].actTicPrice);
+
+        // //                 $("#cartItems").empty();
+
+        // // 				//取得明細並渲染在網頁上
+        // //                 var actTicPriceString = data[0].actTicPrice;
+        // //                 var actTicPriceInt = parseInt(actTicPriceString, 10);
+        // //                 for (var i = 0; i < data.length; i++) {
+        // //     				var row = $("<tr>");
+        // //     				row.append('<td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>');
+        // //     				row.append('<td id="actName' + i + '">' + data[i].actName + '</td>');
+        // //     				row.append('<td id="actTicPrice' + i + '">' + data[i].actTicPrice + '元</td>');
+        // //     				row.append('<td><button onclick="changeQuantity(this, -1)">-</button><input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1"><button onclick="changeQuantity(this, 1)">+</button></td>');
+        // //     				row.append('<td class="item-subtotal">' + data[i].actTicPrice + '元</td>');
+        // //     				$("#cart-items").append(row);
+        // // 					}
+        // //             },
+        // //             error: function () {
+        // //                 console.error("Ajax請求失敗");
+        // //             }
+        // //         });
+        // //     });
+        // // });
     </script>
 
 
 </body>
+
 </html>

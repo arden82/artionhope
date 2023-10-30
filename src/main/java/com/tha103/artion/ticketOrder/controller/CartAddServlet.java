@@ -20,6 +20,8 @@ public class CartAddServlet {
 	private static JedisPool pool = JedisPoolUtil.getJedisPool(); // 請替換為您自己的 Redis 相關設置
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+		
 		// 獲取actId的值
 		String actId = req.getParameter("actId");
 

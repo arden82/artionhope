@@ -89,33 +89,35 @@ public class TicketOrderDAO implements TicketOrderDAO_interface {
 		}
 		return null;
 	}
+	
+	//利用
 
-	public static void main(String[] args) throws Exception {
-		TicketOrderDAO dao = new TicketOrderDAO();
-
-		SellerVO sellerVO = new SellerVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
-		sellerVO.setSelId(2001);
-
-		MyPromoCodeVO mypromocodeVO = new MyPromoCodeVO();
-		mypromocodeVO.setMyProCodeId(1);
-
-		MemberVO membervo = new MemberVO();
-		membervo.setMemId(7001);
-		// 新增
-		TicketOrderVO ticketorderVO = new TicketOrderVO();
-		ticketorderVO.setMember(null);
-		ticketorderVO.setTicketOrdStatus(2);
-		ticketorderVO.setTicketOrdTotalPrice(1100.0);
-		ticketorderVO.setTicketOrdProCodeAmount(1100.0);
-		ticketorderVO.setTicketOrdActuallyAmount(4100.0);
-		ticketorderVO.setTicketOrdPayStatus(1);
-		ticketorderVO.setMypromocode(mypromocodeVO);
-		ticketorderVO.setTicketOrdAddress("新北市金石區");
-		ticketorderVO.setSeller(sellerVO);
-		ticketorderVO.setTicketOrdCode("vvv888");
-
-		dao.insert(ticketorderVO);
-	}
+//	public static void main(String[] args) throws Exception {
+//		TicketOrderDAO dao = new TicketOrderDAO();
+//
+//		SellerVO sellerVO = new SellerVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
+//		sellerVO.setSelId(2001);
+//
+//		MyPromoCodeVO mypromocodeVO = new MyPromoCodeVO();
+//		mypromocodeVO.setMyProCodeId(1);
+//
+//		MemberVO membervo = new MemberVO();
+//		membervo.setMemId(7001);
+//		// 新增
+//		TicketOrderVO ticketorderVO = new TicketOrderVO();
+//		ticketorderVO.setMember(null);
+//		ticketorderVO.setTicketOrdStatus(2);
+//		ticketorderVO.setTicketOrdTotalPrice(1100.0);
+//		ticketorderVO.setTicketOrdProCodeAmount(1100.0);
+//		ticketorderVO.setTicketOrdActuallyAmount(4100.0);
+//		ticketorderVO.setTicketOrdPayStatus(1);
+//		ticketorderVO.setMypromocode(mypromocodeVO);
+//		ticketorderVO.setTicketOrdAddress("新北市金石區");
+//		ticketorderVO.setSeller(sellerVO);
+//		ticketorderVO.setTicketOrdCode("vvv888");
+//
+//		dao.insert(ticketorderVO);
+//	}
 //		// 修改
 //		SellerVO sellerVO = new SellerVO(); // FK寫法 要去想怎麼抓值，抓的是PK還是什麼
 //		sellerVO.setSelId(2001);
