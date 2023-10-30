@@ -544,8 +544,6 @@
             }
         });
         logoutBtn.addEventListener("click", function () {
-            sessionStorage.removeItem("memId");
-            sessionStorage.removeItem("account");
             localStorage.removeItem("memId");
             localStorage.removeItem("account");
             fetch(`${window.location, path}/memberlogout`, {

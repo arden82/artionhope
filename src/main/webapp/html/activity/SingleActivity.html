@@ -45,7 +45,7 @@
 								<a class="badge bg-secondary text-decoration-none link-light"
 									href="#" id="actType"></a><br>
 <!-- ========================================== 活動名稱與收藏 ========================================== -->
-								<div class="header_container collectionbtr" style:"display: flex;">
+								<div class="header_container collectionbtn" style:"display: flex;">
 									<span class="fw-bolder mb-1 activity_name" style="font-size: 40px;" id=actName></span>
 									<button type="button" class="btn btn-outline-success">收藏</button>
 								</div>
@@ -285,7 +285,8 @@ $(document).ready(function () {
             var urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('actId');
         }
-
+        let path = window.location.pathname;
+        path = path.substring(0, path.indexOf("/", 1));
         $(document).ready(function () {
             $(".collectionbtn").click(function () {
                 var memId = localStorage.getItem('memId');

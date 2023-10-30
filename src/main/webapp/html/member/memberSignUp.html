@@ -263,6 +263,13 @@
 			}
 	
 		})
+
+		if(localStorage.getItem("memId")||localStorage.getItem("account")||localStorage.getItem("chatID")){
+			localStorage.removeItem("memId");
+			localStorage.removeItem("account");
+			localStorage.removeItem("chatID");
+		}
+	
 		//註冊帳號檢查
 		let mem_account = document.querySelector("#mem_account");
 		let errmsg = document.querySelector('.errmsg');
@@ -362,8 +369,8 @@
 						console.log(memId);
 						
 						
-						sessionStorage.setItem("account", mem_account);
-						sessionStorage.setItem("memId", memId);
+						localStorage.setItem("account", mem_account);
+						localStorage.setItem("memId", memId);
  						window.location.href=`${window.location, path}/html/member/memberProfile.html`;
 					})
 					.catch(err => {

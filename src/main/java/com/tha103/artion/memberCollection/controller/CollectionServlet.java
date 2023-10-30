@@ -44,30 +44,39 @@ public class CollectionServlet extends HttpServlet {
 		String actIdStr = req.getParameter("actId");
 		String action = req.getParameter("action");
 		action = (action != null) ? action : "";
-		System.out.println("action:" + action);
+//		System.out.println("action:" + action);
 		Integer actId = null;
 		Integer result = null;
 		if (actIdStr != null) {
 			actId = Integer.valueOf(actIdStr);
 		}
 		MemberCollectionService mecSv = null;
+		MemberCollectionVO collection = null;
 		Membermsg msg = null;
 		Gson gson = null;
 
 		switch (action) {
 		case "insert":
 			mecSv = new MemberCollectionServicelmp();
-			MemberCollectionVO collection = new MemberCollectionVO();
-			collection.setMemColStatus(1);
-			result = mecSv.insert(collection, memId, actId);
-			if (result == -1) {
-				session.setAttribute("errmsg", "收藏失敗");
-				msg = new Membermsg("收藏失敗");
-				System.out.println("msg:" + msg);
-				gson = new Gson();
-				res.setContentType("application/json");
-				res.setCharacterEncoding("UTF-8");
-				res.getWriter().write(gson.toJson(msg));
+			if (mecSv.getCollection(memId, actId) == null) {// null代表沒有收藏過
+				collection = new MemberCollectionVO();
+				collection.setMemColStatus(1);
+				result = mecSv.insert(collection, memId, actId);
+				if (result == -1) {
+					session.setAttribute("errmsg", "收藏失敗");
+					msg = new Membermsg("收藏失敗");
+					System.out.println("msg:" + msg);
+					gson = new Gson();
+					res.setContentType("application/json");
+					res.setCharacterEncoding("UTF-8");
+					res.getWriter().write(gson.toJson(msg));
+				}
+			}
+			if (mecSv.getCollection(memId, actId) != null && mecSv.getCollection(memId, actId).getMemColStatus() == 0) {
+				collection = new MemberCollectionVO(); //曾經收藏過又重新加入收藏
+				collection = mecSv.getCollection(memId, actId);
+				collection.setMemColStatus(1);
+				result = mecSv.update(collection);
 			}
 			break;
 		case "update":
