@@ -350,7 +350,7 @@
                 </div>
                 <!-- left bar end -->
 
-                <div class="mt-4 mx-auto ">
+                <div class="mt-4 mx-auto collectionallbox ">
                     <!-- 收藏分頁控制開始 -->
                     <nav>
                         <div class="nav nav-tabs " id="nav-tab" role="tablist">
@@ -406,7 +406,7 @@
                         <!-- 收藏大標題3結束 -->
 
                     </div>
-                    <hr>
+                 
                     <!-- 收藏內容容器控制結束 -->
                     <!-- 分頁開始 -->
 
@@ -496,10 +496,12 @@
                     if (Array.isArray(data)) {
                         for (let i = 0; i < data.length; i++) {
                             // console.log(data[i].obj.act_name);
+                            if(data[i].obj.memCol_status==1){                            	
                             let date = new Date(data[i].obj.act_startDate);
                             let month = date.getMonth() + 1;
                             let day = date.getDate();
                             eventlist.push({ title: data[i].obj.act_name, date: `${month}/${day}`, url: `${window.location, path}/html/activity/SingleActivity.html?actId=` + data[i].obj.act_id, coverpic: `${window.location, path}/actPicServlet?actId=` + data[i].obj.act_id, type: data[i].obj.act_type, actId: data[i].obj.act_id });
+                            }
                         }
 
                         mem_nickname.forEach(e => e.innerHTML = `${data[0].obj.mem_nickname}`);
@@ -594,7 +596,7 @@
                                     if (data.message === "收藏更新失敗" && data != "") {
                                         alert(`${data.message},請重試`);
                                     }else{
-                                    
+                                    	window.history.go();//刷新頁面
                                     }
                                 })
                             })

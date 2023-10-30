@@ -47,10 +47,10 @@ notify background: #c1717131;
 }
 
 .account_wrap {
-    text-align: center;
+/*     text-align: center; */
     font-size: 14px;
     padding: 2px;
-    max-width: 120px;
+    width: 120px;
     overflow: hidden;
 }
 
@@ -84,10 +84,10 @@ notify background: #c1717131;
     height: 70%;
 }
 .log_out{
-	position: absolute;
-    bottom: 0;
-    transform: translateX(-50%);
-    left: 50%;
+	bottom: 40px;
+    position: fixed;
+    left: 5%;
+    transform: translateX(-5%);
 }
 .none {
     overflow: hidden;
@@ -178,7 +178,10 @@ notify background: #c1717131;
 .heading:hover {
     color: #d83b3b9c;
 }
+.collectionallbox{
+	 height:450px;
 
+}
 .cardwrap{
 	max-height:58vh;
 	max-width:1025px;

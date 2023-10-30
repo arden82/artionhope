@@ -43,7 +43,7 @@ public class MemberServlet extends HttpServlet {
 		memSvc = new MemberServiceImp();
 		MemberVO memberVO = new MemberVO();
 		Integer memId = null;
-		HttpSession session = null;
+		HttpSession session ;
 		Gson gson = null;
 		Membermsg msg = null;
 		toObject memIdobj = null;
@@ -130,6 +130,7 @@ public class MemberServlet extends HttpServlet {
 			res.getWriter().write(memIdjson);
 			return;
 		case "update":
+			session = req.getSession();
 			memId=(Integer)session.getAttribute("memId");
 			if (memId == null) {
 				res.sendRedirect(req.getContextPath() + "/html/member/memberLogin.html");

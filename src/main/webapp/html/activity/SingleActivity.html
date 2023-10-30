@@ -45,7 +45,7 @@
 								<a class="badge bg-secondary text-decoration-none link-light"
 									href="#" id="actType"></a><br>
 <!-- ========================================== 活動名稱與收藏 ========================================== -->
-								<div class="header_container" style:"display: flex;">
+								<div class="header_container collectionbtn" style:"display: flex;">
 									<span class="fw-bolder mb-1 activity_name" style="font-size: 40px;" id=actName></span>
 									<button type="button" class="btn btn-outline-success">收藏</button>
 								</div>
@@ -278,25 +278,28 @@ $(document).ready(function () {
             var urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('actId');
         }
-
+        let path = window.location.pathname;
+        path = path.substring(0, path.indexOf("/", 1));
         $(document).ready(function () {
-            $("#collection1_icon").click(function () {
+            $(".collectionbtn").click(function () {
                 var memId = localStorage.getItem('memId');
                 if (memId) {
                     var actId = getActIdFromURL();
                     var status = 1; 
                     
                     var data = {
+                    	action:"insert",
                         memId: memId,
                         actId: actId,
-                        status: status
                     };
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost:8081/artion/addToCollectionServlet", 
+                        url: `${window.location, path}/CollectionServlet`, 
                         data: data,
                         success: function (response) {
                             alert("成功加入收藏！");
+                            $(".collectionbtn > button").removeClass("btn-outline-success").addClass("btn-success").text("已收藏");
+                      
                         },
                         error: function () {
                             alert("加入失敗");
