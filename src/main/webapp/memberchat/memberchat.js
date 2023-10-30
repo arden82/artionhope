@@ -3,7 +3,7 @@
  */
  const messagesUl = document.querySelector('#messagesUl');
 
-    const account = localStorage.getItem('memId');
+    const accountchat = localStorage.getItem('memId');
 
     const webSocket = new WebSocket(getUri());
 
@@ -36,7 +36,7 @@
     }
 
     function getUri() {
-        const endPoint = `/ChatEndpoint/${account}/user`;
+        const endPoint = `/ChatEndpoint/${accountchat}/user`;
         const { host, pathname } = location;
         const webCtx = pathname.substring(0, pathname.indexOf('/', 1));
         return 'ws://' + host + webCtx + endPoint;
@@ -45,7 +45,7 @@
     document.querySelector('#sendMessage').addEventListener('click', () => {
         webSocket.send(JSON.stringify({
             type: 'MESSAGE',
-            sender: account,
+            sender: accountchat,
             content: messageDiv.textContent
         }));
     });
