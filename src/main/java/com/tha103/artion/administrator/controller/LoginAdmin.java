@@ -72,8 +72,11 @@ public class LoginAdmin extends HttpServlet{
 			String admId = admSvc.checkAdminMail(mail).getAdmId().toString();
 			session.setAttribute("admId", admId);
 			
+			String admName = admSvc.checkAdminMail(mail).getAdmName().toString();
+			
 			data.put("status","success");
 			data.put("admId", admId);
+			data.put("admName", admName);
 			data.put("mail", mail);
 			
 			String json = gson.toJson(data);
