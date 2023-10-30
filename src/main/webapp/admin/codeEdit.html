@@ -298,7 +298,10 @@
     const queryParams = new URLSearchParams(location.search);
     const promoCodeId = queryParams.get('promoCodeId');
     $('#promoCodeId').text(promoCodeId);
-
+    
+    let path = window.location.pathname;
+    path = path.substring(0, path.indexOf("/", 1));  
+    
     $.ajax({
         url: `../showOnePromoCode?promoCodeId=${promoCodeId}`,
         dataType: "json",
@@ -314,20 +317,14 @@
 			$('#proCodeTotal').val(promo.proCodeTotal);
 			$('#proCodeStatus').val(promo.proCodeStatus);
 			$('#proCodeDescribe').val(promo.proCodeDescribe);
-	
-	        
-			
-        
+		     		        
         },
         error: function () {
 
         },
       });
     		
-    		
-    		
-    		
-    		
+    		    		    		    		
       //填充表單
       function getPromoCodeData() {
         // 获取查询参数中的商品ID
@@ -338,7 +335,9 @@
 
         if (promoCodeId) {
           $.ajax({
-            url: "http://localhost:8081/artion/showOnePromoCode",
+            url:`${window.location, path}/showOnePromoCode`,
+
+//             url: "http://localhost:8081/artion/showOnePromoCode",
             type: "POST",
             data: { promoCodeId: promoCodeId },
             dataType: "json",
@@ -383,7 +382,8 @@
         console.log(adminPhoto1);
 
         // const initialImageUrl = "img/user.jpg";
-        const alternateImageUrl = "http://localhost:8081/artion/adminphoto?admId=" + admId;
+//         const alternateImageUrl = "http://localhost:8081/artion/adminphoto?admId=" + admId;
+		const alternateImageUrl = `${window.location, path}/adminphoto?admId= ` + admId;
 
         // let isInitialImage = true;
 
@@ -413,7 +413,9 @@
 
           // 发送数据到后端
           $.ajax({
-            url: "http://localhost:8081/artion/updatePromoCode", // 替换为用于更新数据的后端URL
+            url:`${window.location, path}/updatePromoCode`,
+  
+//             url: "http://localhost:8081/artion/updatePromoCode", // 替换为用于更新数据的后端URL
             type: "POST", // 根据您的需要选择请求类型
             data: promoCodeData, // 发送的数据
             success: function () {

@@ -1,6 +1,7 @@
 package com.tha103.artion.promoCode.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -21,42 +22,47 @@ public class SendPromoCode extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		// 获取前端传递的参数，例如 promoCodeId
-		String proCodeCode = req.getParameter("proCodeCode");
-		System.out.println(proCodeCode);
+		// 獲取前端傳遞的参数，例如 promoCodeId
+		String promoCodeId = req.getParameter("promoCodeId");
+		System.out.println(promoCodeId);
 
-		// 创建PromoCodeEmailDAO实例
+		// 創建PromoCodeEmailDAO實例
 		PromoCodeEmailDAO promoCodeEmailDAO = new PromoCodeEmailDAO();
 
-		// 获取所有会员的电子邮件地址
+		// 獲取所有會員的電子郵件地址
 		List<String> memberEmails = promoCodeEmailDAO.selectAllMemberEmail();
 
-		// 创建PromocoEmailutil实例
+		// 創建PromocoEmailutil實例
 		PromocoEmailutil emailUtil = new PromocoEmailutil();
-
-		// 发送邮件给所有会员
+		List<String> failedEmails = new ArrayList<>();
 		for (String userEmail : memberEmails) {
-			emailUtil.sendPromoCodeEmail(userEmail, proCodeCode, getBaseUrl(req));
+			try {
+				emailUtil.sendPromoCodeEmail(userEmail, promoCodeId, getBaseUrl(req));
+			} catch (Exception e) {
+				// 如果發送失敗，記錄失敗的郵件
+				failedEmails.add(userEmail);
+			}
 		}
 
-		// 处理成功或失败的情况，可以向前端发送响应
-		// 例如：
-		// if (发送邮件成功) {
-		// // 发送成功的响应
-		// res.getWriter().write("Email sent successfully");
-		// } else {
-		// // 发送失败的响应
-		// res.getWriter().write("Failed to send email");
-		// }
+		res.setContentType("application/json");
+		res.setCharacterEncoding("UTF-8");
+
+		if (failedEmails.isEmpty()) {
+			// 發送成功
+			res.getWriter().write("Email sent successfully");
+		} else {
+			// 發送失败，可以包含失敗的郵件列表或其他信息
+			res.getWriter().write("Failed to send email to the following emails: " + failedEmails);
+		}
 	}
 
 	private String getBaseUrl(HttpServletRequest request) {
-		String scheme = request.getScheme(); // 获取协议 (http, https)
-		String serverName = request.getServerName(); // 获取主机名或IP地址
-		int serverPort = request.getServerPort(); // 获取端口号
-		String contextPath = request.getContextPath(); // 获取上下文路径
+		String scheme = request.getScheme(); // (http, https)
+		String serverName = request.getServerName(); // 獲取主機名或IP地址
+		int serverPort = request.getServerPort(); // 獲取端口號
+		String contextPath = request.getContextPath(); // 獲取上下文路徑
 
-		// 构建基本URL
+		// 創建基本URL
 		return scheme + "://" + serverName + ":" + serverPort + contextPath;
 	}
 

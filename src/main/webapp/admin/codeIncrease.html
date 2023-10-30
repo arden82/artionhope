@@ -305,12 +305,20 @@
         console.log(adminPhoto1);
 
         // const initialImageUrl = "img/user.jpg";
-        const alternateImageUrl = "http://localhost:8081/artion/adminphoto?admId=" + admId;
+        
+        let path = window.location.pathname;
+        path = path.substring(0, path.indexOf("/", 1));
+      console.log("window.location:"+window.location);
+        
+        const alternateImageUrl = `${window.location, path}/adminphoto?admId= ` + admId;
+//          const alternateImageUrl = "http://localhost:8081/artion/adminphoto?admId=" + admId;
 
-        // let isInitialImage = true;
+//         let isInitialImage = true;
 
+//         adminPhoto1.attr("src", `${window.location, path}/admin/adminphoto?admId=${admId}`);
         adminPhoto1.attr("src", alternateImageUrl);
         adminPhoto2.attr("src", alternateImageUrl);
+//         adminPhoto2.attr("src", `${window.location, path}/admin/adminphoto?admId=${admId}`);
 
         $("#commit").on("click", function () {
           // 创建一个对象来保存表单数据
@@ -332,7 +340,10 @@
 
           // 发送数据到后端
           $.ajax({
-            url: "http://localhost:8081/artion/addPromoCode", // 替换为用于更新数据的后端URL
+       
+        	url: `${window.location, path}/addPromoCode`,  // 替换为用于更新数据的后端URL
+        	    	
+//           url: "http://localhost:8081/artion/addPromoCode", 
             type: "POST", // 根据您的需要选择请求类型
             data: promoCodeData, // 发送的数据
             success: function () {
@@ -357,7 +368,6 @@
         $("#commit").on("click", function () {
         
         });
-        
         
       });
     </script>

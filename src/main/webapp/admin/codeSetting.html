@@ -277,9 +277,15 @@
 	<script src="js/main.js"></script>
 	<script>
 //    ================== 取得優惠碼顯示在網頁上 ==================
-      function fillTableWithPromoCodes() {
+      let path = window.location.pathname;
+      path = path.substring(0, path.indexOf("/", 1));  
+	
+	function fillTableWithPromoCodes() {
         $.ajax({
-          url: "http://localhost:8081/artion/showAllPromoCode", // 修改为您的Servlet的URL
+        	
+          url:`${window.location, path}/showAllPromoCode`,
+        	
+//           url: "http://localhost:8081/artion/showAllPromoCode", // 修改为您的Servlet的URL
           type: "POST",
           dataType: "json",
           success: function (data) {
@@ -297,9 +303,9 @@
                             <td>${promoCode.promoCodeCode}</td>
                             <td>${promoCode.promoCodeStatus}</td>
                             <td>${promoCode.proCodeStartDate} - ${promoCode.proCodeEndDate}</td>
-                            <td>
-                                <button type="button" class="btn btn-primary" id="update" data-promoCode="${promoCode.promoCodeId}">修改</button>
-                                <button type="button" class="btn btn-secondary" id="sendemail" data-promoCode="${promoCode.promoCodeId}">送出</button>
+                            <td> 
+                                <button type="button" class="btn btn-primary" id="update" data-promocode=${promoCode.promoCodeId}>修改</button>
+                                <button type="button" class="btn btn-secondary" id="sendemail" data-promocode=${promoCode.promoCodeCode}>送出</button>
                             	
                                 </td>
                         </tr>
@@ -308,34 +314,36 @@
                 tableBody.append(newRowHTML);
               });
             } else {
-              tableBody.html("<tr><td colspan='7'>没有数据。</td></tr>");
+              tableBody.html("<tr><td colspan='7'>没有數據。</td></tr>");
             }
           },
           error: function () {
-            // 处理错误
-            alert("请求失败。");
+            // 例外訊息
+            alert("請求失敗。");
           },
         });
       }
 
       function sendemail(promoCodeId) {
     	  $.ajax({
-    	    url: "http://localhost:8081/artion/SendPromoCode", // 修改为你的后端API的URL
+    		  
+            url:`${window.location, path}/SendPromoCode`,
+
+//     	    url: "http://localhost:8081/artion/SendPromoCode", // 修改为你的后端API的URL
     	    type: "POST",
-    	    data: "promoCodeId",
+    	    data: { promoCodeId: promoCodeId },
     	    dataType: "json",
     	    success: function (data) {
     	      // 在成功发送电子邮件后执行的操作
     	      alert("電子郵件已發送！");
     	    },
-    	    error: function () {
-    	      // 处理错误
-    	      alert("发送电子邮件失败。");
+    	    error: function () {    	      // 处理错误
+    	      alert("發送電子郵件失敗。");
     	    },
     	  });
     	};
 
-      // 在文档加载完成后调用函数
+      // 在文檔加載完成後调用函數
 
       $(document).ready(function () {
         const admId = localStorage.getItem("admId");
@@ -348,7 +356,9 @@
 //         console.log(adminPhoto1);
 
         // const initialImageUrl = "img/user.jpg";
-        const alternateImageUrl = "http://localhost:8081/artion/adminphoto?admId=" + admId;
+//         const alternateImageUrl = "http://localhost:8081/artion/adminphoto?admId=" + admId;
+        
+		const alternateImageUrl = `${window.location, path}/adminphoto?admId= ` + admId;
 
         // let isInitialImage = true;
 
@@ -369,8 +379,9 @@
         
         //送出按鈕
       $("#table-body").on("click", "#sendemail", function () {
-  // 获取所在行的 proCodeCode
-  var promoCodeId = $(this).data("promoCodeId");
+  // 獲取所在行的 proCodeCode
+  var promoCodeId = $(this).data("promocode");
+//   console.log(promoCodeId);
   sendemail(promoCodeId);
 });
 

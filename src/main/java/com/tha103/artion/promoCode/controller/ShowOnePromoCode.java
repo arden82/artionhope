@@ -1,6 +1,7 @@
 package com.tha103.artion.promoCode.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,12 +29,12 @@ public class ShowOnePromoCode extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		var promoCodeId = Integer.valueOf(req.getParameter("promoCodeId"));
-//		var vo = service.getByPromoCodeId(promoCodeId);
-//		resp.setContentType("application/json; charset=utf-8");
-//		String jsonStr = gson.toJson(vo);
-//		PrintWriter out = resp.getWriter();
-//		out.write(jsonStr);
+		var promoCodeId = Integer.valueOf(req.getParameter("promoCodeId"));
+		var vo = service.getByPromoCodeId(promoCodeId);
+		resp.setContentType("application/json; charset=utf-8");
+		String jsonStr = gson.toJson(vo);
+		PrintWriter out = resp.getWriter();
+		out.write(jsonStr);
 
 		resp.getWriter().write(gson.toJson(new PromoCodeEmailDAO().selectAllMemberEmail()));
 	}
