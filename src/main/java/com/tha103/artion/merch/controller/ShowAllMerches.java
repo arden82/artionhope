@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -32,44 +33,53 @@ public class ShowAllMerches extends HttpServlet{
 		
 		res.setContentType("text/html; charset=UTF-8");
 		res.setCharacterEncoding("UTF-8");
-
 		res.setHeader("Access-Control-Allow-Origin", "*");
 		
-		MerchService_Interface merchSvc = new MerchService();
-		List<MerchVO> merchList = merchSvc.getAllMerches();
-
-
+		HttpSession session = req.getSession();
+		String sessionAdmId = session.getAttribute("admId").toString();
 		
-		List<Map<String, Object>> merchMapList = new ArrayList<>();
-		for (MerchVO merch : merchList) {
-			Map<String, Object> merchMap = new HashMap<>();
-			merchMap.put("merchId", merch.getMerchId());
-			merchMap.put("merchPicture1", merch.getMerchPicture1());
-			merchMap.put("merchPicture2", merch.getMerchPicture2());
-			merchMap.put("merchPicture3", merch.getMerchPicture3());
-			merchMap.put("merchPicture4", merch.getMerchPicture4());
-			merchMap.put("merchName", merch.getMerchName());
-			merchMap.put("merchTotal", merch.getMerchTotal());
-			merchMap.put("merchPrice", merch.getMerchPrice());
-			merchMap.put("merchSort", merch.getMerchSort());
-			merchMap.put("merchStartTime", merch.getMerchStartTime());
-			merchMap.put("merchEndTime", merch.getMerchEndTime());
-			merchMap.put("merchIntroduction", merch.getMerchIntroduction());
-			merchMap.put("merchSellAmount", merch.getMerchSellAmount());
-			merchMap.put("merchStatus", merch.getMerchStatus());
-			
+		if(sessionAdmId != null) {
+			MerchService_Interface merchSvc = new MerchService();
+			List<MerchVO> merchList = merchSvc.getAllMerches();
 
 
 			
-			merchMapList.add(merchMap);
+			List<Map<String, Object>> merchMapList = new ArrayList<>();
+			for (MerchVO merch : merchList) {
+				Map<String, Object> merchMap = new HashMap<>();
+				merchMap.put("merchId", merch.getMerchId());
+				merchMap.put("merchPicture1", merch.getMerchPicture1());
+				merchMap.put("merchPicture2", merch.getMerchPicture2());
+				merchMap.put("merchPicture3", merch.getMerchPicture3());
+				merchMap.put("merchPicture4", merch.getMerchPicture4());
+				merchMap.put("merchName", merch.getMerchName());
+				merchMap.put("merchTotal", merch.getMerchTotal());
+				merchMap.put("merchPrice", merch.getMerchPrice());
+				merchMap.put("merchSort", merch.getMerchSort());
+				merchMap.put("merchStartTime", merch.getMerchStartTime());
+				merchMap.put("merchEndTime", merch.getMerchEndTime());
+				merchMap.put("merchIntroduction", merch.getMerchIntroduction());
+				merchMap.put("merchSellAmount", merch.getMerchSellAmount());
+				merchMap.put("merchStatus", merch.getMerchStatus());
+				
+
+
+				
+				merchMapList.add(merchMap);
+			}
+
+			Gson gson = new Gson();
+			String json = gson.toJson(merchMapList);
+
+			PrintWriter out = res.getWriter();
+			out.print(json); // 將JSON字串寫入響應
+			out.flush();
+		}else {
+			res.sendRedirect(req.getContextPath() + "/admin/signin.html");
+			return;
 		}
-
-		Gson gson = new Gson();
-		String json = gson.toJson(merchMapList);
-
-		PrintWriter out = res.getWriter();
-		out.print(json); // 將JSON字串寫入響應
-		out.flush();
+		
+		
 		
 		
 		

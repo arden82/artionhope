@@ -59,7 +59,7 @@
             </div>
           </div>
           <div class="ms-3">
-            <h6 class="mb-0">Jhon Doe</h6>
+            <h6 class="mb-0"><span id="admName"></span></h6>
             <span>Admin</span>
           </div>
         </div>
@@ -67,9 +67,9 @@
           <a href="index.html" class="nav-item nav-link"><i class="fa-solid fa-address-card"></i>會員總覽</a>
           <a href="memberOrderManage.html" class="nav-item nav-link"><i class="fa-solid fa-table-list"></i> 會員訂單管理</a>
           <a href="firm.html" class="nav-item nav-link"><i class="fa-solid fa-building-user"></i> 廠商總覽</a>
-          <a href="activityManage.html" class="nav-item nav-link"><i class="fa-solid fa-calendar-check"></i> 廠商活動管理</a>
-          <a href="complaint.html" class="nav-item nav-link"><i class="fa-solid fa-triangle-exclamation"></i> 客訴處理</a>
-          <a href="customerService.html" class="nav-item nav-link"><i class="fa-solid fa-comments"></i> 即時客服</a>
+          <a href="activityManage.html" class="nav-item nav-link "><i class="fa-solid fa-calendar-check"></i>廠商活動管理</a>
+
+          <a href="../adminchat/adminchat.html" class="nav-item nav-link"><i class="fa-solid fa-comments"></i> 即時客服</a>
           <a href="product.html" class="nav-item nav-link"><i class="fa-solid fa-box"></i> 周邊商品</a>
           <a href="codeSetting.html" class="nav-item nav-link"><i class="fa-solid fa-barcode"></i> 優惠碼設定</a>
           <a href="manager.html" class="nav-item nav-link active"><i class="fa-solid fa-user-tie"></i> 管理者管理</a>
@@ -89,83 +89,21 @@
         <a href="#" class="sidebar-toggler flex-shrink-0">
           <i class="fa fa-bars"></i>
         </a>
-
-        <input class="form-control border-0" type="search" placeholder="Search" />
-
+        <form class="d-none d-md-flex ms-4">
+          <input class="form-control border-0" type="search" placeholder="Search" />
+        </form>
         <div class="navbar-nav align-items-center ms-auto">
-          <div class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-              <i class="fa fa-envelope me-lg-2"></i>
-              <span class="d-none d-lg-inline-flex">信件</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-              <a href="#" class="dropdown-item">
-                <div class="d-flex align-items-center">
-                  <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px" />
-                  <div class="ms-2">
-                    <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                    <small>15 minutes ago</small>
-                  </div>
-                </div>
-              </a>
-              <hr class="dropdown-divider" />
-              <a href="#" class="dropdown-item">
-                <div class="d-flex align-items-center">
-                  <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px" />
-                  <div class="ms-2">
-                    <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                    <small>15 minutes ago</small>
-                  </div>
-                </div>
-              </a>
-              <hr class="dropdown-divider" />
-              <a href="#" class="dropdown-item">
-                <div class="d-flex align-items-center">
-                  <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px" />
-                  <div class="ms-2">
-                    <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                    <small>15 minutes ago</small>
-                  </div>
-                </div>
-              </a>
-              <hr class="dropdown-divider" />
-              <a href="#" class="dropdown-item text-center">See all message</a>
-            </div>
-          </div>
-          <div class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-              <i class="fa fa-bell me-lg-2"></i>
-              <span class="d-none d-lg-inline-flex">通知</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-              <a href="#" class="dropdown-item">
-                <h6 class="fw-normal mb-0">Profile updated</h6>
-                <small>15 minutes ago</small>
-              </a>
-              <hr class="dropdown-divider" />
-              <a href="#" class="dropdown-item">
-                <h6 class="fw-normal mb-0">New user added</h6>
-                <small>15 minutes ago</small>
-              </a>
-              <hr class="dropdown-divider" />
-              <a href="#" class="dropdown-item">
-                <h6 class="fw-normal mb-0">Password changed</h6>
-                <small>15 minutes ago</small>
-              </a>
-              <hr class="dropdown-divider" />
-              <a href="#" class="dropdown-item text-center">See all notifications</a>
-            </div>
-          </div>
+
+
           <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
               <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px"
-                id="adminPhoto1" />
-              <span class="d-none d-lg-inline-flex">John Doe</span>
+                id="adminPhoto2" />
+              <span id="admName2"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-              <a href="#" class="dropdown-item">My Profile</a>
-              <a href="#" class="dropdown-item">Settings</a>
-              <a href="#" class="dropdown-item">Log Out</a>
+
+              <a href="signin.html" class="dropdown-item" id="logOut">Log Out</a>
             </div>
           </div>
         </div>
@@ -353,7 +291,7 @@
 
       if (admId) {
         $.ajax({
-          url: "http://localhost:8081/artion/showOneAdmin",
+          url: `${window.location, path}/showOneAdmin`,
           type: "POST",
           data: { admId: admId },
           dataType: "json",
@@ -398,26 +336,41 @@
       let path = window.location.pathname;
       path = path.substring(0, path.indexOf("/", 1));
       const admId = localStorage.getItem("admId");
-
+      const admName = localStorage.getItem("admName");
       console.log(admId);
+      console.log(admName);
+
+      if (admId != null) {
+        const admNameSpan = $("#admName");
+        const admNameSpan2 = $("#admName2");
+
+        const adminPhoto1 = $("#adminPhoto1");
+        const adminPhoto2 = $("#adminPhoto2");
+
+        console.log(adminPhoto1);
+
+        admNameSpan.text(admName);
+        admNameSpan2.text(admName);
+
+        $("#logOut").on("click", function () {
+          localStorage.removeItem("admId");
+          localStorage.removeItem("admName");
+
+        });
 
 
-      const adminPhoto1 = $("#adminPhoto1");
-      const adminPhoto2 = $("#adminPhoto2");
+        // const initialImageUrl = "img/user.jpg";
+        // http://localhost:8081/artion/adminphoto?admId=1001
+        const alternateImageUrl = window.location.origin + path + "/adminphoto?admId=" + admId;
 
-      console.log(adminPhoto1);
+        // let isInitialImage = true;
 
+        adminPhoto1.attr("src", alternateImageUrl);
+        adminPhoto2.attr("src", alternateImageUrl);
 
-
-
-      // const initialImageUrl = "img/user.jpg";
-      // http://localhost:8081/artion/adminphoto?admId=1001
-      const alternateImageUrl = window.location.origin + path + "/adminphoto?admId=" + admId;
-
-      // let isInitialImage = true;
-
-      adminPhoto1.attr("src", alternateImageUrl);
-      adminPhoto2.attr("src", alternateImageUrl);
+      } else {
+        window.location.href = window.location.origin + path + "signin.html";
+      }
 
       //渲染畫面
       getAdminData();
@@ -439,7 +392,7 @@
         console.log(admin);
 
         $.ajax({
-          url: "http://localhost:8081/artion/updateadmin", // 替换为用于更新数据的后端URL
+          url: `${window.location, path}/artion/updateadmin`, // 替换为用于更新数据的后端URL
           type: "POST", // 根据你的需要选择请求类型
           data: admin, // 发送的数据
           processData: false, // 禁止处理数据
@@ -449,7 +402,7 @@
             // 在成功时执行的操作
             console.log("Update successful for admId: " + admId);
             // 如果更新成功，可以执行重定向到oneAdmin.html
-            window.location.href = "manager.html?admId=" + localAdmId;
+            window.location.href = window.location.origin + path + "manager.html?admId=" + localAdmId;
           },
           error: function (error) {
             // 在请求失败时执行的操作
@@ -459,7 +412,7 @@
         });
       });
       $("#cancel").on("click", function () {
-        location.href = "manager.html?admId=" + admId;
+        location.href = window.location.origin + path + "manager.html?admId=" + admId;
       });
     });
   </script>

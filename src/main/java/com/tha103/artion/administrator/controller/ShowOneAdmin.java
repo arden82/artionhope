@@ -29,39 +29,48 @@ public class ShowOneAdmin extends HttpServlet {
 		
 		res.setContentType("text/html; charset=UTF-8");
 		res.setCharacterEncoding("UTF-8");
-		
 		res.setHeader("Access-Control-Allow-Origin", "*");		
+		
+		HttpSession session = req.getSession();
+		String sessionAdmId = session.getAttribute("admId").toString();
+		
+		if(sessionAdmId != null) {
+			
+			PrintWriter out = res.getWriter();
+			String str = req.getParameter("admId");
+			System.out.println(str);
 
-		PrintWriter out = res.getWriter();
+			if (str != null && !str.isEmpty()) {
+				Integer admId = Integer.valueOf(str);
+				AdministratorService adminService = new AdministratorService();
+				AdministratorVO admin = adminService.getAdminByAdmId(admId);
 
-		String str = req.getParameter("admId");
+				Gson gson = new Gson();
 
-		System.out.println(str);
+				if (admin != null) {
 
-		if (str != null && !str.isEmpty()) {
-			Integer admId = Integer.valueOf(str);
-			AdministratorService adminService = new AdministratorService();
-			AdministratorVO admin = adminService.getAdminByAdmId(admId);
+					Map<String, Object> adminMap = convertAdministratorToMap(admin);
+					String adminJson = gson.toJson(adminMap);
 
-			Gson gson = new Gson();
+					System.out.println(adminJson);
 
-			if (admin != null) {
+					out.print(adminJson); // 將JSON字串寫入響應
+					out.flush();
 
-				Map<String, Object> adminMap = convertAdministratorToMap(admin);
-				String adminJson = gson.toJson(adminMap);
-
-				System.out.println(adminJson);
-
-				out.print(adminJson); // 將JSON字串寫入響應
-				out.flush();
-
+				} else {
+					String errorJson = gson.toJson("Admin not found");
+					out.println(errorJson);
+				}
 			} else {
-				String errorJson = gson.toJson("Admin not found");
-				out.println(errorJson);
+				// 处理空字符串的情况，例如返回错误消息
 			}
-		} else {
-			// 处理空字符串的情况，例如返回错误消息
+			
+		}else {
+			res.sendRedirect(req.getContextPath() + "/admin/signin.html");
+			return;
 		}
+
+		
 
 	}
 

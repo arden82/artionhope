@@ -52,12 +52,14 @@ public class LoginAdmin extends HttpServlet{
 			
 			
 			if(admSvc.checkAdminMail(mail) == null) {
-				data.put("status", "pswFailed");
+				data.put("status", "accNull");
 				System.out.println(data);
 				String json = gson.toJson(data);
 				out.write(json);
 				return;
 			}
+			
+			
 			if (!admSvc.checkAdminMail(mail).getAdmPassword().equals(password)) {
 				data.put("status", "pswFailed");
 				System.out.println(data);
@@ -67,8 +69,6 @@ public class LoginAdmin extends HttpServlet{
 			}
 			
 			HttpSession session = req.getSession();
-			session.setAttribute("mail", mail);
-			
 			String admId = admSvc.checkAdminMail(mail).getAdmId().toString();
 			session.setAttribute("admId", admId);
 			
@@ -77,7 +77,6 @@ public class LoginAdmin extends HttpServlet{
 			data.put("status","success");
 			data.put("admId", admId);
 			data.put("admName", admName);
-			data.put("mail", mail);
 			
 			String json = gson.toJson(data);
 			out.write(json);
