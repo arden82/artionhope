@@ -24,51 +24,57 @@ public class GetFromRedisServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        String memId = request.getParameter("memId");
+        String memId = "7002";
+//        String memId = request.getParameter("memId");
+        if (memId != null) {
+            Jedis jedis = new Jedis("localhost", 6379);
 
-        Jedis jedis = new Jedis("localhost", 6379);
+            // 選擇適當的 Redis 資料庫
+            jedis.select(3);
 
-        // 选择 db03 数据库
-        jedis.select(3);
+            Set<String> cartItems = jedis.smembers(memId);
 
-        Set<String> cartItems = jedis.smembers(memId);
+            JsonArray jsonData = new JsonArray();
+            ActivityService activityService = new ActivityService();
 
-        // 关闭 Redis 连接
-//        jedis.close();
-
-        JsonArray jsonData = new JsonArray();
-
-        ActivityService activityService = new ActivityService();
-
-        for (String cartItem : cartItems) {
-            // 解析JSON字符串以获取活动ID
-            JsonObject cartItemJson = new JsonParser().parse(cartItem).getAsJsonObject();
-            String actId = cartItemJson.get("活動編號").getAsString();
-            String selIdStr = cartItemJson.get("廠商編號").getAsString();
-//            String selName = cartItemJson.get("廠商名稱").getAsString();
-          
-            ActivityVO activityVO = activityService.getOneActivity(Integer.parseInt(actId));
-            int selId = Integer.parseInt(selIdStr);
-            
-            SellerVO sellerVO = activityVO.getSeller();
-            
-            if (activityVO != null) {
+            for (String cartItem : cartItems) {
                 JsonObject cartItemData = new JsonObject();
-                cartItemData.addProperty("selName", sellerVO.getSelName());
-                cartItemData.addProperty("actId", actId);
-                cartItemData.addProperty("actName", activityVO.getActName());
-                cartItemData.addProperty("actTicPrice", activityVO.getActTicketPrice());
-                cartItemData.addProperty("selId", selId);
-                
-                
-                jsonData.add(cartItemData);
+                JsonObject cartItemJson = new JsonParser().parse(cartItem).getAsJsonObject();
+
+                if (cartItemJson.has("活動編號") && cartItemJson.has("廠商編號")) {
+                    String actId = cartItemJson.get("活動編號").getAsString();
+                    String selIdStr = cartItemJson.get("廠商編號").getAsString();
+                    int selId = Integer.parseInt(selIdStr);
+
+                    ActivityVO activityVO = activityService.getOneActivity(Integer.parseInt(actId));
+                    SellerVO sellerVO = activityVO.getSeller();
+
+                    if (activityVO != null) {
+                        cartItemData.addProperty("selName", sellerVO.getSelName());
+                        cartItemData.addProperty("actId", actId);
+                        cartItemData.addProperty("actName", activityVO.getActName());
+                        cartItemData.addProperty("actTicPrice", activityVO.getActTicketPrice());
+                        cartItemData.addProperty("selId", selId);
+                        cartItemData.addProperty("memId", memId);
+
+                        jsonData.add(cartItemData);
+                    }
+                }
             }
+
+            // 關閉 Redis 連線
+            jedis.close();
+
+            // 將購物車資料轉成 JSON 並送給前端
+            response.getWriter().write(jsonData.toString());
+        } else {
+            // 處理 memId 遺失的情況
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("遺失 memId 參數");
         }
-        
-        // 將購物車資料轉成 JSON 送回前端
-        response.getWriter().write(jsonData.toString());
     }
 }
+
 
 
 

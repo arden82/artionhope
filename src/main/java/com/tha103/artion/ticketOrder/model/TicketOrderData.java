@@ -1,5 +1,7 @@
 package com.tha103.artion.ticketOrder.model;
-//沒有用的東西(皓瑄)
+
+import java.util.List;
+
 public class TicketOrderData {
 	private int selName;
     private String actName;
@@ -8,21 +10,10 @@ public class TicketOrderData {
     private int subtotal;
     private double totalAmount;
     private int memId;
+    private List<ItemData> cartData;
     
 	public TicketOrderData() {
 		super();
-	}
-
-	public TicketOrderData(int selName, String actName, double actTicPrice, int quantity, int subtotal,
-			double totalAmount, int memId) {
-		super();
-		this.selName = selName;
-		this.actName = actName;
-		this.actTicPrice = actTicPrice;
-		this.quantity = quantity;
-		this.subtotal = subtotal;
-		this.totalAmount = totalAmount;
-		this.memId = memId;
 	}
 
 	public int getSelName() {
@@ -80,7 +71,13 @@ public class TicketOrderData {
 	public void setMemId(int memId) {
 		this.memId = memId;
 	}
-	
-	
+
+	public List<ItemData> getCartData() {
+		return cartData;
+	}
+
+	public void setCartData(List<ItemData> cartData) {
+		this.cartData = cartData;
+	}
 	
 }

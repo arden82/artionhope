@@ -1,14 +1,9 @@
 package com.tha103.artion.seller.model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
-import java.io.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,9 +12,10 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
-import com.tha103.artion.seller.model.*;
+
 import com.tha103.artion.util.HibernateUtil;
 
 public class SellerDAO implements SellerDAO_interface {
@@ -66,7 +62,56 @@ public class SellerDAO implements SellerDAO_interface {
 		}
 		return sellerVO;
 	}
+	
+	//皓瑄
+	public Integer findSelIdBySelName(String selName) {
+	    Integer selId = null;
+	    Session session = HibernateUtil.getSessionFactory().openSession();
+	    try {
+	        session.beginTransaction();
+	        Query query = session.createQuery("SELECT sel.selId FROM SellerVO sel WHERE sel.selName = :selName");
+	        query.setParameter("selName", selName);
+	        selId = (Integer) query.uniqueResult();
+	        session.getTransaction().commit();
+	    } catch (RuntimeException ex) {
+	        session.getTransaction().rollback();
+	        throw ex;
+	    } finally {
+	        session.close();
+	    }
+	    return selId;
+	}
 
+	public Integer findFirstSelIdBySelName(String selName) {
+	    Session session = HibernateUtil.getSessionFactory().openSession();
+	    Transaction tx = null;
+	    Integer selId = null;
+	    
+	    try {
+	        tx = session.beginTransaction();
+	        
+	        // 使用 HQL 查询获取第一条匹配记录的 selId
+	        String hql = "SELECT sel.selId FROM SellerVO sel WHERE sel.selName = :selName";
+	        Query<Integer> query = session.createQuery(hql, Integer.class);
+	        query.setParameter("selName", selName);
+	        query.setMaxResults(1);  // 只获取第一条记录
+	        selId = query.uniqueResult();
+	        
+	        tx.commit();
+	    } catch (RuntimeException ex) {
+	        if (tx != null && tx.isActive()) {
+	            tx.rollback();
+	        }
+	        throw ex;
+	    } finally {
+	        session.close();
+	    }
+	    
+	    return selId;
+	}
+
+	
+	
 	@Override
 	public List<SellerVO> getAll() {
 		List<SellerVO> list = null;
