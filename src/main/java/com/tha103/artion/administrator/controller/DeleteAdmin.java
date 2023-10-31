@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.tha103.artion.administrator.service.AdministratorService;
 import com.tha103.artion.administrator.service.AdministratorService_Interface;
@@ -23,30 +24,36 @@ public class DeleteAdmin extends HttpServlet{
 		protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
 			res.setHeader("Access-Control-Allow-Origin", "*");
+			HttpSession session = req.getSession();
+			String sessionAdmId = session.getAttribute("admId").toString();
 			
-			try {
-				
-			String strAdmId = req.getParameter("admId");
-			
-			if (strAdmId != null) {
-				
-				int admId = Integer.parseInt(strAdmId);
-				
-				AdministratorService_Interface admSvc = new AdministratorService();
-				
-				admSvc.deleteAdmin(admId);
-				
-				res.getWriter().write("1");
-				
+			if(sessionAdmId != null) {
+				try {
+					
+					String strAdmId = req.getParameter("admId");
+					
+					if (strAdmId != null) {
+						
+						int admId = Integer.parseInt(strAdmId);
+						
+						AdministratorService_Interface admSvc = new AdministratorService();
+						
+						admSvc.deleteAdmin(admId);
+						
+						res.getWriter().write("1");
+						
+					}else {
+						res.getWriter().write("-1");
+					}
+						
+					} catch (Exception e) {
+						res.getWriter().write("-1");
+					}
 			}else {
-				res.getWriter().write("-1");
+				res.sendRedirect(req.getContextPath() + "/admin/signin.html");
+				return;
 			}
-				
-			} catch (Exception e) {
-				res.getWriter().write("-1");
-			}
+			
+			
 		}
-
-	
-	
 }

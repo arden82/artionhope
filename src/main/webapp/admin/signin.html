@@ -93,6 +93,8 @@
   <script src="js/main.js"></script>
 
   <script>
+
+    console.log(localStorage.getItem("admId"));
     $("#commit").on("click", function (e) {
       e.preventDefault;
 
@@ -119,10 +121,13 @@
             localStorage.setItem("admName", admName);
 
             window.location.href = `${window.location, path}/admin/index.html?admId=` + admId;
-          } else {
-            alert("登入失敗");
-            window.location.href = "signin.html";
-          }
+          } else if (data.status === "accNull") {
+            alert("無此帳號或帳號輸入錯誤，請重新輸入或註冊帳號!");
+            window.location.href = window.location.origin + path + "signin.html";
+          } else if (data.status === "pswFailed") {
+            alert("密碼輸入錯誤，登入失敗");
+            window.location.href = window.location.origin + path + "signin.html";
+          };
         },
       });
     });
