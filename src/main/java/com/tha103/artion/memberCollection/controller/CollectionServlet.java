@@ -36,15 +36,16 @@ public class CollectionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
-		Integer memId = (Integer) session.getAttribute("memId");
-		if (memId == null) {
+		Object memidobj=session.getAttribute("memId");
+		if (memidobj == null) {
 			res.sendRedirect(req.getContextPath() + "/html/member/memberLogin.html");
 			return;
 		}
+		Integer memId = (Integer) session.getAttribute("memId");
 		String actIdStr = req.getParameter("actId");
 		String action = req.getParameter("action");
 		action = (action != null) ? action : "";
-//		System.out.println("action:" + action);
+
 		Integer actId = null;
 		Integer result = null;
 		if (actIdStr != null) {
