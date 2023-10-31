@@ -1,5 +1,7 @@
 package com.tha103.artion.member.service;
 
+import java.util.List;
+
 import org.hibernate.Session;
 
 import com.tha103.artion.member.model.MemberDAO;
@@ -54,5 +56,11 @@ public class MemberServiceImp implements MemberService {
 	public MemberVO getMember(Integer mem_id) {
 		return dao.getMember(mem_id);
 	}
+
+	@Override
+	public List<MemberVO> getAll() {
+		return dao.getAll();
+	}
+	
 
 }

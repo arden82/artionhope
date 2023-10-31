@@ -1,5 +1,7 @@
 package com.tha103.artion.member.model;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -74,5 +76,12 @@ public class MemberDAOlmp implements MemberDAO {
 	public MemberVO getMember(Integer id) {
 		return getSession().get(MemberVO.class, id);
 	}
+
+	@Override
+	public List<MemberVO> getAll() {
+	return getSession().createQuery("from MemberVO",MemberVO.class).list();
+	}
+	
+	
 
 }
