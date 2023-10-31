@@ -44,7 +44,6 @@ public class MemberShopList extends HttpServlet {
 		String ticketOrdIdstr = req.getParameter("ticketOrd_id");
 		System.out.println("ticketOrdIdstr:"+ticketOrdIdstr);
 		if(ticketOrdIdstr!=null) {
-			toObject obj = new toObject();
 			Integer ticketOrdId=Integer.valueOf(ticketOrdIdstr);
 			TicketOrderDetailService tods=new TicketOrderDetailService();
 			TicketOrderService tos = new TicketOrderService();
@@ -53,6 +52,7 @@ public class MemberShopList extends HttpServlet {
 			List<Object> listJson = new ArrayList<>();
 			Gson gson=null;
 			for (TicketOrderDetailVO list : dlist) {
+				toObject obj = new toObject();
 				obj.getData().put("mem_id",memId);
 				obj.getData().put("mem_nickname", String.valueOf(list.getTicketorder().getMember().getMemNickname()));
 				obj.getData().put("memLev_levelName", String.valueOf(list.getTicketorder().getMember().getMemLevLevel().getMemLevLevelName()));
@@ -62,7 +62,6 @@ public class MemberShopList extends HttpServlet {
 				obj.getData().put("act_name",list.getActivity().getActName());
 				obj.getData().put("ticketOrd_totalPrice", list.getTicketorder().getTicketOrdTotalPrice());
 				obj.getData().put("ticketOrd_code", list.getTicketorder().getTicketOrdCode());
-				obj.getData().put("ticketOrd_time", list.getTicketorder().getTicketOrdTotalPrice());
 				java.util.Date ticketOrdTime=new Date(list.getTicketorder().getTicketOrdTime().getTime());
 				String strticketOrdTime =dateformat.format(ticketOrdTime);
 				obj.getData().put("ticketOrd_time", strticketOrdTime);
