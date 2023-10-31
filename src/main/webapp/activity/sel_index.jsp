@@ -17,7 +17,6 @@ if (selId == null) {
 SellerService sellerSvc = new SellerService();
 SellerVO sellerVO = sellerSvc.getOneSeller(selId);
 pageContext.setAttribute("sellerVO", sellerVO);
-System.out.println(sellerVO.getSelName());
 
 ActivityService activitySvc = new ActivityService();
 List<ActivityVO> list = activitySvc.getActivitiesBySellerId(selId);
@@ -61,7 +60,8 @@ pageContext.setAttribute("list", list);
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="<%=request.getContextPath()%>/activity/css/bootstrap.min.css"
+<link
+	href="<%=request.getContextPath()%>/activity/css/bootstrap.min.css"
 	rel="stylesheet">
 
 <!-- Template Stylesheet -->
@@ -247,7 +247,9 @@ pageContext.setAttribute("list", list);
 										<th>刪除</th>
 									</tr>
 								</thead>
-								<c:forEach var="activityVO" items="${list}">
+								<%@ include file="page1.file" %> 
+								<c:forEach var="activityVO" items="${list}"
+									begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 									<tr>
 										<td>${activityVO.actId}</td>
 										<td>${activityVO.actName}</td>
@@ -309,11 +311,12 @@ pageContext.setAttribute("list", list);
 									</tr>
 								</c:forEach>
 							</table>
+							<%@ include file="page2.file"%>
 						</div>
 					</div>
 				</div>
 				<!-- Table End -->
-						
+
 				<!-- Footer Start -->
 				<div class="container-fluid pt-4 px-4">
 					<div class="bg-light rounded-top p-4">
@@ -375,28 +378,28 @@ pageContext.setAttribute("list", list);
 									// 調用 updateTable 函數以根據初始篩選值初始化表格
 									updateTable();
 								});
-				</script>
-				<!-- JavaScript Libraries -->
-				
-				<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-				<script
-					src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+			</script>
+			<!-- JavaScript Libraries -->
 
-				<script
-					src="<%=request.getContextPath()%>/activity/lib/easing/easing.min.js"></script>
-				<script
-					src="<%=request.getContextPath()%>/activity/lib/waypoints/waypoints.min.js"></script>
-				<script
-					src="<%=request.getContextPath()%>/activity/lib/owlcarousel/owl.carousel.min.js"></script>
-				<script
-					src="<%=request.getContextPath()%>/activity/lib/tempusdominus/js/moment.min.js"></script>
-				<script
-					src="<%=request.getContextPath()%>/activity/lib/tempusdominus/js/moment-timezone.min.js"></script>
-				<script
-					src="<%=request.getContextPath()%>/activity/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+			<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+			<script
+				src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
-				<!-- Template Javascript -->
-				<script src="<%=request.getContextPath()%>/activity/js/main.js"></script>
+			<script
+				src="<%=request.getContextPath()%>/activity/lib/easing/easing.min.js"></script>
+			<script
+				src="<%=request.getContextPath()%>/activity/lib/waypoints/waypoints.min.js"></script>
+			<script
+				src="<%=request.getContextPath()%>/activity/lib/owlcarousel/owl.carousel.min.js"></script>
+			<script
+				src="<%=request.getContextPath()%>/activity/lib/tempusdominus/js/moment.min.js"></script>
+			<script
+				src="<%=request.getContextPath()%>/activity/lib/tempusdominus/js/moment-timezone.min.js"></script>
+			<script
+				src="<%=request.getContextPath()%>/activity/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+			<!-- Template Javascript -->
+			<script src="<%=request.getContextPath()%>/activity/js/main.js"></script>
 </body>
 
 </html>

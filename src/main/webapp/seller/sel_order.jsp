@@ -15,7 +15,6 @@ if (selId == null) {
 TicketOrderService ticketOrderSvc = new TicketOrderService();
 List<TicketOrderVO> list = ticketOrderSvc.getTicketOrderBySellerId(selId);
 pageContext.setAttribute("list", list);
-
 %>
 
 <!DOCTYPE html>
@@ -115,6 +114,13 @@ pageContext.setAttribute("list", list);
 	transition: transform 0.5s ease-in-out;
 	cursor: pointer;
 }
+.footer-fixed {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* 這個屬性確保footer始終在其他元素之上 */
+}
+
 </style>
 </head>
 
@@ -133,25 +139,20 @@ pageContext.setAttribute("list", list);
 		<!-- Sidebar Start -->
 		<div class="sidebar pe-4 pb-3 d-flex flex-column">
 			<nav class="navbar bg-light navbar-light">
-				<a href="../activity/sel_index.jsp" class="navbar-brand mx-4 mb-3 artionimg">
-					<img src="./images/artion-logo.png">
+				<a href="../activity/sel_index.jsp"
+					class="navbar-brand mx-4 mb-3 artionimg"> <img
+					src="./images/artion-logo.png">
 				</a>
 
 				<div class="navbar-nav w-100">
 					<div class="nav-item">
 						<a href="../activity/sel_index.jsp" class="nav-item nav-link">
-						<i class="fa-solid fa-users me-2"></i>
-						</i>活動總覽</a> 
-						
-						<a href="../activity/sel_actadd.jsp" class="nav-item nav-link">
-						<i class="fa-solid fa-heart-circle-plus me-2"></i>
-						</i>新增活動</a> 
-						
-						<a href="./sel_order.jsp" class="nav-item nav-link"><i
-							class="fa-solid fa-magnifying-glass me-2"></i>
-							</i>訂單總覽</a> 
-							
-						<a href="./sel_profile.jsp" class="nav-item nav-link"> <i
+							<i class="fa-solid fa-users me-2"></i> </i>活動總覽
+						</a> <a href="../activity/sel_actadd.jsp" class="nav-item nav-link">
+							<i class="fa-solid fa-heart-circle-plus me-2"></i> </i>新增活動
+						</a> <a href="./sel_order.jsp" class="nav-item nav-link"><i
+							class="fa-solid fa-magnifying-glass me-2"></i> </i>訂單總覽</a> <a
+							href="./sel_profile.jsp" class="nav-item nav-link"> <i
 							class="fa-solid fa-address-card me-2"></i>廠商基本資料
 						</a>
 					</div>
@@ -201,11 +202,11 @@ pageContext.setAttribute("list", list);
 						<a href="../seller/sel_profile.jsp" class="dropdown-item">My
 							Profile</a>
 						<form
-								action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
-								method="post">
-								<button type="submit" class="dropdown-item">Log Out</button>
-								<input type="hidden" name="action" value="logout">
-							</form>
+							action="<%=request.getContextPath()%>/seller/LogOutHandler.do"
+							method="post">
+							<button type="submit" class="dropdown-item">Log Out</button>
+							<input type="hidden" name="action" value="logout">
+						</form>
 
 					</div>
 				</div>
@@ -220,39 +221,6 @@ pageContext.setAttribute("list", list);
 						<h6 class="mb-4" style="font-size: 24px">
 							<a href="">訂單總覽</a>
 						</h6>
-						<!-- 						<form -->
-						<!-- 							class="d-md-flex justify-content-between align-items-center mb-3"> -->
-						<!-- 							<div class="col-md-6 d-md-flex justify-content-md-end"> -->
-						<!-- 								Existing content -->
-
-						<!-- 							</div> -->
-						<!-- 							<div class="col-md-6 d-md-flex justify-content-md-end"> -->
-						<!-- 								Move the select elements here -->
-						<!-- 								<select id="orderstatus" class="form-select me-2 small-select" -->
-						<!-- 									style="font-size: 14px"> -->
-						<!-- 									<option value="0">訂單狀態</option> -->
-						<!-- 									<option value="1">未完成</option> -->
-						<!-- 									<option value="2">已完成</option> -->
-						<!-- 									<option value="3">已取消</option> -->
-						<!-- 								</select>  -->
-
-						<!-- 								<select id="paymentstatus" -->
-						<!-- 									class="form-select me-2 small-select" style="font-size: 14px"> -->
-						<!-- 									<option value="0">付款狀態</option> -->
-						<!-- 									<option value="1">未付款</option> -->
-						<!-- 									<option value="2">已付款</option> -->
-						<!-- 									<option value="3">已取消</option> -->
-						<!-- 								</select> -->
-
-						<!-- 								 <select id="ordertime" class="form-select me-2 small-select" -->
-						<!-- 									style="font-size: 14px"> -->
-						<!-- 									<option value="0">訂單時間</option> -->
-						<!-- 									<option value="1">最新到最舊</option> -->
-						<!-- 									<option value="2">最舊到最新</option> -->
-						<!-- 								</select> -->
-						<!-- 							</div> -->
-						<!-- 						</form> -->
-
 
 						<table class="table"
 							style="font-size: 18px; text-align: center; vertical-align: middle;">
@@ -316,7 +284,7 @@ pageContext.setAttribute("list", list);
 		<!-- Table End -->
 
 		<!-- Footer Start -->
-		<div class="container-fluid pt-4 px-4">
+		<div class="container-fluid footer-fixed pt-4 px-4">
 			<div class="bg-light rounded-top p-4">
 				<div class="row">
 					<div class="col-12 col-sm-6 text-center text-sm-start"
@@ -330,7 +298,7 @@ pageContext.setAttribute("list", list);
 	</div>
 	<!-- Content End -->
 
-		<!-- JavaScript Libraries -->
+	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>

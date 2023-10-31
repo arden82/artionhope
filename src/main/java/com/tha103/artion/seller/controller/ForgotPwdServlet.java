@@ -18,20 +18,20 @@ public class ForgotPwdServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String selAccount = request.getParameter("selAccount");
 
-		 // 首先检查是否存在该帐号
-	    SellerDAO sellerDAO = new SellerDAO(); // 假设你有一个SellerDAO用于数据库交互
+		 // 首先檢查是否存在該帳號
+	    SellerDAO sellerDAO = new SellerDAO(); // 假設你有一個SellerDAO用於數據庫交換
 	    boolean accountExists = sellerDAO.doesSellerAccountExist(selAccount);
 
 	    if (!accountExists) {
-	        // 如果帐号不存在，返回错误消息
+	        // 如果帳號不存在，返回錯誤消息
 	        request.setAttribute("errorMsg", "該帳號不存在。");
 	        request.getRequestDispatcher("/seller/sel_forgotPassword.jsp").forward(request, response);
 	        return;
 	    }
 
-		// 创建SellerEmailUtil实例
+		// 創建SellerEmailUtil實例
 		SellerEmailUtil emailUtil = new SellerEmailUtil();
-		// 发送重新设置密码的链接
+		// 發送重新設置密碼的連結
 		emailUtil.sendResetPasswordEmail(selAccount, getBaseUrl(request));
 		System.out.println(222);
 		request.getRequestDispatcher("/seller/sel_blankPage.jsp").forward(request, response);
