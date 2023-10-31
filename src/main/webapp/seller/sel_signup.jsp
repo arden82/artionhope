@@ -68,7 +68,7 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 			</c:forEach>
 		</ul>
 	</c:if>
-<c:if test="${not empty successfulMsg}">
+	<c:if test="${not empty successfulMsg}">
 		<font style="color: red">你已成功修改密碼!</font>
 		<ul>
 			<c:forEach var="message" items="${successfulMsg}">
@@ -309,23 +309,22 @@ SellerVO sellerVO = (SellerVO) request.getAttribute("sellerVO");
 										</div>
 									</div>
 								</div>
-								
+
 								<!-- 圖片上傳 -->
-									<div class="mb-3">
-										<label for="formFile1" class="form-label">廠商頭像</label> <input
-											class="form-control" type="file" name="selProfilePicture">
-									</div>
-								
+								<div class="mb-3">
+									<label for="formFile1" class="form-label">廠商頭像</label> <input
+										class="form-control" type="file" name="selProfilePicture">
+								</div>
+
 								<div class="text-center" style="margin-top: 30px;">
 									<input type="hidden" name="action" value="insert"> <input
 										type="submit" value="送出" style="margin-bottom: 20px;">
 								</div>
-						</table>
-					</FORM>
+			</table>
+	</FORM>
 
-					
+
 	<!-- Form End -->
-
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
