@@ -99,5 +99,11 @@ public class TicketOrderService {
 
 		return ticketOrderVO;
 	}
+	public List<TicketOrderVO> getTicketlist(Integer memId){
+		return dao.getTicketlist(memId);
+	}
+	public MemberVO getmember(Integer memId) {
+		return dao.getmember(memId);
+	}
 
 }

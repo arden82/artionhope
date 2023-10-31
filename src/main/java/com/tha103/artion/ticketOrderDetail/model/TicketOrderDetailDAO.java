@@ -199,4 +199,43 @@ public class TicketOrderDetailDAO implements TicketOrderDetailDAO_interface {
 		return null;
 	}
 
+	@Override
+	public TicketOrderDetailVO getTicketorder(Integer ticketOrdId) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			List<TicketOrderDetailVO> resultList=session
+					.createQuery("from TicketOrderDetailVO  where ticketOrd_id=:ticketOrdId ", TicketOrderDetailVO.class)
+					.setParameter("ticketOrdId", ticketOrdId).setMaxResults(1).list();
+			session.getTransaction().commit();
+			  if (resultList != null && !resultList.isEmpty()) {
+		            return resultList.get(0); 
+		        }
+			  return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+			return null;
+		}
+	}
+
+	@Override
+	public List<TicketOrderDetailVO> getTicketordelist(Integer ticketOrdId) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			List<TicketOrderDetailVO> list=session
+					.createQuery("from TicketOrderDetailVO  where ticketOrd_id=:ticketOrdId ", TicketOrderDetailVO.class)
+					.setParameter("ticketOrdId", ticketOrdId).list();
+			session.getTransaction().commit();
+			return list;
+		}catch(Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+			return null;
+		}
+	}
+	
+	
+
 }

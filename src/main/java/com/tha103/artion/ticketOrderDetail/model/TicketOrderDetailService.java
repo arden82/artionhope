@@ -64,4 +64,14 @@ public class TicketOrderDetailService {
 		}
 	}
 
+	public TicketOrderDetailVO ticketbyticketorder(Integer ticketOrderVO) {
+		TicketOrderDetailVO ticketOrderDetailVO = dao.getTicketorder(ticketOrderVO);
+		if (ticketOrderDetailVO != null) {
+			return ticketOrderDetailVO;
+		}
+		return null;
+	}
+	public List<TicketOrderDetailVO> getTicketordelist(Integer ticketOrdId) {
+		return dao.getTicketordelist(ticketOrdId);
+	}
 }

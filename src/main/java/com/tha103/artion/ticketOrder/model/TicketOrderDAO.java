@@ -6,6 +6,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.tha103.artion.member.model.MemberVO;
+import com.tha103.artion.memberCollection.model.MemberCollectionVO;
 import com.tha103.artion.myPromoCode.model.MyPromoCodeVO;
 import com.tha103.artion.seller.model.SellerVO;
 import com.tha103.artion.util.HibernateUtil;
@@ -236,4 +237,40 @@ public class TicketOrderDAO implements TicketOrderDAO_interface {
 		}
 		return null;
 	}
+
+	@Override
+	public List<TicketOrderVO> getTicketlist(Integer memId) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			List<TicketOrderVO> list=session
+					.createQuery("from TicketOrderVO where mem_id=:memId ORDER BY ticketOrd_time DESC", TicketOrderVO.class)
+					.setParameter("memId", memId).list();
+			session.getTransaction().commit();
+		return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+			return null;
+		}
+	
+	}
+
+	@Override
+	public MemberVO getmember(Integer memId) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			 MemberVO member=session.get(MemberVO.class, memId);
+			session.getTransaction().commit();
+			return member;
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+			return null;
+		}
+	}
+	
+	
 }

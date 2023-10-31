@@ -2,6 +2,8 @@ package com.tha103.artion.ticketOrder.model;
 
 import java.util.List;
 
+import com.tha103.artion.member.model.MemberVO;
+
 public interface TicketOrderDAO_interface {
 	int insert(TicketOrderVO ticketOrderVO);
 
@@ -23,4 +25,7 @@ public interface TicketOrderDAO_interface {
 
 	TicketOrderVO getTicketOrderDetailsByTicketOrdId(Integer ticketOrdId);
 
+	List<TicketOrderVO> getTicketlist(Integer memId);
+
+	MemberVO getmember(Integer memId);
 }
