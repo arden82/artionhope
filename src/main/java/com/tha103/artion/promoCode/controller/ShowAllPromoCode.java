@@ -42,14 +42,14 @@ public class ShowAllPromoCode extends HttpServlet {
 			promoCodeMap.put("promoCodeId", promoCode.getProCodeId());
 			promoCodeMap.put("promoCodeName", promoCode.getProCodeName());
 			promoCodeMap.put("promoCodeCode", promoCode.getProCodeCode());
-			promoCodeMap.put("proCodeType", promoCode.getProCodeType());
-			promoCodeMap.put("proCodeValue", promoCode.getProCodeValue());
-			promoCodeMap.put("proCodeStartDate", promoCode.getProCodeStartDate());
-			promoCodeMap.put("proCodeEndDate", promoCode.getProCodeEndDate());
-			promoCodeMap.put("proCodeActType", promoCode.getProCodeActType());
-			promoCodeMap.put("proCodeTotal", promoCode.getProCodeTotal());
-			promoCodeMap.put("proCodeStatus", promoCode.getProCodeStatus());
-			promoCodeMap.put("proCodeDescribe", promoCode.getProCodeDescribe());
+			promoCodeMap.put("promoCodeType", promoCode.getProCodeType());
+			promoCodeMap.put("promoCodeValue", promoCode.getProCodeValue());
+			promoCodeMap.put("promoCodeStartDate", promoCode.getProCodeStartDate());
+			promoCodeMap.put("promoCodeEndDate", promoCode.getProCodeEndDate());
+			promoCodeMap.put("promoCodeActType", promoCode.getProCodeActType());
+			promoCodeMap.put("promoCodeTotal", promoCode.getProCodeTotal());
+			promoCodeMap.put("promoCodeStatus", promoCode.getProCodeStatus());
+			promoCodeMap.put("promoCodeDescribe", promoCode.getProCodeDescribe());
 			promoCodeMap.put("memLevLevel", promoCode.getMemLevLevel().getMemLevLevel());
 
 			promoCodeMapList.add(promoCodeMap);

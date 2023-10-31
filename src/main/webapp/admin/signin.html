@@ -120,7 +120,7 @@
             localStorage.setItem("admId", admId);
             localStorage.setItem("admName", admName);
 
-            window.location.href = `${window.location, path}/admin/index.html?admId=` + admId;
+            window.location.href = `${window.location, path}/admin/manager.html?admId=` + admId;
           } else if (data.status === "accNull") {
             alert("無此帳號或帳號輸入錯誤，請重新輸入或註冊帳號!");
             window.location.href = window.location.origin + path + "signin.html";

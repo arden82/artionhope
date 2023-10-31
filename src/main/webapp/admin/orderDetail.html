@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body {
@@ -120,11 +121,11 @@
     <div class="container">
         <h1>订单页面</h1>
         <div class="order-details">
-            <span>订单编号: <span id="order-number">Your Order Number</span></span>
-            <span>订单代号: <span id="order-code">Your Order Code</span></span>
-            <span>订购者姓名: <span id="customer-name">Your Customer Name</span></span>
-            <span>订单时间: <span id="order-time">Order Time</span></span>
-            <span>厂商名称: <span id="vendor-name">Vendor Name</span></span>
+            <span>订单编号: <span id="order-number"></span></span>
+            <span>订单代号: <span id="order-code"></span></span>
+            <span>订购者姓名: <span id="customer-name"></span></span>
+            <span>订单时间: <span id="order-time"></span></span>
+            <span>厂商名称: <span id="vendor-name"></span></span>
         </div>
 
         <table>
@@ -149,54 +150,76 @@
             <input type="text" id="actual-amount">
         </div>
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         const tableRows = document.querySelectorAll('table tbody tr');
         const totalAmountInput = document.getElementById('total-amount');
         const actualAmountInput = document.getElementById('actual-amount');
 
-        var memId =
-            showOrder(function () {
-                $.ajax({
-                    url: `${window.location, path}/getOneTicketOrder`,
-                    type: "POST",
-                    dataType: "json",
-                    success: function (data) {
-                        var tableBody = $("#table-body");
-                        tableBody.empty();
+        var sendItem = {
+            memId: 7001,
+            ticketOrdId: 134789,
+        };
+        function showOrder() {
+            console.log("aaa");
+            $.ajax({
+                // url: `${window.location, path}/showOneOrder`,
+                url: "http://localhost:8081/artion/showOneOrder",
+                type: "POST",
+                data: sendItem,
+                success: function (data) {
+                    // 获取JSON字符串（假设data是服务器返回的JSON字符串）
+                    console.log(data);
+                    var jsonData = JSON.parse(data);
 
-                        if (data.length > 0) {
-                            $.each(data, function (index, member) {
-                                var newRowHTML = `
-                              <tr>
-                                  <th scope="row" id="admId">${member.memId}</th>
-                                  <td>${member.memName}</td>
-                                  <td>${member.memNickName}</td>
-                                  <td>${member.memAccount}</td>
-                                  <td>${member.memBirthdaty}</td>
-                                  <td>${member.memGender}</td>
-                                  <td>${member.memMobile}</td>
-                                  <td><button type="submit" id="commit" class="btn btn-primary m-2">修改</button></td>
-                                  <td><button id="delete" data-admin="${member.memId}" class="btn btn-secondary m-2">刪除</button></td>
-                              </tr>
-                          `;
-                                tableBody.append(newRowHTML);
-                            });
-                        } else {
-                            tableBody.html("<tr><td colspan='13'>沒有管理員資料。</td></tr>");
-                        }
-                    },
-                    error: function () {
-                        // 處理錯誤
-                        alert("請求失敗。");
-                    },
-                });
-                document.getElementById('order-number').textContent = '12345';
-                document.getElementById('order-code').textContent = 'ABC123';
-                document.getElementById('customer-name').textContent = 'John Doe';
-                document.getElementById('order-time').textContent = '2023-10-31 12:00 PM';
-                document.getElementById('vendor-name').textContent = 'Example Inc.';
-            }, 1000);
+                    // 从JSON对象中获取值
+                    var ticketOrdId = jsonData.ticketOrdId;
+                    var memName = jsonData.memName;
+                    var ticketOrdCode = jsonData.ticketOrdCode;
+                    var ticketOrdTime = jsonData.ticketOrdTime;
+                    var selName = jsonData.selName;
+
+                    // 然后将这些值设置到HTML元素中
+                    document.getElementById('order-number').textContent = ticketOrdId;
+                    document.getElementById('order-code').textContent = ticketOrdCode;
+                    document.getElementById('customer-name').textContent = memName;
+                    document.getElementById('order-time').textContent = ticketOrdTime;
+                    document.getElementById('vendor-name').textContent = selName;
+
+
+
+
+                    var tableBody = $("#table-body");
+                    tableBody.empty();
+
+                    // if (data.length > 0) {
+                    //     $.each(data, function (index, member) {
+                    //         var newRowHTML = `
+                    //           <tr>
+                    //               <th scope="row" id="admId">${member.memId}</th>
+                    //               <td>${member.memName}</td>
+                    //               <td>${member.memNickName}</td>
+                    //               <td>${member.memAccount}</td>
+                    //               <td>${member.memBirthdaty}</td>
+                    //               <td>${member.memGender}</td>
+                    //               <td>${member.memMobile}</td>
+                    //               <td><button type="submit" id="commit" class="btn btn-primary m-2">修改</button></td>
+                    //               <td><button id="delete" data-admin="${member.memId}" class="btn btn-secondary m-2">刪除</button></td>
+                    //           </tr>
+                    //       `;
+                    //         tableBody.append(newRowHTML);
+                    //     });
+                    // } else {
+                    //     tableBody.html("<tr><td colspan='13'>沒有管理員資料。</td></tr>");
+                    // }
+                },
+                error: function () {
+                    // 處理錯誤
+                    alert("請求失敗。");
+                },
+            });
+
+        };
 
         tableRows.forEach(row => {
             const ticketPrice = parseInt(row.children[1].textContent);
@@ -218,6 +241,10 @@
                 actualAmountInput.style.borderBottomColor = '#f44336';
                 document.querySelector('.total').style.backgroundColor = '#f44336';
             }
+        });
+
+        $(document).ready(function () {
+            showOrder();
         });
     </script>
 </body>
