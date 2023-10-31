@@ -365,13 +365,13 @@
       adminPhoto2.attr("src", alternateImageUrl);
 
     } else {
-      window.location.href = window.location.origin + path + "signin.html";
+      window.location.href = "signin.html";
     }
 
     //渲染全部標籤
     function getMerchesData() {
       $.ajax({
-        url: `${window.location, path}/showAllMerches`, // 替換成您的 Servlet 的實際 URL
+        url: `http://localhost:8081/artion/showAllMerches`, // 替換成您的 Servlet 的實際 URL
         type: "POST",
         dataType: "json",
         success: function (data) {
@@ -381,7 +381,7 @@
 
           if (data.length > 0) {
             $.each(data, function (index, merch) {
-              var merchDetailURL = window.location.origin + path + "productDetails.html?merchId=" + merch.merchId;
+              var merchDetailURL = "productDetails.html?merchId=" + merch.merchId;
               var newRowHTML = `
                 <tr>
                   <td><a href="${merchDetailURL}">${merch.merchId}</a></td>
@@ -418,7 +418,7 @@
         };
 
         $.ajax({
-          url: `${window.location, path}/deleteMerch`,
+          url: `http://localhost:8081/artion/deleteMerch`,
           type: "POST",
           data: deleteItem,
           dataType: "json",
@@ -445,7 +445,7 @@
         // 獲取所在行的 merchId
         var merchId = $(this).data("merch");
         console.log(merchId);
-        location.href = window.location.origin + path + "productedit.html?merchId=" + merchId;
+        location.href = "productedit.html?merchId=" + merchId;
       });
       $("#merchesAllTableBody").on("click", "#delete", function (e) {
         e.preventDefault();

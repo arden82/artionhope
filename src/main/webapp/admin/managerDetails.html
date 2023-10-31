@@ -291,7 +291,7 @@
 
       if (admId) {
         $.ajax({
-          url: `${window.location, path}/showOneAdmin`,
+          url: `http://localhost:8081/artion/showOneAdmin`,
           type: "POST",
           data: { admId: admId },
           dataType: "json",
@@ -369,7 +369,7 @@
         adminPhoto2.attr("src", alternateImageUrl);
 
       } else {
-        window.location.href = window.location.origin + path + "signin.html";
+        window.location.href = "signin.html";
       }
 
       //渲染畫面
@@ -392,7 +392,7 @@
         console.log(admin);
 
         $.ajax({
-          url: `${window.location, path}/artion/updateadmin`, // 替换为用于更新数据的后端URL
+          url: `http://localhost:8081/artion/updateadmin`, // 替换为用于更新数据的后端URL
           type: "POST", // 根据你的需要选择请求类型
           data: admin, // 发送的数据
           processData: false, // 禁止处理数据
@@ -402,7 +402,7 @@
             // 在成功时执行的操作
             console.log("Update successful for admId: " + admId);
             // 如果更新成功，可以执行重定向到oneAdmin.html
-            window.location.href = window.location.origin + path + "manager.html?admId=" + localAdmId;
+            window.location.href = "manager.html?admId=" + localAdmId;
           },
           error: function (error) {
             // 在请求失败时执行的操作
@@ -412,7 +412,7 @@
         });
       });
       $("#cancel").on("click", function () {
-        location.href = window.location.origin + path + "manager.html?admId=" + admId;
+        location.href = "manager.html?admId=" + admId;
       });
     });
   </script>

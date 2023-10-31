@@ -278,7 +278,7 @@
         adminPhoto2.attr("src", alternateImageUrl);
 
       } else {
-        window.location.href = window.location.origin + path + "signin.html";
+        window.location.href = "signin.html";
       }
 
       $("#insert").on("click", function () {
@@ -301,14 +301,14 @@
         console.log(merch);
 
         $.ajax({
-          url: `${window.location, path}/addMerch`, // 替换为用于更新数据的后端URL
+          url: `http://localhost:8081/artion/addMerch`, // 替换为用于更新数据的后端URL
           type: "POST", // 根据你的需要选择请求类型
           data: merch, // 发送的数据
           processData: false, // 禁止处理数据
           contentType: false, // 禁止设置内容类型
 
           success: function () {
-            location.href = window.location.origin + path + "product.html?admId=" + admId;
+            location.href = "product.html?admId=" + admId;
           },
           error: function (error) {
             // 在请求失败时执行的操作
@@ -318,7 +318,7 @@
         });
       });
       $("#cancel").on("click", function () {
-        location.href = window.location.origin + path + "product.html?admId=" + admId;
+        location.href = "product.html?admId=" + admId;
       });
     });
   </script>

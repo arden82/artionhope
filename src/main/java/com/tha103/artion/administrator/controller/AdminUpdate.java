@@ -51,7 +51,8 @@ public class AdminUpdate extends HttpServlet {
 
 			System.out.println(strAdminId);
 
-			String adminName = req.getParameter("admName");
+			String admName = req.getParameter("admName");
+			System.out.println(admName);
 
 			String strAdminIdentity = req.getParameter("admIdentity");
 
@@ -117,7 +118,7 @@ public class AdminUpdate extends HttpServlet {
 			}
 			
 			System.out.println(admProfilePhoto);
-			System.out.println(adminName);
+			System.out.println(admName);
 			try {
 				Integer admId = Integer.valueOf(strAdminId);
 
@@ -127,7 +128,7 @@ public class AdminUpdate extends HttpServlet {
 				
 				//要修改區域	
 				adminVO.setAdmProfilePhoto(admProfilePhoto);
-				adminVO.setAdmName(adminName);
+				adminVO.setAdmName(admName);
 				adminVO.setAdmIdentity(adminIdentity);
 				adminVO.setAdmStatus(adminStatus);
 				adminVO.setAdmMail(adminEmail);

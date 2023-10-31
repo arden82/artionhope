@@ -288,7 +288,7 @@
         success: function (data) {
           alert("success");
           console.log(data);
-          location.href = window.location.origin + path + "managerDetails.html?admId=" + admId; // 在URL中包含admId
+          location.href = "managerDetails.html?admId=" + admId; // 在URL中包含admId
         },
       });
     }
@@ -331,7 +331,7 @@
         data: item,
         dataType: "json",
         success: function (data) {
-          location.href = window.location.origin + path + "oneAdmin.html?admId=" + admId; // 在URL中包含admId
+          location.href = "oneAdmin.html?admId=" + admId; // 在URL中包含admId
         },
         error: function () {
           // 處理錯誤

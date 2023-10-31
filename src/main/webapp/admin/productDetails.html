@@ -184,7 +184,7 @@
       if (merchId) {
         $.ajax({
           type: "GET",
-          url: `${window.location, path}/artion/showOneMerch`, // 指向您的Servlet URL
+          url: `http://localhost:8081/artion/showOneMerch`, // 指向您的Servlet URL
           data: { merchId: merchId }, // 替换成您的商品ID
           dataType: "json",
           success: function (data) {
@@ -198,10 +198,10 @@
         <div class="merch-info">
             <div class="product-title">${data.merchName}</div>
             <div class="product-images">
-                <img src="${window.location, path}/MerchPhoto?merchId=${data.merchId}&merchPicture=1" alt="商品圖片1" />
-                <img src="${window.location, path}/MerchPhoto?merchId=${data.merchId}&merchPicture=2" alt="商品圖片2" />
-                <img src="${window.location, path}/MerchPhoto?merchId=${data.merchId}&merchPicture=3" alt="商品圖片3" />
-                <img src="${window.location, path}/MerchPhoto?merchId=${data.merchId}&merchPicture=4" alt="商品圖片4" />
+                <img src="http://localhost:8081/artion/merchPhoto?merchId=${data.merchId}&merchPicture=1" alt="商品圖片1" style='max-width: 400px'/>
+                <img src="http://localhost:8081/artion/merchPhoto?merchId=${data.merchId}&merchPicture=2" alt="商品圖片2" style='max-width: 400px'/>
+                <img src="http://localhost:8081/artion/merchPhoto?merchId=${data.merchId}&merchPicture=3" alt="商品圖片3" style='max-width: 400px'/>
+                <img src="http://localhost:8081/artion/merchPhoto?merchId=${data.merchId}&merchPicture=4" alt="商品圖片4" style='max-width: 400px'/>
             </div>
             <div class="product-info"><strong>周边商品編號:</strong> ${data.merchId}</div>
             <div class="product-info"><strong>周边商品總數:</strong> ${data.merchTotal}</div>
@@ -261,7 +261,7 @@
         adminPhoto2.attr("src", alternateImageUrl);
 
       } else {
-        window.location.href = window.location.origin + path + "signin.html";
+        window.location.href = "signin.html";
       }
       getMerchData();
     });
