@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            background: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 30px;
+            transform: scale(1);
+            transition: all 0.4s ease-in-out;
+        }
+
+        .container:hover {
+            transform: scale(1.03);
+            background: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            text-transform: uppercase;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .order-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .order-details span {
+            flex-basis: 48%;
+            font-weight: bold;
+            color: #555;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ccc;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        table th {
+            background: #333;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .total label {
+            font-weight: bold;
+            color: #555;
+            text-transform: uppercase;
+            font-size: 20px;
+        }
+
+        .total input {
+            width: 100px;
+            border: none;
+            border-bottom: 2px solid #333;
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        .total:hover {
+            background: #333;
+            transition: background 0.5s;
+        }
+
+        .fa-check {
+            color: #4caf50;
+        }
+
+        .fa-times {
+            color: #f44336;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>订单页面</h1>
+        <div class="order-details">
+            <span>订单编号: <span id="order-number">Your Order Number</span></span>
+            <span>订单代号: <span id="order-code">Your Order Code</span></span>
+            <span>订购者姓名: <span id="customer-name">Your Customer Name</span></span>
+            <span>订单时间: <span id="order-time">Order Time</span></span>
+            <span>厂商名称: <span id="vendor-name">Vendor Name</span></span>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>活动名称</th>
+                    <th>票价</th>
+                    <th>数量</th>
+                    <th>小计</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+
+            </tbody>
+        </table>
+
+        <div class="total">
+            <label for="total-amount">总金额:</label>
+            <input type="text" id="total-amount" readonly>
+
+            <label for="actual-amount">实付金额:</label>
+            <input type="text" id="actual-amount">
+        </div>
+    </div>
+
+    <script>
+        const tableRows = document.querySelectorAll('table tbody tr');
+        const totalAmountInput = document.getElementById('total-amount');
+        const actualAmountInput = document.getElementById('actual-amount');
+
+        var memId =
+            showOrder(function () {
+                $.ajax({
+                    url: `${window.location, path}/getOneTicketOrder`,
+                    type: "POST",
+                    dataType: "json",
+                    success: function (data) {
+                        var tableBody = $("#table-body");
+                        tableBody.empty();
+
+                        if (data.length > 0) {
+                            $.each(data, function (index, member) {
+                                var newRowHTML = `
+                              <tr>
+                                  <th scope="row" id="admId">${member.memId}</th>
+                                  <td>${member.memName}</td>
+                                  <td>${member.memNickName}</td>
+                                  <td>${member.memAccount}</td>
+                                  <td>${member.memBirthdaty}</td>
+                                  <td>${member.memGender}</td>
+                                  <td>${member.memMobile}</td>
+                                  <td><button type="submit" id="commit" class="btn btn-primary m-2">修改</button></td>
+                                  <td><button id="delete" data-admin="${member.memId}" class="btn btn-secondary m-2">刪除</button></td>
+                              </tr>
+                          `;
+                                tableBody.append(newRowHTML);
+                            });
+                        } else {
+                            tableBody.html("<tr><td colspan='13'>沒有管理員資料。</td></tr>");
+                        }
+                    },
+                    error: function () {
+                        // 處理錯誤
+                        alert("請求失敗。");
+                    },
+                });
+                document.getElementById('order-number').textContent = '12345';
+                document.getElementById('order-code').textContent = 'ABC123';
+                document.getElementById('customer-name').textContent = 'John Doe';
+                document.getElementById('order-time').textContent = '2023-10-31 12:00 PM';
+                document.getElementById('vendor-name').textContent = 'Example Inc.';
+            }, 1000);
+
+        tableRows.forEach(row => {
+            const ticketPrice = parseInt(row.children[1].textContent);
+            const quantity = parseInt(row.children[2].textContent);
+            const subtotal = ticketPrice * quantity;
+            row.children[3].textContent = subtotal;
+        });
+
+        const subtotals = Array.from(document.querySelectorAll('table tbody tr td:nth-child(4)'));
+        const total = subtotals.reduce((acc, subtotal) => acc + parseInt(subtotal.textContent), 0);
+        totalAmountInput.value = total;
+        actualAmountInput.value = total;
+
+        actualAmountInput.addEventListener('input', function () {
+            if (parseInt(this.value) === total) {
+                actualAmountInput.style.borderBottomColor = '#4caf50';
+                document.querySelector('.total').style.backgroundColor = '#4caf50';
+            } else {
+                actualAmountInput.style.borderBottomColor = '#f44336';
+                document.querySelector('.total').style.backgroundColor = '#f44336';
+            }
+        });
+    </script>
+</body>
+
+</html>

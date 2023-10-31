@@ -70,6 +70,7 @@ public class GetAllServlet extends HttpServlet {
 			actMap.put("ActViews", act.getActViews());
 //			actMap.put("ActAppStatus", act.getActApproalStatus());
 //			actMap.put("ActStatus", act.getActStatus());
+			actMap.put("selId", act.getSeller().getSelId());
 //			actMap.put("selName", act.getSeller().getSelName());
 //			actMap.put("selInfo", act.getSeller().getSelIntroduction());
 //			actMap.put("ActLongitude", act.getActLongitude());

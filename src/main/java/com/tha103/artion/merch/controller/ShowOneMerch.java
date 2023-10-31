@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.tha103.artion.administrator.model.AdministratorVO;
@@ -29,39 +30,48 @@ public class ShowOneMerch extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("text/html; charset=UTF-8");
 		res.setCharacterEncoding("UTF-8");
-		
 		res.setHeader("Access-Control-Allow-Origin", "*");		
+		
+		HttpSession session = req.getSession();
+		String sessionAdmId = session.getAttribute("admId").toString();
+		
+		if(sessionAdmId != null) {
+			PrintWriter out = res.getWriter();
 
-		PrintWriter out = res.getWriter();
+			String str = req.getParameter("merchId");
 
-		String str = req.getParameter("merchId");
+			System.out.println(str);
 
-		System.out.println(str);
+			if (str != null && !str.isEmpty()) {
+				Integer merchId = Integer.valueOf(str);
+				MerchService_Interface merchSvc = new MerchService();
+				MerchVO Merch = merchSvc.getMerchByMerchId(merchId);
 
-		if (str != null && !str.isEmpty()) {
-			Integer merchId = Integer.valueOf(str);
-			MerchService_Interface merchSvc = new MerchService();
-			MerchVO Merch = merchSvc.getMerchByMerchId(merchId);
+				Gson gson = new Gson();
 
-			Gson gson = new Gson();
+				if (Merch != null) {
 
-			if (Merch != null) {
+					Map<String, Object> merchMap = convertMerchToMap(Merch);
+					String merchJson = gson.toJson(merchMap);
 
-				Map<String, Object> merchMap = convertMerchToMap(Merch);
-				String merchJson = gson.toJson(merchMap);
+					System.out.println(merchJson);
 
-				System.out.println(merchJson);
+					out.print(merchJson); // 將JSON字串寫入響應
+					out.flush();
 
-				out.print(merchJson); // 將JSON字串寫入響應
-				out.flush();
-
+				} else {
+					String errorJson = gson.toJson("Merch not found");
+					out.println(errorJson);
+				}
 			} else {
-				String errorJson = gson.toJson("Merch not found");
-				out.println(errorJson);
+				// 处理空字符串的情况，例如返回错误消息
 			}
-		} else {
-			// 处理空字符串的情况，例如返回错误消息
+		}else {
+			res.sendRedirect(req.getContextPath() + "/admin/signin.html");
+			return;
 		}
+
+		
 
 	}
 

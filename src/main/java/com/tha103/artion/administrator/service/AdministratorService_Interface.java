@@ -9,7 +9,7 @@ public interface AdministratorService_Interface {
 	
 	int updateAdmin(AdministratorVO admin);
 	
-	void deleteAdmin(Integer admId);
+	int deleteAdmin(Integer admId);
 	
 	AdministratorVO getAdminByAdmId(Integer admId);
 	
