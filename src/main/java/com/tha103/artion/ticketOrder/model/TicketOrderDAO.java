@@ -17,10 +17,10 @@ public class TicketOrderDAO implements TicketOrderDAO_interface {
 		int ticketOrdId = 0;
 
 		try {
-//			session.beginTransaction();
+			session.beginTransaction();
 
 			ticketOrdId = (int) session.save(ticketOrderVO);
-//			session.getTransaction().commit();
+			session.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
