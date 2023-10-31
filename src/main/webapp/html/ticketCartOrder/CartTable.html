@@ -102,7 +102,7 @@
             $("#cartBtn").click(function () {
                 $.ajax({
                     type: "GET",
-                    url: `${window.location, path}/getFromRedis?memId=` + memId, // 替换为实际的URL
+                    url: `${window.location, path}/getFromRedis?memId=` + memId, 
                     dataType: "json",
                     success: function (data) {
                         $("#cart-items").empty();
