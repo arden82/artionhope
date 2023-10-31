@@ -6,10 +6,10 @@
 <%@page import="com.tha103.artion.ticketOrder.model.TicketOrderVO"%>
 <%@page import="com.tha103.artion.ticketOrder.model.TicketOrderService"%>
 <%@page import="com.tha103.artion.ticketOrderDetail.model.*"%>
-<%@ page import="java.io.PrintWriter"%>
-<%@ page import="java.util.List"%>
-<%@ page import="com.tha103.artion.activity.model.*"%>
-<%@ page import="com.tha103.artion.activity.service.*"%>
+<%@page import="java.io.PrintWriter"%>
+<%@page import="java.util.List"%>
+<%@page import="com.tha103.artion.activity.model.*"%>
+<%@page import="com.tha103.artion.activity.service.*"%>
 
 <%
 Integer selId = (Integer) session.getAttribute("sel_id");
@@ -275,7 +275,6 @@ if (ticketOrdIdStr != null && !ticketOrdIdStr.isEmpty()) {
 												</th>
 												<th scope="col" style="padding-left: 20px"><span>${ticOrdDets.activity.actTicketPrice}</span>
 												<th scope="col" style="padding-left: 20px"><span>${ticOrdDets.ticOrdDetQuantity * ticOrdDets.ticOrdDetPrice}</span>
-													<%-- 											<span>${getActNameByActId(detail.activity.actId)}"</span> --%>
 
 												</th>
 											</tr>

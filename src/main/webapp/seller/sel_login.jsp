@@ -111,7 +111,7 @@
 									Password</label>
 							</div>
 
-							<a href="./sel_forgotPassword.jsp">忘記密碼</a>
+							<a href="<%=request.getContextPath()%>/seller/sel_forgotPassword.jsp">忘記密碼</a>
 
 							<form action="<%=request.getContextPath()%>/seller/LoginHandler.do" method="post">
 								<!-- 这是你的登录按钮 -->
@@ -121,7 +121,7 @@
 							</form>
 
 							<p class="text-center mb-0">
-								立即申請線上註冊 <a href="sel_signup.jsp">註冊</a>
+								立即申請線上註冊 <a href="<%=request.getContextPath()%>/seller/sel_signup.jsp">註冊</a>
 							</p>
 						</div>
 					</div>

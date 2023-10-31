@@ -35,14 +35,8 @@ public class ActivityService {
 		activityVO.setActTicketStartTime(act_ticketStartTime);
 		activityVO.setActTicketEndTime(act_ticketEndTime);
 		activityVO.setActType(act_type);
-	    Date currentDate = new Date(System.currentTimeMillis());
-
-	    // 如果当前日期等于活动的开始日期，将状态更改为已开始
-	    if (currentDate.equals(act_startDate)) {
-	        activityVO.setActStatus(2); // 已开始
-	    } else {
-	        activityVO.setActStatus(1); // 未开始
-	    }		activityVO.setActEndDate(act_endDate);
+		activityVO.setActStartDate(act_startDate);
+	    activityVO.setActEndDate(act_endDate);
 		activityVO.setActStartTime(act_startTime);
 		activityVO.setActEndTime(act_endTime);
 		activityVO.setActCity(act_city);
@@ -57,8 +51,8 @@ public class ActivityService {
 
 		activityVO.setActLikeTimes(0);
 		activityVO.setActViews(0);
-		activityVO.setActApproalStatus(1);
-		activityVO.setActStatus(1);
+		activityVO.setActApproalStatus(2);
+		activityVO.setActStatus(2);
 
 		// 创建一个SellerVO对象并设置sel_id
 		SellerVO sellerVO = new SellerVO();
