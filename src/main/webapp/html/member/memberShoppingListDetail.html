@@ -271,7 +271,6 @@
                 <div class=" p-0 m-0 border fixed left_nav navbar_sm_state h-100 logo_color ">
                     <div class="d-flex my-4 ">
                         <div class="account mem_profilePhoto">
-                            <img src="" alt="用戶頭像">
                         </div>
                         <div class="account_wrap ">
                             <span class="mem_nickname account_name"></span>
@@ -351,86 +350,23 @@
                 <!-- left bar end -->
 
                 <div class="col-10  mx-auto  shoppingList mt-5 ">
-
                     <div class=" ">
-                        <span class="fs-4 ">購物清單</span>
+                        <span class="fs-4 ">訂單詳情</span>
                         <hr>
-                        <nav>
-                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
-                                    data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
-                                    aria-selected="true">活動</button>
-                                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab"
-                                    data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact"
-                                    aria-selected="false">周邊商品</button>
-                            </div>
-                        </nav>
-                        <div class="tab-content" id="nav-tabContent">
-                            <!-- 購物清單內容票卷開始 -->
-                                <div class="tab-pane fade show active shoppingList_wrap actshoppingList py-2" id="nav-home" role="tabpanel"
-                                aria-labelledby="nav-home-tab">
-                            </div>
-                            <!-- 購物清單內容票卷結束 -->
-
-                            <!-- 購物清單內容周邊商品開始 -->
-                            <div class="tab-pane fade shoppingList_wrap" id="nav-contact" role="tabpanel"
-                                aria-labelledby="nav-contact-tab">
-                                <!-- <a href="./member_shoppingListDetail(merchandise).html"
-                                    class="nav-link shoppingList_unit_wrap border ">
-                                    <div class="shoppingList_unit d-flex  ">
-                                        <div class="shoppingList_unit_img text-center"><img
-                                                src="./image/Ugly Beauty 夜光Tee黑色.jpeg" alt=""></div>
-                                        <div
-                                            class="shoppingList_unit_info d-flex align-items-center justify-content-between">
-                                            <p class="shoppingList_unit_info_title m-0 ">
-                                                Ugly Beauty 夜光Tee黑色
-                                            </p>
-                                            <div class="shoppingList_unit_info_num_wrap d-flex ">
-                                                <span class="shoppingList_unit_info_num me-4">x1</span>
-                                                <p class="shoppingList_unit_info_price m-0">$900</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        class="shoppingList_unit_total_wrap d-flex justify-content-between align-items-center ">
-                                        <div>
-                                            <span class="shoppingList_unit_total_num">2</span>
-                                            <span>商品</span>
-                                        </div>
-                                        <p class="shoppingList_unit_total_price m-0">$1030</p>
-                                    </div>
-                                </a>
-                                <a href="" class="nav-link shoppingList_unit_wrap border ">
-                                    <div class="shoppingList_unit d-flex  ">
-                                        <div class="shoppingList_unit_img text-center"><img
-                                                src="./image/Ugly Beauty 毛巾-A款.jpeg" alt=""></div>
-                                        <div
-                                            class="shoppingList_unit_info d-flex align-items-center justify-content-between">
-                                            <p class="shoppingList_unit_info_title m-0 ">
-                                                Ugly Beauty 毛巾-A款
-                                            </p>
-                                            <div class="shoppingList_unit_info_num_wrap d-flex ">
-                                                <span class="shoppingList_unit_info_num me-4">x2</span>
-                                                <p class="shoppingList_unit_info_price m-0">$390</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        class="shoppingList_unit_total_wrap d-flex justify-content-between align-items-center ">
-                                        <div>
-                                            <span class="shoppingList_unit_total_num">2</span>
-                                            <span>商品</span>
-                                        </div>
-                                        <p class="shoppingList_unit_total_price m-0">$780</p>
-                                    </div>
-                                </a> -->
-                            </div>
-                            <!-- 購物清單內容周邊商品結束 -->
+                        <div class="shopping_order_status_wrap d-flex align-items-center justify-content-between  p-1">
+                            <span class="mx-3">訂單狀態</span>
+                            <span class="shopping_order_status mx-3">訂單已完成</span>
                         </div>
+                        <div class="shopdetail">
+                        </div>
+                        <!-- <div class="mt-3 d-flex justify-content-center">
+                            <a href="#" class="btn btn-outline-success">活動留言</a>
+                            <button type="button" class="btn btn-outline-success mx-2">下載票卷</button>
+                        </div> -->
+
 
                     </div>
+
 
                 </div>
             </div>
@@ -460,7 +396,7 @@
         let mem_nickname = document.querySelectorAll(".mem_nickname");
         let member_level = document.querySelectorAll(".member_level");
         let mem_profilePhoto = document.querySelectorAll(".mem_profilePhoto");
-        let actshoppingList = document.querySelector(".actshoppingList");
+        let shopdetail = document.querySelector(".shopdetail");
         let path = window.location.pathname;
 
 
@@ -468,9 +404,15 @@
         if (memId == null) {
             window.location.href = `${window.location, path}/html/member/memberLogin.html`;
         };
+        let search = window.location.search;
+        let param = new URLSearchParams(search);
+        let ticketOrd_id = param.get("ticketOrd_id");
+        let formData = new FormData();
+        formData.append("ticketOrd_id",ticketOrd_id);
         document.addEventListener("DOMContentLoaded", function () {
             fetch(`${window.location, path}/membershoplist`, {
-                method: "GET",
+                method: "POST",
+                body:formData,
             }).then(res => {
                 console.log(res);
                 if (res.url.includes("memberLogin")) {
@@ -490,51 +432,57 @@
                 console.log(data);
                 var eventlist = [];
                 if (data != null) {
-                    if (data[0].obj.act_name!=undefined) {
+                    if (data[0].obj.act_name != undefined) {
                         for (let i = 0; i < data.length; i++) {
                             eventlist.push({
                                 title: data[i].obj.act_name,
-                                actid: data[i].obj.act_id,
                                 date: data[i].obj.ticketOrd_time,
-                                ticketOrd_id:data[i].obj.ticketOrd_id,
-                                url: `${window.location, path}/html/activity/memberShopdetil.html?ticketOrd_id=` + data[i].obj.ticketOrd_id,
                                 coverpic: `${window.location, path}/actPicServlet?actId=` + data[i].obj.act_id,
                                 ticketOrd_code: data[i].obj.ticketOrd_code,
-                                actId: data[i].obj.act_id,
+                                merOrderDetail_price: data[i].obj.merOrderDetail_price,
+                                merOrderDetail_quantity: data[i].obj.merOrderDetail_quantity,
                                 ticketOrd_totalPrice: data[i].obj.ticketOrd_totalPrice,
-                                ticketOrdDetail_quantity: data[i].obj.ticketOrdDetail_quantity,
-                                ticOrdDetail_price: data[i].obj.ticOrdDetail_price
+                                url: `${window.location, path}/html/activity/SingleActivity.html?actId=` + data[i].obj.act_id
                             });
                         }
                         for (let i = 0; i < eventlist.length; i++) {
-                            actshoppingList.innerHTML += `
-                            <a href="./memberShoppingListDetail.html?ticketOrd_id=${eventlist[i].ticketOrd_id}" class="nav-link shoppingList_unit_wrap border ">
-                                    <div class="shoppingList_unit d-flex  ">
-                                        <div class="shoppingList_unit_img text-center "><img src="${eventlist[i].coverpic}"
-                                                alt="活動封面圖"></div>
-                                        <div
-                                            class="shoppingList_unit_info d-flex align-items-center justify-content-between">
-                                            <p class="shoppingList_unit_info_title m-0 ">
-                                                ${eventlist[i].title}
-                                            </p>
-                                            <div class="shoppingList_unit_info_num_wrap d-flex ">
-                                                <span class="shoppingList_unit_info_num me-4">x${eventlist[i].ticketOrdDetail_quantity}</span>
-                                                <p class="shoppingList_unit_info_price m-0">$${eventlist[i].ticOrdDetail_price}</p>
-                                            </div>
+                            shopdetail.innerHTML += `
+                            <a href="${eventlist[i].url}" class="nav-link shoppingList_unit_wrap border ">
+                                <div class="shoppingList_unit d-flex  ">
+                                    <div class="shoppingList_unit_img text-center "><img src="${eventlist[i].coverpic}"
+                                                alt="活動封面圖">
+                                    </div>
+                                    <div
+                                        class="shoppingList_unit_info d-flex align-items-center justify-content-between">
+                                        <p class="shoppingList_unit_info_title m-0 ">
+                                            ${eventlist[i].title}
+                                        </p>
+                                        <div class="shoppingList_unit_info_num_wrap d-flex ">
+                                            <span class="shoppingList_unit_info_num me-4">x${eventlist[i].merOrderDetail_quantity}</span>
+                                            <p class="shoppingList_unit_info_price m-0">$${eventlist[i].merOrderDetail_price}</p>
                                         </div>
                                     </div>
-
-                                    <div class="shoppingList_unit_total_wrap d-flex justify-content-between align-items-center ">
-                                        <div >
-                                            <span>訂單編號:</span>
-                                            <span class="shoppingList_unit_total_num" >${eventlist[i].ticketOrd_code}</span>
-                                        </div>
-                                        <p class="shoppingList_unit_total_price m-0">$${eventlist[i].ticketOrd_totalPrice}</p>
-                                    </div>
-                                </a>
+                                </div>
+                            </a>
                             `;
                         }
-
+                        shopdetail.innerHTML +=`    <div class="mt-2 border ">
+                                <div class="d-flex justify-content-between align-items-center px-3 ">
+                                    <span>商品小計</span>
+                                    <span class="">$${eventlist[0].ticketOrd_totalPrice}</span>
+                                </div>
+    
+                            </div>
+                            <div class=" mt-2 px-3 border ">
+                                <div class="shopping_order_id_wrap d-flex justify-content-between align-items-center">
+                                    <span>訂單編號</span>
+                                    <span class="shopping_order_id">${eventlist[0].ticketOrd_code}</span>
+                                </div>
+                                <div class="shopping_order_time_wrap d-flex justify-content-between align-items-center">
+                                    <span>訂單時間</span>
+                                    <div class="shopping_order_time">${eventlist[0].date}</div>
+                                </div>
+                            </div>`;
                         mem_nickname.forEach(e => e.innerHTML = `${data[0].obj.mem_nickname}`);
                         member_level.forEach(e => e.innerHTML = `lv.${data[0].obj.memLev_levelName}`);
                         mem_profilePhoto.forEach(e => { e.innerHTML = ` <img src="${window.location, path}/memberImg?id=${memId}" alt="用戶頭像">` });
