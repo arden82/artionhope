@@ -32,7 +32,6 @@
                         <li class="nav-item dropdown d-flex"><a class="nav-link d-flex align-items-center hover"
                                 href="../member/memberProfile.html">
                                 <div class="account mem_profilePhoto">
-                                    <!-- <img src="./image/6446d860dbbfe540e9e2cbab5f98f1e3-6-560x313.png" alt="用戶頭像"> -->
                                 </div>
                             </a>
                             <div class="account_wrap ">
@@ -107,8 +106,7 @@
                                         d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
                                 </svg> 我的通知
                             </a></li>
-                        <li class="nav-item "><a class="nav-link  triangle hover member_svg"
-                               <a href="../member/memberCollection.html" id="navbarDropdown" role="button" aria-expanded="false">
+                        <li class="nav-item "><a class="nav-link  triangle hover member_svg" href="../member/memberCollection.html" id="navbarDropdown" role="button" aria-expanded="false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="bi bi-bookmarks"
                                     viewBox="0 0 16 16">
                                     <path
@@ -116,7 +114,7 @@
                                     <path
                                         d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z" />
                                 </svg> 我的收藏
-                            </a></li>
+                            </href=></li>
                         <li class="nav-item "><a class="nav-link triangle member_svg hover"
                                 href="../member/memberCalendar.html" id="navbarDropdown" role="button" aria-expanded="false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
@@ -267,6 +265,7 @@
 			<div class="container-fluid  relative d-flex justify-content-end">
 				<a class="navbar-brand  mx-auto fixed_center logo" href="../activity/ActivityPage.html">Artion</a>
 				<div class="shoppingCart member_svg p-2">
+                
 					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="bi bi-cart3"
 						viewBox="0 0 16 16">
 						<path
@@ -326,11 +325,13 @@
 				<a class="navbar-brand mx-5 logo " href="../activity/ActivityPage.html">Artion</a>
 
 				<div class="shoppingCart member_svg p-2 margin_auto display_none_6">
-					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="bi bi-cart3"
-						viewBox="0 0 16 16">
-						<path
-							d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-					</svg>
+                <a class="member_svg " href="../../html/ticketCartOrder/CartTable.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="bi bi-cart3"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                </svg>
+                </a>
 				</div>
 				<a class="nav-link display_none_6  mx-3" href="../member/memberLogin.html">
 					<button type="button" class="colortest btn_old  ">登入/註冊</button>
