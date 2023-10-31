@@ -270,7 +270,7 @@
 		let mem_account = document.querySelector("#mem_account");
 		let errmsg = document.querySelector('.errmsg');
 		mem_account.addEventListener("blur", function () {
-			if (!emailPattern.test(mem_account.value)) {
+			if (!emailPattern.test(mem_account.value) && mem_account.value!="") {
 				alert("帳號格式不正確");
 				errmsg.classList.remove("display_none");
 				errmsg.innerHTML = "帳號格式不正確";
