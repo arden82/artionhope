@@ -64,9 +64,9 @@
           </div>
         </div>
         <div class="navbar-nav w-100">
-          <a href="index.html" class="nav-item nav-link"><i class="fa-solid fa-address-card"></i>會員總覽</a>
-          <a href="memberOrderManage.html" class="nav-item nav-link"><i class="fa-solid fa-table-list"></i> 會員訂單管理</a>
-          <a href="firm.html" class="nav-item nav-link"><i class="fa-solid fa-building-user"></i> 廠商總覽</a>
+          <!-- <a href="index.html" class="nav-item nav-link"><i class="fa-solid fa-address-card"></i>會員總覽</a> -->
+          <!-- <a href="memberOrderManage.html" class="nav-item nav-link"><i class="fa-solid fa-table-list"></i> 會員訂單管理</a> -->
+          <!-- <a href="firm.html" class="nav-item nav-link"><i class="fa-solid fa-building-user"></i> 廠商總覽</a> -->
           <a href="activityManage.html" class="nav-item nav-link active"><i
               class="fa-solid fa-calendar-check"></i>廠商活動管理</a>
 
@@ -74,7 +74,7 @@
           <a href="product.html" class="nav-item nav-link"><i class="fa-solid fa-box"></i> 周邊商品</a>
           <a href="codeSetting.html" class="nav-item nav-link"><i class="fa-solid fa-barcode"></i> 優惠碼設定</a>
           <a href="manager.html" class="nav-item nav-link"><i class="fa-solid fa-user-tie"></i> 管理者管理</a>
-          <a href="notification.html" class="nav-item nav-link"><i class="fa-solid fa-envelope"></i> 通知信</a>
+          <!-- <a href="notification.html" class="nav-item nav-link"><i class="fa-solid fa-envelope"></i> 通知信</a> -->
         </div>
       </nav>
     </div>
@@ -90,9 +90,9 @@
         <a href="#" class="sidebar-toggler flex-shrink-0">
           <i class="fa fa-bars"></i>
         </a>
-        <form class="d-none d-md-flex ms-4">
+        <!-- <form class="d-none d-md-flex ms-4">
           <input class="form-control border-0" type="search" placeholder="Search" />
-        </form>
+        </form> -->
         <div class="navbar-nav align-items-center ms-auto">
 
 
@@ -116,10 +116,10 @@
         <div class="bg-light text-center rounded p-4">
           <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-0">廠商活動管理</h6>
-            <a href="">Show All</a>
+            <!-- <a href="">Show All</a>
             <select name="" id=""></select>
             <input class="form-control border-0" type="search" placeholder="Search" />
-            <select name="" id=""></select>
+            <select name="" id=""></select> -->
           </div>
           <div class="table-responsive">
             <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -133,7 +133,7 @@
                   <th scope="col">地址</th>
                   <th scope="col">活動讚數</th>
                   <th scope="col">觀看次數</th>
-                  <th scope="col">操作</th>
+
                 </tr>
               </thead>
               <tbody id="table-body"></tbody>
@@ -244,8 +244,7 @@
               <td>${activity.ActAdd}</td>
               <td>${activity.ActLikeTimes}</td>
               <td>${activity.ActViews}</td>
-              <td><button type="submit" id="commit" class="btn btn-primary m-2">修改</button></td>
-                                  <td><button id="delete" data-admin="${activity.actId}" class="btn btn-secondary m-2">刪除</button></td>
+              
             </tr>
           `;
               tableBody.append(newRowHTML);
