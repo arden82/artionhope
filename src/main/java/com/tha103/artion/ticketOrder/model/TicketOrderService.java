@@ -2,47 +2,44 @@ package com.tha103.artion.ticketOrder.model;
 
 import java.util.List;
 
+import com.tha103.artion.activityComment.model.ActivityCommentVO;
+import com.tha103.artion.member.model.MemberVO;
+import com.tha103.artion.myPromoCode.model.MyPromoCodeVO;
+import com.tha103.artion.seller.model.SellerVO;
 
-
-
-public class TicketOrderService implements TicketOrderService_Interface{
-
-	
-	private TicketOrderDAO dao;
+public class TicketOrderService {
+	private TicketOrderDAO_interface dao;
 
 	public TicketOrderService() {
-
 		dao = new TicketOrderDAO();
 	}
 
-	@Override
-	public int addTicketOrder(TicketOrderVO ticketOrderVO) {
-		return dao.insert(ticketOrderVO);
+	// 新增
+	public TicketOrderVO add(TicketOrderVO ticketOrderVO) {
+		dao.insert(ticketOrderVO);
+		return ticketOrderVO;
 	}
 
-	@Override
-	public int updateTicketOrder(TicketOrderVO ticketOrderVO) {
-		return dao.update(ticketOrderVO);
+	// 更新
+	public TicketOrderVO update(TicketOrderVO ticketOrderVO) {
+		dao.update(ticketOrderVO);
+		return ticketOrderVO;
 	}
 
-	@Override
-	public int deleteTicketorder(Integer ticketOrdId) {
-		return dao.delete(ticketOrdId);
-		
+	// 刪除
+	public void deleteTicketorder(Integer ticketOrdId) {
+		dao.delete(ticketOrdId);
 	}
 
-	@Override
-	public TicketOrderVO getTicketOrderById(Integer ticketOrdId) {
-		
+	// 取得PK
+	public TicketOrderVO getById(Integer ticketOrdId) {
 		return dao.getById(ticketOrdId);
 	}
 
-	@Override
-	public List<TicketOrderVO> getAllTicketOrders() {
-		List<TicketOrderVO> list = dao.getAll();
-		return list;
+	// 取得所有
+	public List<TicketOrderVO> getAll() {
+		return dao.getAll();
 	}
-
 
 	// 利用selId取得對應的ticketOrderList
 	public List<TicketOrderVO> getTicketOrderBySellerId(Integer sel_id) {
@@ -108,6 +105,5 @@ public class TicketOrderService implements TicketOrderService_Interface{
 	public MemberVO getmember(Integer memId) {
 		return dao.getmember(memId);
 	}
-
 
 }
