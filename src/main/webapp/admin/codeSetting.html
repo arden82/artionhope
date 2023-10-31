@@ -73,23 +73,29 @@
 					</div>
 				</div>
 				<div class="navbar-nav w-100">
-					<a href="index.html" class="nav-item nav-link"><i
-						class="fa-solid fa-address-card"></i>會員總覽</a> <a
-						href="memberOrderManage.html" class="nav-item nav-link"><i
-						class="fa-solid fa-table-list"></i> 會員訂單管理</a> <a href="firm.html"
-						class="nav-item nav-link"><i class="fa-solid fa-building-user"></i>
-						廠商總覽</a> <a href="activityManage.html" class="nav-item nav-link"><i
-						class="fa-solid fa-calendar-check"></i> 廠商活動管理</a> <a
-						href="complaint.html" class="nav-item nav-link"><i
-						class="fa-solid fa-triangle-exclamation"></i> 客訴處理</a> <a
-						href="customerService.html" class="nav-item nav-link"><i
+<!-- 					<a href="index.html" class="nav-item nav-link"><i -->
+<!-- 						class="fa-solid fa-address-card"></i>會員總覽</a>  -->
+<!-- 						<a -->
+<!-- 						href="memberOrderManage.html" class="nav-item nav-link"><i -->
+<!-- 						class="fa-solid fa-table-list"></i> 會員訂單管理</a>  -->
+<!-- 						<a href="firm.html" -->
+<!-- 						class="nav-item nav-link"><i class="fa-solid fa-building-user"></i> -->
+<!-- 						廠商總覽</a>  -->
+						<a href="activityManage.html" class="nav-item nav-link"><i
+						class="fa-solid fa-calendar-check"></i> 廠商活動管理</a> 
+<!-- 						<a -->
+<!-- 						href="complaint.html" class="nav-item nav-link"><i -->
+<!-- 						class="fa-solid fa-triangle-exclamation"></i> 客訴處理</a>  -->
+						<a
+						href="../adminchat/adminchat.html" class="nav-item nav-link"><i
 						class="fa-solid fa-comments"></i> 即時客服</a> <a href="product.html"
 						class="nav-item nav-link"><i class="fa-solid fa-box"></i> 周邊商品</a>
 					<a href="codeSetting.html" class="nav-item nav-link active"><i
 						class="fa-solid fa-barcode"></i> 優惠碼設定</a> <a href="manager.html"
 						class="nav-item nav-link"><i class="fa-solid fa-user-tie"></i>
-						管理者管理</a> <a href="notification.html" class="nav-item nav-link"><i
-						class="fa-solid fa-envelope"></i> 通知信</a>
+						管理者管理</a> 
+<!-- 						<a href="notification.html" class="nav-item nav-link"><i -->
+<!-- 						class="fa-solid fa-envelope"></i> 通知信</a> -->
 				</div>
 			</nav>
 		</div>
@@ -299,10 +305,10 @@
                             <th scope="row">
                             <td>${promoCode.promoCodeId}</td>
                             <td>${promoCode.promoCodeName}</td>
-                            <td>${promoCode.proCodeType}</td>
+                            <td>${promoCode.promoCodeType}</td>
                             <td>${promoCode.promoCodeCode}</td>
-                            <td>${promoCode.proCodeStatus}</td>
-                            <td>${promoCode.proCodeStartDate} - ${promoCode.proCodeEndDate}</td>
+                            <td>${promoCode.promoCodeStatus}</td>
+                            <td>${promoCode.promoCodeStartDate} - ${promoCode.promoCodeEndDate}</td>
                             <td> 
                                 <button type="button" class="btn btn-primary" id="update" data-promocode=${promoCode.promoCodeId}>修改</button>
                                 <button type="button" class="btn btn-secondary" id="sendemail" data-promocode=${promoCode.promoCodeCode}>送出</button>
