@@ -53,6 +53,15 @@
 </style>
 <body>
 
+<c:if test="${not empty successfulMsg}">
+		<font style="color: red">你已成功修改密碼!</font>
+		<ul>
+			<c:forEach var="message" items="${successfulMsg}">
+				<li style="color: red">${message}</li>
+			</c:forEach>
+		</ul>
+	</c:if>
+
 	<div class="sendMailMsg">
 		<c:if test="${not empty sendMailMsg.logoutMessage}">
 			<p class="text-success">${sendMailMsg.logoutMessage}</p>

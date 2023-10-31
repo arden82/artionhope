@@ -76,7 +76,7 @@ public class ResetPasswordServlet extends HttpServlet {
 					} else if (!newPassword.trim().matches(sel_passwordReg)) {
 						// 密码格式不符合要求，显示错误消息或重定向到错误页面
 						request.setAttribute("errorMsg", "格式不符合,只能是英文字母、數字,且長度必需在2到10之間");
-						response.sendRedirect(request.getContextPath() + "/seller/sel_resetPassword.jsp");
+						request.getRequestDispatcher("/seller/sel_resetPassword.jsp").forward(request, response);
 					} else {
 						// 密码符合要求，进行密码重置逻辑
 						SellerDAO sellerDAO = new SellerDAO();
@@ -96,7 +96,7 @@ public class ResetPasswordServlet extends HttpServlet {
 						} else {
 							// 邮箱不存在，显示错误消息或重定向到错误页面
 							request.setAttribute("errorMsg", "不存在此信箱!!");
-							response.sendRedirect(request.getContextPath() + "/seller/sel_resetPassword.jsp");
+							request.getRequestDispatcher("/seller/sel_resetPassword.jsp").forward(request, response);
 							System.out.println("錯誤1");
 						}
 					}
@@ -104,14 +104,14 @@ public class ResetPasswordServlet extends HttpServlet {
 					// 密码不匹配，显示错误消息或重定向到错误页面
 					request.setAttribute("errorMsg", "兩次輸入的密碼不同!");
 					System.out.println("錯誤2");
-					response.sendRedirect(request.getContextPath() + "/seller/sel_resetPassword.jsp");
+					request.getRequestDispatcher("/seller/sel_resetPassword.jsp").forward(request, response);
 				}
 			} else {
 				// 验证码不匹配，显示错误消息或重定向到错误页面
 				request.setAttribute("errorMsg", "驗證碼輸入錯誤!");
 				System.out.println("錯誤3");
 
-				response.sendRedirect(request.getContextPath() + "/seller/sel_resetPassword.jsp");
+				request.getRequestDispatcher("/seller/sel_resetPassword.jsp").forward(request, response);
 			}
 		}
 	}
