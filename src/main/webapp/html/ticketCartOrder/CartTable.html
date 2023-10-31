@@ -43,60 +43,57 @@
         </p>
     </div>
     <div id="test"></div>
-    <button onclick="checkout()">下訂單</button>
+    <button onclick="checkout()" id="submit">下訂單</button>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         let path = window.location.pathname;
         path = path.substring(0, path.indexOf("/", 1));
-//         url: `${window.location, path}/getAllAct`,
+//         url: `${window.location, path}`,
         
         //=============================== 加減數量 ===============================
         function changeQuantity(button, change) {
-            // 找到与按钮关联的输入框
+            
             var inputElement = button.parentElement.querySelector('input.item-quantity');
 
             if (inputElement) {
-                // 获取当前值并确保它是数字
                 var currentValue = parseInt(inputElement.value, 10);
                 if (!isNaN(currentValue)) {
-                    // 更新值并确保不小于1
+                    
                     var newValue = currentValue + change;
                     if (newValue < 1) {
                         newValue = 1;
                     }
                     inputElement.value = newValue;
 
-                    // 在这里可以调用 calculateSubtotal 函数来更新小计
                     calculateSubtotal(inputElement);
                 }
             }
         }
         //=============================== 計算小計  ===============================
         function calculateSubtotal(inputElement) {
-            // 找到包含商品单价和小计的父元素（可能是 <tr>）
+            // 取得商品單價和小計父元素
             var parentRow = inputElement.closest('tr');
 
             if (parentRow) {
-                // 找到商品单价元素
+                // 取得票卷單價
                 var priceElement = parentRow.querySelector('#actTicPrice');
-                // 找到小计金额元素
+                // 取得票卷小計
                 var subtotalElement = parentRow.querySelector('.item-subtotal');
 
                 if (priceElement && subtotalElement) {
-                    // 获取商品单价和数量
-                    var price = parseFloat(priceElement.textContent); // 假设商品单价是数值
-                    var quantity = parseInt(inputElement.value, 10); // 获取输入框中的数量
+                    // 取得票劵價和數量
+                    var price = parseFloat(priceElement.textContent); 
+                    var quantity = parseInt(inputElement.value, 10); // 輸入框的數值
 
                     if (!isNaN(price) && !isNaN(quantity)) {
-                        // 计算小计金额
+                        // 計算小計
                         var subtotal = price * quantity;
-                        // 更新小计金额元素
+                        // 更新小計金額
                         subtotalElement.textContent = subtotal + '元';
                     }
                 }
             }
         }
-        //===============================   ===============================
        
 
         //=============================== 取得redis資料並成功渲染畫面在畫面並廠商篩選功能(完成) ===============================	
@@ -105,7 +102,7 @@
             $("#cartBtn").click(function () {
                 $.ajax({
                     type: "GET",
-                    url: `${window.location, path}/getFromRedis?memId=` + memId, // 替换为实际的URL
+                    url: `${window.location, path}/getFromRedis?memId=` + memId, 
                     dataType: "json",
                     success: function (data) {
                         $("#cart-items").empty();
@@ -123,12 +120,12 @@
                             row.append('<button style="display: none;" id="selId">' + item.selId + '</button>');
                             $("#cart-items").append(row);
 
-                            // 计算总金额
-                            //                             totalAmount += parseFloat(item.actTicPrice);
+                            
+                            //totalAmount += parseFloat(item.actTicPrice);
                         });
 
                         // 设置总金额
-                        //                         $("#total-amount").text(totalAmount + "元");
+                        // $("#total-amount").text(totalAmount + "元");
                     },
                     error: function () {
                         alert("取得資料失敗");
@@ -141,10 +138,9 @@
 
         //=============================== 點擊去結帳，生成訂單並且將訂單和訂單明細送進資料庫(待完成) ===============================
        function checkout() {
-    var selectedSelId = null; // 用于跟踪已选择的 selId
+    var selectedSelId = null; 
     var selectedCartData = [];
 
-    // 检查所有选中的项目是否都属于相同的 selId
     $("#cart-items tr").each(function (index, row) {
         var selId = $(row).find("button#selId").text();
 		
@@ -153,10 +149,9 @@
                 selectedSelId = selId;
             } else if (selectedSelId !== selId) {
                 alert("無法選不同廠商票卷");
-                return; // 退出函数
+                return; 
             }
 
-            // 其他逻辑，将所需的数据添加到 selectedCartData 数组中
             var selName = $(row).find("td#selName").text();
             var actName = $(row).find("td#actName").text();
             var actTicPrice = parseFloat($(row).find("td#actTicPrice").text().replace("元", ""));
@@ -186,19 +181,17 @@
     
     $.ajax({
         type: "POST",
-        url: `${window.location, path}/ticketOrderServlet`, // 根据实际情况提供正确的 URL
+        url: `${window.location, path}/ticketOrderServlet`,
         data: JSON.stringify(selectedCartData),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
-//            	console.log("1"+ JSON.stringify(selectedCartData));
-//             console.log(response); // 这里可以处理从服务器返回的数据
-            alert("購買成功"); // 例如，显示购买成功的消息
+            alert("購買成功"); 
+            var ticOrdId = response.ticOrdId;
+            window.location.href = `${window.location, path}/test.html?ticOrdId=${ticOrdId}`;
         },
         error: function () {
-            // 在 AJAX 请求失败时执行的逻辑
-            console.log("2"+ JSON.stringify(selectedCartData));
-            alert("購買失敗"); // 例如，显示购买失败的消息
+		alert("購買失敗"); 
         }
     });
 }
