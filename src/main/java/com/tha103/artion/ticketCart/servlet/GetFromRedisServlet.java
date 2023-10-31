@@ -25,8 +25,9 @@ public class GetFromRedisServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
-        String memId = "7002";
-//        String memId = request.getParameter("memId");
+//        String memId = "7002";
+//        Integer memId = (Integer) session.getAttribute("memId");
+        String memId = request.getParameter("memId");
         if (memId != null) {
             Jedis jedis = new Jedis("localhost", 6379);
 

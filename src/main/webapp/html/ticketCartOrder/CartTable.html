@@ -5,10 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>購物車</title>
+<style>
+	.cool-button {
+    background-color: #0074e4; /* 蓝色背景颜色 */
+    border: none;
+    color: white; /* 字体颜色 */
+    padding: 15px 32px; /* 内边距 */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 2px;
+    cursor: pointer;
+    border-radius: 5px; /* 圆角 */
+    box-shadow: 0px 0px 10px 2px #0074e4; /* 初始阴影 */
+    animation: jump 1s infinite alternate, shadow-pulse 1s infinite alternate; /* 动画效果 */
+  }
+
+  .cool-button:hover {
+    background-color: #004db3; /* 悬停时的背景颜色 */
+  }
+	
+</style>
 </head>
 
 <body>
-    <button id="cartBtn">取得Redis購物車明細</button>
+	<a class="cool-button" href="http://localhost:8081/artion/html/activity/ActivityPage.html">回首页</a>
+    <button id="cartBtn">取得購物車明細</button>
     <table border="1">
         <thead>
             <tr>
@@ -33,14 +56,14 @@
                 </td>
                 <td class="item-subtotal">元</td>
                 <button style="display: none;" id="actId">
-                    <button style="display: none;" id="selId">
+                <button style="display: none;" id="selId">
             </tr>
         </tbody>
     </table>
     <div>
-        <p>
-            總金額: <span id="total-amount">0元</span>
-        </p>
+<!--         <p> -->
+<!--             總金額: <span id="total-amount">0元</span> -->
+<!--         </p> -->
     </div>
     <div id="test"></div>
     <button onclick="checkout()" id="submit">下訂單</button>
@@ -96,7 +119,14 @@
         }
        
 
-        //=============================== 取得redis資料並成功渲染畫面在畫面並廠商篩選功能(完成) ===============================	
+        //=============================== 取得redis資料並成功渲染畫面在畫面並廠商篩選功能(完成) ===============================
+        document.addEventListener('DOMContentLoaded', function() {
+  			var cartButton = document.getElementById('cartBtn');
+  			if (cartButton) {
+    			cartButton.click(); 
+ 			}
+		});
+        	
         $(document).ready(function () {
             var memId = localStorage.getItem("memId");
             $("#cartBtn").click(function () {
@@ -136,8 +166,9 @@
 
 
 
-        //=============================== 點擊去結帳，生成訂單並且將訂單和訂單明細送進資料庫(待完成) ===============================
-       function checkout() {
+        //=============================== 載入畫面時，生成訂單並且將訂單和訂單明細送進資料庫(待完成) ===============================
+   
+    function checkout() {
     var selectedSelId = null; 
     var selectedCartData = [];
 
@@ -188,7 +219,7 @@
         success: function (response) {
             alert("購買成功"); 
             var ticOrdId = response.ticOrdId;
-            window.location.href = `${window.location, path}/test.html?ticOrdId=${ticOrdId}`;
+            window.location.href = `${window.location, path}/orderDetail.html?ticOrdId=${ticOrdId}`;
         },
         error: function () {
 		alert("購買失敗"); 

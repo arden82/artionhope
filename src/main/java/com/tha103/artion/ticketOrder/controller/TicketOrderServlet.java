@@ -41,12 +41,12 @@ public class TicketOrderServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 
-//        session.setAttribute("memId", "7002");
+//        session.setAttribute("memId", 7002);
 		
         
         
 		Integer memId = (Integer) session.getAttribute("memId");
-System.out.println(memId);
+System.out.println("memId=" + memId);
 		BufferedReader reader = request.getReader();
 		StringBuilder jsonInput = new StringBuilder();
 		String line;
