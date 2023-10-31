@@ -204,8 +204,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
         crossorigin="anonymous"></script>
-        <script src="https://kit.fontawesome.com/53f3396f69.js"
-		crossorigin="anonymous"></script>
+        
+        <script src="https://kit.fontawesome.com/53f3396f69.js" crossorigin="anonymous"></script>
+		
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="../../js/activity/logstate.js"></script>
         
@@ -285,8 +286,7 @@ $(document).ready(function () {
             var urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('actId');
         }
-        let path = window.location.pathname;
-        path = path.substring(0, path.indexOf("/", 1));
+
         $(document).ready(function () {
             $(".collectionbtn").click(function () {
                 var memId = localStorage.getItem('memId');

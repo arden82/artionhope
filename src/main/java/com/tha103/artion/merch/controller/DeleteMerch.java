@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.tha103.artion.administrator.service.AdministratorService;
 import com.tha103.artion.administrator.service.AdministratorService_Interface;
@@ -25,28 +26,37 @@ public class DeleteMerch extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		res.setHeader("Access-Control-Allow-Origin", "*");
+		HttpSession session = req.getSession();
+		String sessionAdmId = session.getAttribute("admId").toString();
+		
+		if(sessionAdmId != null) {
+			try {
 
-		try {
+				String strmerchId = req.getParameter("merchId");
 
-			String strmerchId = req.getParameter("merchId");
+				if (strmerchId != null) {
 
-			if (strmerchId != null) {
+					int merchId = Integer.parseInt(strmerchId);
 
-				int merchId = Integer.parseInt(strmerchId);
+					MerchService_Interface merchSvc = new MerchService();
 
-				MerchService_Interface merchSvc = new MerchService();
+					merchSvc.deleteMerch(merchId);
 
-				merchSvc.deleteMerch(merchId);
+					res.getWriter().write("1");
 
-				res.getWriter().write("1");
+				} else {
+					res.getWriter().write("-1");
+				}
 
-			} else {
+			} catch (Exception e) {
 				res.getWriter().write("-1");
 			}
-
-		} catch (Exception e) {
-			res.getWriter().write("-1");
+		}else {
+			res.sendRedirect(req.getContextPath() + "/admin/signin.html");
+			return;
 		}
+
+		
 	}
 
 }

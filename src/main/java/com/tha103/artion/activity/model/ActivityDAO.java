@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.tha103.artion.administrator.model.AdministratorVO;
 import com.tha103.artion.seller.model.SellerVO;
@@ -101,6 +102,54 @@ public class ActivityDAO implements ActivityDAO_interface {
 		return list;
 	}
 
+	public Integer findActIdByActName(String actName) {
+	    Integer actId = null;
+	    Session session = HibernateUtil.getSessionFactory().openSession();
+	    try {
+	        session.beginTransaction();
+	        Query query = session.createQuery("SELECT act.actId FROM ActivityVO sel WHERE act.actName = :actName");
+	        query.setParameter("actName", actName);
+	        actId = (Integer) query.uniqueResult();
+	        session.getTransaction().commit();
+	    } catch (RuntimeException ex) {
+	        session.getTransaction().rollback();
+	        throw ex;
+	    } finally {
+	        session.close();
+	    }
+	    return actId;
+	}
+	
+	public Integer findFirstActIdBySelId(Integer selId) {
+	    // 创建一个 Hibernate 会话
+	    Session session = HibernateUtil.getSessionFactory().openSession();
+	    Transaction tx = null;
+	    Integer actId = null;
+
+	    try {
+	        tx = session.beginTransaction();
+
+	        // 使用 HQL 根据 selId 选择 actId 并将结果限制为第一个记录
+	        String hql = "SELECT act.actId FROM ActivityVO act WHERE act.seller.selId = :selId";
+	        Query<Integer> query = session.createQuery(hql, Integer.class);
+	        query.setParameter("selId", selId);
+	        query.setMaxResults(1);  // 将结果限制为第一个记录
+	        actId = query.uniqueResult();
+
+	        tx.commit();
+	    } catch (RuntimeException ex) {
+	        if (tx != null && tx.isActive()) {
+	            tx.rollback();
+	        }
+	        throw ex;
+	    } finally {
+	        session.close();
+	    }
+
+	    return actId;
+	}
+
+	
 	// 透過種類查詢
 	public List<ActivityVO> getActType(String type) {
 		Session session = HibernateUtil.getSessionFactory().openSession();

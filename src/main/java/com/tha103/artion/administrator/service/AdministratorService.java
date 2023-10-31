@@ -28,8 +28,8 @@ public class AdministratorService implements AdministratorService_Interface {
 	}
 
 	@Override
-	public void deleteAdmin(Integer admId) {
-		dao.delete(admId);
+	public int deleteAdmin(Integer admId) {
+		return dao.delete(admId);
 
 	}
 
