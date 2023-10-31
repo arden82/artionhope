@@ -1,6 +1,7 @@
 package com.tha103.artion.promoCode.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonObject;
 import com.tha103.artion.promoCode.model.PromoCodeEmailDAO;
 import com.tha103.artion.promoCode.util.PromocoEmailutil;
 
@@ -25,7 +27,7 @@ public class SendPromoCode extends HttpServlet {
 		// 獲取前端傳遞的参数，例如 promoCodeId
 		String promoCodeId = req.getParameter("promoCodeId");
 		System.out.println(promoCodeId);
-
+		JsonObject jObj = new JsonObject();
 		// 創建PromoCodeEmailDAO實例
 		PromoCodeEmailDAO promoCodeEmailDAO = new PromoCodeEmailDAO();
 
@@ -37,7 +39,7 @@ public class SendPromoCode extends HttpServlet {
 		List<String> failedEmails = new ArrayList<>();
 		for (String userEmail : memberEmails) {
 			try {
-				emailUtil.sendPromoCodeEmail(userEmail, promoCodeId, getBaseUrl(req));
+				new Thread(() -> emailUtil.sendPromoCodeEmail(userEmail, promoCodeId, getBaseUrl(req))).start();
 			} catch (Exception e) {
 				// 如果發送失敗，記錄失敗的郵件
 				failedEmails.add(userEmail);
@@ -46,14 +48,16 @@ public class SendPromoCode extends HttpServlet {
 
 		res.setContentType("application/json");
 		res.setCharacterEncoding("UTF-8");
-
+		PrintWriter out = res.getWriter();
 		if (failedEmails.isEmpty()) {
 			// 發送成功
-			res.getWriter().write("Email sent successfully");
+			jObj.addProperty("status", "Email sent successfully}");
 		} else {
 			// 發送失败，可以包含失敗的郵件列表或其他信息
-			res.getWriter().write("Failed to send email to the following emails: " + failedEmails);
+			jObj.addProperty("status", "Failed to send email to the following emails:" + failedEmails);
 		}
+		out.println(jObj.toString());
+		out.close();
 	}
 
 	private String getBaseUrl(HttpServletRequest request) {
