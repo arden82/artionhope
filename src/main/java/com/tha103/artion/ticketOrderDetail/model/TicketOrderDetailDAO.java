@@ -14,9 +14,9 @@ public class TicketOrderDetailDAO implements TicketOrderDetailDAO_interface {
 	public int insert(TicketOrderDetailVO ticketorderdetailVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
-			session.beginTransaction();
+//			session.beginTransaction();
 			Integer id = (Integer) session.save(ticketorderdetailVO);
-			session.getTransaction().commit();
+//			session.getTransaction().commit();
 			return id;
 		} catch (Exception e) {
 			e.printStackTrace();
