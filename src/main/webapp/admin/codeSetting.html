@@ -1,45 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8" />
-<title>天龍Artion</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-<meta content="" name="keywords" />
-<meta content="" name="description" />
+	<meta charset="utf-8" />
+	<title>天龍Artion</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="" name="keywords" />
+	<meta content="" name="description" />
 
-<!-- Favicon -->
-<link href="img/favicon.ico" rel="icon" />
+	<!-- Favicon -->
+	<link href="img/favicon.ico" rel="icon" />
 
-<!-- Google Web Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-	href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap"
-	rel="stylesheet" />
+	<!-- Google Web Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-<!-- Icon Font Stylesheet -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-	rel="stylesheet" />
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
-	rel="stylesheet" />
+	<!-- Icon Font Stylesheet -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
 
-<!-- Libraries Stylesheet -->
-<link href="lib/owlcarousel/assets/owl.carousel.min.css"
-	rel="stylesheet" />
-<link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
-	rel="stylesheet" />
+	<!-- Libraries Stylesheet -->
+	<link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+	<link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
-<!-- Customized Bootstrap Stylesheet -->
-<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<!-- Customized Bootstrap Stylesheet -->
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
 
-<!-- Template Stylesheet -->
-<link href="css/style.css" rel="stylesheet" />
+	<!-- Template Stylesheet -->
+	<link href="css/style.css" rel="stylesheet" />
 
-<!-- font-awesome -->
-<script src="https://kit.fontawesome.com/c89374f433.js"
-	crossorigin="anonymous"></script>
+	<!-- font-awesome -->
+	<script src="https://kit.fontawesome.com/c89374f433.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -47,8 +39,7 @@
 		<!-- Spinner Start -->
 		<div id="spinner"
 			class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-			<div class="spinner-border text-primary"
-				style="width: 3rem; height: 3rem" role="status">
+			<div class="spinner-border text-primary" style="width: 3rem; height: 3rem" role="status">
 				<span class="sr-only">Loading...</span>
 			</div>
 		</div>
@@ -57,45 +48,45 @@
 		<!-- Sidebar Start -->
 		<div class="sidebar pe-4 pb-3">
 			<nav class="navbar bg-light navbar-light">
-				<a href="index.html" class="navbar-brand mx-4 mb-3 artionimg"> <!-- <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3> -->
+				<a href="manager.html" class="navbar-brand mx-4 mb-3 artionimg">
+					<!-- <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3> -->
 					<img src="./img/artion-logo.png" />
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
-						<img class="rounded-circle" src="img/user.jpg" alt=""
-							style="width: 40px; height: 40px" id="adminPhoto1" />
+						<img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px"
+							id="adminPhoto1" />
 						<div
-							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+						</div>
 					</div>
 					<div class="ms-3">
-						<h6 class="mb-0">Jhon Doe</h6>
+						<h6 class="mb-0"><span id="admName"></span></h6>
 						<span>Admin</span>
 					</div>
 				</div>
 				<div class="navbar-nav w-100">
-<!-- 					<a href="index.html" class="nav-item nav-link"><i -->
-<!-- 						class="fa-solid fa-address-card"></i>會員總覽</a>  -->
-<!-- 						<a -->
-<!-- 						href="memberOrderManage.html" class="nav-item nav-link"><i -->
-<!-- 						class="fa-solid fa-table-list"></i> 會員訂單管理</a>  -->
-<!-- 						<a href="firm.html" -->
-<!-- 						class="nav-item nav-link"><i class="fa-solid fa-building-user"></i> -->
-<!-- 						廠商總覽</a>  -->
-						<a href="activityManage.html" class="nav-item nav-link"><i
-						class="fa-solid fa-calendar-check"></i> 廠商活動管理</a> 
-<!-- 						<a -->
-<!-- 						href="complaint.html" class="nav-item nav-link"><i -->
-<!-- 						class="fa-solid fa-triangle-exclamation"></i> 客訴處理</a>  -->
-						<a
-						href="../adminchat/adminchat.html" class="nav-item nav-link"><i
-						class="fa-solid fa-comments"></i> 即時客服</a> <a href="product.html"
-						class="nav-item nav-link"><i class="fa-solid fa-box"></i> 周邊商品</a>
+					<!-- 					<a href="index.html" class="nav-item nav-link"><i -->
+					<!-- 						class="fa-solid fa-address-card"></i>會員總覽</a>  -->
+					<!-- 						<a -->
+					<!-- 						href="memberOrderManage.html" class="nav-item nav-link"><i -->
+					<!-- 						class="fa-solid fa-table-list"></i> 會員訂單管理</a>  -->
+					<!-- 						<a href="firm.html" -->
+					<!-- 						class="nav-item nav-link"><i class="fa-solid fa-building-user"></i> -->
+					<!-- 						廠商總覽</a>  -->
+					<a href="activityManage.html" class="nav-item nav-link"><i
+							class="fa-solid fa-calendar-check"></i>廠商活動管理</a>
+					<!-- 						<a -->
+					<!-- 						href="complaint.html" class="nav-item nav-link"><i -->
+					<!-- 						class="fa-solid fa-triangle-exclamation"></i> 客訴處理</a>  -->
+					<a href="../adminchat/adminchat.html" class="nav-item nav-link"><i
+							class="fa-solid fa-comments"></i>即時客服</a>
+					<a href="product.html" class="nav-item nav-link"><i class="fa-solid fa-box"></i>周邊商品</a>
 					<a href="codeSetting.html" class="nav-item nav-link active"><i
-						class="fa-solid fa-barcode"></i> 優惠碼設定</a> <a href="manager.html"
-						class="nav-item nav-link"><i class="fa-solid fa-user-tie"></i>
-						管理者管理</a> 
-<!-- 						<a href="notification.html" class="nav-item nav-link"><i -->
-<!-- 						class="fa-solid fa-envelope"></i> 通知信</a> -->
+							class="fa-solid fa-barcode"></i>優惠碼設定</a>
+					<a href="manager.html" class="nav-item nav-link"><i class="fa-solid fa-user-tie"></i>管理者管理</a>
+					<!-- 						<a href="notification.html" class="nav-item nav-link"><i -->
+					<!-- 						class="fa-solid fa-envelope"></i> 通知信</a> -->
 				</div>
 			</nav>
 		</div>
@@ -104,101 +95,27 @@
 		<!-- Content Start -->
 		<div class="content">
 			<!-- Navbar Start -->
-			<nav
-				class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-				<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+			<nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+				<a href="manager.html" class="navbar-brand d-flex d-lg-none me-4">
 					<h2 class="text-primary mb-0">
 						<i class="fa fa-hashtag"></i>
 					</h2>
-				</a> <a href="#" class="sidebar-toggler flex-shrink-0"> <i
-					class="fa fa-bars"></i>
+				</a> <a href="#" class="sidebar-toggler flex-shrink-0"> <i class="fa fa-bars"></i>
 				</a>
-				<form class="d-none d-md-flex ms-4">
-					<input class="form-control border-0" type="search"
-						placeholder="Search" />
-				</form>
+				<!-- <form class="d-none d-md-flex ms-4">
+					<input class="form-control border-0" type="search" placeholder="Search" />
+				</form> -->
 				<div class="navbar-nav align-items-center ms-auto">
+
+
 					<div class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle"
-							data-bs-toggle="dropdown"> <i class="fa fa-envelope me-lg-2"></i>
-							<span class="d-none d-lg-inline-flex">信件</span>
+						<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+							<img class="rounded-circle me-lg-2" src="img/user.jpg" alt=""
+								style="width: 40px; height: 40px" id="adminPhoto2" />
+							<span id="admName2"></span>
 						</a>
-						<div
-							class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-							<a href="#" class="dropdown-item">
-								<div class="d-flex align-items-center">
-									<img class="rounded-circle" src="img/user.jpg" alt=""
-										style="width: 40px; height: 40px" />
-									<div class="ms-2">
-										<h6 class="fw-normal mb-0">Jhon send you a message</h6>
-										<small>15 minutes ago</small>
-									</div>
-								</div>
-							</a>
-							<hr class="dropdown-divider" />
-							<a href="#" class="dropdown-item">
-								<div class="d-flex align-items-center">
-									<img class="rounded-circle" src="img/user.jpg" alt=""
-										style="width: 40px; height: 40px" />
-									<div class="ms-2">
-										<h6 class="fw-normal mb-0">Jhon send you a message</h6>
-										<small>15 minutes ago</small>
-									</div>
-								</div>
-							</a>
-							<hr class="dropdown-divider" />
-							<a href="#" class="dropdown-item">
-								<div class="d-flex align-items-center">
-									<img class="rounded-circle" src="img/user.jpg" alt=""
-										style="width: 40px; height: 40px" />
-									<div class="ms-2">
-										<h6 class="fw-normal mb-0">Jhon send you a message</h6>
-										<small>15 minutes ago</small>
-									</div>
-								</div>
-							</a>
-							<hr class="dropdown-divider" />
-							<a href="#" class="dropdown-item text-center">See all message</a>
-						</div>
-					</div>
-					<div class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle"
-							data-bs-toggle="dropdown"> <i class="fa fa-bell me-lg-2"></i>
-							<span class="d-none d-lg-inline-flex">通知</span>
-						</a>
-						<div
-							class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-							<a href="#" class="dropdown-item">
-								<h6 class="fw-normal mb-0">Profile updated</h6> <small>15
-									minutes ago</small>
-							</a>
-							<hr class="dropdown-divider" />
-							<a href="#" class="dropdown-item">
-								<h6 class="fw-normal mb-0">New user added</h6> <small>15
-									minutes ago</small>
-							</a>
-							<hr class="dropdown-divider" />
-							<a href="#" class="dropdown-item">
-								<h6 class="fw-normal mb-0">Password changed</h6> <small>15
-									minutes ago</small>
-							</a>
-							<hr class="dropdown-divider" />
-							<a href="#" class="dropdown-item text-center">See all
-								notifications</a>
-						</div>
-					</div>
-					<div class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle"
-							data-bs-toggle="dropdown"> <img
-							class="rounded-circle me-lg-2" src="img/user.jpg" alt=""
-							style="width: 40px; height: 40px" id="adminPhoto2" /> <span
-							class="d-none d-lg-inline-flex">John Doe</span>
-						</a>
-						<div
-							class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-							<a href="#" class="dropdown-item">My Profile</a> <a href="#"
-								class="dropdown-item">Settings</a> <a href="#"
-								class="dropdown-item">Log Out</a>
+						<div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+							<a href="signin.html" class="dropdown-item" id="logOut">Log Out</a>
 						</div>
 					</div>
 				</div>
@@ -209,11 +126,10 @@
 				<div class="bg-light rounded h-100 p-4">
 					<h6 class="mb-4">優惠碼設定</h6>
 					<div class="row">
-						<div class="input-group col-md-6 mb-3">
-							<input class="form-control border" type="search"
-								placeholder="Search" />
+						<!-- <div class="input-group col-md-6 mb-3">
+							<input class="form-control border" type="search" placeholder="Search" />
 							<button class="btn btn-primary" type="submit">Search</button>
-						</div>
+						</div> -->
 
 						<div class="col-md-6 mb-3">
 							<a href="codeIncrease.html">
@@ -252,8 +168,8 @@
 							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 							Designed By <a href="https://htmlcodex.com">HTML Codex</a>
 
-							Distributed By <a class="border-bottom"
-								href="https://themewagon.com" target="_blank">ThemeWagon</a>
+							Distributed By <a class="border-bottom" href="https://themewagon.com"
+								target="_blank">ThemeWagon</a>
 						</div>
 					</div>
 				</div>
@@ -263,14 +179,12 @@
 		<!-- Content End -->
 
 		<!-- Back to Top -->
-		<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
-			class="bi bi-arrow-up"></i></a>
+		<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 	</div>
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/chart/chart.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/waypoints/waypoints.min.js"></script>
@@ -282,25 +196,61 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	<script>
-//    ================== 取得優惠碼顯示在網頁上 ==================
-      let path = window.location.pathname;
-      path = path.substring(0, path.indexOf("/", 1));  
-	
-	function fillTableWithPromoCodes() {
-        $.ajax({
-        	
-          url:`${window.location, path}/showAllPromoCode`,
-        	
-//           url: "http://localhost:8081/artion/showAllPromoCode", // 修改为您的Servlet的URL
-          type: "POST",
-          dataType: "json",
-          success: function (data) {
-            var tableBody = $("#table-body");
-            tableBody.empty();
+		//    ================== 取得優惠碼顯示在網頁上 ==================
+		let path = window.location.pathname;
+		path = path.substring(0, path.indexOf("/", 1));
+		const admId = localStorage.getItem("admId");
+		const admName = localStorage.getItem("admName");
+		console.log(admId);
+		console.log(admName);
 
-            if (data.length > 0) {
-              $.each(data, function (index, promoCode) {
-                var newRowHTML = `
+		if (admId != null) {
+			const admNameSpan = $("#admName1");
+			const admNameSpan2 = $("#admName2");
+
+			const adminPhoto1 = $("#adminPhoto1");
+			const adminPhoto2 = $("#adminPhoto2");
+
+			console.log(adminPhoto1);
+
+			admNameSpan.text(admName);
+			admNameSpan2.text(admName);
+
+			$("#logOut").on("click", function () {
+				localStorage.removeItem("admId");
+				localStorage.removeItem("admName");
+
+			});
+
+
+			// const initialImageUrl = "img/user.jpg";
+			// http://localhost:8081/artion/adminphoto?admId=1001
+			const alternateImageUrl = window.location.origin + path + "/adminphoto?admId=" + admId;
+
+			// let isInitialImage = true;
+
+			adminPhoto1.attr("src", alternateImageUrl);
+			adminPhoto2.attr("src", alternateImageUrl);
+
+		} else {
+			window.location.href = window.location.origin + path + "/admin/signin.html";
+		}
+
+		function fillTableWithPromoCodes() {
+			$.ajax({
+
+				url: `${window.location, path}/showAllPromoCode`,
+
+				//           url: "http://localhost:8081/artion/showAllPromoCode", // 修改为您的Servlet的URL
+				type: "POST",
+				dataType: "json",
+				success: function (data) {
+					var tableBody = $("#table-body");
+					tableBody.empty();
+
+					if (data.length > 0) {
+						$.each(data, function (index, promoCode) {
+							var newRowHTML = `
                         <tr>
                             <th scope="row">
                             <td>${promoCode.promoCodeId}</td>
@@ -316,82 +266,66 @@
                                 </td>
                         </tr>
                     `;
-                    
-                tableBody.append(newRowHTML);
-              });
-            } else {
-              tableBody.html("<tr><td colspan='7'>没有數據。</td></tr>");
-            }
-          },
-          error: function () {
-            // 例外訊息
-            alert("請求失敗。");
-          },
-        });
-      }
 
-      function sendemail(promoCodeId) {
-    	  $.ajax({
-    		  
-            url:`${window.location, path}/SendPromoCode`,
+							tableBody.append(newRowHTML);
+						});
+					} else {
+						tableBody.html("<tr><td colspan='7'>没有數據。</td></tr>");
+					}
+				},
+				error: function () {
+					// 例外訊息
+					alert("請求失敗。");
+				},
+			});
+		}
 
-//     	    url: "http://localhost:8081/artion/SendPromoCode", // 修改为你的后端API的URL
-    	    type: "POST",
-    	    data: { promoCodeId: promoCodeId },
-    	    dataType: "json",
-    	    success: function (data) {
-    	      // 在成功发送电子邮件后执行的操作
-    	      alert("電子郵件已發送！");
-    	    },
-    	    error: function () {    	      // 处理错误
-    	      alert("發送電子郵件失敗。");
-    	    },
-    	  });
-    	};
+		function sendemail(promoCodeId) {
+			$.ajax({
 
-      // 在文檔加載完成後调用函數
+				url: `${window.location, path}/SendPromoCode`,
 
-      $(document).ready(function () {
-        const admId = localStorage.getItem("admId");
+				//     	    url: "http://localhost:8081/artion/SendPromoCode", // 修改为你的后端API的URL
+				type: "POST",
+				data: { promoCodeId: promoCodeId },
+				dataType: "json",
+				success: function (data) {
+					// 在成功发送电子邮件后执行的操作
+					alert("電子郵件已發送！");
+				},
+				error: function () {    	      // 处理错误
+					alert("發送電子郵件失敗。");
+				},
+			});
+		};
 
-//         console.log(admId);
+		// 在文檔加載完成後调用函數
 
-        const adminPhoto1 = $("#adminPhoto1");
-        const adminPhoto2 = $("#adminPhoto2");
+		$(document).ready(function () {
 
-//         console.log(adminPhoto1);
 
-        // const initialImageUrl = "img/user.jpg";
-//         const alternateImageUrl = "http://localhost:8081/artion/adminphoto?admId=" + admId;
-        
-		const alternateImageUrl = `${window.location, path}/adminphoto?admId= ` + admId;
+			fillTableWithPromoCodes();
+		});
 
-        // let isInitialImage = true;
+		//修改按鈕
+		$("#table-body").on("click", "#update", function () {
+			// 獲取所在行的 merchId
+			//           console.log($(this));
+			var promoCodeId = $(this).data("promocode");
+			//           console.log(promoCodeId);
+			window.location.href = window.location.origin + path + "/admin/codeEdit.html?promoCodeId=" + promoCodeId;
+		});
 
-        adminPhoto1.attr("src", alternateImageUrl);
-        adminPhoto2.attr("src", alternateImageUrl);
+		//送出按鈕
+		$("#table-body").on("click", "#sendemail", function () {
+			// 獲取所在行的 proCodeCode
+			var promoCodeId = $(this).data("promocode");
+			//   console.log(promoCodeId);
+			sendemail(promoCodeId);
+		});
 
-        fillTableWithPromoCodes();
-	  });
 
-        //修改按鈕
-        $("#table-body").on("click", "#update", function () {
-          // 獲取所在行的 merchId
-//           console.log($(this));
-          var promoCodeId = $(this).data("promocode");
-//           console.log(promoCodeId);
-          location.href = "codeEdit.html?promoCodeId=" + promoCodeId;
-        });
-        
-        //送出按鈕
-      $("#table-body").on("click", "#sendemail", function () {
-  // 獲取所在行的 proCodeCode
-  var promoCodeId = $(this).data("promocode");
-//   console.log(promoCodeId);
-  sendemail(promoCodeId);
-});
-
-          
-    </script>
+	</script>
 </body>
+
 </html>

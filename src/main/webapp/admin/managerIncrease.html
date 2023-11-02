@@ -59,7 +59,7 @@
             </div>
           </div>
           <div class="ms-3">
-            <h6 class="mb-0"><span id="admName"></span></h6>
+            <h6 class="mb-0"><span id="admName1"></span></h6>
             <span>Admin</span>
           </div>
         </div>
@@ -245,7 +245,7 @@
     console.log(admName);
 
     if (admId != null) {
-      const admNameSpan = $("#admName");
+      const admNameSpan = $("#admName1");
       const admNameSpan2 = $("#admName2");
 
       const adminPhoto1 = $("#adminPhoto1");
@@ -273,7 +273,7 @@
       adminPhoto2.attr("src", alternateImageUrl);
 
     } else {
-      window.location.href = "signin.html";
+      window.location.href = window.location.origin + path + "/admin/signin.html";
     }
 
 
@@ -295,7 +295,7 @@
       console.log(admin);
 
       $.ajax({
-        url: `http://localhost:8081/artion/addAdmin`, // 替换为用于更新数据的后端URL
+        url: `${window.location, path}/addAdmin`, // 替换为用于更新数据的后端URL
         type: "POST", // 根据你的需要选择请求类型
         data: admin, // 发送的数据
         processData: false, // 禁止处理数据
@@ -303,7 +303,7 @@
 
         success: function () {
           e.preventDefault;
-          window.location.href = "manager.html?admId=" + admId;
+          window.location.href = window.location.origin + path + "/admin/manager.html?admId=" + admId;
         },
         error: function (error) {
           // 在请求失败时执行的操作
@@ -314,7 +314,7 @@
     });
 
     $("#cancel").on("click", function () {
-      location.href = "manager.html?admId=" + admId;
+      location.href = window.location.origin + path + "/admin/manager.html?admId=" + admId;
     });
 
   </script>
