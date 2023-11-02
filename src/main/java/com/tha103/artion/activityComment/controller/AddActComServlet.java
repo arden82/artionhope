@@ -88,7 +88,9 @@ public class AddActComServlet extends HttpServlet {
 			activityCommentVO.setActComPicture3(actComPicture3);
 			
 			MemberVO memberVO = new MemberVO();  //改成動態會員id
-			memberVO.setMemId(7001);
+			HttpSession session = req.getSession();
+			Integer memId = (Integer) session.getAttribute("memId");
+			memberVO.setMemId(memId);
 			activityCommentVO.setMember(memberVO);
 			
 			activityCommentVO.setActComLikeTimes(0);

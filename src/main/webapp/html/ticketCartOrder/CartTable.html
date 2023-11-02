@@ -2,234 +2,241 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>購物車</title>
-<style>
-	.cool-button {
-    background-color: #0074e4; /* 蓝色背景颜色 */
-    border: none;
-    color: white; /* 字体颜色 */
-    padding: 15px 32px; /* 内边距 */
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px 2px;
-    cursor: pointer;
-    border-radius: 5px; /* 圆角 */
-    box-shadow: 0px 0px 10px 2px #0074e4; /* 初始阴影 */
-    animation: jump 1s infinite alternate, shadow-pulse 1s infinite alternate; /* 动画效果 */
-  }
+    <meta charset="utf-8">
+    <title>MultiShop - Online Shop Website Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
 
-  .cool-button:hover {
-    background-color: #004db3; /* 悬停时的背景颜色 */
-  }
-	
-</style>
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="../../css/ticketOrder/animate.min.css" rel="stylesheet">
+    <link href="../../css/ticketOrder/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="../../css/ticketOrder/style.css" rel="stylesheet">
+
+    <link rel="icon" href="../../images/artionLogo.png" type="image/png">
+    <link rel="stylesheet" href="../../css/member/member.css">
+
+
 </head>
 
 <body>
-	<a class="cool-button" href="http://localhost:8081/artion/html/activity/ActivityPage.html">回首页</a>
-    <button id="cartBtn">取得購物車明細</button>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>選擇</th>
-                <th>廠商名稱</th>
-                <th>活動名稱</th>
-                <th>票卷價格</th>
-                <th>數量</th>
-                <th>小計</th>
-            </tr>
-        </thead>
-        <tbody id="cart-items">
-            <tr class="cart-item">
-                <td><input type="checkbox" name="select" class="item-checkbox" onchange="calculateTotal()"></td>
-                <td id="selName"></td>
-                <td id="actName"></td>
-                <td id="actTicPrice"></td>
-                <td>
-                    <button onclick="changeQuantity(this, -1)">-</button> <input type="number" name="quantity" value="1"
-                        size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1">
-                    <button onclick="changeQuantity(this, 1)">+</button>
-                </td>
-                <td class="item-subtotal">元</td>
-                <button style="display: none;" id="actId">
-                <button style="display: none;" id="selId">
-            </tr>
-        </tbody>
-    </table>
-    <div>
-<!--         <p> -->
-<!--             總金額: <span id="total-amount">0元</span> -->
-<!--         </p> -->
+	<!-- 整個頁面容器開始 -->
+	<div class="container-fluid p-0">
+        <div class="loginstate"></div>
+		<div class="container-fluid">
+		<!--除了navbar 以外的東西放裡面 -->
+		<!-- Cart Start -->
+    <div class="container-fluid">
+        <div class="row px-xl-5 mt-5">
+            <div class="col-lg-8 table-responsive mb-5">
+                <table class="table table-light table-borderless table-hover text-center mb-0">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>活動名稱</th>
+                            <th>票劵價格</th>
+                            <th>數量</th>
+                            <th>小計</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle" id="cart-items">
+                        <!-- 票劵明細開始 -->
+                        <tr>
+                            <td class="align-middle"><img src="" alt="" style="width: 50px;"> 活動名稱</td>
+                            <td class="align-middle">價格</td>
+                            <td class="align-middle">
+                                <div class="input-group quantity mx-auto" style="width: 100px;">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-primary btn-minus">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <input type="text"
+                                        class="form-control form-control-sm bg-secondary border-0 text-center"
+                                        value="1">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-primary btn-plus">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-middle">小計金額</td>
+                            <td class="align-middle"><button class="btn btn-sm btn-danger"><i
+                                        class="fa fa-times"></i></button></td>
+                        </tr>
+                        <!-- 票劵明細結束 -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- 購物車摘要開始 -->
+            <div class="col-lg-4">
+                <form class="mb-30" action="">
+                    <div class="input-group">
+                        <input type="text" class="form-control border-0 p-4" placeholder="輸入優惠碼">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" id="promoCode">使用優惠碼</button>
+                        </div>
+                    </div>
+                </form>
+                <h5 class="section-title position-relative text-uppercase mb-3"><span
+                        class="bg-secondary pr-3">購物車摘要</span></h5>
+                <div class="bg-light p-30 mb-5">
+                    <div class="border-bottom pb-2">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h6>總金額</h6>
+                            <span id="totalPrice"></span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium">優惠折扣金額</h6>
+                            <h6 class="font-weight-medium" id="proCodeAmount"></h6>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5>實付金額</h5>
+                            <h5 id="actuallyAmount"></h5>
+                        </div>
+                        <a href="http://127.0.0.1:5500/src/main/webapp/html/ticketCartOrder/ticketOrder.html">
+                            <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">去買單</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- 購物車摘要結束 -->
+        </div>
     </div>
-    <div id="test"></div>
-    <button onclick="checkout()" id="submit">下訂單</button>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Cart End -->
+
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+			
+		
+		
+		</div>
+	</div>
+			<!--除了navbar 以外的東西放裡面 -->
+
+    
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/ticketOrder/easing.min.js"></script>
+    <script src="../../js/ticketOrder/owl.carousel.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="../../js/ticketOrder/jqBootstrapValidation.min.js"></script>
+    <script src="../../js/ticketOrder/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="../../js/ticketOrder/main.js"></script>
+
+    <script src="../../js/activity/logstate.js"></script>
+    <!-- ======================== 網頁JS ======================== -->
     <script>
         let path = window.location.pathname;
         path = path.substring(0, path.indexOf("/", 1));
-//         url: `${window.location, path}`,
+
+        function redirectToTicketOrder() {
+        	  window.location.href = "http://localhost:8081/artion/html/ticketCartOrder/ticketOrder.html";
+        	}
         
-        //=============================== 加減數量 ===============================
-        function changeQuantity(button, change) {
-            
-            var inputElement = button.parentElement.querySelector('input.item-quantity');
-
-            if (inputElement) {
-                var currentValue = parseInt(inputElement.value, 10);
-                if (!isNaN(currentValue)) {
-                    
-                    var newValue = currentValue + change;
-                    if (newValue < 1) {
-                        newValue = 1;
-                    }
-                    inputElement.value = newValue;
-
-                    calculateSubtotal(inputElement);
-                }
-            }
-        }
-        //=============================== 計算小計  ===============================
-        function calculateSubtotal(inputElement) {
-            // 取得商品單價和小計父元素
-            var parentRow = inputElement.closest('tr');
-
-            if (parentRow) {
-                // 取得票卷單價
-                var priceElement = parentRow.querySelector('#actTicPrice');
-                // 取得票卷小計
-                var subtotalElement = parentRow.querySelector('.item-subtotal');
-
-                if (priceElement && subtotalElement) {
-                    // 取得票劵價和數量
-                    var price = parseFloat(priceElement.textContent); 
-                    var quantity = parseInt(inputElement.value, 10); // 輸入框的數值
-
-                    if (!isNaN(price) && !isNaN(quantity)) {
-                        // 計算小計
-                        var subtotal = price * quantity;
-                        // 更新小計金額
-                        subtotalElement.textContent = subtotal + '元';
-                    }
-                }
-            }
-        }
-       
-
-        //=============================== 取得redis資料並成功渲染畫面在畫面並廠商篩選功能(完成) ===============================
-        document.addEventListener('DOMContentLoaded', function() {
-  			var cartButton = document.getElementById('cartBtn');
-  			if (cartButton) {
-    			cartButton.click(); 
- 			}
-		});
-        	
+        //     		取得redis購物車明細
         $(document).ready(function () {
             var memId = localStorage.getItem("memId");
-            $("#cartBtn").click(function () {
+            $.ajax({
+                type: "GET",
+                url: `${window.location, path}/getFromRedis?memId=` + memId,
+                dataType: "json",
+                success: function (data) {
+                    $("#cart-items").empty();
+                    var totalPrice = 0;
+                    $.each(data, function (index, item) {
+                        var row = $('<tr style="vertical-align: middle;">');
+                        row.append('<td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;">' + item.actName + '</td>');
+                        row.append('<td class="align-middle" id="actTicPrice">' + item.actTicPrice + '元</td>');
+                        row.append('<div class="input-group quantity mx-auto" style="width: 100px;">');
+                        row.append('<div class="input-group-btn">');
+//                         row.append('<button class="btn btn-sm btn-primary btn-minus">');
+//                         row.append('<i class="fa fa-minus"></i>');
+                        row.append('</button>');
+                        row.append('</div>');
+                        row.append('<input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="1" style="marging-top:5px;">');
+                        row.append('<div class="input-group-btn">');
+//                         row.append('<button class="btn btn-sm btn-primary btn-plus">');
+//                         row.append('<i class="fa fa-plus"></i>');
+                        row.append('</button>');
+                        row.append('</div>');
+                        row.append('</div>');
+                        row.append('</td>');
+                        row.append('<td class="align-middle">' + item.actTicPrice + '元</td>');
+                        row.append('<td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>');
+                        row.append('</tr>');
+                        row.append('<button style="display: none;" id="actId">' + item.actId + '</button>');
+                        row.append('<button style="display: none;" id="selId">' + item.selId + '</button>');
+                        $("#cart-items").append(row);
+                        
+                        totalPrice += item.actTicPrice;
+                    });
+
+                    $("#totalPrice").append(totalPrice + '元');
+                    var proCodeAmount = $("#proCodeAmount").text();
+                    $("#actuallyAmount").append(totalPrice - proCodeAmount + '元');
+                },
+                error: function () {
+                    alert("無法取得資料");
+                }
+            });
+        });
+
+        //優惠碼使用
+        $("#promoCode").on("click", function () {
+            $("#proCodeAmount").text("50元");
+//             $("#actuallyAmount").append(totalPrice - 50 + '元');
+            
+        });
+
+        // 刪除明細
+        $(document).ready(function () {
+            $("#cart-items").on("click", ".btn-danger", function () {
+                var row = $(this).closest("tr");
+
+                var actId = row.find("#actId").text();
+                var selId = row.find("#selId").text();
+
                 $.ajax({
-                    type: "GET",
-                    url: `${window.location, path}/getFromRedis?memId=` + memId, 
-                    dataType: "json",
-                    success: function (data) {
-                        $("#cart-items").empty();
-                        var totalAmount = 0;
-
-                        $.each(data, function (index, item) {
-                            var row = $("<tr class='cart-item'>");
-                            row.append('<td><input type="checkbox" name="select" class="item-checkbox""></td>');
-                            row.append('<td id="selName">' + item.selName + '</td>');
-                            row.append('<td id="actName">' + item.actName + '</td>');
-                            row.append('<td id="actTicPrice">' + item.actTicPrice + '元</td>');
-                            row.append('<td><button onclick="changeQuantity(this, -1)">-</button><input type="number" name="quantity" value="1" size="1" class="item-quantity" oninput="calculateSubtotal(this)" min="1"><button onclick="changeQuantity(this, 1)">+</button></td>');
-                            row.append('<td class="item-subtotal">' + item.actTicPrice + '元</td>');
-                            row.append('<button style="display: none;" id="actId">' + item.actId + '</button>');
-                            row.append('<button style="display: none;" id="selId">' + item.selId + '</button>');
-                            $("#cart-items").append(row);
-
-                            
-                            //totalAmount += parseFloat(item.actTicPrice);
-                        });
-
-                        // 设置总金额
-                        // $("#total-amount").text(totalAmount + "元");
+                    type: "DELETE",
+                    url: "removeTicketDetail",
+                    data: {
+                        actId: actId,
+                        selId: selId
                     },
-                    error: function () {
-                        alert("取得資料失敗");
+                    success: function (response) {
+                        row.remove();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("錯誤：" + error);
                     }
                 });
             });
         });
-
-
-
-        //=============================== 載入畫面時，生成訂單並且將訂單和訂單明細送進資料庫(待完成) ===============================
-   
-    function checkout() {
-    var selectedSelId = null; 
-    var selectedCartData = [];
-
-    $("#cart-items tr").each(function (index, row) {
-        var selId = $(row).find("button#selId").text();
-		
-        if ($(row).find("input.item-checkbox").is(":checked")) {
-            if (selectedSelId === null) {
-                selectedSelId = selId;
-            } else if (selectedSelId !== selId) {
-                alert("無法選不同廠商票卷");
-                return; 
-            }
-
-            var selName = $(row).find("td#selName").text();
-            var actName = $(row).find("td#actName").text();
-            var actTicPrice = parseFloat($(row).find("td#actTicPrice").text().replace("元", ""));
-            var quantity = parseInt($(row).find("input.item-quantity").val());
-            var subtotal = parseFloat($(row).find("td.item-subtotal").text().replace("元", ""));
-            var actId = $(row).find("button#actId").text();
-
-            var itemData = {
-                actId: actId,
-                actName: actName,
-                actTicPrice: actTicPrice,
-                quantity: quantity,
-                subtotal: subtotal,
-                selId: selId,
-                selName: selName,
-            };
-
-            selectedCartData.push(itemData);
-          
-        }
-    });
-	console.log(selectedCartData);
-    if (selectedCartData.length === 0) {
-        alert("請選擇要購買的票卷");
-        return;
-    }
-    
-    $.ajax({
-        type: "POST",
-        url: `${window.location, path}/ticketOrderServlet`,
-        data: JSON.stringify(selectedCartData),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (response) {
-            alert("購買成功"); 
-            var ticOrdId = response.ticOrdId;
-            window.location.href = `${window.location, path}/orderDetail.html?ticOrdId=${ticOrdId}`;
-        },
-        error: function () {
-		alert("購買失敗"); 
-        }
-    });
-}
-
     </script>
-
-
 </body>
 
 </html>

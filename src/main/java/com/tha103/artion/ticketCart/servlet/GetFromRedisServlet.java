@@ -58,6 +58,8 @@ public class GetFromRedisServlet extends HttpServlet {
                         cartItemData.addProperty("actTicPrice", activityVO.getActTicketPrice());
                         cartItemData.addProperty("selId", selId);
                         cartItemData.addProperty("memId", memId);
+                        cartItemData.addProperty("quantity", 1);
+//                        cartItemData.addProperty("totalPrice", 100);
 
                         jsonData.add(cartItemData);
                     }
