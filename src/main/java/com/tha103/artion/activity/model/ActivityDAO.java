@@ -81,26 +81,20 @@ public class ActivityDAO implements ActivityDAO_interface {
 	}
 	
 
-	public List<ActivityVO> getAll() {
-	    List<ActivityVO> list = null;
-	    Session session = null;
-	    try {
-	        session = HibernateUtil.getSessionFactory().openSession();
-	        session.beginTransaction();
-	        session.getTransaction().commit();
-	    } catch (Exception e) {
-	        if (session != null) {
-	            session.getTransaction().rollback();
-	        }
-	        e.printStackTrace();
-	    } finally {
-	        if (session != null && session.isOpen()) {
-	            session.close();
-	        }
-	    }
-	    return list;
-	}
-
+	 @Override
+	 public List<ActivityVO> getAll() {
+	  Session session = HibernateUtil.getSessionFactory().openSession();
+	  try {
+	   session.beginTransaction();
+	   List<ActivityVO> list = session.createQuery("from ActivityVO", ActivityVO.class).list();
+	   session.getTransaction().commit();
+	   return list;
+	  } catch (Exception e) {
+	   e.printStackTrace();
+	   session.getTransaction().rollback();
+	  }
+	  return null;
+	 }
 
 	public Integer findActIdByActName(String actName) {
 	    Integer actId = null;
