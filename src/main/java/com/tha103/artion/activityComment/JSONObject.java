@@ -22,6 +22,14 @@ public class JSONObject {
     public long getLong(String key) {
         return jsonObject.get(key).getAsLong();
     }
+
+	public String[] keySet() {
+		return null;
+	}
+
+	public void remove(String key) {
+		
+	}
 }
 
     

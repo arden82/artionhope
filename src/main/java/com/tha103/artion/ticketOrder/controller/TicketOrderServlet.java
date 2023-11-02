@@ -41,12 +41,12 @@ public class TicketOrderServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 
-//        session.setAttribute("memId", 7002);
+//        session.setAttribute("memId", "7002");
 		
         
-        
+		
 		Integer memId = (Integer) session.getAttribute("memId");
-System.out.println("memId=" + memId);
+System.out.println(memId);
 		BufferedReader reader = request.getReader();
 		StringBuilder jsonInput = new StringBuilder();
 		String line;
@@ -140,38 +140,3 @@ System.out.println("新PK值: " + newTicketOrderPK);
 	}
 }
 	
-	
-	
-	
-	
-
-// ============================================ 訂單完成 ============================================
-// step2: 建立訂單明細
-//            List<TicketOrderDetailVO> orderDetails = new ArrayList<>();
-//            for (TicketOrderDetailVO ticketOrderDetailData : ticketOrderData.getCartData()) {
-//                TicketOrderDetailVO ticketOrderDetail = new TicketOrderDetailVO();
-//                ticketOrderDetail.setActName(ticketOrderDetailData.getActName()); // 活動名稱
-//                ticketOrderDetail.setActTicPrice(ticketOrderDetailData.getActTicPrice()); // 活動票價
-//                ticketOrderDetail.setQuantity(ticketOrderDetailData.getQuantity()); // 購買數量
-//                ticketOrderDetail.setSubtotal(ticketOrderDetailData.getSubtotal()); // 小計
-
-// 步骤3: 明細關聯到訂單
-//                ticketOrderDetail.setTicketOrder(ticketOrder);
-//
-//                orderDetails.add(ticketOrderDetail);
-//            }
-
-// 步骤5: 使用 Hibernate 保存订单明细对象（这应该在订单之后进行）
-// 请确保配置了 Hibernate 的 SessionFactory
-// for (TicketOrderDetailVO orderDetail : orderDetails) {
-// session.save(orderDetail);
-// }
-
-//            response.setStatus(HttpServletResponse.SC_OK);
-//            response.getWriter().println("成功訂單建立！");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-//            response.getWriter().println("訂單建立失敗");
-//        }
-//    }
