@@ -87,7 +87,6 @@ public class ActivityDAO implements ActivityDAO_interface {
 	    try {
 	        session = HibernateUtil.getSessionFactory().openSession();
 	        session.beginTransaction();
-	        list = session.createQuery("from ActivityVO ORDER BY actStartDate DESC", ActivityVO.class).list();
 	        session.getTransaction().commit();
 	    } catch (Exception e) {
 	        if (session != null) {
