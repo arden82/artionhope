@@ -54,7 +54,7 @@
         </a>
         <div class="d-flex align-items-center ms-4 mb-4">
           <div class="position-relative">
-            <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto2" />
+            <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px" id="adminPhoto1" />
             <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
             </div>
           </div>
@@ -355,11 +355,7 @@
               history.back();
             });
 
-            // 点击“更改”按钮时提交表单或执行其他操作
-            $("#updateButton").on("click", function () {
-              // 这里可以添加表单提交的代码或其他操作
-              // 例如，通过 AJAX 请求将修改后的数据发送到后端
-            });
+
           },
           error: function () {
             // 处理错误
@@ -402,7 +398,7 @@
             // 在成功时执行的操作
             console.log("Update successful for admId: " + admId);
             // 如果更新成功，可以执行重定向到oneAdmin.html
-            window.location.href = window.location.origin + path + "/admin/manager.html?admId=" + localAdmId;
+            window.location.href = window.location.origin + path + "/admin/manager.html?admId=" + admId;
           },
           error: function (error) {
             // 在请求失败时执行的操作
