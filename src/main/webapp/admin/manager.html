@@ -48,7 +48,7 @@
     <!-- Sidebar Start -->
     <div class="sidebar pe-4 pb-3">
       <nav class="navbar bg-light navbar-light">
-        <a href="index.html" class="navbar-brand mx-4 mb-3 artionimg">
+        <a href="manager.html" class="navbar-brand mx-4 mb-3 artionimg">
           <!-- <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3> -->
           <img src="./img/artion-logo.png" />
         </a>
@@ -83,7 +83,7 @@
     <div class="content">
       <!-- Navbar Start -->
       <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-        <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+        <a href="manager.html" class="navbar-brand d-flex d-lg-none me-4">
           <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
         </a>
         <a href="#" class="sidebar-toggler flex-shrink-0">
@@ -225,7 +225,7 @@
       adminPhoto2.attr("src", alternateImageUrl);
 
     } else {
-      window.location.href = window.location.origin + path + "signin.html";
+      window.location.href = window.location.origin + path + "/admin/signin.html";
     };
     //畫面開始直接渲染
 
@@ -288,7 +288,7 @@
         success: function (data) {
           alert("success");
           console.log(data);
-          location.href = "managerDetails.html?admId=" + admId; // 在URL中包含admId
+          window.location.href = window.location.origin + path + "/admin/managerDetails.html?admId=" + admId; // 在URL中包含admId
         },
       });
     }
@@ -317,29 +317,29 @@
       }
     }
 
-    function search() {
+    // function search() {
 
-      var result = $("#managerSearch").val();
+    //   var result = $("#managerSearch").val();
 
-      let item = {
-        admId: result,
-      }
+    //   let item = {
+    //     admId: result,
+    //   }
 
-      $.ajax({
-        url: `${window.location, path}/showOneAdmin`,
-        type: "POST",
-        data: item,
-        dataType: "json",
-        success: function (data) {
-          location.href = "oneAdmin.html?admId=" + admId; // 在URL中包含admId
-        },
-        error: function () {
-          // 處理錯誤
-          alert("搜尋失敗。");
-        },
-      });
+    //   $.ajax({
+    //     url: `${window.location, path}/showOneAdmin`,
+    //     type: "POST",
+    //     data: item,
+    //     dataType: "json",
+    //     success: function (data) {
+    //       location.href = "oneAdmin.html?admId=" + admId; // 在URL中包含admId
+    //     },
+    //     error: function () {
+    //       // 處理錯誤
+    //       alert("搜尋失敗。");
+    //     },
+    //   });
 
-    }
+    // }
 
     $(document).ready(function () {
 
