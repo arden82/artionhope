@@ -130,12 +130,7 @@ public class MemberServlet extends HttpServlet {
 			res.getWriter().write(memIdjson);
 			return;
 		case "update":
-			session = req.getSession();
-			memId=(Integer)session.getAttribute("memId");
-			if (memId == null) {
-				res.sendRedirect(req.getContextPath() + "/html/member/memberLogin.html");
-				return;
-			}
+	
 			String passwordType = req.getParameter("passwordType");
 			if (passwordType != null && "remake".equals(passwordType)) {
 				account = req.getParameter("mem_account");
@@ -151,6 +146,12 @@ public class MemberServlet extends HttpServlet {
 				}
 
 			} else {
+				session = req.getSession();
+				memId=(Integer)session.getAttribute("memId");
+				if (memId == null) {
+					res.sendRedirect(req.getContextPath() + "/html/member/memberLogin.html");
+					return;
+				}
 				account = req.getParameter("mem_account");
 				password = req.getParameter("mem_password");
 				name = req.getParameter("mem_name");

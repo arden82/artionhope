@@ -219,7 +219,7 @@
         success: function (response) {
             alert("購買成功"); 
             var ticOrdId = response.ticOrdId;
-            window.location.href = `${window.location, path}/orderDetail.html?ticOrdId=${ticOrdId}`;
+            window.location.href = `${window.location, path}/html/member/memberShoppingListDetail.html?ticketOrd_id=${ticOrdId}`;
         },
         error: function () {
 		alert("購買失敗"); 

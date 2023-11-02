@@ -230,8 +230,8 @@ pageContext.setAttribute("list", list);
 									<th scope="col">訂單成立時間</th>
 									<th scope="col">會員編號</th>
 									<th scope="col">實付金額</th>
-									<th scope="col">付款狀態</th>
-									<th scope="col">訂單狀態</th>
+<!-- 									<th scope="col">付款狀態</th> -->
+<!-- 									<th scope="col">訂單狀態</th> -->
 									<th scope="col">詳情</th>
 								</tr>
 							</thead>
@@ -245,29 +245,29 @@ pageContext.setAttribute("list", list);
 									<td>${ticketOrderVO.member.memId}</td>
 									<td>${ticketOrderVO.ticketOrdActuallyAmount}</td>
 
-									<td><c:choose>
-											<c:when test="${ticketOrderVO.ticketOrdPayStatus == 1}">
-                   								未付款
-                								</c:when>
-											<c:when test="${ticketOrderVO.ticketOrdPayStatus == 2}">
-                    							已付款
-                								</c:when>
-											<c:when test="${ticketOrderVO.ticketOrdPayStatus == 3}">
-                    							已退款
-                								</c:when>
-										</c:choose></td>
+<%-- 									<td><c:choose> --%>
+<%-- 											<c:when test="${ticketOrderVO.ticketOrdPayStatus == 1}"> --%>
+<!--                    								未付款 -->
+<%--                 								</c:when> --%>
+<%-- 											<c:when test="${ticketOrderVO.ticketOrdPayStatus == 2}"> --%>
+<!--                     							已付款 -->
+<%--                 								</c:when> --%>
+<%-- 											<c:when test="${ticketOrderVO.ticketOrdPayStatus == 3}"> --%>
+<!--                     							已退款 -->
+<%--                 								</c:when> --%>
+<%-- 										</c:choose></td> --%>
 
-									<td><c:choose>
-											<c:when test="${ticketOrderVO.ticketOrdStatus == 1}">
-                   								未完成
-                								</c:when>
-											<c:when test="${ticketOrderVO.ticketOrdStatus == 2}">
-                    							已完成
-                								</c:when>
-											<c:when test="${ticketOrderVO.ticketOrdStatus == 3}">
-                    							已取消
-                								</c:when>
-										</c:choose></td>
+<%-- 									<td><c:choose> --%>
+<%-- 											<c:when test="${ticketOrderVO.ticketOrdStatus == 1}"> --%>
+<!--                    								未完成 -->
+<%--                 								</c:when> --%>
+<%-- 											<c:when test="${ticketOrderVO.ticketOrdStatus == 2}"> --%>
+<!--                     							已完成 -->
+<%--                 								</c:when> --%>
+<%-- 											<c:when test="${ticketOrderVO.ticketOrdStatus == 3}"> --%>
+<!--                     							已取消 -->
+<%--                 								</c:when> --%>
+<%-- 										</c:choose></td> --%>
 									<td><a
 										href="sel_orderDetail.jsp?ticketOrdId=${ticketOrderVO.ticketOrdId}">查看詳情</a>
 									</td>

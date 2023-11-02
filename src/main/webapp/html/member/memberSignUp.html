@@ -169,27 +169,27 @@
 								<div class="d-flex mb-2 wrap_memberinfo_input">
 									<label for="mem_account">帳號</label> <input type="email"
 										class="form-control form-control-sm" name="mem_account" id="mem_account"
-										required>
+										required="required">
 								</div>
 								<div class="d-flex mb-1 wrap_memberinfo_input">
 									<label for="mem_password" class="form-label">密碼</label>
 									<div class="mb-1  input-group align-items-center">
 										<input type="password" class="form-control form-control-sm" name="mem_password"
-											id="mem_password" required>
+											id="mem_password" required="required" >
 
 									</div>
 								</div>
 								<div class="d-flex mb-1 wrap_memberinfo_input">
 									<label for="mem_name" class="form-label">姓名</label> <input type="text"
 										class="form-control form-control-sm" name="mem_name" id="mem_name"
-										pattern="^[\u4e00-\u9fff]{2,}$" required>
+										pattern="^[\u4e00-\u9fff]{2,}$" required="required">
 								</div>
 								<div class="d-flex gender_wrap align-items-center mb-2">
 									<div class="d-flex justify-content-center align-items-center">
 										<span class="me-5">性別</span>
 										<div class="form-check form-check-inline ">
 											<input class="form-check-input" type="radio" id="inlineRadio1"
-												name="mem_gender" value="男" required>
+												name="mem_gender" value="男" required="">
 											<label class="form-check-label" for="inlineRadio1"
 												style="width: 10px;">男</label>
 										</div>
@@ -205,18 +205,18 @@
 								<div class=" d-flex  align-items-center wrap_memberinfo_input mb-1">
 									<label for="mem_birthday" class="">生日</label> <input type="date"
 										class="form-control form-control-sm" name="mem_birthday" id="mem_birthday"
-										required>
+										required="required">
 								</div>
 								<div class="d-flex mb-2 align-items-center wrap_memberinfo_input ">
 									<label for="mem_mobile">手機號碼</label> <input type="text"
 										class="form-control form-control-sm " name="mem_mobile" id="mem_mobile"
-										pattern="09[0-9]{8}" required>
+										pattern="09[0-9]{8}" required="required">
 								</div>
 								<div class="">
 									<div class="d-flex  align-items-center address_wrap mb-2">
 										<label for="mem_billAddress" class="">收件地址</label> <input type="text"
 											class="form-control form-control-sm" name="mem_billAddress"
-											id="mem_billAddress" required>
+											id="mem_billAddress" required="required">
 									</div>
 								</div>
 
@@ -322,6 +322,7 @@
 
 		//送表單
 
+	
 		logupForm.addEventListener("click", function () {
 			let mem_account = document.querySelector("#mem_account").value;
 			let mem_password = document.querySelector("#mem_password").value;

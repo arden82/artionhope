@@ -167,7 +167,19 @@ public class ActivityServlet extends HttpServlet {
 				errorMsgs.add("連絡電話請勿空白");
 			}
 
-			Integer act_ticketTotal = Integer.valueOf(req.getParameter("actTicketTotal").trim());
+			int act_ticketTotal = 0; // 在這裡聲明變量
+
+			   try {
+			       // 從請求中獲取參數，去除首尾空格，並嘗試將其轉換為整數
+			       String actTicketTotalParam = req.getParameter("actTicketTotal").trim();
+			       act_ticketTotal = Integer.parseInt(actTicketTotalParam); // 在這裡使用變量
+
+			       // ... 使用轉換後的數字進行後續操作 ...
+
+			   } catch (NumberFormatException e) {
+			       // 輸入的字符串不是一個有效的整數，進行錯誤處理
+			       System.err.println("票卷總數輸入錯誤");
+			   }
 
 			String act_content = req.getParameter("actContent");
 			if (act_content != null && !act_content.trim().isEmpty()) {
