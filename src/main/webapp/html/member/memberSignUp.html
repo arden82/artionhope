@@ -227,7 +227,7 @@
 								</div>
 								<div class='mugShotBox'></div>
 								<hr>
-								<button type="button" class="colortest btn_old  mb-3  btnform ">註冊會員</button>
+								<input type="submit" class="colortest btn_old  mb-3  btnform " value="註冊會員">
 							</form>
 							<div class="d-flex ">
 								<a class="nav-link me-3 " href="./memberLogin.html">已經是會員了?會員登入</a>
@@ -249,7 +249,7 @@
 		let mugShotBox = document.querySelector(".mugShotBox");
 		let profilePhoto = document.querySelector("#mem_profilePhoto");
 		let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-		let logupForm = document.querySelector(".btnform");
+		let logupForm = document.querySelector(".logupForm");
 		read.addEventListener("load", function () {
 			mugShotBox.innerHTML = `<img src=${read.result}>`;
 		})
@@ -322,8 +322,8 @@
 
 		//送表單
 
-	
-		logupForm.addEventListener("click", function () {
+		logupForm.addEventListener("submit", function (e) {
+			e.preventDefault(); 
 			let mem_account = document.querySelector("#mem_account").value;
 			let mem_password = document.querySelector("#mem_password").value;
 			let mem_name = document.querySelector("#mem_name").value;
