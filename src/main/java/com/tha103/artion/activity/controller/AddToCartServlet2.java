@@ -49,7 +49,7 @@ public class AddToCartServlet2 extends HttpServlet {
         String selName = sellerVO.getSelName();  //廠商名稱
         
         
-        // 创建 JSON 对象
+        // 創建JSON對象
         JsonObject cartItem = new JsonObject();
         cartItem.addProperty("活動編號", actId);
         cartItem.addProperty("活動名稱", actName);
@@ -57,16 +57,16 @@ public class AddToCartServlet2 extends HttpServlet {
         cartItem.addProperty("廠商編號", selId);
         cartItem.addProperty("廠商名稱", selName);
 
-        // 将 JSON 对象转换为字符串
+        // 將Json轉成字串
         String jsonItem = cartItem.toString();
 
-        // 使用 SADD 命令将 JSON 字符串添加到 memId 对应的集合
+        // 使用sadd()將json字串加入memid對應的集合
         jedis.sadd(memId, jsonItem);
 
-        // 关闭 Redis 连接
+        // 關閉連線
         jedis.close();
 
-        // 发送成功响应
+        // 發送成功回應
         response.getWriter().write("{\"message\":\"Activity added to cart.\"}");
     }
 }
