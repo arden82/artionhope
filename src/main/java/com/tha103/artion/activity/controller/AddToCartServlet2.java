@@ -25,14 +25,14 @@ public class AddToCartServlet2 extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        // 获取传递的数据
+        // 從前端獲得數據
         String actId = request.getParameter("actId");
         String memId = request.getParameter("memId");
 
-        // 连接到 Redis 数据库
+        // redis 連線
         Jedis jedis = new Jedis("localhost", 6379);
 
-        // 选择 db03 数据库
+        // 選擇資料庫
         jedis.select(3);
 
         int actIdInt = Integer.parseInt(actId); //活動編號
